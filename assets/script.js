@@ -175,65 +175,103 @@ gsap.fromTo(
 
 // PINNED PANELS EFFECT
 
-gsap.utils.toArray(".panel").forEach((panel, i) => {
-  if (i === 0) return; // hero skip
+// gsap.utils.toArray(".panel").forEach((panel, i) => {
+//   if (i === 0) return; // hero skip
 
-  ScrollTrigger.create({
-    trigger: panel,
-    start: "top top",
-    pin: true,
-    pinSpacing: false,
-  });
-});
+//   ScrollTrigger.create({
+//     trigger: panel,
+//     start: "top top",
+//     pin: true,
+//     pinSpacing: false,
+//   });
+// });
 
 // VIDEO SECTION INTERACTION
 const videoWrapper = document.querySelector(".video-wrapper");
 const video = document.getElementById("mainVideo");
 const playBtn = document.getElementById("playBtn");
 
-// show play button
-videoWrapper.addEventListener("mouseenter", () => {
-  playBtn.classList.add("visible");
-});
-
-// hide play button
-videoWrapper.addEventListener("mouseleave", () => {
-  playBtn.classList.remove("visible");
-});
-
-// follow cursor
-videoWrapper.addEventListener("mousemove", (e) => {
-  const rect = videoWrapper.getBoundingClientRect();
-
-  const x = e.clientX - rect.left - playBtn.clientWidth / 2;
-  const y = e.clientY - rect.top - playBtn.clientHeight / 2;
-
-  playBtn.style.left = x + "px";
-  playBtn.style.top = y + "px";
-});
-
-// play / pause video
+// Click to play/pause — toggle icon
 videoWrapper.addEventListener("click", () => {
   if (video.paused) {
     video.play();
-    playBtn.style.opacity = "0";
+    playBtn.innerHTML = `<span class="pause-icon"></span>`;
   } else {
     video.pause();
-    playBtn.style.opacity = "1";
+    playBtn.innerHTML = `<span class="triangle"></span>`;
   }
 });
 
-// ⭐ VIDEO SMOOTH SCROLL ZOOM
-gsap.to(".video-wrapper", {
-  scale: 1,
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".video-section",
-    start: "top center",
-    end: "bottom top",
-    scrub: true,
-  },
+// Cursor follow on hover
+videoWrapper.addEventListener("mousemove", (e) => {
+  const rect = videoWrapper.getBoundingClientRect();
+  const x = e.clientX - rect.left - 40;
+  const y = e.clientY - rect.top - 40;
+  gsap.to(playBtn, {
+    left: x,
+    top: y,
+    xPercent: 0,
+    yPercent: 0,
+    duration: 0.4,
+    ease: "power2.out",
+    overwrite: "auto",
+  });
 });
+
+// Reset to center when mouse leaves
+videoWrapper.addEventListener("mouseleave", () => {
+  gsap.to(playBtn, {
+    left: "50%",
+    top: "50%",
+    xPercent: -50,
+    yPercent: -50,
+    duration: 0.5,
+    ease: "power3.out",
+  });
+});
+
+// ── VIDEO REVEAL: pill → full screen ─────────────────────────────────────
+// 1. Pin the wrapper for 200vh of scroll
+ScrollTrigger.create({
+  trigger: ".video-section",
+  start: "top top",
+  end: "+=200%",
+  pin: ".video-wrapper",
+  pinSpacing: false,
+  anticipatePin: 1,
+});
+
+// 2. Expand clip-path from small pill to full screen
+gsap.fromTo(
+  ".video-container",
+  { clipPath: "inset(35% 25% 35% 25% round 0px)" },
+  {
+    clipPath: "inset(0% 0% 0% 0% round 0px)",
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".video-section",
+      start: "top top",
+      end: "+=200%",
+      scrub: 1.5,
+    },
+  },
+);
+
+// 3. Parallax on the video itself (moves up as clip expands)
+gsap.fromTo(
+  ".bg-video",
+  { y: "8%" },
+  {
+    y: "-8%",
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".video-section",
+      start: "top top",
+      end: "+=200%",
+      scrub: 2,
+    },
+  },
+);
 
 // Register plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -338,3 +376,56 @@ form.addEventListener("submit", function (e) {
     alert("Please fill all fields");
   }
 });
+
+// ============================================================
+// HORIZONTAL SECTION — Unified Pinned Timeline
+// Phase 1: text slides in from left        (1 unit)
+// Phase 2: lavender circle grows           (1 unit)
+// Phase 3: panels enter + scroll through  (5 units)
+// Everything fully reverses on scroll up
+// ============================================================
+const horizontal = document.querySelector(".horizontal-wrapper");
+const panelScrollWidth = () => horizontal.scrollWidth - window.innerWidth;
+
+// Initial states — panels start completely off-screen to the right
+gsap.set(".horizontal-section .yellow h2", { x: -160, opacity: 0 });
+gsap.set(".lavender-circle", { scale: 0.2, transformOrigin: "bottom right" });
+gsap.set(horizontal, { x: () => window.innerWidth }); // hidden off-screen right
+
+const hTL = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".horizontal-section",
+    start: "top top",
+    // Total scroll = enough room for text+circle phases (600px each) + full panel travel
+    end: () => "+=" + (window.innerWidth + panelScrollWidth() + 600),
+    scrub: 1.5,
+    pin: true,
+    anticipatePin: 1,
+  },
+});
+
+hTL
+  // Phase 1a — heading slides in from left  ↘ both run at
+  .to(".horizontal-section .yellow h2", {
+    //   the same time
+    x: 0,
+    opacity: 1,
+    ease: "power3.out",
+    duration: 1,
+  })
+  // Phase 1b — lavender circle grows simultaneously with text
+  .to(
+    ".lavender-circle",
+    {
+      scale: 1,
+      ease: "power2.out",
+      duration: 1,
+    },
+    "<",
+  ) // "<" = start at same time as previous tween
+  // Phase 2 — ONLY after both above finish: panels slide in + scroll
+  .to(horizontal, {
+    x: () => -panelScrollWidth(),
+    ease: "none",
+    duration: 5,
+  });
