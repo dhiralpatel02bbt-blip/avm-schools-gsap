@@ -1,54 +1,155 @@
-ScrollTrigger.refresh();
-gsap.config({
-  force3D: true,
-});
+gsap.config({ force3D: true });
 gsap.registerPlugin(ScrollTrigger);
-// page load animation
-gsap.fromTo(
-  [".burgundy-bg", ".yellow-circle"],
-  { scale: 0.8 },
-  {
-    scale: 1.1,
-    duration: 1,
-    ease: "power3.out",
-  },
-);
 
-// TEXT PAGE LOAD (left → right)
-gsap.fromTo(
-  ".main-title",
-  { x: -150, opacity: 0 },
-  {
-    x: 0,
-    opacity: 1,
-    duration: 1,
-    ease: "power3.out",
-  },
-);
+// ============================================================
+// HEADER — Sirf hero section mein dikh ta hai, baad mein hide
+// ============================================================
+const header = document.querySelector("header");
+const heroSection = document.querySelector(".bbt-dp-hero");
 
-// ORANGE BAR PAGE LOAD (left → right)
-gsap.fromTo(
-  ".orange-bg-element",
-  { x: -200 },
-  {
-    x: 0,
-    duration: 1,
-    ease: "power3.out",
-  },
-);
+window.addEventListener("scroll", () => {
+  const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+  if (window.scrollY > heroBottom - 100) {
+    gsap.to(header, {
+      opacity: 0,
+      y: -80,
+      duration: 0.4,
+      ease: "power2.in",
+      overwrite: "auto",
+    });
+  } else {
+    gsap.to(header, {
+      opacity: 1,
+      y: 0,
+      duration: 0.4,
+      ease: "power2.out",
+      overwrite: "auto",
+    });
+  }
+});
 
-// ABOUT ORANGE CIRCLE PAGE LOAD
-gsap.fromTo(
-  ".orange-circle",
-  { y: 120 },
-  {
-    y: 0,
-    duration: 1,
-    ease: "power3.out",
-  },
-);
+// ============================================================
+// INITIAL STATES — Page load pe yeh positions hongi
+// ============================================================
 
-// ABOUT ORANGE CIRCLE SCROLL
+// Burgundy BG — adha left mein
+gsap.set(".burgundy-bg", { x: -220 });
+
+// Yellow circle — aur neeche (screen ke bahar se thoda andar)
+gsap.set(".yellow-circle", { y: 380 });
+
+// Text — spans ko individually hide karo, hero overflow ke andar
+// Opacity 0 + translateX se animate hoga, clip nahi hoga
+gsap.set(".main-title .line1", { xPercent: -150, opacity: 0 });
+gsap.set(".main-title .line2", { xPercent: -150, opacity: 0 });
+gsap.set(".main-title .line3", { xPercent: -150, opacity: 0 });
+
+// Orange bar — hidden
+gsap.set(".orange-bg-element", { x: -300, opacity: 0 });
+
+// Students — right side mein, thoda cut hoga (x: +200)
+gsap.set(".hero-student-img", { x: 200 });
+
+// ============================================================
+// SCROLL ANIMATION — Hero section pin + scrub
+// ============================================================
+
+const heroTL = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".bbt-dp-hero",
+    start: "top top",
+    end: "+=900",
+    scrub: 1.2,
+    pin: true,
+    anticipatePin: 1,
+  },
+});
+
+heroTL
+  // Burgundy BG — left se right
+  .to(
+    ".burgundy-bg",
+    {
+      x: 0,
+      duration: 3,
+      ease: "power2.out",
+    },
+    0,
+  )
+
+  // Yellow circle — neeche se upar (final: y:0)
+  .to(
+    ".yellow-circle",
+    {
+      y: 0,
+      duration: 3,
+      ease: "power2.out",
+    },
+    0,
+  )
+
+  // Students — right se left (final: x:0)
+  .to(
+    ".hero-student-img",
+    {
+      x: 0,
+      duration: 3,
+      ease: "power2.out",
+    },
+    0,
+  )
+
+  // Orange bar
+  .to(
+    ".orange-bg-element",
+    {
+      x: 0,
+      opacity: 1,
+      duration: 2,
+      ease: "power2.out",
+    },
+    0.2,
+  )
+
+  // Line 1 "Shaping"
+  .to(
+    ".main-title .line1",
+    {
+      xPercent: 0,
+      opacity: 1,
+      duration: 2,
+      ease: "power3.out",
+    },
+    0.3,
+  )
+
+  // Line 2 "Indian leaders"
+  .to(
+    ".main-title .line2",
+    {
+      xPercent: 0,
+      opacity: 1,
+      duration: 2,
+      ease: "power3.out",
+    },
+    0.6,
+  )
+
+  // Line 3 "for the world."
+  .to(
+    ".main-title .line3",
+    {
+      xPercent: 0,
+      opacity: 1,
+      duration: 2,
+      ease: "power3.out",
+    },
+    0.9,
+  );
+
+// ============================================================
+// ABOUT SECTION
+// ============================================================
 gsap.fromTo(
   ".orange-circle",
   { y: 0 },
@@ -64,57 +165,6 @@ gsap.fromTo(
   },
 );
 
-// SCROLL ANIMATION
-// SCROLL ANIMATION (smooth + responsive safe)
-gsap
-  .timeline({
-    scrollTrigger: {
-      trigger: ".bbt-dp-about",
-      start: "top bottom",
-      end: "top top",
-      scrub: 1,
-    },
-  })
-  .fromTo(
-    ".burgundy-bg",
-    { scale: 1.1 },
-    { scale: 0.9, ease: "none" }, // small change instead of 0.4
-  )
-  .fromTo(".yellow-circle", { y: 250 }, { y: -200, ease: "none" }, 0);
-
-// TEXT SCROLL ANIMATION
-gsap.fromTo(
-  ".main-title",
-  { x: 0 },
-  {
-    x: -40, // smaller movement
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".bbt-dp-about",
-      start: "top bottom",
-      end: "top top",
-      scrub: true,
-    },
-  },
-);
-
-// ORANGE BAR SCROLL
-gsap.fromTo(
-  ".orange-bg-element",
-  { x: 0 },
-  {
-    x: -200,
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".bbt-dp-about",
-      start: "top bottom",
-      end: "top top",
-      scrub: true,
-    },
-  },
-);
-
-// ABOUT YELLOW SHAPE SCROLL
 gsap.fromTo(
   ".yellow-shape",
   { y: 0 },
@@ -130,7 +180,6 @@ gsap.fromTo(
   },
 );
 
-// ABOUT ORANGE CIRCLE SCROLL (rise effect)
 gsap.fromTo(
   ".about-img",
   { y: 0 },
@@ -146,23 +195,11 @@ gsap.fromTo(
   },
 );
 
-// PURPLE BAR PAGE LOAD (right → left)
 gsap.fromTo(
   ".bbt-dp-about .row",
   { "--purpleMove": "200px" },
   {
     "--purpleMove": "0px",
-    duration: 1,
-    ease: "power3.out",
-  },
-);
-
-// PURPLE BAR SCROLL
-gsap.fromTo(
-  ".bbt-dp-about .row",
-  { "--purpleMove": "0px" },
-  {
-    "--purpleMove": "200px",
     ease: "none",
     scrollTrigger: {
       trigger: ".bbt-dp-about",
@@ -173,25 +210,73 @@ gsap.fromTo(
   },
 );
 
-// PINNED PANELS EFFECT
+gsap.fromTo(
+  ".about-paragraph p",
+  { y: 50, opacity: 0 },
+  {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: ".bbt-dp-about",
+      start: "top 75%",
+      toggleActions: "play none none none",
+    },
+  },
+);
 
-// gsap.utils.toArray(".panel").forEach((panel, i) => {
-//   if (i === 0) return; // hero skip
+gsap.fromTo(
+  ".about-paragraph .secondary-btn",
+  { y: 30, opacity: 0 },
+  {
+    y: 0,
+    opacity: 1,
+    duration: 0.8,
+    ease: "power3.out",
+    delay: 0.3,
+    scrollTrigger: {
+      trigger: ".bbt-dp-about",
+      start: "top 75%",
+      toggleActions: "play none none none",
+    },
+  },
+);
 
-//   ScrollTrigger.create({
-//     trigger: panel,
-//     start: "top top",
-//     pin: true,
-//     pinSpacing: false,
-//   });
-// });
+gsap.fromTo(
+  ".bbt-dp-about .about-img img.kid",
+  { y: 60, opacity: 0 },
+  {
+    y: 0,
+    opacity: 1,
+    duration: 1.2,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: ".bbt-dp-about",
+      start: "top 80%",
+      toggleActions: "play none none none",
+    },
+  },
+);
 
-// VIDEO SECTION INTERACTION
+// ══════════════════════════════════════════════════════════════════
+// VIDEO SECTION — 3-Phase Scroll Animation
+//
+// PHASE 1: Small square → wide rectangle   (before viewport, no pin)
+//   Starts as section enters viewport bottom, ends when it hits top.
+//
+// PHASE 2: Overlay + text + play btn reveal (pinned at top)
+//   Opacity stays fixed after reveal — no further darkening.
+//
+// PHASE 3: Upward wipe exit                (after pin releases)
+//   Fires as you scroll to the next section. Content fades instantly.
+// ══════════════════════════════════════════════════════════════════
+
 const videoWrapper = document.querySelector(".video-wrapper");
 const video = document.getElementById("mainVideo");
 const playBtn = document.getElementById("playBtn");
 
-// Click to play/pause — toggle icon
+// ── Click: play / pause toggle ───────────────────────────────────
 videoWrapper.addEventListener("click", () => {
   if (video.paused) {
     video.play();
@@ -202,23 +287,28 @@ videoWrapper.addEventListener("click", () => {
   }
 });
 
-// Cursor follow on hover
+// ── Cursor-following play button ─────────────────────────────────
 videoWrapper.addEventListener("mousemove", (e) => {
-  const rect = videoWrapper.getBoundingClientRect();
-  const x = e.clientX - rect.left - 40;
-  const y = e.clientY - rect.top - 40;
+  const rect = document
+    .querySelector(".video-container")
+    .getBoundingClientRect();
+  const overlayOpacity = parseFloat(
+    getComputedStyle(document.querySelector(".video-section .overlay")).opacity,
+  );
+  if (overlayOpacity < 0.3) return;
+  const x = e.clientX - rect.left - 45;
+  const y = e.clientY - rect.top - 45;
   gsap.to(playBtn, {
     left: x,
     top: y,
     xPercent: 0,
     yPercent: 0,
-    duration: 0.4,
+    duration: 0.35,
     ease: "power2.out",
     overwrite: "auto",
   });
 });
 
-// Reset to center when mouse leaves
 videoWrapper.addEventListener("mouseleave", () => {
   gsap.to(playBtn, {
     left: "50%",
@@ -230,48 +320,100 @@ videoWrapper.addEventListener("mouseleave", () => {
   });
 });
 
-// ── VIDEO REVEAL: pill → full screen ─────────────────────────────────────
-// 1. Pin the wrapper for 200vh of scroll
-ScrollTrigger.create({
-  trigger: ".video-section",
-  start: "top top",
-  end: "+=200%",
-  pin: ".video-wrapper",
-  pinSpacing: false,
-  anticipatePin: 1,
-});
-
-// 2. Expand clip-path from small pill to full screen
+// ── PHASE 1: Square → Rectangle (BEFORE reaching viewport) ───────
 gsap.fromTo(
   ".video-container",
-  { clipPath: "inset(35% 25% 35% 25% round 0px)" },
+  { clipPath: "inset(40% 44% 40% 44%)" },
   {
-    clipPath: "inset(0% 0% 0% 0% round 0px)",
+    clipPath: "inset(10% 3% 0% 3%)",
     ease: "none",
     scrollTrigger: {
       trigger: ".video-section",
-      start: "top top",
-      end: "+=200%",
-      scrub: 1.5,
+      start: "top bottom", // fires as section enters viewport bottom
+      end: "top top", // done by the time section reaches viewport top
+      scrub: 1,
     },
   },
 );
 
-// 3. Parallax on the video itself (moves up as clip expands)
+// Parallax on video during Phase 1
 gsap.fromTo(
   ".bg-video",
   { y: "8%" },
   {
-    y: "-8%",
+    y: "0%",
     ease: "none",
     scrollTrigger: {
       trigger: ".video-section",
-      start: "top top",
-      end: "+=200%",
-      scrub: 2,
+      start: "top bottom",
+      end: "top top",
+      scrub: 1,
     },
   },
 );
+
+// ── PHASE 2 + 3: Pinned reveal → hold → cut-upside exit ──────────
+// Everything lives inside ONE pinned timeline so the exit is
+// perfectly in sync with scroll — no separate trigger needed.
+//
+// Timeline breakdown (total = 4 units of scroll):
+//   0 → 1.5  : overlay fades in
+//   0.4 → 1.4: content + play btn rise in
+//   1.5 → 2.5: hold (viewer reads the text)
+//   2.5 → 4  : cut-upside — wrapper clips from bottom→top (video exits upward)
+
+gsap.set(".video-wrapper", { clipPath: "inset(0% 0% 0% 0%)" });
+
+const videoTL = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".video-section",
+    start: "top top",
+    end: "+=400%", // 4× viewport of scroll room
+    scrub: 1.5,
+    pin: ".video-wrapper",
+    anticipatePin: 1,
+    pinSpacing: true, // true so scroll space is reserved for all 4 phases
+  },
+});
+
+videoTL
+  // Reveal overlay
+  .fromTo(
+    ".video-section .overlay",
+    { opacity: 0 },
+    { opacity: 1, ease: "none", duration: 1.5 },
+  )
+  // Reveal text
+  .fromTo(
+    ".video-section .content",
+    { opacity: 0, yPercent: -40, y: 60 },
+    { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 1 },
+    0.4,
+  )
+  // Reveal play btn
+  .fromTo(
+    "#playBtn",
+    { opacity: 0, scale: 0 },
+    { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.8 },
+    0.4,
+  )
+  // Hold — pause at full reveal so user can read
+  .to({}, { duration: 1 })
+
+  // ── PHASE 3: Cut-upside exit ─────────────────────────────────
+  // Fade out content instantly as wipe begins
+  .to([".video-section .content", "#playBtn"], {
+    opacity: 0,
+    ease: "none",
+    duration: 0.2,
+  })
+  // Clip the wrapper downward: inset(bottom) 0%→100% wipes video off screen downward
+  .fromTo(
+    ".video-wrapper",
+    { clipPath: "inset(0% 0% 0% 0%)" },
+    { clipPath: "inset(0% 0% 100% 0%)", ease: "none", duration: 1.5 },
+    "<", // starts at the same time as the fade
+  );
 
 // Register plugin
 gsap.registerPlugin(ScrollTrigger);

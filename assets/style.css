@@ -124,13 +124,16 @@ p {
 /* Header css Start */
 header {
   padding-top: 40px;
-  position: relative;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 9999;
   background: transparent;
+  transition: background 0.3s ease;
 }
+
+
 
 header .row {
   justify-content: space-between;
@@ -221,6 +224,16 @@ header .main-btn:hover::before {
 }
 
 @media (max-width: 991.9px) {
+  header {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  header .row {
+    min-height: 60px;
+    position: relative;
+  }
+
   .offcanvas-menu {
     display: block;
   }
@@ -229,10 +242,19 @@ header .main-btn:hover::before {
     display: none;
   }
 
+  .offcanvas-menu {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
   .offcanvas-menu>label {
-    top: 30px;
-    right: 30px;
-    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    position: absolute;
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -268,7 +290,7 @@ header .main-btn:hover::before {
 
   .offcanvas-menu nav {
     position: fixed;
-    height: 100%;
+    height: 100vh;
     width: 300px;
     top: 0;
     right: -410px;
@@ -417,10 +439,19 @@ body {
   background-size: cover;
   position: relative;
   overflow: hidden;
-  margin-top: -144px;
-  /* margin-top:0; */
-  padding-top: 200px;
-  /* min-height: 100vh; */
+  margin-top: 0;
+  padding-top: 144px;
+}
+
+/* Text ko hero overflow se bahar nikalo */
+.bbt-dp-hero h1.main-title {
+  position: relative;
+  z-index: 2;
+  padding-left: 20%;
+  width: 100%;
+  transform-origin: left center;
+  clip-path: none !important;
+  overflow: visible !important;
 }
 
 .bbt-dp-hero .burgundy-bg {
@@ -433,14 +464,6 @@ body {
   background: #7c1641;
 }
 
-.bbt-dp-hero h1.main-title {
-  z-index: 2;
-  position: relative;
-  padding-left: 20%;
-  width: 100%;
-  transform-origin: left center;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-}
 
 .main-hero-items .d-flex {
   justify-content: space-between;
@@ -625,6 +648,11 @@ body {
 }
 
 @media (max-width: 991px) {
+  .bbt-dp-hero {
+    margin-top: 0;
+    padding-top: 90px;
+  }
+
   .bbt-dp-hero .yellow-circle {
     width: 200px;
     height: 200px;
@@ -688,8 +716,11 @@ body {
     border-radius: 50%;
   }
 
+  .col-6.burgundy-bg-ele {
+    width: 100%;
+  }
+
   .bbt-dp-hero h1.main-title {
-    padding-left: 0;
     z-index: 0;
   }
 
@@ -699,7 +730,6 @@ body {
   }
 }
 
-
 /* hero section css End */
 
 /* About section css Start */
@@ -707,7 +737,6 @@ body {
   background-color: #fff;
   position: relative;
   padding: 90px 0;
-
 }
 
 .bbt-dp-about .row::before {
@@ -907,6 +936,10 @@ body {
   .about-paragraph {
     padding-left: 0;
   }
+
+  .bbt-dp-about .width-100 {
+    width: 100%;
+  }
 }
 
 @media(max-width: 767px) {
@@ -931,21 +964,27 @@ body {
 
 /* video section CSS start  */
 .video-section {
-  height: 300vh;
+  /* 100vh (Phase1 approach) + 200vh (pin) + 100vh (Phase3 exit) = 400vh */
+  height: 400vh;
+  position: relative;
 }
 
-/* Sticky wrapper pins full-screen to viewport */
+/* Wrapper is the sticky canvas — must be 100vw from edge to edge */
 .video-wrapper {
   position: sticky;
   top: 0;
   height: 100vh;
   width: 100vw;
+  /* Break out of any parent padding */
+  left: 50%;
+  transform: translateX(-50%);
   overflow: hidden;
   background: #fff;
   cursor: none;
+  z-index: 100;
 }
 
-/* Video container: starts as small pill CENTER of screen */
+/* Video container: starts as small centered pill, GSAP expands to full */
 .video-container {
   position: absolute;
   top: 0;
@@ -953,8 +992,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* small pill in center — GSAP expands this to 0% 0% 0% 0% */
-  clip-path: inset(35% 25% 35% 25% round 0px);
+  clip-path: inset(40% 44% 40% 44%);
   will-change: clip-path;
 }
 
@@ -963,30 +1001,36 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-  /* scale > 1 so parallax y-shift doesn't show edges */
-  transform: scale(1.15) translateY(0px);
+  transform: scale(1.18) translateY(8%);
   will-change: transform;
 }
 
+/* Overlay — starts invisible, fades to dark in Phase 2 */
 .video-section .overlay {
   position: absolute;
   inset: 0;
-  /* background: rgba(0, 0, 0, 0.42); */
+  background: rgba(0, 0, 0, 0.62);
+  opacity: 0;
   pointer-events: none;
   z-index: 1;
+  will-change: opacity;
 }
 
+/* Content text — starts hidden, revealed in Phase 2 */
 .video-section .content {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  /* GSAP controls yPercent / y — set a base left transform only */
+  transform: translateX(-50%);
   text-align: center;
   color: #fff;
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
   width: 680px;
   max-width: 90vw;
+  opacity: 0;
+  will-change: opacity, transform;
 }
 
 .video-section .content h2 {
@@ -995,9 +1039,9 @@ body {
   line-height: 1.3;
 }
 
-/* Play btn follows cursor */
+/* Play btn — absolute so it clips with the wrapper in Phase 3 */
 .video-section .play-btn {
-  position: fixed;
+  position: absolute;
   width: 90px;
   height: 90px;
   background: #ffd400;
@@ -1005,18 +1049,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  left: 0;
-  top: 0;
-  z-index: 9999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
   pointer-events: none;
   opacity: 0;
   scale: 0;
-  transition: opacity 0.3s ease, scale 0.3s ease;
-}
-
-.video-section .play-btn.visible {
-  opacity: 1;
-  scale: 1;
+  will-change: opacity, transform, scale;
 }
 
 .video-section .triangle {
@@ -1028,15 +1068,32 @@ body {
   margin-left: 6px;
 }
 
-@media(max-width: 1400px) {
+.video-section .pause-icon {
+  display: inline-block;
+  width: 18px;
+  height: 22px;
+  border-left: 6px solid #fff;
+  border-right: 6px solid #fff;
+}
+
+@media (max-width: 1400px) {
   .video-section .content h2 {
     font-size: 34px;
   }
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .video-section .content h2 {
     font-size: 28px;
+  }
+
+  .video-section .play-btn {
+    width: 68px;
+    height: 68px;
+  }
+
+  .video-container {
+    clip-path: inset(40% 44% 40% 44%);
   }
 }
 
@@ -1098,8 +1155,8 @@ body {
 
 .horizontal-section .yellow h2 {
   font-size: 62px;
-  color: #6E143A;
-  font-family: 'Circular Std';
+  color: #6e143a;
+  font-family: "Circular Std";
   font-weight: 600;
   letter-spacing: -2px;
   padding-top: 50px;
@@ -1107,7 +1164,7 @@ body {
 
 .horizontal-section .panel .content h3 {
   font-size: 44px;
-  font-family: 'Circular Std';
+  font-family: "Circular Std";
   width: 90%;
   color: #000;
   letter-spacing: -1.5%;
@@ -1118,7 +1175,7 @@ body {
   font-size: 20px;
   letter-spacing: 1px;
   line-height: 1.5;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: 400;
 }
 
@@ -1130,19 +1187,19 @@ body {
   z-index: 5;
   font-size: 25px;
   font-weight: 600;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   color: #000;
   text-decoration: underline;
   text-decoration-color: #821939;
   text-decoration-thickness: 2px;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 .pedagogy-btn:hover {
   text-decoration-color: #000;
 }
 
-@media(max-width: 1400px) {
+@media (max-width: 1400px) {
   .horizontal-section .horizontal-wrapper {
     padding: 50px 20px 0;
   }
@@ -1177,7 +1234,7 @@ body {
   }
 }
 
-@media(max-width: 1200px) {
+@media (max-width: 1200px) {
   .lavender-circle {
     width: 1300px;
     height: 650px;
@@ -1215,7 +1272,7 @@ body {
   }
 }
 
-@media(max-width: 1023px) {
+@media (max-width: 1023px) {
   .horizontal-section .yellow {
     width: 70%;
   }
@@ -1236,7 +1293,7 @@ body {
   }
 }
 
-@media(max-width: 991px) {
+@media (max-width: 991px) {
   .lavender-circle {
     width: 900px;
     height: 450px;
@@ -1244,7 +1301,7 @@ body {
   }
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .horizontal-section .yellow h2 {
     padding-top: 70px;
     font-size: 30px;
@@ -1269,7 +1326,7 @@ body {
   }
 }
 
-@media(max-width: 576px) {
+@media (max-width: 576px) {
   .horizontal-section .yellow {
     width: 100%;
   }
@@ -1282,9 +1339,6 @@ body {
     font-size: 14px;
     line-height: 20px;
   }
-
-
-
 }
 
 /* Beyond subjects section css End */
@@ -1300,7 +1354,7 @@ body {
   color: #fff;
   font-size: 62px;
   font-weight: 600;
-  font-family: 'Circular Std';
+  font-family: "Circular Std";
   letter-spacing: -2px;
   line-height: 1.3;
   transform: translateY(-80px);
@@ -1349,7 +1403,7 @@ body {
 
 .recognition-sec .award-title {
   font-size: 20px;
-  font-family: 'Circular Std';
+  font-family: "Circular Std";
   line-height: 1.5;
   font-weight: 500;
 }
@@ -1366,7 +1420,7 @@ body {
   font-weight: 500;
   font-size: 20px;
   letter-spacing: -1px;
-  font-family: 'Circular Std';
+  font-family: "Circular Std";
 }
 
 .recognition-sec .award:nth-child(4) {
@@ -1379,7 +1433,7 @@ body {
   justify-self: start;
 }
 
-@media(max-width: 1400px) {
+@media (max-width: 1400px) {
   .recognition-sec .section-title {
     font-size: 52px;
     line-height: 1.2;
@@ -1408,7 +1462,7 @@ body {
   }
 }
 
-@media(max-width: 1200px) {
+@media (max-width: 1200px) {
   .recognition-sec .section-title {
     font-size: 45px;
   }
@@ -2096,15 +2150,11 @@ body {
   transform-origin: center;
 } */
 .footer-container .divi {
-  /* content: ""; */
-  /* position: absolute; */
-  top: 0px;
-  left: 4%;
   width: 100%;
-  /* max-width: 1280px; */
   height: 2px;
   background: #fff;
   transform-origin: center;
+  margin-bottom: 100px;
 }
 
 .bbt-FA-main-footer .d-flex {
@@ -2165,7 +2215,7 @@ body {
   background: linear-gradient(0deg,
       transparent,
       transparent 80%,
-      #ff950045) !important;
+      #ff7f503d) !important;
 }
 
 .bbt-FA-main-footer .apply-btn.footer-btn:hover {
@@ -2446,7 +2496,7 @@ body {
     display: flex;
     justify-content: space-between;
     position: relative;
-    bottom: -110px;
+    bottom: -70px;
   }
 
   .bbt-FA-main-footer .main {
@@ -2455,7 +2505,11 @@ body {
   }
 
   .bbt-FA-main-footer .footer-text {
-    margin-top: 200px !important;
+    margin-top: 160px !important;
+  }
+
+  .footer-container .divi {
+    margin-bottom: 0;
   }
 }
 
