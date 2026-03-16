@@ -2,7 +2,7 @@ gsap.config({ force3D: true });
 gsap.registerPlugin(ScrollTrigger);
 
 // ============================================================
-// HEADER — Sirf hero section mein dikh ta hai, baad mein hide
+// HEADER — Sirf hero section mein dikhta hai, baad mein hide
 // ============================================================
 const header = document.querySelector("header");
 const heroSection = document.querySelector(".bbt-dp-hero");
@@ -38,8 +38,7 @@ gsap.set(".burgundy-bg", { x: -220 });
 // Yellow circle — aur neeche (screen ke bahar se thoda andar)
 gsap.set(".yellow-circle", { y: 380 });
 
-// Text — spans ko individually hide karo, hero overflow ke andar
-// Opacity 0 + translateX se animate hoga, clip nahi hoga
+// Text — spans ko individually hide karo
 gsap.set(".main-title .line1", { xPercent: -150, opacity: 0 });
 gsap.set(".main-title .line2", { xPercent: -150, opacity: 0 });
 gsap.set(".main-title .line3", { xPercent: -150, opacity: 0 });
@@ -47,22 +46,15 @@ gsap.set(".main-title .line3", { xPercent: -150, opacity: 0 });
 // Orange bar — hidden
 gsap.set(".orange-bg-element", { x: -300, opacity: 0 });
 
-// Students — right side mein, thoda cut hoga (x: +200)
+// Students — right side mein
 gsap.set(".hero-student-img", { x: 200 });
 
 // ============================================================
-// SCROLL ANIMATION — Hero section pin + scrub
+// PAGE LOAD ANIMATION — Scroll ki jagah ab page load pe play hoga
 // ============================================================
 
 const heroTL = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".bbt-dp-hero",
-    start: "top top",
-    end: "+=900",
-    scrub: 1.2,
-    pin: true,
-    anticipatePin: 1,
-  },
+  delay: 0.3, // Thoda wait karo taaki page properly load ho jaye
 });
 
 heroTL
@@ -71,7 +63,7 @@ heroTL
     ".burgundy-bg",
     {
       x: 0,
-      duration: 3,
+      duration: 1.2,
       ease: "power2.out",
     },
     0,
@@ -82,7 +74,7 @@ heroTL
     ".yellow-circle",
     {
       y: 0,
-      duration: 3,
+      duration: 1.2,
       ease: "power2.out",
     },
     0,
@@ -93,7 +85,7 @@ heroTL
     ".hero-student-img",
     {
       x: 0,
-      duration: 3,
+      duration: 1.2,
       ease: "power2.out",
     },
     0,
@@ -105,7 +97,7 @@ heroTL
     {
       x: 0,
       opacity: 1,
-      duration: 2,
+      duration: 0.9,
       ease: "power2.out",
     },
     0.2,
@@ -117,7 +109,7 @@ heroTL
     {
       xPercent: 0,
       opacity: 1,
-      duration: 2,
+      duration: 0.8,
       ease: "power3.out",
     },
     0.3,
@@ -129,10 +121,10 @@ heroTL
     {
       xPercent: 0,
       opacity: 1,
-      duration: 2,
+      duration: 0.8,
       ease: "power3.out",
     },
-    0.6,
+    0.5,
   )
 
   // Line 3 "for the world."
@@ -141,10 +133,10 @@ heroTL
     {
       xPercent: 0,
       opacity: 1,
-      duration: 2,
+      duration: 0.8,
       ease: "power3.out",
     },
-    0.9,
+    0.7,
   );
 
 // ============================================================
@@ -287,45 +279,12 @@ videoWrapper.addEventListener("click", () => {
   }
 });
 
-// ── Cursor-following play button ─────────────────────────────────
-videoWrapper.addEventListener("mousemove", (e) => {
-  const rect = document
-    .querySelector(".video-container")
-    .getBoundingClientRect();
-  const overlayOpacity = parseFloat(
-    getComputedStyle(document.querySelector(".video-section .overlay")).opacity,
-  );
-  if (overlayOpacity < 0.3) return;
-  const x = e.clientX - rect.left - 45;
-  const y = e.clientY - rect.top - 45;
-  gsap.to(playBtn, {
-    left: x,
-    top: y,
-    xPercent: 0,
-    yPercent: 0,
-    duration: 0.35,
-    ease: "power2.out",
-    overwrite: "auto",
-  });
-});
-
-videoWrapper.addEventListener("mouseleave", () => {
-  gsap.to(playBtn, {
-    left: "50%",
-    top: "50%",
-    xPercent: -50,
-    yPercent: -50,
-    duration: 0.5,
-    ease: "power3.out",
-  });
-});
-
 // ── PHASE 1: Square → Rectangle (BEFORE reaching viewport) ───────
 gsap.fromTo(
   ".video-container",
   { clipPath: "inset(40% 44% 40% 44%)" },
   {
-    clipPath: "inset(10% 3% 0% 3%)",
+    clipPath: "inset(10% 11% 0% 11%)",
     ease: "none",
     scrollTrigger: {
       trigger: ".video-section",
@@ -571,3 +530,36 @@ hTL
     ease: "none",
     duration: 5,
   });
+
+// bubble section
+(function initBubbleSection() {
+  const section = document.querySelector(".bbt-FA-circle-sec");
+  if (!section) return;
+
+  const track = document.getElementById("bubbleTrack");
+  const cluster = document.getElementById("circleCluster");
+
+  function updateScroll() {
+    const rect = section.getBoundingClientRect();
+    const sectionH = section.offsetHeight;
+    const viewH = window.innerHeight;
+
+    // progress 0→1 as we scroll through the section
+    const scrolled = -rect.top;
+    const scrollMax = sectionH - viewH;
+    const progress = Math.min(Math.max(scrolled / scrollMax, 0), 1);
+
+    // Start: cluster center aligned to right edge of screen
+    // End: cluster center aligned to left edge of screen
+    const clusterW = cluster.offsetWidth; // ~980px
+    const startX = window.innerWidth; // fully off-screen right
+    const endX = -clusterW; // fully off-screen left
+    const currentX = startX + (endX - startX) * progress;
+
+    track.style.transform = `translateX(${currentX}px)`;
+  }
+
+  window.addEventListener("scroll", updateScroll, { passive: true });
+  window.addEventListener("resize", updateScroll);
+  updateScroll();
+})();
