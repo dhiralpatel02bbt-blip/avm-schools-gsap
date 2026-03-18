@@ -1576,7 +1576,7 @@ section.bbt-FA-img-sec {
     top: 16px;
     left: 16px;
     right: 16px;
-    max-width: 210px;
+    max-width: 250px;
   }
 
   .bbt-FA-img-sec .img-text h2 {
@@ -1590,7 +1590,7 @@ section.bbt-FA-img-sec {
   }
 
   .bbt-FA-img-sec .main-title {
-    right: 44px;
+    right: 40px;
     top: calc(300px - 0px);
     width: 78%;
     height: min(66vw, 220px);
@@ -2986,15 +2986,6 @@ section.bbt-FA-img-sec {
   padding-top: 50px;
 }
 
-.horizontal-section .panel .content h3 {
-  font-size: 44px;
-  font-family: "Circular Std";
-  width: 90%;
-  color: #000;
-  letter-spacing: -1.5%;
-  padding-bottom: 30px;
-}
-
 .horizontal-section .panel .content p {
   font-size: 20px;
   letter-spacing: 1px;
@@ -3019,6 +3010,30 @@ section.bbt-FA-img-sec {
 
 .pedagogy-btn:hover {
   text-decoration-color: #000;
+}
+
+@media(max-width: 1600px) {
+  .horizontal-section .horizontal-wrapper {
+    padding: 70px 0px 0 0px;
+  }
+
+  .horizontal-section .panel img {
+    max-width: 646px;
+    max-height: 368px;
+  }
+
+  .horizontal-section .panel .content h3 {
+    font-size: 36px;
+  }
+
+  .horizontal-section .panel .content p {
+    font-size: 20px;
+  }
+
+  .pedagogy-btn {
+    font-size: 20px;
+    margin-top: 50px;
+  }
 }
 
 @media (max-width: 1400px) {
@@ -3370,18 +3385,12 @@ section.bbt-FA-blog-sec .secondary-btn {
   .bbt-FA-blog-sec h3 {
     font-size: 35px;
   }
-
-  section.bbt-FA-blog-sec {
-    padding: 0px 0;
-  }
 }
 
 @media (max-width: 1023px) {
   section.bbt-FA-blog-sec {
     padding: 80px 0 0;
   }
-
-
 
   .bbt-FA-blog-sec h2 {
     font-size: 50px;
@@ -3433,47 +3442,41 @@ section.bbt-FA-blog-sec .secondary-btn {
     margin-bottom: 33px;
   }
 
-  .bbt-FA-blog-sec p {
-    font-size: 20px !important;
-  }
-
-  .bbt-FA-blog-sec h3 {
-    font-size: 30px;
-    line-height: 40px;
-  }
-
   .bbt-FA-blog-sec .text-bottom a,
   .bbt-FA-blog-sec .text-1 a {
     margin-top: 10px;
     font-size: 18px;
   }
 
-  .bbt-FA-blog-sec .text-top {
-    margin-bottom: 40px;
-  }
-
   .bbt-FA-blog-sec h2 {
     font-size: 40px;
     line-height: 42px;
   }
-
 }
 
 @media(max-width: 767px) {
-  .bbt-FA-blog-sec h3 {
-    font-size: 25px;
-  }
-
   .bbt-FA-blog-sec .second {
     gap: 35px;
+  }
+
+  .bbt-FA-blog-sec h3 {
+    font-size: 25px;
+    line-height: 30px;
+  }
+
+  .bbt-FA-blog-sec .text-top {
+    margin-bottom: 40px;
   }
 }
 
 @media (max-width: 576px) {
-  .bbt-FA-blog-sec p {
-    font-size: 12px;
-    margin-bottom: 25px;
-    line-height: 20px;
+  section.bbt-FA-blog-sec {
+    padding: 80px 0 60px;
+  }
+
+  .bbt-FA-blog-sec h2 {
+    font-size: 30px;
+    line-height: 32px;
   }
 
   .bbt-FA-blog-sec h1 {
@@ -3482,14 +3485,53 @@ section.bbt-FA-blog-sec .secondary-btn {
     margin-bottom: 15px;
   }
 
-  .bbt-FA-blog-sec p.text-p {
-    font-size: 10px;
-    margin-bottom: 14px;
-  }
-
   .bbt-FA-blog-sec a {
     font-size: 13px;
     line-height: 12px;
+  }
+
+  .bbt-FA-blog-sec .text-bottom {
+    align-items: flex-start;
+  }
+
+  .bbt-FA-blog-sec .text-bottom a {
+    margin-top: 20px;
+  }
+
+  section.bbt-FA-blog-sec .d-flex {
+    gap: 40px;
+  }
+
+  .bbt-FA-blog-sec .second {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .bbt-FA-blog-sec .img-part,
+  .bbt-FA-blog-sec .text-1 {
+    width: 100%;
+  }
+
+  .bbt-FA-blog-sec .second::after {
+    display: none;
+  }
+
+  .bbt-FA-blog-sec .text-top {
+    margin-bottom: 30px;
+  }
+
+  .bbt-FA-blog-sec .img-v {
+    margin-bottom: 20px;
+  }
+
+  .bbt-FA-blog-sec h3 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .bbt-FA-blog-sec .text-1 p {
+    font-size: 20px;
+    line-height: 20px;
   }
 }
 
@@ -3497,8 +3539,6 @@ section.bbt-FA-blog-sec .secondary-btn {
 
 
 /* Stats bubble section css Start */
-
-/* ── Outer scroll container ── */
 .bbt-FA-circle-sec {
   --bubble-scale: 1.12;
   --connector-stroke: 14px;
@@ -3509,7 +3549,6 @@ section.bbt-FA-blog-sec .secondary-btn {
   background: #fff;
 }
 
-/* ── Sticky viewport ── */
 .bbt-FA-circle-sec .sticky-viewport {
   position: relative;
   height: 100vh;
@@ -3518,7 +3557,6 @@ section.bbt-FA-blog-sec .secondary-btn {
   z-index: 1;
 }
 
-/* ── Horizontal track — moves left via JS translateX ── */
 .bbt-FA-circle-sec .slides-track {
   position: absolute;
   top: 0;
@@ -3530,7 +3568,6 @@ section.bbt-FA-blog-sec .secondary-btn {
   padding: 0 10vw;
 }
 
-/* ── The single cluster of all circles ── */
 .bbt-FA-circle-sec .circle-cluster {
   position: relative;
   width: 2980px;
@@ -3539,7 +3576,6 @@ section.bbt-FA-blog-sec .secondary-btn {
   margin: 0;
 }
 
-/* ── Dotted connector lines (SVG absolute) ── */
 .bbt-FA-circle-sec .circle-cluster svg.connectors {
   position: absolute;
   top: 0;
@@ -3557,7 +3593,6 @@ section.bbt-FA-blog-sec .secondary-btn {
   filter: drop-shadow(0 0 2px rgba(167, 182, 230, 0.25));
 }
 
-/* ── Each circle — always visible ── */
 .bbt-FA-circle-sec .circle {
   border-radius: 50%;
   display: flex;
