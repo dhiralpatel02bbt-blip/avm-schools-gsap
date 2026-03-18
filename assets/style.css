@@ -1565,7 +1565,7 @@ section.bbt-FA-img-sec {
 
 @media (max-width: 576px) {
   section.bbt-FA-img-sec {
-    margin: 20px 0 40px;
+    margin: 0;
   }
 
   .bbt-FA-img-sec .img-box img {
@@ -1585,21 +1585,19 @@ section.bbt-FA-img-sec {
   }
 
   .bbt-FA-img-sec .purple-circle {
-    width: min(86vw, 320px);
-    margin-top: -36px;
+    width: 100%;
+    margin-top: -80px;
   }
 
   .bbt-FA-img-sec .main-title {
-    right: 14px;
-    top: calc(300px - 18px);
-    width: min(66vw, 220px);
+    right: 44px;
+    top: calc(300px - 0px);
+    width: 78%;
     height: min(66vw, 220px);
   }
 
   .bbt-FA-img-sec .main-title p {
-    font-size: 11px;
-    line-height: 1.5;
-    max-width: 74%;
+    max-width: 100%;
   }
 }
 
