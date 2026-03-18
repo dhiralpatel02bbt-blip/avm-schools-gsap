@@ -704,6 +704,16 @@ if (typeof tl !== "undefined") {
         travelDistance,
         focusTime - viewportWidth * 0.16,
       );
+      const titleStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.14,
+      );
+      const bodyStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.1,
+      );
       const activeStart = gsap.utils.clamp(
         0,
         travelDistance,
@@ -731,9 +741,9 @@ if (typeof tl !== "undefined") {
           {
             autoAlpha: 0.45,
             y: 0,
-            duration: Math.max(activeStart - phaseTwoStart, 0.01),
+            duration: Math.max(bodyStart - titleStart, 0.01),
           },
-          phaseTwoStart,
+          titleStart,
         );
       }
 
@@ -743,9 +753,9 @@ if (typeof tl !== "undefined") {
           {
             autoAlpha: 0.3,
             y: 0,
-            duration: Math.max(activeStart - phaseTwoStart, 0.01),
+            duration: Math.max(activeStart - bodyStart, 0.01),
           },
-          phaseTwoStart + viewportWidth * 0.015,
+          bodyStart,
         );
       }
 
