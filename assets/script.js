@@ -419,35 +419,387 @@ hTL
     duration: 5,
   });
 
-// bubble section
-(function initBubbleSection() {
+// // bubble section
+// (function initBubbleSection() {
+//   const section = document.querySelector(".bbt-FA-circle-sec");
+//   if (!section) return;
+
+//   const track = document.getElementById("bubbleTrack");
+//   const cluster = document.getElementById("circleCluster");
+
+//   function updateScroll() {
+//     const rect = section.getBoundingClientRect();
+//     const sectionH = section.offsetHeight;
+//     const viewH = window.innerHeight;
+
+//     // progress 0→1 as we scroll through the section
+//     const scrolled = -rect.top;
+//     const scrollMax = sectionH - viewH;
+//     const progress = Math.min(Math.max(scrolled / scrollMax, 0), 1);
+
+//     // Start: cluster center aligned to right edge of screen
+//     // End: cluster center aligned to left edge of screen
+//     const clusterW = cluster.offsetWidth; // ~980px
+//     const startX = window.innerWidth; // fully off-screen right
+//     const endX = -clusterW; // fully off-screen left
+//     const currentX = startX + (endX - startX) * progress;
+
+//     track.style.transform = `translateX(${currentX}px)`;
+//   }
+
+//   window.addEventListener("scroll", updateScroll, { passive: true });
+//   window.addEventListener("resize", updateScroll);
+//   updateScroll();
+// })();
+gsap.registerPlugin(ScrollTrigger);
+
+const track = document.querySelector("#bubbleTrack");
+const circles = gsap.utils.toArray(".circle");
+
+// total horizontal width
+const totalWidth = track.scrollWidth - window.innerWidth;
+
+// MAIN TIMELINE
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".bbt-FA-circle-sec",
+    start: "top top",
+    end: "+=3000",
+    scrub: 1.5,
+    pin: true,
+    anticipatePin: 1,
+  },
+});
+
+// 👉 Horizontal movement
+tl.to(
+  track,
+  {
+    x: -totalWidth,
+    ease: "none",
+  },
+  0,
+);
+
+// 👉 EACH CIRCLE ANIMATION
+circles.forEach((circle, i) => {
+  const label = `circle-${i}`;
+
+  // Phase 1: appear (no text)
+  tl.to(
+    circle,
+    {
+      scale: 0.8,
+      opacity: 0.6,
+      duration: 0.5,
+    },
+    i * 0.8,
+  );
+
+  // Phase 2: text fade in (light)
+  tl.to(
+    circle.querySelector("h2"),
+    {
+      opacity: 0.5,
+      duration: 0.3,
+    },
+    i * 0.8 + 0.2,
+  );
+
+  tl.to(
+    circle.querySelector("p"),
+    {
+      opacity: 0.5,
+      duration: 0.3,
+    },
+    i * 0.8 + 0.25,
+  );
+
+  // Phase 3: center → grow + full text
+  tl.to(
+    circle,
+    {
+      scale: 1.4,
+      opacity: 1,
+      duration: 0.6,
+    },
+    i * 0.8 + 0.4,
+  );
+
+  tl.to(
+    circle.querySelector("h2"),
+    {
+      opacity: 1,
+      duration: 0.3,
+    },
+    i * 0.8 + 0.5,
+  );
+
+  tl.to(
+    circle.querySelector("p"),
+    {
+      opacity: 1,
+      duration: 0.3,
+    },
+    i * 0.8 + 0.55,
+  );
+});
+
+// Bubble section override: center-based overlapping scroll animation
+if (typeof tl !== "undefined") {
+  tl.scrollTrigger?.kill();
+  tl.kill();
+  gsap.set(track, { clearProps: "x" });
+}
+
+(function initBubbleSectionV2() {
   const section = document.querySelector(".bbt-FA-circle-sec");
-  if (!section) return;
-
-  const track = document.getElementById("bubbleTrack");
+  const stickyViewport = section?.querySelector(".sticky-viewport");
+  const bubbleTrack = document.getElementById("bubbleTrack");
   const cluster = document.getElementById("circleCluster");
+  const bubbleCircles = gsap.utils.toArray(".bbt-FA-circle-sec .circle");
+  const connectorSegments = gsap.utils.toArray(
+    ".bbt-FA-circle-sec .connector-segment",
+  );
 
-  function updateScroll() {
-    const rect = section.getBoundingClientRect();
-    const sectionH = section.offsetHeight;
-    const viewH = window.innerHeight;
-
-    // progress 0→1 as we scroll through the section
-    const scrolled = -rect.top;
-    const scrollMax = sectionH - viewH;
-    const progress = Math.min(Math.max(scrolled / scrollMax, 0), 1);
-
-    // Start: cluster center aligned to right edge of screen
-    // End: cluster center aligned to left edge of screen
-    const clusterW = cluster.offsetWidth; // ~980px
-    const startX = window.innerWidth; // fully off-screen right
-    const endX = -clusterW; // fully off-screen left
-    const currentX = startX + (endX - startX) * progress;
-
-    track.style.transform = `translateX(${currentX}px)`;
+  if (
+    !section ||
+    !stickyViewport ||
+    !bubbleTrack ||
+    !cluster ||
+    !bubbleCircles.length
+  ) {
+    return;
   }
 
-  window.addEventListener("scroll", updateScroll, { passive: true });
-  window.addEventListener("resize", updateScroll);
-  updateScroll();
+  let bubbleTimeline;
+  let resizeTimer;
+
+  function buildBubbleTimeline() {
+    if (bubbleTimeline) {
+      bubbleTimeline.scrollTrigger?.kill();
+      bubbleTimeline.kill();
+    }
+
+    gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
+    gsap.set(bubbleTrack, { clearProps: "x" });
+
+    const viewportWidth = window.innerWidth;
+    const viewportCenter = viewportWidth / 2;
+    const clusterOffset = cluster.offsetLeft;
+    const firstCircleCenter =
+      clusterOffset +
+      bubbleCircles[0].offsetLeft +
+      bubbleCircles[0].offsetWidth / 2;
+    const lastCircle = bubbleCircles[bubbleCircles.length - 1];
+    const lastCircleCenter =
+      clusterOffset + lastCircle.offsetLeft + lastCircle.offsetWidth / 2;
+
+    const startX = viewportWidth * 0.72 - firstCircleCenter;
+    const endX = viewportWidth * 0.22 - lastCircleCenter;
+    const travelDistance = Math.max(startX - endX, viewportWidth * 1.8);
+    const scrollDistance = Math.max(travelDistance * 1.15, viewportWidth * 2.8);
+
+    gsap.set(bubbleCircles, {
+      scale: 0.82,
+      autoAlpha: 0.38,
+      zIndex: 1,
+      transformOrigin: "50% 50%",
+    });
+
+    connectorSegments.forEach((segment, index) => {
+      const fromCircle = bubbleCircles[index];
+      const toCircle = bubbleCircles[index + 1];
+
+      if (!fromCircle || !toCircle) return;
+
+      const x1 = fromCircle.offsetLeft + fromCircle.offsetWidth / 2;
+      const y1 = fromCircle.offsetTop + fromCircle.offsetHeight / 2;
+      const x2 = toCircle.offsetLeft + toCircle.offsetWidth / 2;
+      const y2 = toCircle.offsetTop + toCircle.offsetHeight / 2;
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const length = Math.hypot(dx, dy) || 1;
+      const ux = dx / length;
+      const uy = dy / length;
+      const startInset = fromCircle.offsetWidth / 2 - 4;
+      const endInset = toCircle.offsetWidth / 2 - 4;
+      const startX = x1 + ux * startInset;
+      const startY = y1 + uy * startInset;
+      const endX = x2 - ux * endInset;
+      const endY = y2 - uy * endInset;
+
+      segment.setAttribute(
+        "d",
+        `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(1)} ${endY.toFixed(1)}`,
+      );
+
+      const segmentLength = segment.getTotalLength();
+
+      gsap.set(segment, {
+        autoAlpha: 0,
+        strokeDasharray: segmentLength,
+        strokeDashoffset: segmentLength,
+      });
+    });
+
+    bubbleCircles.forEach((circle) => {
+      const heading = circle.querySelector("h2");
+      const body = circle.querySelector("p");
+
+      if (heading) {
+        gsap.set(heading, {
+          autoAlpha: 0,
+          y: 16,
+        });
+      }
+
+      if (body) {
+        gsap.set(body, {
+          autoAlpha: 0,
+          y: 20,
+        });
+      }
+    });
+
+    bubbleTimeline = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: `+=${scrollDistance}`,
+        scrub: 1.2,
+        pin: stickyViewport,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    bubbleTimeline.fromTo(
+      bubbleTrack,
+      { x: startX },
+      { x: endX, duration: travelDistance },
+      0,
+    );
+
+    bubbleCircles.forEach((circle, index) => {
+      const heading = circle.querySelector("h2");
+      const body = circle.querySelector("p");
+      const circleCenter =
+        clusterOffset + circle.offsetLeft + circle.offsetWidth / 2;
+      const connector = index > 0 ? connectorSegments[index - 1] : null;
+      const focusTime = gsap.utils.clamp(
+        0,
+        travelDistance,
+        startX + circleCenter - viewportCenter,
+      );
+
+      const phaseOneStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.28,
+      );
+      const phaseTwoStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.16,
+      );
+      const activeStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.07,
+      );
+      const activeEnd = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime + viewportWidth * 0.07,
+      );
+
+      bubbleTimeline.to(
+        circle,
+        {
+          scale: 0.94,
+          autoAlpha: 0.7,
+          duration: Math.max(phaseTwoStart - phaseOneStart, 0.01),
+        },
+        phaseOneStart,
+      );
+
+      if (heading) {
+        bubbleTimeline.to(
+          heading,
+          {
+            autoAlpha: 0.45,
+            y: 0,
+            duration: Math.max(activeStart - phaseTwoStart, 0.01),
+          },
+          phaseTwoStart,
+        );
+      }
+
+      if (body) {
+        bubbleTimeline.to(
+          body,
+          {
+            autoAlpha: 0.3,
+            y: 0,
+            duration: Math.max(activeStart - phaseTwoStart, 0.01),
+          },
+          phaseTwoStart + viewportWidth * 0.015,
+        );
+      }
+
+      bubbleTimeline.to(
+        circle,
+        {
+          scale: 1.22,
+          autoAlpha: 1,
+          zIndex: 5,
+          duration: Math.max(activeEnd - activeStart, 0.01),
+        },
+        activeStart,
+      );
+
+      if (heading) {
+        bubbleTimeline.to(
+          heading,
+          {
+            autoAlpha: 1,
+            duration: Math.max(activeEnd - activeStart, 0.01),
+          },
+          activeStart,
+        );
+      }
+
+      if (body) {
+        bubbleTimeline.to(
+          body,
+          {
+            autoAlpha: 1,
+            duration: Math.max(activeEnd - activeStart, 0.01),
+          },
+          activeStart + viewportWidth * 0.01,
+        );
+      }
+
+      if (connector) {
+        bubbleTimeline.to(
+          connector,
+          {
+            autoAlpha: 0.92,
+            strokeDashoffset: 0,
+            duration: Math.max(activeStart - phaseOneStart, 0.01),
+          },
+          phaseOneStart,
+        );
+      }
+    });
+  }
+
+  buildBubbleTimeline();
+
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(buildBubbleTimeline, 150);
+  });
 })();

@@ -219,6 +219,10 @@ header .main-btn:hover::before {
   .logo img {
     width: 150px;
   }
+
+  nav.main-menu ul {
+    gap: 30px;
+  }
 }
 
 @media (max-width: 991.9px) {
@@ -259,7 +263,7 @@ header .main-btn:hover::before {
     transition: 0.3s ease;
     display: flex;
     align-items: center;
-    z-index: 9999;
+    z-index: 1;
   }
 
   .offcanvas-menu label span,
@@ -373,6 +377,7 @@ header .main-btn:hover::before {
 
   .offcanvas-menu input[type="checkbox"]:checked~nav {
     right: 0;
+    z-index: 2;
   }
 
   .offcanvas-menu input[type="checkbox"]:checked~nav label span {
@@ -550,6 +555,11 @@ body {
 @media(max-width: 1400px) {
   .bbt-dp-hero h1.main-title span.weight-500 {
     font-size: 61px;
+  }
+
+  .bbt-dp-hero h1.main-title span.weight-600 {
+    font-size: 65px;
+    line-height: 70px;
   }
 
   .bbt-dp-hero h1.main-title span {
@@ -892,6 +902,16 @@ body {
   .about-paragraph p,
   .secondary-btn {
     font-size: 20px;
+  }
+
+  .about-img .purple-divider {
+    width: 125.83px;
+    height: 27.28px;
+    left: -40px;
+  }
+
+  .about-img .orange-circle {
+    top: 25%;
   }
 }
 
@@ -3196,138 +3216,6 @@ section.bbt-FA-img-sec {
 
 /* Beyond subjects section css End */
 
-/* Stats bubble section css Start */
-
-/* ── Outer scroll container ── */
-.bbt-FA-circle-sec {
-  position: relative;
-  height: 250vh;
-}
-
-/* ── Sticky viewport ── */
-.bbt-FA-circle-sec .sticky-viewport {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-  background: #fff;
-}
-
-/* ── Horizontal track — moves left via JS translateX ── */
-.bbt-FA-circle-sec .slides-track {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  will-change: transform;
-  /* width is set by JS based on content */
-}
-
-/* ── The single cluster of all circles ── */
-.bbt-FA-circle-sec .circle-cluster {
-  position: relative;
-  width: 900px;
-  height: 500px;
-  flex-shrink: 0;
-  margin: 0 15vw;
-}
-
-/* ── Dotted connector lines (SVG absolute) ── */
-.bbt-FA-circle-sec .circle-cluster svg.connectors {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
-}
-
-/* ── Each circle — always visible ── */
-.bbt-FA-circle-sec .circle {
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 28px;
-  position: absolute;
-}
-
-/* ── Sizes — matching Image 1 ── */
-.bbt-FA-circle-sec .circle.c1 {
-  width: 268px;
-  height: 268px;
-  left: 0px;
-  top: 80px;
-}
-
-.bbt-FA-circle-sec .circle.c2 {
-  width: 200px;
-  height: 200px;
-  left: 310px;
-  top: 140px;
-}
-
-.bbt-FA-circle-sec .circle.c3 {
-  width: 240px;
-  height: 240px;
-  left: 530px;
-  top: 60px;
-}
-
-.bbt-FA-circle-sec .circle.c4 {
-  width: 160px;
-  height: 160px;
-  left: 790px;
-  top: 120px;
-}
-
-/* ── Colors ── */
-.bbt-FA-circle-sec .circle.c1 {
-  background: #f9794a;
-}
-
-.bbt-FA-circle-sec .circle.c2 {
-  background: #f5c400;
-}
-
-.bbt-FA-circle-sec .circle.c3 {
-  background: #a9a8d8;
-}
-
-.bbt-FA-circle-sec .circle.c4 {
-  background: #f9794a;
-}
-
-/* ── Typography ── */
-.bbt-FA-circle-sec .circle h2 {
-  font-size: clamp(28px, 3.5vw, 52px);
-  font-weight: 700;
-  color: #fff;
-  line-height: 1;
-}
-
-.bbt-FA-circle-sec .circle.c2 h2 {
-  color: #7c1641;
-}
-
-.bbt-FA-circle-sec .circle p {
-  font-size: clamp(9px, 0.9vw, 12px);
-  line-height: 1.45;
-  color: #fff;
-  margin-top: 6px !important;
-}
-
-.bbt-FA-circle-sec .circle.c2 p {
-  color: #7c1641;
-}
-
-/* Stats bubble section css End */
-
 /* blog section css start */
 section.bbt-FA-blog-sec {
   padding: 120px 0;
@@ -3630,3 +3518,247 @@ section.bbt-FA-blog-sec .secondary-btn {
 }
 
 /* blog section css end */
+
+
+/* Stats bubble section css Start */
+
+/* ── Outer scroll container ── */
+.bbt-FA-circle-sec {
+  position: relative;
+  min-height: 100vh;
+  z-index: 1;
+  isolation: isolate;
+  background: #fff;
+}
+
+/* ── Sticky viewport ── */
+.bbt-FA-circle-sec .sticky-viewport {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #fff;
+  z-index: 1;
+}
+
+/* ── Horizontal track — moves left via JS translateX ── */
+.bbt-FA-circle-sec .slides-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  padding: 0 10vw;
+}
+
+/* ── The single cluster of all circles ── */
+.bbt-FA-circle-sec .circle-cluster {
+  position: relative;
+  width: 2380px;
+  height: 520px;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* ── Dotted connector lines (SVG absolute) ── */
+.bbt-FA-circle-sec .circle-cluster svg.connectors {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0;
+}
+
+.bbt-FA-circle-sec .circle-cluster svg.connectors path {
+  opacity: 0.92;
+  filter: drop-shadow(0 0 2px rgba(167, 182, 230, 0.25));
+}
+
+/* ── Each circle — always visible ── */
+.bbt-FA-circle-sec .circle {
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 22px;
+  position: absolute;
+  transform-origin: center center;
+  will-change: transform, opacity;
+  z-index: 2;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+}
+
+/* ── Sizes — matching Image 1 ── */
+.bbt-FA-circle-sec .circle.c1 {
+  /* width: 188px;
+  height: 188px; */
+  width: 208px;
+  height: 208px;
+  left: 95px;
+  top: 126px;
+}
+
+.bbt-FA-circle-sec .circle.c2 {
+  /* width: 172px;
+  height: 172px; */
+  width: 192px;
+  height: 192px;
+  left: 369px;
+  top: 294px;
+}
+
+.bbt-FA-circle-sec .circle.c3 {
+  /* width: 188px;
+  height: 188px; */
+  width: 208px;
+  height: 208px;
+  left: 631px;
+  top: 86px;
+}
+
+.bbt-FA-circle-sec .circle.c4 {
+  /* width: 182px;
+  height: 182px; */
+  width: 202px;
+  height: 202px;
+  left: 919px;
+  top: 269px;
+}
+
+.bbt-FA-circle-sec .circle.c5 {
+  width: 182px;
+  height: 182px;
+  left: 1189px;
+  top: 104px;
+}
+
+.bbt-FA-circle-sec .circle.c6 {
+  /* width: 186px;
+  height: 186px; */
+  width: 206px;
+  height: 206px;
+  left: 1472px;
+  top: 266px;
+}
+
+.bbt-FA-circle-sec .circle.c7 {
+  /* width: 186px;
+  height: 186px; */
+  width: 206px;
+  height: 206px;
+  left: 1747px;
+  top: 92px;
+}
+
+.bbt-FA-circle-sec .circle.c8 {
+  /* width: 186px;
+  height: 186px; */
+  width: 206px;
+  height: 206px;
+  left: 2022px;
+  top: 247px;
+}
+
+/* ── Colors ── */
+.bbt-FA-circle-sec .circle.c1 {
+  background: #fed400;
+}
+
+.bbt-FA-circle-sec .circle.c2 {
+  background: #002ca2;
+}
+
+.bbt-FA-circle-sec .circle.c3 {
+  background: #987fff;
+}
+
+.bbt-FA-circle-sec .circle.c4 {
+  background: #ff6f43;
+}
+
+.bbt-FA-circle-sec .circle.c5 {
+  background: #ffd400;
+}
+
+.bbt-FA-circle-sec .circle.c6 {
+  background: #002ca2;
+}
+
+.bbt-FA-circle-sec .circle.c7 {
+  background: #987fff;
+}
+
+.bbt-FA-circle-sec .circle.c8 {
+  background: #ff6f43;
+}
+
+/* ── Typography ── */
+.bbt-FA-circle-sec .circle h2 {
+  font-family: "Circular Std";
+  font-size: clamp(30px, 3vw, 52px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+.bbt-FA-circle-sec .circle.c1 h2,
+.bbt-FA-circle-sec .circle.c5 h2 {
+  color: #000;
+}
+
+.bbt-FA-circle-sec .circle p {
+  font-family: 'Poppins';
+  font-size: clamp(9px, 0.8vw, 12.5px);
+  line-height: 1.35;
+  color: #fff;
+  margin-top: 8px !important;
+  margin-bottom: 0;
+  max-width: 84%;
+  font-weight: 500;
+}
+
+.bbt-FA-circle-sec .circle.c1 p,
+.bbt-FA-circle-sec .circle.c5 p {
+  color: #000;
+}
+
+/* Stats bubble section css End */
+.circle-cluster {
+  position: relative;
+  width: 1400px;
+  /* increased from 980/1200 */
+  height: 500px;
+  margin: 0 auto;
+}
+
+/* NEW SPACING */
+.c1 {
+  left: 0;
+  top: 120px;
+}
+
+.c3 {
+  left: 350px;
+  /* was ~300 → increase */
+  top: 260px;
+}
+
+.c2 {
+  left: 750px;
+  /* was ~600 → increase */
+  top: 120px;
+}
+
+.c4 {
+  left: 1100px;
+  /* was ~900 → increase */
+  top: 240px;
+}
