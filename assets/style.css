@@ -1396,6 +1396,9 @@ body {
 
 /* school-info section CSS end  */
 section.bbt-FA-img-sec {
+  --school-circle-size: clamp(420px, 42vw, 650px);
+  --school-circle-right: clamp(-30px, -2vw, -8px);
+  --school-circle-bottom: clamp(-110px, -9vw, -60px);
   margin: 80px 0 190px;
 }
 
@@ -1415,7 +1418,6 @@ section.bbt-FA-img-sec {
   top: clamp(28px, 5vw, 80px);
   left: clamp(20px, 5.5vw, 80px);
   z-index: 3;
-  max-width: min(42vw, 420px);
 }
 
 .bbt-FA-img-sec .img-text h2 {
@@ -1428,9 +1430,9 @@ section.bbt-FA-img-sec {
 
 .bbt-FA-img-sec .purple-circle {
   position: absolute;
-  right: clamp(-30px, -2vw, -8px);
-  bottom: clamp(-110px, -9vw, -60px);
-  width: clamp(420px, 42vw, 650px);
+  right: var(--school-circle-right);
+  bottom: var(--school-circle-bottom);
+  width: var(--school-circle-size);
   aspect-ratio: 1;
   background: #7a0f2e;
   border-radius: 50%;
@@ -1441,11 +1443,11 @@ section.bbt-FA-img-sec {
 
 .bbt-FA-img-sec .main-title {
   position: absolute;
-  right: clamp(28px, 6vw, 90px);
-  bottom: clamp(32px, 8vw, 120px);
+  right: var(--school-circle-right);
+  bottom: var(--school-circle-bottom);
   z-index: 2;
-  width: min(28vw, 360px);
-  height: min(28vw, 360px);
+  width: var(--school-circle-size);
+  height: var(--school-circle-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1471,23 +1473,9 @@ section.bbt-FA-img-sec {
 
 @media (max-width: 1200.9px) {
   section.bbt-FA-img-sec {
+    --school-circle-size: clamp(360px, 44vw, 520px);
+    --school-circle-bottom: -105px;
     margin: 50px 0 160px;
-  }
-
-  .bbt-FA-img-sec .img-text {
-    max-width: min(48vw, 380px);
-  }
-
-  .bbt-FA-img-sec .purple-circle {
-    width: clamp(360px, 44vw, 520px);
-    bottom: -105px;
-  }
-
-  .bbt-FA-img-sec .main-title {
-    width: min(30vw, 350px);
-    height: min(30vw, 300px);
-    right: clamp(28px, 4vw, 56px);
-    bottom: 18px;
   }
 
   .bbt-FA-img-sec .main-title p {
@@ -1496,13 +1484,16 @@ section.bbt-FA-img-sec {
 }
 
 @media(max-width: 1023px) {
-  .bbt-FA-img-sec .main-title {
-    bottom: -20px;
+  section.bbt-FA-img-sec {
+    --school-circle-bottom: -20px;
   }
 }
 
 @media (max-width: 991.9px) {
   section.bbt-FA-img-sec {
+    --school-circle-size: clamp(320px, 46vw, 440px);
+    --school-circle-right: -12px;
+    --school-circle-bottom: -96px;
     margin: 30px 0 100px;
   }
 
@@ -1510,32 +1501,16 @@ section.bbt-FA-img-sec {
     height: clamp(320px, 58vw, 560px);
   }
 
-  .bbt-FA-img-sec .img-text {
-    max-width: min(55vw, 340px);
-  }
-
-  .bbt-FA-img-sec .purple-circle {
-    width: clamp(320px, 46vw, 440px);
-    right: -12px;
-    bottom: -96px;
-  }
-
-  .bbt-FA-img-sec .main-title {
-    width: min(34vw, 330px);
-    height: min(34vw, 260px);
-    right: 28px;
-    bottom: -14px;
-  }
-
   .bbt-FA-img-sec .main-title p {
     font-size: 13px;
     line-height: 1.55;
-    max-width: 100%;
+    max-width: 78%;
   }
 }
 
 @media (max-width: 767.9px) {
   section.bbt-FA-img-sec {
+    --school-circle-size: min(82vw, 360px);
     margin: 24px 0 48px;
   }
 
@@ -1564,7 +1539,7 @@ section.bbt-FA-img-sec {
     position: relative;
     right: auto;
     bottom: auto;
-    width: min(82vw, 360px);
+    width: var(--school-circle-size);
     margin: -48px 0 0 auto;
   }
 
@@ -1572,8 +1547,8 @@ section.bbt-FA-img-sec {
     position: absolute;
     right: 18px;
     top: calc(340px - 24px);
-    width: min(62vw, 250px);
-    height: min(62vw, 250px);
+    width: var(--school-circle-size);
+    height: var(--school-circle-size);
     z-index: 2;
   }
 
@@ -3194,11 +3169,11 @@ section.bbt-FA-img-sec {
 
 /* blog section css start */
 section.bbt-FA-blog-sec {
-  padding: 120px 0;
+  padding: 0 0 120px;
 }
 
 section.bbt-FA-blog-sec .d-flex {
-  gap: 105px;
+  gap: 80px;
 }
 
 .bbt-FA-blog-sec .left-c {
@@ -3244,7 +3219,7 @@ section.bbt-FA-blog-sec .d-flex {
 .bbt-FA-blog-sec p.text-p {
   font-family: 'Poppins';
   font-size: 22px;
-  line-height: 26px;
+  line-height: normal;
   color: #000;
   font-weight: 500;
 }
@@ -3272,7 +3247,7 @@ section.bbt-FA-blog-sec .secondary-btn {
 .bbt-FA-blog-sec .text-1 {
   width: 40%;
   display: flex;
-  gap: 60px;
+  /* gap: 60px; */
   flex-wrap: wrap;
 }
 
@@ -3305,7 +3280,6 @@ section.bbt-FA-blog-sec .secondary-btn {
 
 .bbt-FA-blog-sec .text-1 a {
   margin-top: 0px;
-
 }
 
 .bbt-FA-blog-sec .second {
@@ -3326,6 +3300,42 @@ section.bbt-FA-blog-sec .secondary-btn {
   background: #B8B5FE;
 }
 
+.bbt-FA-blog-sec .second:last-child {
+  margin-bottom: 0;
+}
+
+@media(max-width: 1400px) {
+  .bbt-FA-blog-sec .text-top {
+    font-size: 50px;
+    line-height: 50px;
+  }
+
+  section.bbt-FA-blog-sec {
+    padding: 0px 0 50px;
+  }
+
+  section.bbt-FA-blog-sec .d-flex {
+    gap: 60px;
+  }
+
+  .bbt-FA-blog-sec .second {
+    gap: 30px;
+  }
+
+  .bbt-FA-blog-sec .text-1 p {
+    font-size: 25px;
+    line-height: 25px;
+  }
+
+  .bbt-FA-blog-sec .text-1 {
+    gap: 30px;
+  }
+
+  .bbt-FA-blog-sec h3 {
+    font-size: 33px;
+  }
+}
+
 @media (max-width: 1200px) {
   .bbt-FA-blog-sec h5 {
     font-size: 35px;
@@ -3339,7 +3349,6 @@ section.bbt-FA-blog-sec .secondary-btn {
 
   .bbt-FA-blog-sec p.text-p {
     font-size: 14px;
-    line-height: 12px;
   }
 
   .bbt-FA-blog-sec .text-1 {
@@ -3357,12 +3366,7 @@ section.bbt-FA-blog-sec .secondary-btn {
 
   .bbt-FA-blog-sec .second {
     margin-bottom: 30px;
-    gap: 25px;
-  }
-
-  .bbt-FA-blog-sec .text-1 p {
-    font-size: 25px;
-    line-height: 25px;
+    gap: 20px;
   }
 
   .bbt-FA-blog-sec h3 {
@@ -3428,7 +3432,6 @@ section.bbt-FA-blog-sec .secondary-btn {
 
   .bbt-FA-blog-sec p.text-p {
     font-size: 12px;
-    line-height: 12px;
     margin-bottom: 33px;
   }
 
@@ -3483,7 +3486,6 @@ section.bbt-FA-blog-sec .secondary-btn {
 
   .bbt-FA-blog-sec p.text-p {
     font-size: 10px;
-    line-height: 12px;
     margin-bottom: 14px;
   }
 
