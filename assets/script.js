@@ -557,6 +557,7 @@ if (typeof tl !== "undefined") {
   const stickyViewport = section?.querySelector(".sticky-viewport");
   const bubbleTrack = document.getElementById("bubbleTrack");
   const cluster = document.getElementById("circleCluster");
+  const connectorsSvg = cluster?.querySelector("svg.connectors");
   const bubbleCircles = gsap.utils.toArray(".bbt-FA-circle-sec .circle");
   const connectorSegments = gsap.utils.toArray(
     ".bbt-FA-circle-sec .connector-segment",
@@ -567,6 +568,7 @@ if (typeof tl !== "undefined") {
     !stickyViewport ||
     !bubbleTrack ||
     !cluster ||
+    !connectorsSvg ||
     !bubbleCircles.length
   ) {
     return;
@@ -583,6 +585,24 @@ if (typeof tl !== "undefined") {
 
     gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
     gsap.set(bubbleTrack, { clearProps: "x" });
+
+    const clusterWidth =
+      Math.max(
+        cluster.offsetWidth,
+        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth),
+      ) + 40;
+    const clusterHeight =
+      Math.max(
+        cluster.offsetHeight,
+        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight),
+      ) + 20;
+
+    gsap.set(cluster, {
+      width: clusterWidth,
+      height: clusterHeight,
+    });
+
+    connectorsSvg.setAttribute("viewBox", `0 0 ${clusterWidth} ${clusterHeight}`);
 
     const viewportWidth = window.innerWidth;
     const viewportCenter = viewportWidth / 2;
@@ -601,8 +621,8 @@ if (typeof tl !== "undefined") {
     const scrollDistance = Math.max(travelDistance * 1.15, viewportWidth * 2.8);
 
     gsap.set(bubbleCircles, {
-      scale: 0.82,
-      autoAlpha: 0.38,
+      scale: 0.12,
+      autoAlpha: 0,
       zIndex: 1,
       transformOrigin: "50% 50%",
     });
@@ -622,12 +642,13 @@ if (typeof tl !== "undefined") {
       const length = Math.hypot(dx, dy) || 1;
       const ux = dx / length;
       const uy = dy / length;
-      const startInset = fromCircle.offsetWidth / 2 - 4;
-      const endInset = toCircle.offsetWidth / 2 - 4;
-      const startX = x1 + ux * startInset;
-      const startY = y1 + uy * startInset;
-      const endX = x2 - ux * endInset;
-      const endY = y2 - uy * endInset;
+      const startRadius = fromCircle.offsetWidth / 2;
+      const endRadius = toCircle.offsetWidth / 2;
+      const edgeOverlap = 0;
+      const startX = x1 + ux * (startRadius - edgeOverlap);
+      const startY = y1 + uy * (startRadius - edgeOverlap);
+      const endX = x2 - ux * (endRadius - edgeOverlap);
+      const endY = y2 - uy * (endRadius - edgeOverlap);
 
       segment.setAttribute(
         "d",
