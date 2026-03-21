@@ -22,6 +22,11 @@ body {
   font-family: "Poppins", sans-serif;
   overflow-x: hidden;
   margin: 0;
+  max-width: 100%;
+}
+
+html {
+  overflow-x: clip;
 }
 
 dl,
@@ -135,9 +140,11 @@ header {
   top: 0;
   left: 0;
   width: 100%;
+  max-width: 100%;
   z-index: 9999;
   background: transparent;
   transition: background 0.3s ease;
+  overflow-x: clip;
 }
 
 header .w-90 {
@@ -146,8 +153,11 @@ header .w-90 {
 }
 
 header .row {
+  --bs-gutter-x: 0;
   justify-content: space-between;
   align-items: center;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .logo img {
@@ -233,7 +243,11 @@ header .main-btn:hover::before {
   }
 
   nav.main-menu ul {
-    gap: 30px;
+    gap: 26px;
+  }
+
+  header .main-btn {
+    padding: 10px 25px;
   }
 }
 
@@ -305,13 +319,16 @@ header .main-btn:hover::before {
   .offcanvas-menu nav {
     position: fixed;
     height: 100vh;
-    width: 300px;
+    height: 100svh;
+    width: min(300px, 100vw);
     top: 0;
-    right: -410px;
+    right: 0;
     overflow: hidden;
     background: #7c1641;
     transition: 0.3s ease;
     padding: 40px 30px;
+    box-sizing: border-box;
+    transform: translateX(100%);
   }
 
   .offcanvas-menu nav>div {
@@ -388,8 +405,8 @@ header .main-btn:hover::before {
   }
 
   .offcanvas-menu input[type="checkbox"]:checked~nav {
-    right: 0;
     z-index: 2;
+    transform: translateX(0);
   }
 
   .offcanvas-menu input[type="checkbox"]:checked~nav label span {
@@ -434,6 +451,8 @@ header .main-btn:hover::before {
 /* Header css End */
 .panels {
   position: relative;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .panel {
@@ -456,12 +475,17 @@ body {
   overflow: hidden;
   margin-top: 0;
   padding-top: 144px;
-  height: 100vh;
+  box-sizing: border-box;
+  min-height: 100vh;
+  height: 100svh;
 }
 
 .bbt-dp-hero .main-hero-items,
 .bbt-dp-hero .main-hero-items>.d-flex {
+  --bs-gutter-x: 0;
   height: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .bbt-dp-hero h1.main-title {
@@ -590,6 +614,22 @@ body {
   margin-left: 5px;
 }
 
+@media(max-width: 1600px) {
+  .bbt-dp-hero .burgundy-bg {
+    width: 1450px;
+    height: 1450px;
+  }
+
+  .bbt-dp-hero h1.main-title span.weight-600 {
+    font-size: 90px;
+    line-height: 100px;
+  }
+
+  .bbt-dp-hero h1.main-title span.weight-500 {
+    font-size: 78px;
+  }
+}
+
 @media(max-width: 1400px) {
   .bbt-dp-hero h1.main-title span.weight-500 {
     font-size: 61px;
@@ -635,18 +675,18 @@ body {
     padding-left: 10%;
   }
 
-  .main-hero-items .hero-student-img img {
+  /* .main-hero-items .hero-student-img img {
     max-width: 700px;
-  }
+  } */
 
   section.bbt-dp-hero.panel.panel1 {
     min-height: 58vh;
   }
 
   .bbt-dp-hero .burgundy-bg {
-    width: 900px;
-    height: 900px;
-    left: -32%;
+    width: 1260px;
+    height: 1260px;
+    left: -42%;
   }
 
   .bbt-dp-hero .yellow-circle {
@@ -674,8 +714,10 @@ body {
   }
 
   .bbt-dp-hero .burgundy-bg {
-    width: 750px;
-    height: 750px;
+    width: 1130px;
+    height: 1130px;
+    top: -1%;
+    left: -47%;
   }
 
   .bbt-dp-hero h1.main-title span.weight-500 {
@@ -684,9 +726,10 @@ body {
   }
 
   .bbt-dp-hero .yellow-circle {
-    width: 200px;
-    height: 200px;
-    top: 30%;
+    width: 250px;
+    height: 250px;
+    top: 58%;
+    right: 21%;
   }
 
   .hero-student-img {
@@ -713,6 +756,7 @@ body {
   .bbt-dp-hero {
     margin-top: 0;
     padding-top: 90px;
+    padding-bottom: 0;
   }
 
   .bbt-dp-hero .yellow-circle {
@@ -721,7 +765,19 @@ body {
   }
 
   .bbt-dp-hero .burgundy-bg {
-    left: -22%;
+    left: -48%;
+  }
+
+  .bbt-dp-hero .main-hero-items,
+  .bbt-dp-hero .main-hero-items>.d-flex,
+  .bbt-dp-hero .main-hero-items>.d-flex>div:last-child {
+    height: 100%;
+  }
+}
+
+@media(max-width: 800px) {
+  .bbt-dp-hero .burgundy-bg {
+    left: -78%;
   }
 }
 
@@ -742,7 +798,7 @@ body {
   }
 
   .main-hero-items .hero-student-img img {
-    max-width: 300px;
+    max-width: 740px;
   }
 
   .bbt-dp-hero .yellow-circle {
@@ -753,12 +809,12 @@ body {
   }
 
   .bbt-dp-hero .burgundy-bg {
-    width: 600px;
-    height: 600px;
+    left: -74%;
+    top: -14%;
   }
 
   .hero-student-img {
-    width: min(100%, 300px);
+    width: min(100%, 740px);
   }
 
   .bbt-dp-about .about-img .orange-circle {
@@ -770,21 +826,23 @@ body {
 @media (max-width: 576.9px) {
   .main-hero-items .d-flex {
     flex-direction: column;
-    gap: 50px;
+    justify-content: space-between;
+    gap: 0;
   }
 
   .bbt-dp-hero .main-hero-items,
   .bbt-dp-hero .main-hero-items>.d-flex,
   .bbt-dp-hero .main-hero-items>.d-flex>div:last-child {
-    height: auto;
+    height: 100%;
   }
 
   .bbt-dp-hero .burgundy-bg {
-    left: -44%;
-  }
-
-  .bbt-dp-hero .burgundy-bg {
+    left: -97%;
+    width: 800px;
+    height: 800px;
+    top: -7%;
     border-radius: 50%;
+
   }
 
   .col-6.burgundy-bg-ele {
@@ -793,14 +851,20 @@ body {
 
   .bbt-dp-hero h1.main-title {
     z-index: 0;
+    padding-top: 42%;
+  }
+
+  .bbt-dp-hero .main-hero-items>.d-flex>div:last-child {
+    width: 100%;
+    flex: 1 1 auto;
   }
 
   .hero-student-img {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: min(100%, 300px);
-    margin-left: auto;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(100%, 450px);
+    margin-left: 0;
   }
 
   .bbt-dp-hero .yellow-circle {
@@ -1065,6 +1129,7 @@ body {
   /* 100vh (Phase1 approach) + 200vh (pin) + 100vh (Phase3 exit) = 400vh */
   height: 400vh;
   position: relative;
+  overflow-x: clip;
 }
 
 /* Wrapper is the sticky canvas — must be 100vw from edge to edge */
@@ -1072,10 +1137,9 @@ body {
   position: sticky;
   top: 0;
   height: 100vh;
-  width: 100vw;
-  /* Break out of any parent padding */
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
+  left: 0;
+  transform: none;
   overflow: hidden;
   background: #fff;
   cursor: none;
@@ -1209,19 +1273,19 @@ body {
   position: relative;
   margin-top: 150px;
   margin-bottom: 50px;
+  overflow-x: clip;
 }
 
 .lavender-circle {
   position: absolute;
   bottom: 0;
-  right: -15%;
-  width: 1700px;
-  height: 850px;
+  right: -25vw;
+  width: clamp(780px, 120vw, 1700px);
+  height: clamp(390px, 60vw, 850px);
   background: #c8c6ff;
   border-radius: 1500px 1500px 0 0;
   z-index: -1;
   transform-origin: bottom right;
-  transform: scale(0.3);
 }
 
 .horizontal-section .horizontal-wrapper {
@@ -1295,7 +1359,12 @@ body {
   transition: all 0.3s ease;
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 24px;
+  z-index: 3;
+  margin-top: 0;
 }
 
 .pedagogy-btn:hover {
@@ -1326,7 +1395,7 @@ body {
 
   .pedagogy-btn {
     font-size: 20px;
-    margin-top: 50px;
+    bottom: 20px;
   }
 
   .horizontal-section .panel .content h3 {
@@ -1340,8 +1409,7 @@ body {
 
 @media (max-width: 1200px) {
   .lavender-circle {
-    width: 1300px;
-    height: 650px;
+    right: -24vw;
   }
 
   .horizontal-section .yellow h2 {
@@ -1376,24 +1444,24 @@ body {
   }
 
   .pedagogy-btn {
-    margin-top: 20px;
+    bottom: 18px;
   }
 }
 
 @media (max-width: 1023px) {
   .horizontal-section .yellow {
-    width: 70%;
+    width: 100%;
   }
 
   .lavender-circle {
-    width: 1100px;
-    height: 550px;
+    right: -22vw;
   }
 
   .pedagogy-btn {
     font-size: 16px;
     width: 100%;
     text-align: center;
+    bottom: 16px;
   }
 
   .horizontal-section .panel .content p {
@@ -1403,13 +1471,17 @@ body {
 
 @media (max-width: 991px) {
   .lavender-circle {
-    width: 900px;
-    height: 450px;
-    right: -35%;
+    right: -20vw;
   }
 }
 
 @media (max-width: 767px) {
+  .lavender-circle {
+    right: -95vw;
+    width: 180vw;
+    height: 90vw;
+  }
+
   .horizontal-section .yellow h2 {
     padding-top: 70px;
     font-size: 30px;
@@ -1435,6 +1507,12 @@ body {
 }
 
 @media (max-width: 576px) {
+  .lavender-circle {
+    right: -105vw;
+    width: 210vw;
+    height: 105vw;
+  }
+
   .horizontal-section .yellow {
     width: 100%;
   }
@@ -1602,8 +1680,8 @@ section.bbt-FA-img-sec {
 
   .bbt-FA-img-sec .main-title {
     position: absolute;
-    right: 18px;
-    top: calc(340px - 24px);
+    right: -12px;
+    top: calc(300px - 4px);
     width: var(--school-circle-size);
     height: var(--school-circle-size);
     z-index: 2;
@@ -2229,6 +2307,10 @@ section.bbt-FA-img-sec {
     min-width: unset;
     max-width: 520px;
     height: auto;
+  }
+
+  .contact-sec .form-actions {
+    gap: 30px;
   }
 }
 
@@ -3001,14 +3083,13 @@ section.bbt-FA-img-sec {
 .lavender-circle {
   position: absolute;
   bottom: 0;
-  right: -15%;
-  width: 1700px;
-  height: 850px;
+  right: -25vw;
+  width: clamp(780px, 120vw, 1700px);
+  height: clamp(390px, 60vw, 850px);
   background: #c8c6ff;
   border-radius: 1500px 1500px 0 0;
   z-index: -1;
   transform-origin: bottom right;
-  transform: scale(0.3);
 }
 
 .horizontal-section .horizontal-wrapper {
@@ -3072,7 +3153,12 @@ section.bbt-FA-img-sec {
   transition: all 0.3s ease;
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 24px;
+  z-index: 3;
+  margin-top: 0;
 }
 
 .pedagogy-btn:hover {
@@ -3099,7 +3185,7 @@ section.bbt-FA-img-sec {
 
   .pedagogy-btn {
     font-size: 20px;
-    margin-top: 50px;
+    bottom: 20px;
   }
 }
 
@@ -3127,6 +3213,7 @@ section.bbt-FA-img-sec {
 
   .pedagogy-btn {
     font-size: 20px;
+    bottom: 18px;
   }
 
   .horizontal-section .panel .content h3 {
@@ -3140,8 +3227,7 @@ section.bbt-FA-img-sec {
 
 @media (max-width: 1200px) {
   .lavender-circle {
-    width: 1300px;
-    height: 650px;
+    right: -24vw;
   }
 
   .horizontal-section .yellow h2 {
@@ -3182,14 +3268,14 @@ section.bbt-FA-img-sec {
   }
 
   .lavender-circle {
-    width: 1100px;
-    height: 550px;
+    right: -22vw;
   }
 
   .pedagogy-btn {
     font-size: 16px;
     width: 100%;
     text-align: center;
+    bottom: 16px;
   }
 
   .horizontal-section .panel .content p {
@@ -3199,13 +3285,17 @@ section.bbt-FA-img-sec {
 
 @media (max-width: 991px) {
   .lavender-circle {
-    width: 900px;
-    height: 450px;
-    right: -35%;
+    right: -20vw;
   }
 }
 
 @media (max-width: 767px) {
+  .lavender-circle {
+    right: -95vw;
+    width: 180vw;
+    height: 90vw;
+  }
+
   .horizontal-section .yellow h2 {
     padding-top: 70px;
     font-size: 30px;
@@ -3231,6 +3321,12 @@ section.bbt-FA-img-sec {
 }
 
 @media (max-width: 576px) {
+  .lavender-circle {
+    right: -105vw;
+    width: 210vw;
+    height: 105vw;
+  }
+
   .horizontal-section .yellow {
     width: 100%;
   }
@@ -3329,6 +3425,7 @@ section.bbt-FA-blog-sec .secondary-btn {
   display: flex;
   /* gap: 60px; */
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .bbt-FA-blog-sec .img-part {
@@ -3456,7 +3553,7 @@ section.bbt-FA-blog-sec .secondary-btn {
 
 @media (max-width: 1023px) {
   section.bbt-FA-blog-sec {
-    padding: 80px 0 0;
+    padding: 80px 0;
   }
 
   .bbt-FA-blog-sec h2 {
@@ -3522,6 +3619,10 @@ section.bbt-FA-blog-sec .secondary-btn {
 }
 
 @media(max-width: 767px) {
+  section.bbt-FA-blog-sec {
+    padding: 20px 0 50px;
+  }
+
   .bbt-FA-blog-sec .second {
     gap: 35px;
   }
@@ -3796,7 +3897,7 @@ section.bbt-FA-blog-sec .secondary-btn {
 
 .bbt-FA-circle-sec .circle p {
   font-family: 'Poppins';
-  font-size: clamp(9px, 0.8vw, 12.5px);
+  font-size: clamp(12px, 0.8vw, 12.5px);
   line-height: 1.35;
   color: #fff;
   margin-top: 8px !important;
