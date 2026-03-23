@@ -139,6 +139,45 @@ heroTL
     0.7,
   );
 
+const aboutSection = document.querySelector(".bbt-dp-about");
+
+if (aboutSection) {
+  gsap.set(".bbt-dp-about .about-img", {
+    y: 90,
+    opacity: 0,
+  });
+
+  gsap.set(".bbt-dp-about .about-paragraph", {
+    x: 100,
+    opacity: 0,
+  });
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: aboutSection,
+      start: "top 78%",
+      toggleActions: "play none none none",
+      once: true,
+    },
+  })
+    .to(".bbt-dp-about .about-img", {
+      y: 0,
+      opacity: 1,
+      duration: 1.5,
+      ease: "power2.out",
+    })
+    .to(
+      ".bbt-dp-about .about-paragraph",
+      {
+        x: 0,
+        opacity: 1,
+        duration: 1.5,
+        ease: "power2.out",
+      },
+      "-=1.1",
+    );
+}
+
 // ══════════════════════════════════════════════════════════════════
 // VIDEO SECTION — 3-Phase Scroll Animation
 //

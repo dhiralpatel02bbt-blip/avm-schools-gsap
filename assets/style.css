@@ -39,6 +39,10 @@ ul li {
   list-style: none;
 }
 
+ul {
+  padding-left: 0 !important;
+}
+
 a {
   text-decoration: none;
 }
@@ -233,7 +237,7 @@ header .main-btn:hover::before {
   }
 
   nav.main-menu ul {
-    gap: 40px;
+    gap: 39px;
   }
 }
 
@@ -896,6 +900,7 @@ body {
 .about-img {
   position: relative;
   width: 90%;
+  will-change: transform, opacity;
 }
 
 .bbt-dp-about .row {
@@ -938,7 +943,7 @@ body {
   height: 164.18px;
   background: #ff7a45;
   border-radius: 50%;
-  top: 55%;
+  top: 25%;
   left: 40px;
 }
 
@@ -1012,6 +1017,7 @@ body {
 
 .about-paragraph {
   padding-left: 80px;
+  will-change: transform, opacity;
 }
 
 @media (max-width: 1400px) {
