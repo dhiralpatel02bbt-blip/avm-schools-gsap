@@ -694,12 +694,8 @@ if (typeof tl !== "undefined") {
         `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(1)} ${endY.toFixed(1)}`,
       );
 
-      const segmentLength = segment.getTotalLength();
-
       gsap.set(segment, {
         autoAlpha: 0,
-        strokeDasharray: segmentLength,
-        strokeDashoffset: segmentLength,
       });
     });
 
@@ -857,7 +853,6 @@ if (typeof tl !== "undefined") {
           connector,
           {
             autoAlpha: 0.92,
-            strokeDashoffset: 0,
             duration: Math.max(activeStart - phaseOneStart, 0.01),
           },
           phaseOneStart,
