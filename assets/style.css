@@ -130,7 +130,7 @@ p {
 }
 
 .color-burgundy {
-  color: #7c1641;
+  color: #0A3D9C;
 }
 
 .container-xxl {
@@ -327,7 +327,7 @@ header .main-btn:hover::before {
     top: 0;
     right: 0;
     overflow: hidden;
-    background: #7c1641;
+    background: #0A3D9C;
     transition: 0.3s ease;
     padding: 40px 30px;
     box-sizing: border-box;
@@ -1265,6 +1265,12 @@ body {
     height: 68px;
   }
 
+  .video-section .triangle {
+    border-left: 42px solid #F7DF00;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+  }
+
   .video-container {
     clip-path: inset(40% 44% 40% 44%);
   }
@@ -1903,7 +1909,8 @@ section.bbt-FA-img-sec {
 
   .recognition-sec .section-title {
     font-size: 26px;
-    margin-bottom: 36px;
+    padding-top: 0px;
+    margin-bottom: 36px !important;
   }
 
   .recognition-sec .awards-grid {
