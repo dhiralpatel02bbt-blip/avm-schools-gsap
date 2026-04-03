@@ -2044,6 +2044,15 @@ section.bbt-FA-img-sec {
     font-size: 20px;
     line-height: 23px;
   }
+
+  .card-category {
+    font-size: 16px;
+    line-height: 18.86px;
+  }
+
+  .card-meta {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 580px) {
