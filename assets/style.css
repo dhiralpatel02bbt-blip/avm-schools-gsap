@@ -2041,6 +2041,8 @@ section.bbt-FA-img-sec {
 
   .card-title {
     min-height: 0;
+    font-size: 20px;
+    line-height: 23px;
   }
 }
 
