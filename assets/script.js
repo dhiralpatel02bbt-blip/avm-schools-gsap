@@ -7,26 +7,69 @@ gsap.registerPlugin(ScrollTrigger);
 const header = document.querySelector("header");
 const heroSection = document.querySelector(".bbt-dp-hero");
 
-window.addEventListener("scroll", () => {
-  const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-  if (window.scrollY > heroBottom - 100) {
-    gsap.to(header, {
-      opacity: 0,
-      y: -80,
-      duration: 0.4,
-      ease: "power2.in",
-      overwrite: "auto",
-    });
-  } else {
-    gsap.to(header, {
-      opacity: 1,
-      y: 0,
-      duration: 0.4,
-      ease: "power2.out",
-      overwrite: "auto",
-    });
-  }
-});
+if (header && heroSection) {
+  window.addEventListener("scroll", () => {
+    const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+    if (window.scrollY > heroBottom - 100) {
+      gsap.to(header, {
+        opacity: 0,
+        y: -80,
+        duration: 0.4,
+        ease: "power2.in",
+        overwrite: "auto",
+      });
+    } else {
+      gsap.to(header, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    }
+  });
+}
+
+if (typeof Swiper !== "undefined" && document.querySelector(".campus-swiper")) {
+  new Swiper(".campus-swiper", {
+    loop: true,
+    speed: 800,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+  });
+}
+
+if (
+  typeof Swiper !== "undefined" &&
+  document.querySelector(".development-swiper")
+) {
+  new Swiper(".development-swiper", {
+    loop: true,
+    speed: 900,
+    slidesPerView: 1.62,
+    spaceBetween: 230,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
+        spaceBetween: 24,
+      },
+      768: {
+        slidesPerView: 1.25,
+        spaceBetween: 80,
+      },
+      1200: {
+        slidesPerView: 1.62,
+        spaceBetween: 230,
+      },
+    },
+  });
+}
 
 // ============================================================
 // INITIAL STATES — Page load pe yeh positions hongi
@@ -152,14 +195,15 @@ if (aboutSection) {
     opacity: 0,
   });
 
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: aboutSection,
-      start: "top 78%",
-      toggleActions: "play none none none",
-      once: true,
-    },
-  })
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: aboutSection,
+        start: "top 78%",
+        toggleActions: "play none none none",
+        once: true,
+      },
+    })
     .to(".bbt-dp-about .about-img", {
       y: 0,
       opacity: 1,
@@ -194,6 +238,8 @@ if (aboutSection) {
 const videoWrapper = document.querySelector(".video-wrapper");
 const video = document.getElementById("mainVideo");
 const playBtn = document.getElementById("playBtn");
+
+if (videoWrapper && video && playBtn) {
 
 // ── Click: play / pause toggle ───────────────────────────────────
 videoWrapper.addEventListener("click", () => {
@@ -300,6 +346,8 @@ videoTL
     { clipPath: "inset(0% 0% 100% 0%)", ease: "none", duration: 1.5 },
     "<", // starts at the same time as the fade
   );
+
+}
 
 // Register plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -413,6 +461,7 @@ form.addEventListener("submit", function (e) {
 // Everything fully reverses on scroll up
 // ============================================================
 const horizontal = document.querySelector(".horizontal-wrapper");
+if (horizontal) {
 const panelScrollWidth = () => horizontal.scrollWidth - window.innerWidth;
 
 // Initial states — panels start completely off-screen to the right
@@ -457,6 +506,7 @@ hTL
     ease: "none",
     duration: 5,
   });
+}
 
 // // bubble section
 // (function initBubbleSection() {
@@ -494,12 +544,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 const track = document.querySelector("#bubbleTrack");
 const circles = gsap.utils.toArray(".circle");
+let tl;
 
+if (track) {
 // total horizontal width
 const totalWidth = track.scrollWidth - window.innerWidth;
 
 // MAIN TIMELINE
-const tl = gsap.timeline({
+tl = gsap.timeline({
   scrollTrigger: {
     trigger: ".bbt-FA-circle-sec",
     start: "top top",
@@ -583,9 +635,10 @@ circles.forEach((circle, i) => {
     i * 0.8 + 0.55,
   );
 });
+}
 
 // Bubble section override: center-based overlapping scroll animation
-if (typeof tl !== "undefined") {
+if (tl) {
   tl.scrollTrigger?.kill();
   tl.kill();
   gsap.set(track, { clearProps: "x" });
@@ -628,12 +681,16 @@ if (typeof tl !== "undefined") {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth),
+        ...bubbleCircles.map(
+          (circle) => circle.offsetLeft + circle.offsetWidth,
+        ),
       ) + 40;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight),
+        ...bubbleCircles.map(
+          (circle) => circle.offsetTop + circle.offsetHeight,
+        ),
       ) + 20;
 
     gsap.set(cluster, {
@@ -641,7 +698,10 @@ if (typeof tl !== "undefined") {
       height: clusterHeight,
     });
 
-    connectorsSvg.setAttribute("viewBox", `0 0 ${clusterWidth} ${clusterHeight}`);
+    connectorsSvg.setAttribute(
+      "viewBox",
+      `0 0 ${clusterWidth} ${clusterHeight}`,
+    );
 
     const viewportWidth = window.innerWidth;
     const viewportCenter = viewportWidth / 2;
@@ -868,3 +928,5 @@ if (typeof tl !== "undefined") {
     resizeTimer = setTimeout(buildBubbleTimeline, 150);
   });
 })();
+
+// ------------------- Our school page hero section
