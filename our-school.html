@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/global.css">
+    <link rel="stylesheet" href="assets/our-school.css" />
 </head>
 <body class="our-school-page">
     <header class="header">
@@ -40,8 +41,8 @@
                 </div>
                 <ul>
                   <li class="menu"><a href="#">About </a></li>
-                  <li class="menu"><a href="#">Pedagogy </a></li>
-                  <li class="menu"><a href="#">Schools </a></li>
+                  <li class="menu"><a href="pedagogy.html">Pedagogy </a></li>
+                  <li class="menu"><a href="our-school.html">Schools </a></li>
                   <li class="menu"><a href="#">News & Events </a></li>
                   <li class="btn-element">
                     <a class="main-btn" href="#">Apply Now </a>
@@ -55,7 +56,7 @@
                   <a href="#">About</a>
                 </li>
                 <li class="menu">
-                  <a href="#">Pedagogy</a>
+                  <a href="pedagogy.html">Pedagogy</a>
                 </li>
                 <li class="menu">
                   <a href="#">Schools</a>
@@ -75,33 +76,63 @@
 
     <!-- hero section Start -->
     <section class="campus-section" aria-label="Three campuses, united by one ethos">
-      <div class="swiper campus-swiper" aria-label="Campus image slider">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="images/about-hero.jpg" alt="AVM campus view 1" />
+      <div class="campus-stage">
+        <div class="campus-viewport">
+          <div class="campus-media campus-static-media" aria-hidden="true">
+            <img src="images/school-img.jpg" alt="AVM school campus exterior">
           </div>
-          <div class="swiper-slide">
-            <img src="images/panel1.jpg" alt="AVM campus view 2" />
+
+          <div class="campus-slider-shell" aria-hidden="true">
+            <div class="swiper campus-sequence-swiper" aria-label="Campus image sequence">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide campus-sequence-slide">
+                  <img src="images/school-img.jpg" alt="AVM school main building">
+                  <div class="campus-slide-caption">
+                    <div class="campus-slide-circle"></div>
+                    <div class="campus-slide-text">
+                      <p>AVM Juhu</p>
+                      <p>Smt. Ramdevi Sobhraj Bajaj Arya Vidya Mandir School</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide campus-sequence-slide">
+                  <img src="images/school2.jpg" alt="AVM school learning space">
+                  <div class="campus-slide-caption">
+                    <div class="campus-slide-circle"></div>
+                    <div class="campus-slide-text">
+                      <p>Bandra (W)</p>
+                      <p>Arya Vidya Mandir</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="swiper-slide campus-sequence-slide">
+                  <img src="images/school3.jpg" alt="AVM school student activity area">
+                  <div class="campus-slide-caption">
+                    <div class="campus-slide-circle"></div>
+                    <div class="campus-slide-text">
+                      <p>AVM Bandra East</p>
+                      <p>Vasudev C. Wadhwa Arya Vidya Mandir</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-pagination campus-sequence-pagination"></div>
+            </div>
           </div>
-          <div class="swiper-slide">
-            <img src="images/panel2.jpg" alt="AVM campus view 3" />
+
+          <div class="panel" role="region" aria-label="Campus description">
+            <div class="half-circle"></div>
+            <div class="body-txt">
+              <h2 class="panel-title">Three campuses,<br>united by one ethos</h2>
+              <p class="panel-body">
+                Each AVM campus is a centre for our values-driven, progressive education,
+                while offering its own distinct environment. Across locations, students experience
+                consistent academic standards, pedagogy and care, guided by a shared vision and
+                supported by strong central academic leadership.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Blue content panel -->
-      <div class="panel" role="region" aria-label="Campus description">
-      <div class="half-circle"></div>
-      <div class="body-txt">
-        <h2 class="panel-title">Three campuses,<br>united by one ethos</h2>
-        <p class="panel-body">
-          Each AVM campus is a centre for our values-driven, progressive education,
-          while offering its own distinct environment. Across locations, students experience
-          consistent academic standards, pedagogy and care, guided by a shared vision and
-          supported by strong central academic leadership.
-        </p>
-      </div>
-        
       </div>
     </section>
     <!-- hero section end -->
@@ -314,7 +345,7 @@
               </form>
 
               <div class="form-actions slide-left">
-                <a type="submit" class="apply-btn">Apply now</a>
+                <a href="#" type="submit" class="apply-btn">Apply now</a>
                 <a href="#" class="download-link">Download Prospectus</a>
               </div>
             </div>
@@ -333,8 +364,7 @@
       <footer class="bbt-FA-main-footer">
         <div class="container-xxl footer-container">
           <div class="divi"></div>
-          <div class="d-flex">
-            <!-- Logo -->
+          <div class="footer-top">
             <div class="ft-col-logo">
               <div class="footer-logo">
                 <a href="index.html">
@@ -347,78 +377,64 @@
               </div>
             </div>
 
-            <div class="main">
-              <!-- Footer Links -->
-              <div class="ft-col-links">
-                <div class="text-wrapper">
-                  <div class="ft-links-left">
-                    <ul class="text">
-                      <li><a href="#" class="title">Home</a></li>
-                      <li><a href="#" class="title">About AVM</a></li>
-                      <li>
-                        <a href="#" class="title">Pedagogy & Academice</a>
-                      </li>
-                      <li><a href="#" class="title">Schools</a></li>
-                    </ul>
-                  </div>
+            <div class="ft-col-menu">
+              <ul class="text">
+                <li><a href="#" class="title">Home</a></li>
+                <li><a href="#" class="title">About AVM</a></li>
+                <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
+                <li><a href="our-school.html" class="title">Schools</a></li>
+              </ul>
+            </div>
 
-                  <div class="ft-links-right">
-                    <ul class="text">
-                      <li><a href="#" class="title">Admissions</a></li>
-                      <li><a href="#" class="title">New & events</a></li>
-                      <li><a href="#" class="title">Contact us</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+            <div class="ft-col-menu">
+              <ul class="text">
+                <li><a href="#" class="title">Admissions</a></li>
+                <li><a href="#" class="title">News & Events</a></li>
+                <li><a href="#" class="title">Contact us</a></li>
+                <li><a href="#" class="title">Careers</a></li>
+              </ul>
+            </div>
 
-              <!-- Right Section -->
-              <div class="ft-col-right">
-                <div class="inner-content">
-                  <!-- Parent Portal Button -->
-                  <div class="ft-portal">
-                    <div class="form-actions">
-                      <a type="submit" class="apply-btn footer-btn"
-                        >Parent's Portal</a
-                      >
-                    </div>
-                  </div>
-                  <!-- Social Connect -->
-                  <div class="ft-social">
-                    <div class="col-sl-1">
-                      <h1>Connect</h1>
-                    </div>
-
-                    <div class="col-sl-2">
-                      <!-- Instagram -->
-                      <div class="icon">
-                        <a href="#">
-                          <img
-                            src="images/Instagram-icon.svg"
-                            alt="Instagram-icon"
-                          />
-                        </a>
-                      </div>
-
-                      <!-- YouTube -->
-                      <div class="icon">
-                        <a href="#">
-                          <img
-                            src="images/youtube-icon.svg"
-                            alt="youtube-icon"
-                          />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="ft-col-menu">
+              <ul class="text">
+                <li><a href="#" class="title">Fee Payment</a></li>
+                <li><a href="#" class="title">Parent Login</a></li>
+                <li><a href="#" class="title">Teacher Login</a></li>
+              </ul>
             </div>
           </div>
 
-          <!-- Footer Bottom -->
           <div class="footer-text">
-            <p>© 2026 Arya Vidya Mandir Group of Institutions</p>
+            <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+            <div class="footer-middle">
+              <div class="ft-meta-phone">
+                <a href="tel:+912261013900">T: +91 22 6101 3900</a>
+              </div>
+
+              <div class="ft-meta-email">
+                <a href="mailto:info@avmschools.ac.in">E: info@avmschools.ac.in</a>
+              </div>
+
+              <div class="ft-social">
+                <div class="icon">
+                  <a href="#">
+                    <img
+                      src="images/Instagram-icon.svg"
+                      alt="Instagram-icon"
+                    />
+                  </a>
+                </div>
+
+                <div class="icon">
+                  <a href="#">
+                    <img
+                      src="images/youtube-icon.svg"
+                      alt="youtube-icon"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
