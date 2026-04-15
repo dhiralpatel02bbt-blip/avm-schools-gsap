@@ -136,11 +136,11 @@ if (header && heroSection) {
     if (!campusTrack || !campusViewport) return null;
 
     var maxShift = Math.max(
-      campusTrack.scrollWidth - campusViewport.offsetWidth,
+      campusTrack.scrollHeight - campusViewport.offsetHeight,
       0,
     );
     return gsap.to(campusTrack, {
-      x: -maxShift,
+      y: -maxShift,
       ease: "none",
       paused: true,
       overwrite: true,
@@ -149,8 +149,8 @@ if (header && heroSection) {
 
   function resetHorizontalTrack() {
     if (horizontalTween) horizontalTween.progress(0);
-    if (campusTrack) gsap.set(campusTrack, { x: 0 });
-    if (campusScroller) campusScroller.scrollLeft = 0;
+    if (campusTrack) gsap.set(campusTrack, { y: 0 });
+    if (campusScroller) campusScroller.scrollTop = 0;
     setActiveSlide(0, true);
   }
 
@@ -220,7 +220,7 @@ if (header && heroSection) {
   gsap.set(campusHalfCircle, { xPercent: -22 });
   gsap.set(campusSliderShell, { autoAlpha: 0 });
   campusSliderShell.style.pointerEvents = "none";
-  if (campusTrack) gsap.set(campusTrack, { x: 0 });
+  if (campusTrack) gsap.set(campusTrack, { y: 0 });
   setActiveSlide(0, true);
 
   // ─────────────────────────────────────────────────────────
@@ -282,7 +282,7 @@ if (header && heroSection) {
   var exitTL = gsap.timeline({ paused: true });
 
   if (campusStaticMedia) {
-    exitTL.to(campusStaticMedia, { scale: 1.06, ease: "none", duration: 1 }, 0);
+    exitTL.to(campusStaticMedia, { scale: 1, ease: "none", duration: 1 }, 0);
   }
   if (campusHalfCircle) {
     exitTL.to(
@@ -305,38 +305,137 @@ if (header && heroSection) {
     );
   }
 
-  var SLIDER_THRESHOLD = 0.5; // slider appears at 50% progress
+  // ─────────────────────────────────────────────────────────
+  // PHASE 2 + 3: campusViewport ko pin karo 300vh ke liye
+  // Phase 2 (0→0.33): text + circle exit
+  // Phase 3 (0.33→0.67): slider slides change
+  // Phase 4 (0.67→1.00): dev section fixed position se neeche se slide up
+  // ─────────────────────────────────────────────────────────
 
+  var SLIDER_THRESHOLD = 0.5;
+
+  // Development section dhundho
+  var devSec = document.querySelector(".development-sec");
+
+  // Dev section ko position:fixed karke screen ke bilkul neeche rakho
+  // taaki pin ke dauran smooth slide ho sake
+  function setDevFixed() {
+    if (!devSec) return;
+    devSec.style.position = "fixed";
+    devSec.style.bottom = "0";
+    devSec.style.left = "0";
+    devSec.style.width = "100%";
+    devSec.style.zIndex = "10";
+    devSec.style.top = "auto";
+    gsap.set(devSec, { y: "100%" });
+  }
+
+  function setDevNormal() {
+    if (!devSec) return;
+    devSec.style.position = "relative";
+    devSec.style.bottom = "auto";
+    devSec.style.top = "auto";
+    devSec.style.left = "auto";
+    devSec.style.width = "";
+    gsap.set(devSec, { y: 0 });
+  }
+
+  if (devSec) {
+    setDevFixed();
+  }
+
+  // Dev section ke liye placeholder — taaki neeche ka content sahi jagah rahe
+  var devPlaceholder = null;
+  if (devSec && devSec.parentNode) {
+    devPlaceholder = document.createElement("div");
+    devPlaceholder.style.height = devSec.offsetHeight + "px";
+    devPlaceholder.style.display = "none"; // initially hidden
+    devSec.parentNode.insertBefore(devPlaceholder, devSec);
+  }
+
+  // Header fixed rakho
+  var siteHeader = document.querySelector("header.header");
+  if (siteHeader) {
+    siteHeader.style.setProperty("z-index", "1000", "important");
+    siteHeader.style.setProperty("position", "fixed", "important");
+    siteHeader.style.setProperty("top", "0", "important");
+    siteHeader.style.setProperty("left", "0", "important");
+    siteHeader.style.setProperty("width", "100%", "important");
+    siteHeader.style.setProperty("opacity", "1", "important");
+    siteHeader.style.setProperty("visibility", "visible", "important");
+    siteHeader.style.setProperty("transform", "none", "important");
+  }
+
+  var pinActive = true; // track karo pin chal raha hai ya nahi
+
+  // campusViewport pin karo — 300vh scroll space
   ScrollTrigger.create({
     trigger: campusViewport,
     start: "top top",
-    end: "+=200%", // pin for 200vh of scroll distance
+    end: "+=300%",
     pin: true,
-    pinSpacing: true, // GSAP adds spacer → no blank screen below
+    pinSpacing: true,
     anticipatePin: 1,
     invalidateOnRefresh: true,
     onRefresh: function () {
       horizontalTween = buildHorizontalTween();
+      if (devSec && pinActive) {
+        devSec.style.position = "fixed";
+      }
     },
     onUpdate: function (self) {
       var p = self.progress;
 
-      // Phase 2: drive exit animation with scroll (first 50%)
-      var exitP = Math.min(p / SLIDER_THRESHOLD, 1);
+      // Phase 2 (0 → 0.33): exit text + circle
+      var exitP = Math.min(p / 0.33, 1);
       exitTL.progress(exitP);
 
-      // Phase 3: toggle slider at threshold
-      if (p >= SLIDER_THRESHOLD) {
+      // Phase 3 (0.33 → 0.67): slider slides
+      if (p >= 0.33 && p < 0.67) {
         showSlider();
-        updateHorizontalTrack((p - SLIDER_THRESHOLD) / (1 - SLIDER_THRESHOLD));
-      } else {
+        var sliderP = (p - 0.33) / 0.34;
+        updateHorizontalTrack(Math.min(sliderP, 1));
+      } else if (p < 0.33) {
         hideSlider();
+      }
+
+      // Phase 4 (0.67 → 1.0): dev section neeche se slide up
+      if (devSec) {
+        if (p >= 0.67) {
+          var slideP = (p - 0.67) / 0.33; // 0 → 1
+          // y: 100% (pura neeche) → y: 0% (apni jagah)
+          var yPct = (1 - Math.min(slideP, 1)) * 100;
+          gsap.set(devSec, { yPercent: yPct });
+        } else {
+          gsap.set(devSec, { yPercent: 100 });
+        }
+      }
+    },
+    onLeave: function () {
+      pinActive = false;
+      // Pin khatam — dev section ko normal flow mein wapas laao
+      if (devSec && devPlaceholder) {
+        devPlaceholder.style.display = "block";
+        devPlaceholder.style.height = devSec.offsetHeight + "px";
+        setDevNormal();
+      }
+      showSlider();
+    },
+    onEnterBack: function () {
+      pinActive = true;
+      // Wapis scroll pe dev section fixed karo
+      if (devSec && devPlaceholder) {
+        devPlaceholder.style.display = "none";
+        setDevFixed();
       }
     },
   });
 
   window.addEventListener("resize", function () {
     horizontalTween = null;
+    if (devPlaceholder && devSec) {
+      devPlaceholder.style.height = devSec.offsetHeight + "px";
+    }
     ScrollTrigger.refresh();
   });
 })();
@@ -1282,23 +1381,47 @@ if (tl) {
     return;
   }
 
+  // ── Immediately hide text so there's no flash before init() ──
+  if (panelKicker) {
+    panelKicker.style.opacity = "0";
+    panelKicker.style.visibility = "hidden";
+  }
+  if (panelTitle) {
+    panelTitle.style.opacity = "0";
+    panelTitle.style.visibility = "hidden";
+  }
+  if (panelBody) {
+    panelBody.style.opacity = "0";
+    panelBody.style.visibility = "hidden";
+  }
+  if (heroGlowCircle) {
+    heroGlowCircle.style.opacity = "0";
+    heroGlowCircle.style.visibility = "hidden";
+  }
+
   // ── DESKTOP ─────────────────────────────────────────────
   function init() {
-    var circleW = halfCircle ? halfCircle.offsetWidth || 1100 : 1100;
-    var circleLeft = halfCircle ? halfCircle.offsetLeft : 0;
+    var circleW = halfCircle
+      ? halfCircle.offsetWidth > 10
+        ? halfCircle.offsetWidth
+        : 2000
+      : 2000;
+    var circleLeft = halfCircle ? halfCircle.getBoundingClientRect().left : 0;
     var centeredCircleX = halfCircle
       ? window.innerWidth / 2 - (circleLeft + circleW / 2)
       : 0;
 
     // ── Step 1: Set all initial states ───────────────────
     // Circle: fully off-screen left
-    gsap.set(halfCircle, {
-      x: -circleW,
-      scale: 1,
-      transformOrigin: "center center",
-    });
+    if (halfCircle) {
+      gsap.set(halfCircle, {
+        x: -circleW,
+        scale: 1,
+        transformOrigin: "center center",
+      });
+    }
 
-    // Text elements: invisible + shifted left (same as demo)
+    // Text elements: invisible + shifted left
     if (panelKicker)
       gsap.set(panelKicker, { opacity: 0, x: -70, visibility: "visible" });
     if (panelTitle)
@@ -1327,39 +1450,44 @@ if (tl) {
       if (l) gsap.set(l, { opacity: 0.25 });
     });
 
-    // ── Step 2: Page-load animation (same as demo) ───────
+    // ── Step 2: Page-load animation ──────────────────────
     //
-    // t=0.00  Circle slides: -circleW → -(circleW*0.5)  [exactly half visible]
-    // t=0.55  Kicker slides in  opacity 0→1
-    // t=0.80  Title slides in   opacity 0→1  (builds AS it moves)
-    // t=1.55  Paragraph same
-    // t=1.00  Yellow glow circle pops in
+    // t=0.00  Blue half-circle slides in from left  → half visible
+    // t=0.60  Yellow glow circle pops in (scale 0.7 → 1)
+    // t=0.85  Title (h2) slides in from left, opacity 0→1
+    // t=1.45  Paragraph slides in from left, opacity 0→1
+    // t=1.55  Kicker fades in (subtle, last)
 
     var loadTL = gsap.timeline({ delay: 0.3 });
 
-    loadTL.to(
-      halfCircle,
-      {
-        x: -(circleW * 0.5),
-        duration: 1.1,
-        ease: "power3.out",
-      },
-      0,
-    );
-
-    if (panelKicker) {
+    // 1. Blue half-circle slides in from fully off-screen left
+    if (halfCircle) {
       loadTL.to(
-        panelKicker,
+        halfCircle,
         {
-          opacity: 1,
-          x: 0,
-          duration: 0.45,
-          ease: "power2.out",
+          x: -(circleW * 0.5),
+          duration: 1.1,
+          ease: "power3.out",
         },
-        0.55,
+        0,
       );
     }
 
+    // 2. Yellow glow circle pops in
+    if (heroGlowCircle) {
+      loadTL.to(
+        heroGlowCircle,
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.65,
+          ease: "back.out(1.6)",
+        },
+        0.6,
+      );
+    }
+
+    // 3. Title slides in from left
     if (panelTitle) {
       loadTL.to(
         panelTitle,
@@ -1369,10 +1497,11 @@ if (tl) {
           duration: 0.85,
           ease: "power3.out",
         },
-        0.8,
+        0.85,
       );
     }
 
+    // 4. Paragraph slides in from left
     if (panelBody) {
       loadTL.to(
         panelBody,
@@ -1382,20 +1511,21 @@ if (tl) {
           duration: 0.8,
           ease: "power3.out",
         },
-        1.55,
+        1.45,
       );
     }
 
-    if (heroGlowCircle) {
+    // 5. Kicker fades in last (subtle)
+    if (panelKicker) {
       loadTL.to(
-        heroGlowCircle,
+        panelKicker,
         {
           opacity: 1,
-          scale: 1,
-          duration: 0.65,
+          x: 0,
+          duration: 0.45,
           ease: "power2.out",
         },
-        1.0,
+        1.55,
       );
     }
 
@@ -1409,29 +1539,51 @@ if (tl) {
 
     var scrollTL = gsap.timeline({ paused: true });
 
-    // Circle floods viewport — same scale:14 as demo
-    scrollTL.to(
-      halfCircle,
-      {
-        // Recenter the circle before it scales so the blue fill reads full-width.
-        x: centeredCircleX,
-        scale: 14,
-        transformOrigin: "center center",
-        ease: "power2.inOut",
-        duration: 0.35,
-      },
-      0,
-    );
+    // Circle floods viewport — starts from its loaded resting position -(circleW*0.5)
+    // so there is no jump when scroll begins.
+    if (halfCircle) {
+      scrollTL.fromTo(
+        halfCircle,
+        {
+          x: -(circleW * 0.5),
+          scale: 1,
+          transformOrigin: "center center",
+        },
+        {
+          x: centeredCircleX,
+          scale: 14,
+          transformOrigin: "center center",
+          ease: "power2.inOut",
+          duration: 0.35,
+        },
+        0,
+      );
+    }
 
     // Keep the hero image crisp while the blue panel expands.
     if (heroGlowCircle)
-      scrollTL.to(heroGlowCircle, { opacity: 0, duration: 0.14 }, 0.02);
+      scrollTL.to(heroGlowCircle, { opacity: 0, duration: 0.18 }, 0.01);
     if (panelKicker)
-      scrollTL.to(panelKicker, { opacity: 0, x: -30, duration: 0.13 }, 0.03);
+      scrollTL.fromTo(
+        panelKicker,
+        { opacity: 1, x: 0 },
+        { opacity: 0, x: -30, duration: 0.16 },
+        0.02,
+      );
     if (panelTitle)
-      scrollTL.to(panelTitle, { opacity: 0, x: -40, duration: 0.15 }, 0.06);
+      scrollTL.fromTo(
+        panelTitle,
+        { opacity: 1, x: 0 },
+        { opacity: 0, x: -40, duration: 0.18 },
+        0.05,
+      );
     if (panelBody)
-      scrollTL.to(panelBody, { opacity: 0, x: -30, duration: 0.13 }, 0.09);
+      scrollTL.fromTo(
+        panelBody,
+        { opacity: 1, x: 0 },
+        { opacity: 0, x: -30, duration: 0.16 },
+        0.08,
+      );
 
     // Diagram reveal
     scrollTL.set(

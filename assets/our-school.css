@@ -31,8 +31,9 @@
 
 .campus-sequence-swiper .swiper-wrapper {
     display: flex;
-    width: max-content;
-    height: 100%;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
     will-change: transform;
 }
 
@@ -67,9 +68,10 @@
 }
 
 .campus-sequence-slide {
-    flex: 0 0 100vw;
-    width: 100vw;
-    min-width: 100vw;
+    width: 100%;
+    min-width: 100%;
+    height: 100vh;
+    min-height: 100%;
     position: relative;
     overflow: hidden;
 }
@@ -144,12 +146,28 @@
 .our-school-page .contact-sec,
 .our-school-page .bbt-FA-main-footer {
     position: relative;
+    z-index: 10;
+}
+
+/* Campus section — GSAP pin handle karega */
+.our-school-page .campus-section {
+    position: relative;
     z-index: 1;
 }
 
+/* Development section — neeche se slide hokar aayega */
 .our-school-page .development-sec {
     background: #fff;
+    will-change: transform;
+    position: relative;
+    z-index: 10;
 }
+
+/* Slide hote waqt horizontal overflow na aaye */
+body.our-school-page {
+    overflow-x: hidden;
+}
+
 
 .campus-section .panel {
     position: absolute;
@@ -363,19 +381,21 @@
     }
 
     .campus-sequence-swiper {
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scroll-snap-type: y mandatory;
         -webkit-overflow-scrolling: touch;
     }
 
     .campus-sequence-swiper .swiper-wrapper {
-        width: auto;
+        width: 100%;
     }
 
     .campus-sequence-slide {
         width: 100%;
         min-width: 100%;
+        height: 320px;
+        min-height: 320px;
         scroll-snap-align: start;
     }
 
