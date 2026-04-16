@@ -2,33 +2,139 @@ gsap.config({ force3D: true });
 gsap.registerPlugin(ScrollTrigger);
 
 // ============================================================
-// HEADER — Sirf hero section mein dikhta hai, baad mein hide
+// HEADER — Directionally Aware (GSAP)
+//
+// Behavior:
+//   • Page load pe hamesha visible
+//   • Scroll DOWN → header slide up (hide)
+//   • Scroll UP   → header slide down (show)
+//   • Top of page → hamesha show
+//
+// Page-specific overrides:
+//   • our-school-page: campus section ke andar hamesha visible rahega
+//     (campus section apna inline style set karta hai — us dauraan
+//      directional logic pause rahega)
+//   • homepage (.bbt-dp-hero): hero section ke andar hamesha visible
 // ============================================================
-const header = document.querySelector("header");
-const heroSection = document.querySelector(".bbt-dp-hero");
+(function initDirectionalHeader() {
+  var hdr = document.querySelector("header.header");
+  if (!hdr) return;
 
-if (header && heroSection) {
-  window.addEventListener("scroll", () => {
-    const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-    if (window.scrollY > heroBottom - 100) {
-      gsap.to(header, {
-        opacity: 0,
-        y: -80,
-        duration: 0.4,
-        ease: "power2.in",
-        overwrite: "auto",
-      });
-    } else {
-      gsap.to(header, {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        ease: "power2.out",
-        overwrite: "auto",
-      });
+  var lastScrollY = window.scrollY;
+  var headerH = hdr.offsetHeight;
+  var isHidden = false;
+  var ticking = false;
+
+  // Campus section reference (our-school-page pe hoga)
+  var campusViewportEl = document.querySelector(".campus-viewport");
+  // Homepage hero reference
+  var homepageHero = document.querySelector(".bbt-dp-hero");
+
+  // ── Helper: Campus section ke pin zone mein hain? ──────────────────
+  // GSAP campusViewport ko pin karta hai 200vh ke liye.
+  // Us dauraan header ko chhedna nahi chahiye.
+  function insideCampusPin() {
+    if (!campusViewportEl) return false;
+    var rect = campusViewportEl.getBoundingClientRect();
+    // Jab viewport sticky ho (rect.top === 0), campus pin active hai
+    return rect.top <= 0 && rect.bottom >= window.innerHeight * 0.5;
+  }
+
+  // ── Helper: Homepage hero ke andar hain? ───────────────────────────
+  function insideHomepageHero() {
+    if (!homepageHero) return false;
+    var heroBottom = homepageHero.offsetTop + homepageHero.offsetHeight;
+    return window.scrollY <= heroBottom - 100;
+  }
+
+  // ── Show / Hide functions ───────────────────────────────────────────
+  function showHeader() {
+    if (!isHidden) return;
+    isHidden = false;
+    gsap.to(hdr, {
+      y: 0,
+      opacity: 1,
+      duration: 0.38,
+      ease: "power3.out",
+      overwrite: "auto",
+    });
+  }
+
+  function hideHeader() {
+    if (isHidden) return;
+    isHidden = true;
+    gsap.to(hdr, {
+      y: -headerH - 10,
+      opacity: 0,
+      duration: 0.28,
+      ease: "power3.in",
+      overwrite: "auto",
+    });
+  }
+
+  // ── Scroll handler ──────────────────────────────────────────────────
+  function onScroll() {
+    var currentY = window.scrollY;
+    var direction = currentY > lastScrollY ? "down" : "up"; // down ya up
+    var delta = Math.abs(currentY - lastScrollY);
+
+    // Top of page — hamesha show
+    if (currentY <= 10) {
+      showHeader();
+      lastScrollY = currentY;
+      return;
     }
+
+    // Campus section pin zone — header ko GSAP campus code control karta hai
+    // Hum yahan kuch nahi karte
+    if (insideCampusPin()) {
+      lastScrollY = currentY;
+      return;
+    }
+
+    // Homepage hero zone — hamesha show
+    if (insideHomepageHero()) {
+      showHeader();
+      lastScrollY = currentY;
+      return;
+    }
+
+    // Very small scroll ignore karo (jitter prevention)
+    if (delta < 4) {
+      lastScrollY = currentY;
+      return;
+    }
+
+    // Direction-based logic
+    if (direction === "down") {
+      hideHeader();
+    } else {
+      showHeader();
+    }
+
+    lastScrollY = currentY;
+  }
+
+  // rAF-throttled scroll listener
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          onScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
+
+  // Resize pe headerH update karo
+  window.addEventListener("resize", function () {
+    headerH = hdr.offsetHeight;
   });
-}
+})();
 
 // ============================================================
 // CAMPUS SECTION — Our School Page
@@ -306,54 +412,15 @@ if (header && heroSection) {
   }
 
   // ─────────────────────────────────────────────────────────
-  // PHASE 2 + 3: campusViewport ko pin karo 300vh ke liye
-  // Phase 2 (0→0.33): text + circle exit
-  // Phase 3 (0.33→0.67): slider slides change
-  // Phase 4 (0.67→1.00): dev section fixed position se neeche se slide up
+  // PHASE 2 + 3: campusViewport ko pin karo 200vh ke liye
+  // Phase 2 (0→0.50): text + circle exit
+  // Phase 3 (0.50→1.00): slider slides change
+  // Dev section ka apna alag ScrollTrigger hai (right→left horizontal)
   // ─────────────────────────────────────────────────────────
 
-  var SLIDER_THRESHOLD = 0.5;
-
-  // Development section dhundho
-  var devSec = document.querySelector(".development-sec");
-
-  // Dev section ko position:fixed karke screen ke bilkul neeche rakho
-  // taaki pin ke dauran smooth slide ho sake
-  function setDevFixed() {
-    if (!devSec) return;
-    devSec.style.position = "fixed";
-    devSec.style.bottom = "0";
-    devSec.style.left = "0";
-    devSec.style.width = "100%";
-    devSec.style.zIndex = "10";
-    devSec.style.top = "auto";
-    gsap.set(devSec, { y: "100%" });
-  }
-
-  function setDevNormal() {
-    if (!devSec) return;
-    devSec.style.position = "relative";
-    devSec.style.bottom = "auto";
-    devSec.style.top = "auto";
-    devSec.style.left = "auto";
-    devSec.style.width = "";
-    gsap.set(devSec, { y: 0 });
-  }
-
-  if (devSec) {
-    setDevFixed();
-  }
-
-  // Dev section ke liye placeholder — taaki neeche ka content sahi jagah rahe
-  var devPlaceholder = null;
-  if (devSec && devSec.parentNode) {
-    devPlaceholder = document.createElement("div");
-    devPlaceholder.style.height = devSec.offsetHeight + "px";
-    devPlaceholder.style.display = "none"; // initially hidden
-    devSec.parentNode.insertBefore(devPlaceholder, devSec);
-  }
-
-  // Header fixed rakho
+  // Header — campus pin zone mein hamesha visible rakho
+  // Directional header code insideCampusPin() check se automatically ruk jata hai,
+  // lekin yahan explicitly show karo taaki koi bhi hide state clear ho jaye
   var siteHeader = document.querySelector("header.header");
   if (siteHeader) {
     siteHeader.style.setProperty("z-index", "1000", "important");
@@ -361,81 +428,122 @@ if (header && heroSection) {
     siteHeader.style.setProperty("top", "0", "important");
     siteHeader.style.setProperty("left", "0", "important");
     siteHeader.style.setProperty("width", "100%", "important");
-    siteHeader.style.setProperty("opacity", "1", "important");
-    siteHeader.style.setProperty("visibility", "visible", "important");
-    siteHeader.style.setProperty("transform", "none", "important");
+    // opacity aur transform GSAP pe chhod do — inline override mat karo
+    // taaki directional header code baad mein sahi se kaam kare
   }
 
-  var pinActive = true; // track karo pin chal raha hai ya nahi
-
-  // campusViewport pin karo — 300vh scroll space
+  // campusViewport pin karo — 200vh scroll space
   ScrollTrigger.create({
     trigger: campusViewport,
     start: "top top",
-    end: "+=300%",
+    end: "+=200%",
     pin: true,
     pinSpacing: true,
     anticipatePin: 1,
     invalidateOnRefresh: true,
     onRefresh: function () {
       horizontalTween = buildHorizontalTween();
-      if (devSec && pinActive) {
-        devSec.style.position = "fixed";
-      }
     },
     onUpdate: function (self) {
       var p = self.progress;
 
-      // Phase 2 (0 → 0.33): exit text + circle
-      var exitP = Math.min(p / 0.33, 1);
+      // Phase 2 (0 → 0.50): exit text + circle
+      var exitP = Math.min(p / 0.5, 1);
       exitTL.progress(exitP);
 
-      // Phase 3 (0.33 → 0.67): slider slides
-      if (p >= 0.33 && p < 0.67) {
+      // Phase 3 (0.50 → 1.00): slider slides
+      if (p >= 0.5) {
         showSlider();
-        var sliderP = (p - 0.33) / 0.34;
+        var sliderP = (p - 0.5) / 0.5;
         updateHorizontalTrack(Math.min(sliderP, 1));
-      } else if (p < 0.33) {
+      } else {
         hideSlider();
-      }
-
-      // Phase 4 (0.67 → 1.0): dev section neeche se slide up
-      if (devSec) {
-        if (p >= 0.67) {
-          var slideP = (p - 0.67) / 0.33; // 0 → 1
-          // y: 100% (pura neeche) → y: 0% (apni jagah)
-          var yPct = (1 - Math.min(slideP, 1)) * 100;
-          gsap.set(devSec, { yPercent: yPct });
-        } else {
-          gsap.set(devSec, { yPercent: 100 });
-        }
       }
     },
     onLeave: function () {
-      pinActive = false;
-      // Pin khatam — dev section ko normal flow mein wapas laao
-      if (devSec && devPlaceholder) {
-        devPlaceholder.style.display = "block";
-        devPlaceholder.style.height = devSec.offsetHeight + "px";
-        setDevNormal();
-      }
       showSlider();
-    },
-    onEnterBack: function () {
-      pinActive = true;
-      // Wapis scroll pe dev section fixed karo
-      if (devSec && devPlaceholder) {
-        devPlaceholder.style.display = "none";
-        setDevFixed();
-      }
     },
   });
 
   window.addEventListener("resize", function () {
     horizontalTween = null;
-    if (devPlaceholder && devSec) {
-      devPlaceholder.style.height = devSec.offsetHeight + "px";
+    ScrollTrigger.refresh();
+  });
+})();
+
+// ============================================================
+// DEVELOPMENT SECTION — Horizontal scroll (right → left)
+// Vertical scroll karo to slides right se left slide honge
+// Section sticky rahega jab tak last slide na aaye
+// ============================================================
+(function initDevSection() {
+  if (!document.querySelector("body.our-school-page")) return;
+
+  function init() {
+    var devSec = document.querySelector(".development-sec");
+    var devHorizontal = document.querySelector(".dev-horizontal");
+    var devTrack = document.querySelector(".dev-track");
+    if (!devSec || !devTrack || !devHorizontal) return;
+
+    // Mobile pe nahi chalana
+    if (window.innerWidth < 768) return;
+
+    // Starting x = 0 ensure karo
+    gsap.set(devTrack, { x: 0 });
+
+    // Scroll distance — slides ka actual rendered width sum karo
+    // devTrack.scrollWidth use nahi karte kyunki flex overflow inflate karta hai
+    function getTotalScrollWidth() {
+      var slides = devTrack.querySelectorAll(".dev-slide");
+      var totalW = 0;
+      slides.forEach(function (slide) {
+        totalW += slide.offsetWidth;
+      });
+      var gap = 60; // CSS gap value
+      totalW += gap * (slides.length - 1);
+      totalW += window.innerWidth * 0.1; // padding: 0 5vw = 10vw total
+      return Math.max(totalW - window.innerWidth, 0);
     }
+
+    // GSAP horizontal scroll tween
+    var horizTween = gsap.to(devTrack, {
+      x: function () {
+        return -getTotalScrollWidth();
+      },
+      ease: "none",
+      paused: true,
+    });
+
+    // Pin + scrub ScrollTrigger
+    ScrollTrigger.create({
+      trigger: devSec,
+      start: "top top",
+      end: function () {
+        return "+=" + getTotalScrollWidth();
+      },
+      pin: true,
+      pinSpacing: true,
+      scrub: 1,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate: function (self) {
+        horizTween.progress(self.progress);
+      },
+      onRefresh: function () {
+        horizTween.invalidate().progress(0);
+        gsap.set(devTrack, { x: 0 });
+      },
+    });
+  }
+
+  // DOM fully ready hone ke baad chalao
+  if (document.readyState === "complete") {
+    init();
+  } else {
+    window.addEventListener("load", init, { once: true });
+  }
+
+  window.addEventListener("resize", function () {
     ScrollTrigger.refresh();
   });
 })();
@@ -905,38 +1013,6 @@ if (horizontal) {
     });
 }
 
-// // bubble section
-// (function initBubbleSection() {
-//   const section = document.querySelector(".bbt-FA-circle-sec");
-//   if (!section) return;
-
-//   const track = document.getElementById("bubbleTrack");
-//   const cluster = document.getElementById("circleCluster");
-
-//   function updateScroll() {
-//     const rect = section.getBoundingClientRect();
-//     const sectionH = section.offsetHeight;
-//     const viewH = window.innerHeight;
-
-//     // progress 0→1 as we scroll through the section
-//     const scrolled = -rect.top;
-//     const scrollMax = sectionH - viewH;
-//     const progress = Math.min(Math.max(scrolled / scrollMax, 0), 1);
-
-//     // Start: cluster center aligned to right edge of screen
-//     // End: cluster center aligned to left edge of screen
-//     const clusterW = cluster.offsetWidth; // ~980px
-//     const startX = window.innerWidth; // fully off-screen right
-//     const endX = -clusterW; // fully off-screen left
-//     const currentX = startX + (endX - startX) * progress;
-
-//     track.style.transform = `translateX(${currentX}px)`;
-//   }
-
-//   window.addEventListener("scroll", updateScroll, { passive: true });
-//   window.addEventListener("resize", updateScroll);
-//   updateScroll();
-// })();
 gsap.registerPlugin(ScrollTrigger);
 
 const track = document.querySelector("#bubbleTrack");
@@ -1326,7 +1402,8 @@ if (tl) {
   });
 })();
 
-// ------------------- Our school page hero section
+// ------------------- Our school page dev section
+// ScrollTrigger initDevSection() function mein handle hota hai (line ~372)
 
 // ============================================================
 // PEDAGOGY PAGE

@@ -141,7 +141,6 @@
     transform: scale(1.35);
 }
 
-.our-school-page .development-sec,
 .our-school-page .location-section,
 .our-school-page .contact-sec,
 .our-school-page .bbt-FA-main-footer {
@@ -155,12 +154,16 @@
     z-index: 1;
 }
 
-/* Development section — neeche se slide hokar aayega */
+/* Development section — horizontal scroll ke liye */
 .our-school-page .development-sec {
     background: #fff;
-    will-change: transform;
     position: relative;
+    overflow: hidden;
     z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Slide hote waqt horizontal overflow na aaye */
@@ -489,7 +492,7 @@ body.our-school-page {
 
 /* development section css start */
 section.development-sec {
-    padding: 130px 0;
+    padding: 60px 0 40px;
 }
 
 .development-sec h2.title-txt {
@@ -499,6 +502,7 @@ section.development-sec {
     font-weight: 700;
     line-height: 60px;
     width: 49%;
+    padding-bottom: 80px;
 }
 
 .main-img-slider {
@@ -553,6 +557,74 @@ section.development-sec {
 
 .purple-box {
     background: #BEACFF;
+}
+
+/* Dev-slide ke andar absolute-box */
+.dev-slide .img-relative {
+    position: relative;
+}
+
+.dev-slide .img-relative img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* image-container jo dev-slide bhi hai — relative parent */
+.image-container.dev-slide {
+    position: relative;
+    padding-bottom: 70px;
+}
+
+.dev-slide .absolute-box {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: min(100%, 420px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dev-slide .absolute-box p {
+    color: #000;
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 25px;
+    padding: 16px 32px;
+    margin: 0;
+}
+
+.dev-horizontal {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.dev-track {
+    display: flex;
+    align-items: flex-start;
+    width: max-content;
+    will-change: transform;
+    padding: 0 5vw;
+    gap: 60px;
+}
+
+.dev-slide {
+    flex: 0 0 55vw;
+    position: relative;
+}
+
+.dev-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
 @media (max-width: 1440px) {
