@@ -198,7 +198,7 @@ gsap.registerPlugin(ScrollTrigger);
       gsap.killTweensOf([c, t]);
       if (slideIndex !== index) {
         gsap.set(c, { x: -110, y: 110, autoAlpha: 0 });
-        gsap.set(t, { x: -28, autoAlpha: 0 });
+        gsap.set(t, { y: 32, autoAlpha: 0 });
       }
     });
 
@@ -218,7 +218,7 @@ gsap.registerPlugin(ScrollTrigger);
       overwrite: true,
     });
     gsap.to(t, {
-      x: 0,
+      y: 0,
       autoAlpha: 1,
       duration: 0.75,
       ease: "power3.out",
@@ -238,36 +238,67 @@ gsap.registerPlugin(ScrollTrigger);
     animateSlide(safeIndex, immediate);
   }
 
+  // buildHorizontalTween — kept for onRefresh compatibility (not used for masking)
   function buildHorizontalTween() {
-    if (!campusTrack || !campusViewport) return null;
-
-    var maxShift = Math.max(
-      campusTrack.scrollHeight - campusViewport.offsetHeight,
-      0,
-    );
-    return gsap.to(campusTrack, {
-      y: -maxShift,
-      ease: "none",
-      paused: true,
-      overwrite: true,
-    });
+    return null;
   }
 
   function resetHorizontalTrack() {
     if (horizontalTween) horizontalTween.progress(0);
     if (campusTrack) gsap.set(campusTrack, { y: 0 });
     if (campusScroller) campusScroller.scrollTop = 0;
+    lastMaskedIndex = -1;
+    revealSlideWithMask(0, true);
     setActiveSlide(0, true);
   }
 
   function updateHorizontalTrack(progress) {
-    if (!campusTrack || !campusSlides.length) return;
-    if (!horizontalTween) horizontalTween = buildHorizontalTween();
-    if (!horizontalTween) return;
-
-    horizontalTween.progress(progress);
+    if (!campusSlides.length) return;
+    // Scroll progress se slide index nikalo (0 to length-1)
     var nextIndex = Math.round(progress * (campusSlides.length - 1));
+    revealSlideWithMask(nextIndex, false);
     setActiveSlide(nextIndex, false);
+  }
+
+  // ─────────────────────────────────────────────────────────
+  // Masking transition — neeche se oopar reveal
+  // Har slide ka clip-path control karta hai reveal
+  // ─────────────────────────────────────────────────────────
+  var maskAnimating = false;
+  var lastMaskedIndex = -1;
+
+  function revealSlideWithMask(index, immediate) {
+    if (!campusSlides.length) return;
+    if (index === lastMaskedIndex && !immediate) return;
+    lastMaskedIndex = index;
+
+    campusSlides.forEach(function (slide, i) {
+      if (i === index) {
+        // Yeh slide visible rahega — top pe
+        gsap.set(slide, { zIndex: 3 });
+        if (immediate) {
+          gsap.set(slide, { clipPath: "inset(0% 0% 0% 0%)" });
+        } else {
+          // Neeche se mask reveal: inset bottom 100% → 0%
+          gsap.fromTo(
+            slide,
+            { clipPath: "inset(100% 0% 0% 0%)" },
+            {
+              clipPath: "inset(0% 0% 0% 0%)",
+              duration: 0.85,
+              ease: "power3.inOut",
+              overwrite: true,
+            },
+          );
+        }
+      } else if (i < index) {
+        // Pichle slides — already revealed, neeche z-index
+        gsap.set(slide, { zIndex: 1, clipPath: "inset(0% 0% 0% 0%)" });
+      } else {
+        // Agle slides — abhi hidden
+        gsap.set(slide, { zIndex: 2, clipPath: "inset(100% 0% 0% 0%)" });
+      }
+    });
   }
 
   // ─────────────────────────────────────────────────────────
@@ -277,12 +308,12 @@ gsap.registerPlugin(ScrollTrigger);
     if (sliderShown) return;
     sliderShown = true;
     campusSliderShell.style.pointerEvents = "auto";
-    gsap.to(campusSliderShell, {
-      autoAlpha: 1,
-      duration: 0.5,
-      ease: "power2.out",
-      overwrite: true,
-    });
+    // Shell instantly visible — masking handles the reveal
+    gsap.set(campusSliderShell, { autoAlpha: 1 });
+    // Pehli slide bottom-se-top mask reveal
+    lastMaskedIndex = -1;
+    revealSlideWithMask(0, false);
+    setActiveSlide(0, false);
   }
 
   function hideSlider() {
@@ -315,6 +346,8 @@ gsap.registerPlugin(ScrollTrigger);
       var t = slide.querySelector(".campus-slide-text");
       if (c) gsap.set(c, { clearProps: "all" });
       if (t) gsap.set(t, { clearProps: "all" });
+      // Mobile pe clip-path clear karo
+      gsap.set(slide, { clearProps: "clipPath,zIndex" });
     });
     return;
   }
@@ -327,6 +360,16 @@ gsap.registerPlugin(ScrollTrigger);
   gsap.set(campusSliderShell, { autoAlpha: 0 });
   campusSliderShell.style.pointerEvents = "none";
   if (campusTrack) gsap.set(campusTrack, { y: 0 });
+
+  // Initial clip-path states — pehli slide visible, baaki hidden
+  campusSlides.forEach(function (slide, i) {
+    if (i === 0) {
+      gsap.set(slide, { clipPath: "inset(0% 0% 0% 0%)", zIndex: 3 });
+    } else {
+      gsap.set(slide, { clipPath: "inset(100% 0% 0% 0%)", zIndex: 2 });
+    }
+  });
+  lastMaskedIndex = 0;
   setActiveSlide(0, true);
 
   // ─────────────────────────────────────────────────────────
@@ -472,80 +515,230 @@ gsap.registerPlugin(ScrollTrigger);
 })();
 
 // ============================================================
-// DEVELOPMENT SECTION — Horizontal scroll (right → left)
-// Vertical scroll karo to slides right se left slide honge
-// Section sticky rahega jab tak last slide na aaye
+// DEVELOPMENT SECTION — pinned horizontal gallery
+// Each mouse-wheel gesture advances one slide while pinned.
+// Scrolling up/down at the ends releases the page naturally.
 // ============================================================
 (function initDevSection() {
   if (!document.querySelector("body.our-school-page")) return;
 
-  function init() {
-    var devSec = document.querySelector(".development-sec");
-    var devHorizontal = document.querySelector(".dev-horizontal");
-    var devTrack = document.querySelector(".dev-track");
-    if (!devSec || !devTrack || !devHorizontal) return;
+  var devTween = null;
+  var devTrigger = null;
+  var resizeTimer = null;
+  var cleanupFns = [];
 
-    // Mobile pe nahi chalana
+  function clearDevSection() {
+    cleanupFns.forEach(function (fn) {
+      fn();
+    });
+    cleanupFns = [];
+
+    if (devTrigger) {
+      devTrigger.kill();
+      devTrigger = null;
+    }
+    if (devTween) {
+      devTween.kill();
+      devTween = null;
+    }
+  }
+
+  function buildDevSection() {
+    clearDevSection();
+
+    var devSec = document.querySelector(".development-sec");
+    var devTrack = document.querySelector(".dev-track");
+    if (!devSec || !devTrack) return;
+
+    gsap.set(devTrack, { clearProps: "x" });
+
     if (window.innerWidth < 768) return;
 
-    // Starting x = 0 ensure karo
-    gsap.set(devTrack, { x: 0 });
+    var slides = Array.from(devTrack.querySelectorAll(".dev-slide"));
+    if (!slides.length) return;
 
-    // Scroll distance — slides ka actual rendered width sum karo
-    // devTrack.scrollWidth use nahi karte kyunki flex overflow inflate karta hai
-    function getTotalScrollWidth() {
-      var slides = devTrack.querySelectorAll(".dev-slide");
-      var totalW = 0;
-      slides.forEach(function (slide) {
-        totalW += slide.offsetWidth;
-      });
-      var gap = 60; // CSS gap value
-      totalW += gap * (slides.length - 1);
-      totalW += window.innerWidth * 0.1; // padding: 0 5vw = 10vw total
-      return Math.max(totalW - window.innerWidth, 0);
+    var viewportWidth = window.innerWidth;
+    var introPeekOffset = Math.min(Math.max(viewportWidth * 0.285, 360), 560);
+    var introRightGap = Math.min(Math.max(viewportWidth * 0.05, 48), 110);
+    var currentSlide = 0;
+    var isAnimating = false;
+    var wheelCooldownUntil = 0;
+    var touchStartY = 0;
+
+    function getSlideOffset(index) {
+      var slide = slides[index];
+      if (!slide) return 0;
+
+      if (index === 0) {
+        var introOffset = introPeekOffset - slide.offsetLeft;
+        var nextSlide = slides[1];
+        if (nextSlide) {
+          var maxIntroOffset =
+            viewportWidth - introRightGap - (nextSlide.offsetLeft + nextSlide.offsetWidth);
+          introOffset = Math.min(introOffset, maxIntroOffset);
+        }
+        return introOffset;
+      }
+
+      if (index === slides.length - 1) {
+        return viewportWidth - (slide.offsetLeft + slide.offsetWidth);
+      }
+
+      var centeredX = viewportWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2);
+      var maxX = -slides[0].offsetLeft;
+      var minX =
+        viewportWidth -
+        (slides[slides.length - 1].offsetLeft + slides[slides.length - 1].offsetWidth);
+
+      return Math.max(Math.min(centeredX, maxX), minX);
     }
 
-    // GSAP horizontal scroll tween
-    var horizTween = gsap.to(devTrack, {
-      x: function () {
-        return -getTotalScrollWidth();
-      },
-      ease: "none",
-      paused: true,
+    var slideOffsets = slides.map(function (_, index) {
+      return getSlideOffset(index);
     });
 
-    // Pin + scrub ScrollTrigger
-    ScrollTrigger.create({
+    function goToSlide(index, immediate) {
+      if (index < 0 || index >= slides.length) return;
+      currentSlide = index;
+
+      if (devTween) {
+        devTween.kill();
+        devTween = null;
+      }
+
+      if (immediate) {
+        gsap.set(devTrack, { x: slideOffsets[index] });
+        isAnimating = false;
+        return;
+      }
+
+      isAnimating = true;
+      devTween = gsap.to(devTrack, {
+        x: slideOffsets[index],
+        duration: 0.6,
+        ease: "power3.inOut",
+        overwrite: true,
+        onComplete: function () {
+          isAnimating = false;
+          devTween = null;
+        },
+      });
+    }
+
+    function releaseScroll(direction) {
+      if (!devTrigger) return;
+      var targetScroll =
+        direction > 0 ? devTrigger.end + 2 : Math.max(devTrigger.start - 2, 0);
+      window.scrollTo({ top: targetScroll, behavior: "auto" });
+    }
+
+    goToSlide(0, true);
+
+    devTrigger = ScrollTrigger.create({
       trigger: devSec,
       start: "top top",
       end: function () {
-        return "+=" + getTotalScrollWidth();
+        return "+=" + Math.max(viewportWidth * 0.9, window.innerHeight * 1.2);
       },
       pin: true,
-      pinSpacing: true,
-      scrub: 1,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-      onUpdate: function (self) {
-        horizTween.progress(self.progress);
-      },
-      onRefresh: function () {
-        horizTween.invalidate().progress(0);
-        gsap.set(devTrack, { x: 0 });
-      },
+    });
+
+    function onWheel(e) {
+      if (!devTrigger || !devTrigger.isActive) return;
+
+      var now = Date.now();
+      if (now < wheelCooldownUntil) {
+        e.preventDefault();
+        return;
+      }
+
+      if (Math.abs(e.deltaY) < 10) return;
+
+      var direction = e.deltaY > 0 ? 1 : -1;
+      var nextSlide = currentSlide + direction;
+
+      e.preventDefault();
+
+      if (isAnimating) return;
+
+      wheelCooldownUntil = now + 650;
+
+      if (nextSlide < 0 || nextSlide >= slides.length) {
+        releaseScroll(direction);
+        return;
+      }
+
+      goToSlide(nextSlide, false);
+    }
+
+    function onKeyDown(e) {
+      if (!devTrigger || !devTrigger.isActive || isAnimating) return;
+
+      var direction = 0;
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") direction = 1;
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") direction = -1;
+      if (!direction) return;
+
+      e.preventDefault();
+      var nextSlide = currentSlide + direction;
+      if (nextSlide < 0 || nextSlide >= slides.length) {
+        releaseScroll(direction);
+        return;
+      }
+
+      goToSlide(nextSlide, false);
+    }
+
+    function onTouchStart(e) {
+      touchStartY = e.touches[0].clientY;
+    }
+
+    function onTouchEnd(e) {
+      if (!devTrigger || !devTrigger.isActive || isAnimating) return;
+
+      var diff = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) < 36) return;
+
+      var direction = diff > 0 ? 1 : -1;
+      var nextSlide = currentSlide + direction;
+      if (nextSlide < 0 || nextSlide >= slides.length) {
+        releaseScroll(direction);
+        return;
+      }
+
+      goToSlide(nextSlide, false);
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKeyDown);
+    devSec.addEventListener("touchstart", onTouchStart, { passive: true });
+    devSec.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    cleanupFns.push(function () {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKeyDown);
+      devSec.removeEventListener("touchstart", onTouchStart);
+      devSec.removeEventListener("touchend", onTouchEnd);
     });
   }
 
-  // DOM fully ready hone ke baad chalao
-  if (document.readyState === "complete") {
-    init();
-  } else {
-    window.addEventListener("load", init, { once: true });
+  function handleResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      buildDevSection();
+      ScrollTrigger.refresh();
+    }, 120);
   }
 
-  window.addEventListener("resize", function () {
-    ScrollTrigger.refresh();
-  });
+  if (document.readyState === "complete") {
+    buildDevSection();
+  } else {
+    window.addEventListener("load", buildDevSection, { once: true });
+  }
+
+  window.addEventListener("resize", handleResize);
 })();
 
 if (
