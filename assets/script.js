@@ -2,7 +2,7 @@ gsap.config({ force3D: true });
 gsap.registerPlugin(ScrollTrigger);
 
 // ============================================================
-// HEADER — Directionally Aware (GSAP)
+// HEADER (GSAP)
 //
 // Behavior:
 //   • Page load pe hamesha visible
@@ -19,6 +19,9 @@ gsap.registerPlugin(ScrollTrigger);
 (function initDirectionalHeader() {
   var hdr = document.querySelector("header.header");
   if (!hdr) return;
+  gsap.killTweensOf(hdr);
+  gsap.set(hdr, { y: 0, opacity: 1, clearProps: "transform" });
+  return;
 
   var lastScrollY = window.scrollY;
   var headerH = hdr.offsetHeight;
@@ -177,7 +180,7 @@ gsap.registerPlugin(ScrollTrigger);
   var campusText = campusSection.querySelector(".body-txt");
   var campusHalfCircle = campusSection.querySelector(".half-circle");
 
-  var isDesktop = window.innerWidth >= 768;
+  var isDesktop = window.innerWidth >= 992;
 
   var loadTL = null;
   var horizontalTween = null;
@@ -285,7 +288,7 @@ gsap.registerPlugin(ScrollTrigger);
             { clipPath: "inset(100% 0% 0% 0%)" },
             {
               clipPath: "inset(0% 0% 0% 0%)",
-              duration: 0.85,
+              duration: 1.35,
               ease: "power3.inOut",
               overwrite: true,
             },
@@ -467,10 +470,8 @@ gsap.registerPlugin(ScrollTrigger);
   var siteHeader = document.querySelector("header.header");
   if (siteHeader) {
     siteHeader.style.setProperty("z-index", "1000", "important");
-    siteHeader.style.setProperty("position", "fixed", "important");
-    siteHeader.style.setProperty("top", "0", "important");
-    siteHeader.style.setProperty("left", "0", "important");
-    siteHeader.style.setProperty("width", "100%", "important");
+    siteHeader.style.setProperty("opacity", "1", "important");
+    siteHeader.style.setProperty("transform", "translateY(0)", "important");
     // opacity aur transform GSAP pe chhod do — inline override mat karo
     // taaki directional header code baad mein sahi se kaam kare
   }
@@ -552,14 +553,19 @@ gsap.registerPlugin(ScrollTrigger);
 
     gsap.set(devTrack, { clearProps: "x" });
 
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < 992) return;
 
     var slides = Array.from(devTrack.querySelectorAll(".dev-slide"));
     if (!slides.length) return;
 
     var viewportWidth = window.innerWidth;
-    var introPeekOffset = Math.min(Math.max(viewportWidth * 0.285, 360), 560);
-    var introRightGap = Math.min(Math.max(viewportWidth * 0.05, 48), 110);
+    var headingContainer = devSec.querySelector(".container-xxl");
+    var sectionLeftEdge = headingContainer
+      ? headingContainer.getBoundingClientRect().left
+      : Math.min(Math.max(viewportWidth * 0.04, 16), 48);
+    var sectionRightGap = headingContainer
+      ? Math.max(viewportWidth - headingContainer.getBoundingClientRect().right, 48)
+      : Math.min(Math.max(viewportWidth * 0.06, 48), 110);
     var currentSlide = 0;
     var isAnimating = false;
     var wheelCooldownUntil = 0;
@@ -570,18 +576,11 @@ gsap.registerPlugin(ScrollTrigger);
       if (!slide) return 0;
 
       if (index === 0) {
-        var introOffset = introPeekOffset - slide.offsetLeft;
-        var nextSlide = slides[1];
-        if (nextSlide) {
-          var maxIntroOffset =
-            viewportWidth - introRightGap - (nextSlide.offsetLeft + nextSlide.offsetWidth);
-          introOffset = Math.min(introOffset, maxIntroOffset);
-        }
-        return introOffset;
+        return sectionLeftEdge - slide.offsetLeft;
       }
 
       if (index === slides.length - 1) {
-        return viewportWidth - (slide.offsetLeft + slide.offsetWidth);
+        return viewportWidth - sectionRightGap - (slide.offsetLeft + slide.offsetWidth);
       }
 
       var centeredX = viewportWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2);

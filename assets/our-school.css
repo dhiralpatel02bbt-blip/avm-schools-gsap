@@ -221,7 +221,7 @@ body.our-school-page {
     position: relative;
     z-index: 4;
     margin: auto 0 auto 100px;
-    max-width: 380px;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
     gap: 46px;
@@ -264,7 +264,174 @@ body.our-school-page {
     line-height: 29.88px;
 }
 
-@media(max-width: 1440px) {
+@media(max-width: 1200px) {
+    .campus-section .panel-title {
+        font-size: 40px;
+    }
+}
+
+@media(max-width:1023px) {
+    .campus-section .panel-title {
+        font-size: 37px;
+        line-height: 43px;
+    }
+}
+
+@media (max-width: 991px) {
+    .campus-stage {
+        min-height: 0;
+    }
+
+    .campus-viewport {
+        height: auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .campus-media {
+        display: none;
+    }
+
+    .campus-slider-shell {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: clamp(420px, 66vw, 560px);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .campus-sequence-swiper {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .campus-sequence-swiper .swiper-wrapper {
+        flex-direction: row;
+        width: max-content;
+        height: 100%;
+    }
+
+    .campus-sequence-swiper .swiper-slide {
+        width: unset;
+        height: unset;
+    }
+
+    .campus-sequence-slide {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        flex: unset;
+        width: unset;
+        min-width: unset;
+        height: unset;
+        min-height: unset;
+        clip-path: none !important;
+        scroll-snap-align: start;
+    }
+
+    .campus-sequence-slide>img {
+        max-width: 1000px;
+    }
+
+    .campus-sequence-pagination {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        left: 24px;
+        bottom: 20px !important;
+        z-index: 5;
+    }
+
+    .campus-section .panel {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        display: block;
+        overflow: hidden;
+        background: #0A3D9C;
+        border-radius: 0;
+        padding: 48px 32px 42px;
+    }
+
+    .campus-section .half-circle {
+        display: none;
+    }
+
+    .campus-section .body-txt {
+        max-width: 680px;
+        margin: 0;
+        gap: 20px;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        filter: none;
+    }
+
+    .campus-section .panel-title {
+        font-size: clamp(32px, 4.8vw, 42px);
+        line-height: 1.12;
+    }
+
+    .campus-section .panel-title::before {
+        top: -22px;
+        left: -18px;
+        width: 108px;
+        height: 108px;
+    }
+
+    .campus-section .panel-body {
+        max-width: 600px;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .campus-slide-caption {
+        width: min(300px, calc(100% - 48px));
+        min-height: 180px;
+        left: 0;
+        bottom: 0;
+    }
+
+    .campus-slide-circle {
+        width: 320px;
+        height: 320px;
+        left: -32px;
+        bottom: -110px;
+    }
+
+    .campus-slide-text {
+        width: min(66%, 245px);
+        top: 72px;
+        left: -6px;
+        opacity: 1;
+        transform: none;
+    }
+
+    .campus-slide-text p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+}
+
+@media(max-width: 767px) {
+    .campus-sequence-slide>img {
+        max-width: 767px;
+    }
+}
+
+@media(max-width: 576px) {
+    .campus-sequence-slide>img {
+        max-width: 576px;
+    }
+}
+
+/* @media(max-width: 1440px) {
     .campus-section .half-circle {
         top: -290px;
         width: 1700px;
@@ -284,8 +451,12 @@ body.our-school-page {
     }
 
     .campus-slide-circle {
-        width: 240px;
-        height: 240px;
+        width: 600px;
+        height: 600px;
+    }
+
+    .campus-slide-text p {
+        font-size: 18px;
     }
 
     .campus-slide-text h3 {
@@ -294,8 +465,18 @@ body.our-school-page {
 }
 
 @media (max-width: 1200px) {
+    .campus-stage {
+        min-height: clamp(620px, 82vh, 760px);
+    }
+
+    .campus-viewport {
+        min-height: clamp(620px, 82vh, 760px);
+    }
+
     .campus-section .body-txt {
-        margin: auto 0 auto 72px;
+        margin: auto 0 auto 64px;
+        max-width: 340px;
+        gap: 34px;
     }
 
     .our-school-page nav.main-menu ul {
@@ -303,7 +484,7 @@ body.our-school-page {
     }
 
     .campus-section .panel {
-        width: 43vw;
+        width: min(46vw, 500px);
     }
 
     .campus-section .panel-title {
@@ -312,138 +493,97 @@ body.our-school-page {
     }
 
     .campus-slide-caption {
-        width: min(420px, calc(100% - 48px));
+        width: min(380px, calc(100% - 48px));
+        bottom: 44px;
     }
 
     .campus-slide-text {
-        padding: 32px 28px 0;
+        width: min(64%, 250px);
+        top: 66px;
+        left: -18px;
     }
 
     .campus-slide-text h3 {
         font-size: 28px;
     }
+
+    .campus-slide-text p {
+        font-size: 17px;
+        line-height: 1.55;
+    }
 }
 
 @media (max-width: 991.9px) {
     .campus-stage {
-        min-height: 220vh;
-    }
-
-    .campus-viewport {
-        min-height: 760px;
-    }
-
-    .campus-section .panel {
-        width: 100%;
-        height: 44%;
-        border-radius: 0 0 100% 100% / 0 0 30% 30%;
-    }
-
-    .campus-section .body-txt {
-        max-width: 520px;
-        margin: 150px 32px 0;
-    }
-
-    .campus-slide-caption {
-        width: min(380px, calc(100% - 40px));
-        min-height: 200px;
-        left: 24px;
-        bottom: 30px;
-    }
-
-    .campus-slide-circle {
-        width: 220px;
-        height: 220px;
-        left: -30px;
-        bottom: -86px;
-    }
-
-    .campus-slide-text h3 {
-        font-size: 24px;
-    }
-
-    .campus-slide-text p {
-        font-size: 15px;
-    }
-}
-
-@media (max-width: 576px) {
-    .campus-viewport {
-        min-height: 680px;
-    }
-
-    .campus-section .body-txt {
-        margin-top: 120px;
-    }
-
-    .campus-section .panel-title {
-        font-size: 25px;
-    }
-
-    .campus-section .panel-body {
-        font-size: 11px;
-    }
-}
-
-@media (max-width: 767.9px) {
-    .campus-stage {
         min-height: 0;
     }
 
     .campus-viewport {
         height: auto;
         min-height: 0;
+        display: flex;
+        flex-direction: column;
     }
 
-    .campus-media,
+    .campus-media {
+        display: none;
+    }
+
     .campus-slider-shell {
         position: relative;
         inset: auto;
         width: 100%;
-        height: 320px;
-    }
-
-    .campus-sequence-swiper {
-        overflow-y: auto;
-        overflow-x: hidden;
-        scroll-snap-type: y mandatory;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .campus-sequence-swiper .swiper-wrapper {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-    .campus-sequence-slide {
-        width: 100%;
-        min-width: 100%;
-        height: 320px;
-        min-height: 320px;
-        scroll-snap-align: start;
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        clip-path: none !important;
-    }
-
-    .campus-slider-shell {
+        height: clamp(420px, 66vw, 560px);
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
     }
 
+    .campus-sequence-swiper {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .campus-sequence-swiper .swiper-wrapper {
+        flex-direction: row;
+        width: max-content;
+        height: 100%;
+    }
+
+    .campus-sequence-slide {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        flex: 0 0 100%;
+        width: min(100vw, 100%);
+        min-width: 100%;
+        height: 100%;
+        min-height: 0;
+        clip-path: none !important;
+        scroll-snap-align: start;
+    }
+
+    .campus-sequence-pagination {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        left: 24px;
+        bottom: 20px !important;
+        z-index: 5;
+    }
+
     .campus-section .panel {
         position: relative;
         width: 100%;
         height: auto;
-        min-height: 390px;
+        min-height: 0;
         display: block;
         overflow: hidden;
         background: #0A3D9C;
         border-radius: 0;
-        padding: 128px 24px 58px;
+        padding: 48px 32px 42px;
     }
 
     .campus-section .half-circle {
@@ -451,9 +591,9 @@ body.our-school-page {
     }
 
     .campus-section .body-txt {
-        max-width: 100%;
+        max-width: 680px;
         margin: 0;
-        gap: 22px;
+        gap: 20px;
         transform: none;
         opacity: 1;
         visibility: visible;
@@ -461,50 +601,103 @@ body.our-school-page {
     }
 
     .campus-section .panel-title {
-        font-size: 32px;
-        line-height: 1.16;
+        font-size: clamp(32px, 4.8vw, 42px);
+        line-height: 1.12;
     }
 
     .campus-section .panel-title::before {
-        top: -30px;
+        top: -22px;
         left: -18px;
-        width: 112px;
-        height: 112px;
+        width: 108px;
+        height: 108px;
     }
 
     .campus-section .panel-body {
-        max-width: 520px;
+        max-width: 600px;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .campus-slide-caption {
+        width: min(360px, calc(100% - 48px));
+        min-height: 180px;
+        left: 24px;
+        bottom: 30px;
+    }
+
+    .campus-slide-circle {
+        width: 250px;
+        height: 250px;
+        left: -28px;
+        bottom: -92px;
+    }
+
+    .campus-slide-text {
+        width: min(66%, 245px);
+        top: 72px;
+        left: -6px;
+        opacity: 1;
+        transform: none;
+    }
+
+    .campus-slide-text p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+}
+
+@media (max-width: 576px) {
+    .campus-viewport {
+        min-height: 0;
+    }
+
+    .campus-section .panel-title {
+        font-size: 28px;
+    }
+
+    .campus-section .panel-body {
         font-size: 14px;
         line-height: 1.65;
     }
 
+    .campus-section .panel {
+        padding: 36px 20px 32px;
+    }
+
+    .campus-slider-shell {
+        height: clamp(320px, 92vw, 420px);
+    }
+
     .campus-slide-caption {
-        left: 18px;
-        right: 18px;
-        bottom: 18px;
+        left: 16px;
+        right: 16px;
+        bottom: 24px;
         width: auto;
         min-height: 0;
     }
 
     .campus-slide-circle {
-        width: 180px;
-        height: 180px;
-        left: -18px;
-        bottom: -70px;
+        width: 170px;
+        height: 170px;
+        left: -16px;
+        bottom: -62px;
     }
 
     .campus-slide-text {
-        padding: 24px 18px 0;
-        opacity: 1;
-    }
-
-    .campus-slide-text h3 {
-        font-size: 20px;
+        width: min(74%, 205px);
+        top: 52px;
+        left: 0;
     }
 
     .campus-slide-text p {
         font-size: 13px;
-        line-height: 1.55;
+        line-height: 1.5;
+    }
+
+    .campus-sequence-pagination {
+        left: 16px;
+        bottom: 14px !important;
     }
 
     .our-school-page .offcanvas-menu label span,
@@ -512,7 +705,7 @@ body.our-school-page {
     .our-school-page .offcanvas-menu label span::after {
         background: #ffffff;
     }
-}
+} */
 
 /* Hero section css end */
 
@@ -656,7 +849,115 @@ section.development-sec {
     aspect-ratio: 16 / 9;
 }
 
-@media (max-width: 1440px) {
+@media(max-width: 1400px) {
+    .dev-horizontal {
+        padding-left: 20px;
+    }
+}
+
+@media(max-width:1200px) {
+    .development-sec h2.title-txt {
+        font-size: 40px;
+        line-height: 48px;
+        width: 60%;
+    }
+}
+
+@media(max-width: 991px) {
+    .our-school-page .development-sec {
+        height: auto;
+        min-height: 0;
+        display: block;
+        overflow: visible;
+        padding: 56px 0 40px;
+    }
+
+    .development-sec h2.title-txt {
+        width: 100%;
+        max-width: 680px;
+        font-size: 38px;
+        line-height: 46px;
+        padding-bottom: 24px;
+    }
+
+    .dev-horizontal {
+        overflow: visible;
+        padding-inline: 24px;
+    }
+
+    .dev-track {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        padding: 0;
+        will-change: auto;
+        transform: none !important;
+    }
+
+    .dev-slide {
+        flex: none;
+        width: 100%;
+    }
+
+    .image-container.dev-slide {
+        padding-bottom: 0;
+    }
+
+    .dev-slide .img-relative {
+        overflow: hidden;
+        border-radius: 0;
+    }
+
+    .dev-slide .img-relative img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+    }
+
+    .dev-slide .absolute-box {
+        position: static;
+        width: 100%;
+    }
+
+    .dev-slide .absolute-box p {
+        font-size: 15px;
+        line-height: 24px;
+        padding: 20px 22px;
+    }
+}
+
+@media(max-width:767px) {
+    .our-school-page .development-sec {
+        padding: 40px 0 28px;
+    }
+
+    .development-sec h2.title-txt {
+        font-size: 32px;
+        line-height: 39px;
+        width: 100%;
+        padding-bottom: 20px;
+    }
+
+    .dev-horizontal {
+        padding-inline: 16px;
+    }
+
+    .dev-track {
+        gap: 24px;
+    }
+
+    .dev-slide .img-relative img {
+        aspect-ratio: 4 / 3;
+    }
+
+    .dev-slide .absolute-box p {
+        font-size: 14px;
+        line-height: 22px;
+        padding: 18px 16px;
+    }
+}
+
+/* @media (max-width: 1440px) {
     section.development-sec {
         padding: 52px 0 28px;
     }
@@ -694,10 +995,48 @@ section.development-sec {
 }
 
 @media (max-width: 991.9px) {
+    section.development-sec {
+        padding: 44px 0 20px;
+    }
+
     .development-sec h2.title-txt {
         width: 100%;
-        font-size: 38px;
-        line-height: 46px;
+        max-width: 640px;
+        font-size: 36px;
+        line-height: 42px;
+        padding-bottom: 24px;
+    }
+
+    .dev-horizontal {
+        overflow: visible;
+        padding-inline: 12px;
+    }
+
+    .dev-track {
+        width: 100%;
+        padding: 0;
+        gap: 28px;
+        flex-direction: column;
+    }
+
+    .dev-slide {
+        flex: none;
+        width: 100%;
+    }
+
+    .image-container.dev-slide {
+        padding-bottom: 0;
+    }
+
+    .dev-slide .absolute-box {
+        position: static;
+        width: 100%;
+    }
+
+    .dev-slide .absolute-box p {
+        font-size: 14px;
+        line-height: 22px;
+        padding: 18px 20px;
     }
 
     .main-img-slider {
@@ -713,58 +1052,25 @@ section.development-sec {
         line-height: 17px;
         padding: 18px 28px;
     }
-
-    .dev-track {
-        padding: 0 max(12px, calc((100vw - 960px) / 2 + 12px));
-        gap: 40px;
-    }
-
-    .dev-slide {
-        flex-basis: 86vw;
-    }
-
-    .dev-slide .absolute-box {
-        width: min(100%, 360px);
-    }
-}
-
-@media(max-width: 767px) {
-    section.development-sec {
-        padding: 50px 0 40px;
-    }
-
-    .development-swiper .image-container {
-        padding-bottom: 0;
-    }
-
-    .main-img-slider {
-        margin-top: 30px;
-    }
-}
-
-@media(max-width: 767px) {
-    .development-swiper .absolute-box {
-        width: 100%;
-    }
-
-    .dev-horizontal {
-        padding-bottom: 0;
-    }
-
-    .dev-track {
-        padding: 0 12px;
-        gap: 28px;
-    }
-
-    .dev-slide {
-        flex-basis: 100%;
-    }
 }
 
 @media (max-width: 576px) {
+    section.development-sec {
+        padding: 36px 0 12px;
+    }
+
     .development-sec h2.title-txt {
         font-size: 28px;
-        line-height: 36px;
+        line-height: 34px;
+        padding-bottom: 20px;
+    }
+
+    .dev-horizontal {
+        padding-inline: 8px;
+    }
+
+    .dev-track {
+        gap: 22px;
     }
 
     .development-swiper .absolute-box {
@@ -777,7 +1083,13 @@ section.development-sec {
         line-height: 22px;
         padding: 18px 20px;
     }
-}
+
+    .dev-slide .absolute-box p {
+        font-size: 13px;
+        line-height: 20px;
+        padding: 16px 16px;
+    }
+} */
 
 /* development section css end */
 
@@ -886,6 +1198,7 @@ section.development-sec {
     }
 
     .campus-heading {
+        flex: 0 0 90px;
         font-size: 45px;
         line-height: 50px;
     }
@@ -902,6 +1215,10 @@ section.development-sec {
 }
 
 @media (max-width: 1200px) {
+    .location-section .d-flex {
+        flex-direction: column;
+    }
+
     .campus-name {
         line-height: 30px;
         font-size: 25px;
@@ -910,9 +1227,17 @@ section.development-sec {
     .card-header {
         margin-bottom: 15px;
     }
+
+    .campus-heading {
+        font-size: 40px;
+    }
 }
 
 @media(max-width: 991px) {
+    .location-section {
+        padding: 60px 0;
+    }
+
     .location-section .d-flex {
         flex-direction: column;
     }
