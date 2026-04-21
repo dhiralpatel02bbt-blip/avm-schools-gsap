@@ -63,11 +63,9 @@
     position: absolute;
     inset: 0;
     z-index: 2;
-    /* visibility/opacity controlled by GSAP */
     pointer-events: none;
 }
 
-/* Stacking for mask reveal — slides absolute positioned */
 .campus-sequence-swiper,
 .campus-sequence-swiper .swiper-wrapper {
     position: relative;
@@ -131,7 +129,6 @@
     line-height: 1.65;
 }
 
-/* Campus slider pagination */
 .campus-sequence-pagination {
     display: none;
 }
@@ -153,26 +150,21 @@
 }
 
 .our-school-page .location-section,
-.our-school-page .contact-sec,
-.our-school-page .bbt-FA-main-footer {
+.our-school-page .contact-sec {
     position: relative;
     z-index: 20;
-    /* Must be above dev-sticky-wrapper (z-index:1) */
 }
 
-/* Campus section — GSAP pin handle karega */
 .our-school-page .campus-section {
     position: relative;
     z-index: 1;
 }
 
-/* Development section — horizontal scroll ke liye */
 .our-school-page .development-sec {
     background: #fff;
     position: relative;
     overflow: hidden;
     z-index: 2;
-    /* Low — wrapper controls stacking context */
     height: 100vh;
     min-height: 100vh;
     display: flex;
@@ -180,17 +172,14 @@
     justify-content: center;
 }
 
-/* Sticky wrapper — z-index:1 so subsequent sections (z-index:20) slide OVER it */
 .our-school-page .dev-sticky-wrapper {
     position: relative;
     z-index: 1;
 }
 
-/* Slide hote waqt horizontal overflow na aaye */
 body.our-school-page {
     overflow-x: hidden;
 }
-
 
 .campus-section .panel {
     position: absolute;
@@ -431,282 +420,6 @@ body.our-school-page {
     }
 }
 
-/* @media(max-width: 1440px) {
-    .campus-section .half-circle {
-        top: -290px;
-        width: 1700px;
-        height: 1700px;
-    }
-
-    .campus-section .panel-title {
-        font-size: 42px;
-        line-height: 46px;
-    }
-
-    .campus-section .panel-title::before {
-        top: -25px;
-        left: -40px;
-        width: 100px;
-        height: 100px;
-    }
-
-    .campus-slide-circle {
-        width: 600px;
-        height: 600px;
-    }
-
-    .campus-slide-text p {
-        font-size: 18px;
-    }
-
-    .campus-slide-text h3 {
-        font-size: 30px;
-    }
-}
-
-@media (max-width: 1200px) {
-    .campus-stage {
-        min-height: clamp(620px, 82vh, 760px);
-    }
-
-    .campus-viewport {
-        min-height: clamp(620px, 82vh, 760px);
-    }
-
-    .campus-section .body-txt {
-        margin: auto 0 auto 64px;
-        max-width: 340px;
-        gap: 34px;
-    }
-
-    .our-school-page nav.main-menu ul {
-        gap: 42px;
-    }
-
-    .campus-section .panel {
-        width: min(46vw, 500px);
-    }
-
-    .campus-section .panel-title {
-        font-size: 38px;
-        line-height: 42px;
-    }
-
-    .campus-slide-caption {
-        width: min(380px, calc(100% - 48px));
-        bottom: 44px;
-    }
-
-    .campus-slide-text {
-        width: min(64%, 250px);
-        top: 66px;
-        left: -18px;
-    }
-
-    .campus-slide-text h3 {
-        font-size: 28px;
-    }
-
-    .campus-slide-text p {
-        font-size: 17px;
-        line-height: 1.55;
-    }
-}
-
-@media (max-width: 991.9px) {
-    .campus-stage {
-        min-height: 0;
-    }
-
-    .campus-viewport {
-        height: auto;
-        min-height: 0;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .campus-media {
-        display: none;
-    }
-
-    .campus-slider-shell {
-        position: relative;
-        inset: auto;
-        width: 100%;
-        height: clamp(420px, 66vw, 560px);
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-    }
-
-    .campus-sequence-swiper {
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .campus-sequence-swiper .swiper-wrapper {
-        flex-direction: row;
-        width: max-content;
-        height: 100%;
-    }
-
-    .campus-sequence-slide {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        flex: 0 0 100%;
-        width: min(100vw, 100%);
-        min-width: 100%;
-        height: 100%;
-        min-height: 0;
-        clip-path: none !important;
-        scroll-snap-align: start;
-    }
-
-    .campus-sequence-pagination {
-        display: flex;
-        gap: 8px;
-        position: absolute;
-        left: 24px;
-        bottom: 20px !important;
-        z-index: 5;
-    }
-
-    .campus-section .panel {
-        position: relative;
-        width: 100%;
-        height: auto;
-        min-height: 0;
-        display: block;
-        overflow: hidden;
-        background: #0A3D9C;
-        border-radius: 0;
-        padding: 48px 32px 42px;
-    }
-
-    .campus-section .half-circle {
-        display: none;
-    }
-
-    .campus-section .body-txt {
-        max-width: 680px;
-        margin: 0;
-        gap: 20px;
-        transform: none;
-        opacity: 1;
-        visibility: visible;
-        filter: none;
-    }
-
-    .campus-section .panel-title {
-        font-size: clamp(32px, 4.8vw, 42px);
-        line-height: 1.12;
-    }
-
-    .campus-section .panel-title::before {
-        top: -22px;
-        left: -18px;
-        width: 108px;
-        height: 108px;
-    }
-
-    .campus-section .panel-body {
-        max-width: 600px;
-        font-size: 16px;
-        line-height: 1.7;
-    }
-
-    .campus-slide-caption {
-        width: min(360px, calc(100% - 48px));
-        min-height: 180px;
-        left: 24px;
-        bottom: 30px;
-    }
-
-    .campus-slide-circle {
-        width: 250px;
-        height: 250px;
-        left: -28px;
-        bottom: -92px;
-    }
-
-    .campus-slide-text {
-        width: min(66%, 245px);
-        top: 72px;
-        left: -6px;
-        opacity: 1;
-        transform: none;
-    }
-
-    .campus-slide-text p {
-        font-size: 14px;
-        line-height: 1.5;
-    }
-
-}
-
-@media (max-width: 576px) {
-    .campus-viewport {
-        min-height: 0;
-    }
-
-    .campus-section .panel-title {
-        font-size: 28px;
-    }
-
-    .campus-section .panel-body {
-        font-size: 14px;
-        line-height: 1.65;
-    }
-
-    .campus-section .panel {
-        padding: 36px 20px 32px;
-    }
-
-    .campus-slider-shell {
-        height: clamp(320px, 92vw, 420px);
-    }
-
-    .campus-slide-caption {
-        left: 16px;
-        right: 16px;
-        bottom: 24px;
-        width: auto;
-        min-height: 0;
-    }
-
-    .campus-slide-circle {
-        width: 170px;
-        height: 170px;
-        left: -16px;
-        bottom: -62px;
-    }
-
-    .campus-slide-text {
-        width: min(74%, 205px);
-        top: 52px;
-        left: 0;
-    }
-
-    .campus-slide-text p {
-        font-size: 13px;
-        line-height: 1.5;
-    }
-
-    .campus-sequence-pagination {
-        left: 16px;
-        bottom: 14px !important;
-    }
-
-    .our-school-page .offcanvas-menu label span,
-    .our-school-page .offcanvas-menu label span::before,
-    .our-school-page .offcanvas-menu label span::after {
-        background: #ffffff;
-    }
-} */
-
 /* Hero section css end */
 
 /* development section css start */
@@ -778,19 +491,19 @@ section.development-sec {
     background: #BEACFF;
 }
 
-/* Dev-slide ke andar absolute-box */
 .dev-slide .img-relative {
     position: relative;
+    height: clamp(320px, 62vh, 720px);
+    overflow: hidden;
 }
 
 .dev-slide .img-relative img {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
 }
 
-/* image-container jo dev-slide bhi hai — relative parent */
 .image-container.dev-slide {
     position: relative;
     padding-bottom: 56px;
@@ -844,9 +557,8 @@ section.development-sec {
 
 .dev-slide img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
-    aspect-ratio: 16 / 9;
 }
 
 @media(max-width: 1400px) {
@@ -863,7 +575,7 @@ section.development-sec {
     }
 }
 
-@media(max-width: 991px) {
+@media(max-width: 1199px) {
     .our-school-page .development-sec {
         height: auto;
         min-height: 0;
@@ -911,7 +623,7 @@ section.development-sec {
 
     .dev-slide .img-relative img {
         width: 100%;
-        aspect-ratio: 16 / 10;
+        height: 100%;
     }
 
     .dev-slide .absolute-box {
@@ -947,7 +659,11 @@ section.development-sec {
     }
 
     .dev-slide .img-relative img {
-        aspect-ratio: 4 / 3;
+        height: 100%;
+    }
+
+    .dev-slide .img-relative {
+        height: clamp(260px, 42vh, 420px);
     }
 
     .dev-slide .absolute-box p {
@@ -956,140 +672,6 @@ section.development-sec {
         padding: 18px 16px;
     }
 }
-
-/* @media (max-width: 1440px) {
-    section.development-sec {
-        padding: 52px 0 28px;
-    }
-
-    .development-sec h2.title-txt {
-        font-size: 44px;
-        line-height: 50px;
-        width: 39%;
-    }
-
-    .main-img-slider {
-        margin-top: 50px;
-    }
-
-    .development-swiper .absolute-box p {
-        font-size: 16px;
-        line-height: 22px;
-        padding: 17px 35px;
-    }
-}
-
-@media (max-width: 1200px) {
-    .development-sec h2.title-txt {
-        width: 44%;
-    }
-
-    .dev-track {
-        padding: 0 max(12px, calc((100vw - 1140px) / 2 + 12px));
-        gap: 64px;
-    }
-
-    .dev-slide {
-        flex-basis: min(78vw, 860px);
-    }
-}
-
-@media (max-width: 991.9px) {
-    section.development-sec {
-        padding: 44px 0 20px;
-    }
-
-    .development-sec h2.title-txt {
-        width: 100%;
-        max-width: 640px;
-        font-size: 36px;
-        line-height: 42px;
-        padding-bottom: 24px;
-    }
-
-    .dev-horizontal {
-        overflow: visible;
-        padding-inline: 12px;
-    }
-
-    .dev-track {
-        width: 100%;
-        padding: 0;
-        gap: 28px;
-        flex-direction: column;
-    }
-
-    .dev-slide {
-        flex: none;
-        width: 100%;
-    }
-
-    .image-container.dev-slide {
-        padding-bottom: 0;
-    }
-
-    .dev-slide .absolute-box {
-        position: static;
-        width: 100%;
-    }
-
-    .dev-slide .absolute-box p {
-        font-size: 14px;
-        line-height: 22px;
-        padding: 18px 20px;
-    }
-
-    .main-img-slider {
-        margin-top: 50px;
-    }
-
-    .development-swiper .absolute-box {
-        width: min(100%, 320px);
-    }
-
-    .development-swiper .absolute-box p {
-        font-size: 12px;
-        line-height: 17px;
-        padding: 18px 28px;
-    }
-}
-
-@media (max-width: 576px) {
-    section.development-sec {
-        padding: 36px 0 12px;
-    }
-
-    .development-sec h2.title-txt {
-        font-size: 28px;
-        line-height: 34px;
-        padding-bottom: 20px;
-    }
-
-    .dev-horizontal {
-        padding-inline: 8px;
-    }
-
-    .dev-track {
-        gap: 22px;
-    }
-
-    .development-swiper .absolute-box {
-        position: static;
-        max-width: 100%;
-    }
-
-    .development-swiper .absolute-box p {
-        font-size: 14px;
-        line-height: 22px;
-        padding: 18px 20px;
-    }
-
-    .dev-slide .absolute-box p {
-        font-size: 13px;
-        line-height: 20px;
-        padding: 16px 16px;
-    }
-} */
 
 /* development section css end */
 

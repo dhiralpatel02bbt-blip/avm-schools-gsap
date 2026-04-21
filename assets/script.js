@@ -553,7 +553,7 @@ gsap.registerPlugin(ScrollTrigger);
 
     gsap.set(devTrack, { clearProps: "x" });
 
-    if (window.innerWidth < 992) return;
+    if (window.innerWidth < 1200) return;
 
     var slides = Array.from(devTrack.querySelectorAll(".dev-slide"));
     if (!slides.length) return;
@@ -564,7 +564,10 @@ gsap.registerPlugin(ScrollTrigger);
       ? headingContainer.getBoundingClientRect().left
       : Math.min(Math.max(viewportWidth * 0.04, 16), 48);
     var sectionRightGap = headingContainer
-      ? Math.max(viewportWidth - headingContainer.getBoundingClientRect().right, 48)
+      ? Math.max(
+          viewportWidth - headingContainer.getBoundingClientRect().right,
+          48,
+        )
       : Math.min(Math.max(viewportWidth * 0.06, 48), 110);
     var currentSlide = 0;
     var isAnimating = false;
@@ -580,14 +583,20 @@ gsap.registerPlugin(ScrollTrigger);
       }
 
       if (index === slides.length - 1) {
-        return viewportWidth - sectionRightGap - (slide.offsetLeft + slide.offsetWidth);
+        return (
+          viewportWidth -
+          sectionRightGap -
+          (slide.offsetLeft + slide.offsetWidth)
+        );
       }
 
-      var centeredX = viewportWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2);
+      var centeredX =
+        viewportWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2);
       var maxX = -slides[0].offsetLeft;
       var minX =
         viewportWidth -
-        (slides[slides.length - 1].offsetLeft + slides[slides.length - 1].offsetWidth);
+        (slides[slides.length - 1].offsetLeft +
+          slides[slides.length - 1].offsetWidth);
 
       return Math.max(Math.min(centeredX, maxX), minX);
     }
@@ -1977,3 +1986,52 @@ tabs.forEach((tab) => {
     document.getElementById(target).classList.add("active");
   });
 });
+
+// AYM diagram section
+function cx(el) {
+  const r = el.getBoundingClientRect(),
+    pr = el.offsetParent.getBoundingClientRect();
+  return r.left - pr.left + r.width / 2;
+}
+function cy(el) {
+  const r = el.getBoundingClientRect(),
+    pr = el.offsetParent.getBoundingClientRect();
+  return r.top - pr.top + r.height / 2;
+}
+function draw() {
+  const svg = document.getElementById("lines");
+  const c = document.getElementById("c");
+  svg.innerHTML = "";
+  ["s1", "s2", "s3", "s4", "s5"].forEach((id) => {
+    const s = document.getElementById(id);
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", cx(c));
+    line.setAttribute("y1", cy(c));
+    line.setAttribute("x2", cx(s));
+    line.setAttribute("y2", cy(s));
+    line.setAttribute("stroke", "#0A3D9C");
+    line.setAttribute("stroke-width", "1.5");
+    line.setAttribute("stroke-dasharray", "5 4");
+    svg.appendChild(line);
+  });
+}
+setTimeout(draw, 100);
+window.addEventListener("resize", draw);
+
+// developer diagram section
+const path = document.querySelector("#arcPath");
+const dots = document.querySelectorAll(".dot");
+const wrapper = document.querySelector(".circle-wrapper");
+
+if (path && dots.length && wrapper) {
+  const length = path.getTotalLength();
+  const rect = wrapper.getBoundingClientRect();
+
+  dots.forEach((dot, i) => {
+    const point = path.getPointAtLength((i / (dots.length - 1)) * length);
+
+    // Position relative to wrapper
+    dot.style.left = point.x + "px";
+    dot.style.top = point.y + "px";
+  });
+}

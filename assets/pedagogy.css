@@ -991,4 +991,423 @@ section.tabbing-sec .tab-items {
 }
 
 /* extra section css End */
+
+/* AYM section css Start */
+.aym-section {
+    display: flex;
+    align-items: center;
+    padding: 100px 0;
+}
+
+.aym-img-col:before {
+    content: "";
+    position: absolute;
+    top: -32px;
+    left: 0;
+    width: 86px;
+    height: 32px;
+    background: #A793EC;
+    animation: bounceeffLR 9s infinite ease-in-out;
+}
+
+@keyframes bounceeffLR {
+    0% {
+        left: 0px;
+    }
+
+    50% {
+        left: 91%;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+.aym-img-col:after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 86px;
+    width: 160px;
+    height: 32px;
+    background: #FF7F50;
+    animation: bounceeffRL 9s infinite ease-in-out;
+}
+
+@keyframes bounceeffRL {
+    0% {
+        left: 86px;
+    }
+
+    50% {
+        left: 83%;
+    }
+
+    100% {
+        left: 86px;
+    }
+}
+
+.aym-img-col {
+    flex: 0 0 50%;
+    position: relative;
+}
+
+.aym-text {
+    padding: 0 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.aym-text h2 {
+    color: #0A3D9C;
+    font-family: Satoshi;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 50px;
+}
+
+.aym-text p {
+    color: #000;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+@media (max-width: 991.98px) {
+    .aym-section {
+        flex-direction: column;
+        padding: 32px 20px;
+    }
+
+    .aym-img-col {
+        width: 100%;
+    }
+}
+
+/* AYM section css End */
+
+/* AYM diagram section css Start  */
+.aym-diagram-sec {
+    margin: 100px 0 50px 0;
+}
+
+.aym-diagram {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    height: 480px;
+    font-family: sans-serif;
+}
+
+.center-node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: #F7DF00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    color: #000;
+    text-align: center;
+    font-family: Satoshi;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 33px;
+}
+
+.sat {
+    position: absolute;
+    background: #BEACFF;
+    border-radius: 100px;
+    padding: 15px 30px;
+    z-index: 2;
+    color: #000;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 29px;
+}
+
+.sat.top {
+    top: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sat.right {
+    top: 50%;
+    right: -100px;
+    transform: translateY(-50%);
+}
+
+.sat.bottom-right {
+    bottom: -40px;
+    right: 0px;
+}
+
+.sat.bottom-left {
+    bottom: -40px;
+    left: 20px;
+}
+
+.sat.left {
+    top: 50%;
+    left: -100px;
+    transform: translateY(-50%);
+}
+
+svg.lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* AYM diagram section css End  */
+
+/* AVM section css Start */
+.avm-section {
+    display: flex;
+    align-items: center;
+    padding: 100px 0;
+}
+
+.avm-img-col:before {
+    content: "";
+    position: absolute;
+    bottom: -32px;
+    left: 160px;
+    width: 86px;
+    height: 32px;
+    background: #A793EC;
+    animation: bounceLR 9s infinite ease-in-out;
+}
+
+@keyframes bounceLR {
+    0% {
+        left: 160px;
+    }
+
+    50% {
+        left: 91%;
+    }
+
+    100% {
+        left: 160px;
+    }
+}
+
+.avm-img-col:after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 160px;
+    height: 32px;
+    background: #FF7F50;
+    animation: bounceRL 9s infinite ease-in-out;
+}
+
+@keyframes bounceRL {
+    0% {
+        left: 0px;
+    }
+
+    50% {
+        left: 83%;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+.avm-img-col {
+    flex: 0 0 50%;
+    position: relative;
+}
+
+.avm-text {
+    padding: 0 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.avm-text h2 {
+    color: #0A3D9C;
+    font-family: Satoshi;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 50px;
+}
+
+.avm-text p {
+    color: #000;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+@media (max-width: 991.98px) {
+    .avm-section {
+        flex-direction: column;
+        padding: 32px 20px;
+    }
+
+    .avm-img-col {
+        width: 100%;
+    }
+}
+
+/* AVM section css End */
+
+/* development diagram section css Start */
+.teacher-dev {
+    padding: 100px 0px;
+}
+
+.teacher-dev .circle-wrapper {
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin: auto;
+}
+
+.teacher-dev .arc-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 300px;
+}
+
+.teacher-dev .arc-svg path {
+    fill: none;
+    stroke: #FF7F50;
+    stroke-width: 2;
+}
+
+.teacher-dev .center-circle {
+    position: absolute;
+    bottom: -90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(120px, 18vw, 300px);
+    height: clamp(120px, 18vw, 300px);
+    background: #F7DF00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.teacher-dev .center-circle p {
+    color: #000;
+    text-align: center;
+    font-family: Satoshi;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+.teacher-dev .dot {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: #FF7F50;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.teacher-dev .content {
+    position: absolute;
+    width: clamp(160px, 22vw, 300px);
+}
+
+.teacher-dev .content h4 {
+    color: #0A3D9C;
+    text-align: center;
+    font-family: Satoshi;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 27px;
+    white-space: nowrap;
+}
+
+.teacher-dev .content p {
+    color: #000;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px;
+}
+
+.teacher-dev .top {
+    top: -130px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.teacher-dev .left-top {
+    top: 30px;
+    left: -260px;
+}
+
+.teacher-dev .right-top {
+    top: 30px;
+    right: -280px;
+}
+
+.teacher-dev .left-bottom {
+    top: 250px;
+    left: -300px;
+}
+
+.teacher-dev .right-bottom {
+    top: 250px;
+    right: -300px;
+}
+
+@media (max-width: 768px) {
+    .teacher-dev .content {
+        position: static;
+        text-align: center !important;
+        margin-top: 20px;
+    }
+
+    .teacher-dev .circle-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .teacher-dev .arc-svg {
+        display: none;
+    }
+
+    .teacher-dev .dot {
+        display: none;
+    }
+}
+
+/* development diagram section css End */
+
 /* ------------------------------ Pedagogy page css End ------------------------------ */
