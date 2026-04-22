@@ -1279,6 +1279,7 @@ svg.lines {
 /* development diagram section css Start */
 .teacher-dev {
     padding: 100px 0px;
+    margin: 20px 0 100px 0;
 }
 
 .teacher-dev .circle-wrapper {

@@ -177,6 +177,9 @@ gsap.registerPlugin(ScrollTrigger);
   var campusSlides = gsap.utils.toArray(
     ".campus-section .campus-sequence-slide",
   );
+  var campusSlideVisuals = campusSlides.map(function (slide) {
+    return slide.querySelector(".campus-slide-visual");
+  });
   var campusText = campusSection.querySelector(".body-txt");
   var campusHalfCircle = campusSection.querySelector(".half-circle");
 
@@ -186,12 +189,15 @@ gsap.registerPlugin(ScrollTrigger);
   var horizontalTween = null;
   var sliderShown = false;
   var activeSlideIndex = -1;
+  var CAMPUS_MASK_DURATION = 1.35;
+  var CAMPUS_CIRCLE_DELAY_AFTER_MASK = 0.08;
+  var CAMPUS_TEXT_DELAY_AFTER_CIRCLE = 0.68;
 
   // ─────────────────────────────────────────────────────────
   // Slide caption animation
   // Yellow circle comes from bottom-left, text fades in after
   // ─────────────────────────────────────────────────────────
-  function animateSlide(index, immediate) {
+  function animateSlide(index, immediate, delay) {
     if (!campusSlides.length) return;
 
     campusSlides.forEach(function (slide, slideIndex) {
@@ -210,7 +216,7 @@ gsap.registerPlugin(ScrollTrigger);
     var t = active && active.querySelector(".campus-slide-text");
     if (!c || !t) return;
 
-    var d = immediate ? 0 : 0.1;
+    var d = immediate ? 0 : delay || 0;
     gsap.to(c, {
       x: 0,
       y: 0,
@@ -225,7 +231,7 @@ gsap.registerPlugin(ScrollTrigger);
       autoAlpha: 1,
       duration: 0.75,
       ease: "power3.out",
-      delay: d + 0.7,
+      delay: d + CAMPUS_TEXT_DELAY_AFTER_CIRCLE,
       overwrite: true,
     });
   }
@@ -233,12 +239,12 @@ gsap.registerPlugin(ScrollTrigger);
   // ─────────────────────────────────────────────────────────
   // Swiper init
   // ─────────────────────────────────────────────────────────
-  function setActiveSlide(index, immediate) {
+  function setActiveSlide(index, immediate, delay) {
     if (!campusSlides.length) return;
     var safeIndex = Math.max(0, Math.min(index, campusSlides.length - 1));
     if (safeIndex === activeSlideIndex && !immediate) return;
     activeSlideIndex = safeIndex;
-    animateSlide(safeIndex, immediate);
+    animateSlide(safeIndex, immediate, delay);
   }
 
   // buildHorizontalTween — kept for onRefresh compatibility (not used for masking)
@@ -260,7 +266,11 @@ gsap.registerPlugin(ScrollTrigger);
     // Scroll progress se slide index nikalo (0 to length-1)
     var nextIndex = Math.round(progress * (campusSlides.length - 1));
     revealSlideWithMask(nextIndex, false);
-    setActiveSlide(nextIndex, false);
+    setActiveSlide(
+      nextIndex,
+      false,
+      CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK,
+    );
   }
 
   // ─────────────────────────────────────────────────────────
@@ -276,15 +286,17 @@ gsap.registerPlugin(ScrollTrigger);
     lastMaskedIndex = index;
 
     campusSlides.forEach(function (slide, i) {
+      var visual = campusSlideVisuals[i];
+      if (!visual) return;
       if (i === index) {
         // Yeh slide visible rahega — top pe
         gsap.set(slide, { zIndex: 3 });
         if (immediate) {
-          gsap.set(slide, { clipPath: "inset(0% 0% 0% 0%)" });
+          gsap.set(visual, { clipPath: "inset(0% 0% 0% 0%)" });
         } else {
           // Neeche se mask reveal: inset bottom 100% → 0%
           gsap.fromTo(
-            slide,
+            visual,
             { clipPath: "inset(100% 0% 0% 0%)" },
             {
               clipPath: "inset(0% 0% 0% 0%)",
@@ -296,10 +308,12 @@ gsap.registerPlugin(ScrollTrigger);
         }
       } else if (i < index) {
         // Pichle slides — already revealed, neeche z-index
-        gsap.set(slide, { zIndex: 1, clipPath: "inset(0% 0% 0% 0%)" });
+        gsap.set(slide, { zIndex: 1 });
+        gsap.set(visual, { clipPath: "inset(0% 0% 0% 0%)" });
       } else {
         // Agle slides — abhi hidden
-        gsap.set(slide, { zIndex: 2, clipPath: "inset(100% 0% 0% 0%)" });
+        gsap.set(slide, { zIndex: 2 });
+        gsap.set(visual, { clipPath: "inset(100% 0% 0% 0%)" });
       }
     });
   }
@@ -313,10 +327,10 @@ gsap.registerPlugin(ScrollTrigger);
     campusSliderShell.style.pointerEvents = "auto";
     // Shell instantly visible — masking handles the reveal
     gsap.set(campusSliderShell, { autoAlpha: 1 });
-    // Pehli slide bottom-se-top mask reveal
+    // First slide should appear cleanly; mask animation starts from the next slide change.
     lastMaskedIndex = -1;
-    revealSlideWithMask(0, false);
-    setActiveSlide(0, false);
+    revealSlideWithMask(0, true);
+    setActiveSlide(0, true);
   }
 
   function hideSlider() {
@@ -345,12 +359,14 @@ gsap.registerPlugin(ScrollTrigger);
       campusSliderShell.style.pointerEvents = "auto";
     }
     campusSlides.forEach(function (slide) {
+      var visual = slide.querySelector(".campus-slide-visual");
       var c = slide.querySelector(".campus-slide-circle");
       var t = slide.querySelector(".campus-slide-text");
       if (c) gsap.set(c, { clearProps: "all" });
       if (t) gsap.set(t, { clearProps: "all" });
+      if (visual) gsap.set(visual, { clearProps: "clipPath" });
       // Mobile pe clip-path clear karo
-      gsap.set(slide, { clearProps: "clipPath,zIndex" });
+      gsap.set(slide, { clearProps: "zIndex" });
     });
     return;
   }
@@ -366,10 +382,13 @@ gsap.registerPlugin(ScrollTrigger);
 
   // Initial clip-path states — pehli slide visible, baaki hidden
   campusSlides.forEach(function (slide, i) {
+    var visual = slide.querySelector(".campus-slide-visual");
     if (i === 0) {
-      gsap.set(slide, { clipPath: "inset(0% 0% 0% 0%)", zIndex: 3 });
+      gsap.set(slide, { zIndex: 3 });
+      if (visual) gsap.set(visual, { clipPath: "inset(0% 0% 0% 0%)" });
     } else {
-      gsap.set(slide, { clipPath: "inset(100% 0% 0% 0%)", zIndex: 2 });
+      gsap.set(slide, { zIndex: 2 });
+      if (visual) gsap.set(visual, { clipPath: "inset(100% 0% 0% 0%)" });
     }
   });
   lastMaskedIndex = 0;
