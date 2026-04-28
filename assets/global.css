@@ -66,6 +66,11 @@ img {
   margin: 0 auto;
   padding: 0 20px;
 } */
+.container-xxl {
+    max-width: 1728px;
+    margin: 0 auto;
+}
+
 h1,
 h2,
 h3,
@@ -513,7 +518,7 @@ body {
 .contact-sec .inner-content h3 {
     font-family: "Satoshi";
     color: #ffffff;
-    font-size: 25px;
+    font-size: 38px;
     font-weight: 500;
     line-height: 78px;
     letter-spacing: -2%;
@@ -521,12 +526,11 @@ body {
 
 .contact-sec .inner-content h2 {
     font-family: "Satoshi";
-    width: 752px;
+    width: 670px;
     color: #ffffff;
-    font-size: 62px;
-    line-height: 75px;
-    letter-spacing: -2%;
-    font-weight: 600;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 70px;
 }
 
 .contact-sec input {
@@ -534,7 +538,6 @@ body {
 }
 
 .contact-sec input:focus {
-    /* transform: scale(1.02); */
     box-shadow: 0 0 0 2px #ffd200;
 }
 
@@ -553,7 +556,6 @@ body {
 
 .contact-sec .apply-form .form-group {
     margin-bottom: 20px;
-    /* transform: translateY(-200px); */
     transform: none;
 }
 
@@ -632,7 +634,6 @@ body {
     bottom: -160px;
 }
 
-/* purple circle */
 .contact-sec .image-container::before {
     content: "";
     position: absolute;
@@ -686,12 +687,23 @@ body {
     transform: none;
 }
 
-/* ================================================================
-   CONTACT SECTION — RESPONSIVE BREAKPOINTS
-   Desktop styles (above 1400px) are untouched above.
-================================================================ */
+@media (max-width: 1600px) {
+    .contact-sec .inner-content h3 {
+        font-size: 28px;
+    }
 
-/* 1400px — minor breathing room tweak */
+    .contact-sec .inner-content h2 {
+        width: 560px;
+        font-size: 46px;
+        font-weight: 700;
+        line-height: 55px;
+    }
+
+    .contact-sec form.apply-form {
+        margin-top: 50px;
+    }
+}
+
 @media (max-width: 1400px) {
     .contact-sec .inner-content h2 {
         width: 100%;

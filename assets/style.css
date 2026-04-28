@@ -77,21 +77,20 @@
 
 .bbt-dp-hero h1.main-title span.weight-500 {
   display: inline-block;
-  font-family: "Satoshi";
+  font-family: Satoshi;
   font-size: 70px;
   font-style: normal;
   font-weight: 500;
-  line-height: 79px;
+  line-height: 112%;
   letter-spacing: -0.697px;
 }
 
 .bbt-dp-hero h1.main-title span.weight-600 {
   font-family: Satoshi;
-  font-size: 92px;
-  font-style: normal;
+  font-size: 103.651px;
   font-weight: 700;
-  line-height: 103px;
-  letter-spacing: -0.917px;
+  line-height: 116px;
+  letter-spacing: -2.591px;
 }
 
 .bbt-dp-hero h1.main-title span.weight-500:last-child {
@@ -153,13 +152,17 @@
     height: 1450px;
   }
 
+  .bbt-dp-hero h1.main-title {
+    padding-left: 5%;
+  }
+
   .bbt-dp-hero h1.main-title span.weight-600 {
     font-size: 90px;
     line-height: 100px;
   }
 
   .bbt-dp-hero h1.main-title span.weight-500 {
-    font-size: 78px;
+    font-size: 60px;
   }
 
   .orange-bg-element {
@@ -414,7 +417,7 @@
   content: "";
   position: absolute;
   top: -90px;
-  right: 10%;
+  right: 33.4%;
   width: 518px;
   height: 34px;
   background: #A793EC;
@@ -437,7 +440,7 @@
   width: 50%;
 }
 
-.about-img .yellow-shape {
+/* .about-img .yellow-shape {
   position: absolute;
   max-width: 568.48px;
   width: 100%;
@@ -445,6 +448,19 @@
   background: #f7df00;
   border-radius: 300px 300px 0 0;
   top: 22%;
+  left: 0px;
+  z-index: 0;
+  transform: translateY(80px);
+  transition: transform 4s ease, opacity 4s ease;
+} */
+.about-img .yellow-shape {
+  position: absolute;
+  max-width: 749.8px;
+  width: 100%;
+  height: 466.25px;
+  background: #f7df00;
+  border-radius: 460px 460px 0 0;
+  top: 19%;
   left: 0px;
   z-index: 0;
   transform: translateY(80px);
@@ -544,9 +560,25 @@
   will-change: transform, opacity;
 }
 
+@media (max-width: 1600px) {
+  .about-img .yellow-shape {
+    height: 390px;
+    top: 23%;
+  }
+}
+
+@media (max-width: 1400px) {
+
+  .about-paragraph p,
+  .secondary-btn {
+    font-size: 20px;
+  }
+}
+
 @media (max-width: 1400px) {
   .bbt-dp-about .row::before {
     height: 24px;
+    right: 30%;
   }
 
   .about-img .yellow-shape {
@@ -555,7 +587,7 @@
 
   .about-paragraph p,
   .secondary-btn {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .about-img .purple-divider {
@@ -915,6 +947,20 @@
   text-decoration-color: #000;
 }
 
+@media (max-width: 1600px) {
+  .horizontal-section .yellow h2 {
+    font-size: 52px;
+  }
+
+  .horizontal-section .yellow {
+    width: 50%;
+  }
+
+  .horizontal-section .panel .content h3 {
+    font-size: 36px;
+  }
+}
+
 @media (max-width: 1400px) {
   .horizontal-section .horizontal-wrapper {
     padding: 50px 20px 0;
@@ -933,21 +979,21 @@
     width: 40%;
   }
 
-  .horizontal-section .yellow h2 {
-    font-size: 52px;
-  }
-
   .pedagogy-btn {
     font-size: 20px;
     bottom: 20px;
   }
 
   .horizontal-section .panel .content h3 {
-    font-size: 34px;
+    font-size: 30px;
   }
 
   .horizontal-section .panel .content p {
     font-size: 18px;
+  }
+
+  .horizontal-section .yellow h2 {
+    font-size: 47px;
   }
 }
 
@@ -1099,7 +1145,7 @@ section.bbt-FA-img-sec {
   z-index: 3;
 }
 
-.news-header h2 {
+.bbt-FA-img-sec .img-box h2 {
   font-family: 'Satoshi';
   font-size: 54px;
   font-weight: 700;
@@ -1134,6 +1180,16 @@ section.bbt-FA-img-sec {
   text-align: left;
 }
 
+.bbt-FA-img-sec .img-text h2 {
+  color: #0A3D9C;
+  font-family: "Satoshi";
+  font-size: 62px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 108%;
+  letter-spacing: -1.24px;
+}
+
 .bbt-FA-img-sec .main-title p {
   margin: 0;
   color: #fff;
@@ -1150,6 +1206,20 @@ section.bbt-FA-img-sec {
   text-decoration: underline;
   text-decoration-color: #ff7f50;
   text-decoration-thickness: 10%;
+}
+
+@media (max-width: 1600px) {
+  .bbt-FA-img-sec .img-box h2 {
+    font-size: 44px;
+    line-height: 48px;
+  }
+}
+
+@media(max-width: 1440px) {
+  section.bbt-FA-img-sec {
+    --school-circle-right: clamp(-80px, -5vw, -10px);
+    margin: 80px 0 120px;
+  }
 }
 
 @media (max-width: 1200.9px) {
@@ -1192,7 +1262,7 @@ section.bbt-FA-img-sec {
 @media (max-width: 767.9px) {
   section.bbt-FA-img-sec {
     --school-circle-size: min(82vw, 360px);
-    margin: 24px 0 48px;
+    margin: 0;
   }
 
   .bbt-FA-img-sec .img-box {
@@ -1209,11 +1279,11 @@ section.bbt-FA-img-sec {
     top: 20px;
     left: 20px;
     right: 20px;
-    max-width: 240px;
   }
 
-  .bbt-FA-img-sec .img-text h2 {
-    font-size: 22px;
+  .bbt-FA-img-sec .img-box h2 {
+    font-size: 34px;
+    line-height: 38px;
   }
 
   .bbt-FA-img-sec .purple-circle {
@@ -1293,11 +1363,11 @@ section.bbt-FA-img-sec {
 
 .recognition-sec .section-title {
   color: #0a3d9c;
-  font-size: 62px;
-  font-weight: 600;
+  font-size: 54px;
+  font-weight: 700;
   font-family: "Satoshi";
   letter-spacing: -2px;
-  line-height: 1.3;
+  line-height: 60px;
   margin-bottom: 80px !important;
 }
 
@@ -1373,12 +1443,19 @@ section.bbt-FA-img-sec {
   justify-self: start;
 }
 
-@media (max-width: 1400px) {
-  .recognition-sec .section-title {
-    font-size: 52px;
-    line-height: 1.2;
+@media (max-width: 1600px) {
+  .recognition-sec {
+    padding: 80px 20px;
   }
 
+  .recognition-sec .section-title {
+    font-size: 44px;
+    line-height: 50px;
+    margin-bottom: 60px !important;
+  }
+}
+
+@media (max-width: 1400px) {
   .recognition-sec .award-title {
     font-size: 18px;
     line-height: 1.3;
@@ -1444,6 +1521,7 @@ section.bbt-FA-img-sec {
   .recognition-sec .section-title {
     font-size: 26px;
     padding-top: 0px;
+    line-height: 30px;
     margin-bottom: 36px !important;
   }
 
@@ -1460,7 +1538,7 @@ section.bbt-FA-img-sec {
   }
 
   .recognition-sec .award .leaf {
-    width: 44px;
+    width: 30px;
     height: 96px;
   }
 
@@ -1480,7 +1558,6 @@ section.bbt-FA-img-sec {
   padding: 80px 0px;
 }
 
-/* ── Header row ── */
 .news-header {
   display: flex;
   align-items: baseline;
@@ -1488,7 +1565,15 @@ section.bbt-FA-img-sec {
   margin-bottom: 50px;
 }
 
-/* ── Cards grid ── */
+.news-header h2 {
+  color: #0A3D9C;
+  font-family: Satoshi;
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 58.32px;
+}
+
 .news-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1496,7 +1581,6 @@ section.bbt-FA-img-sec {
   align-items: start;
 }
 
-/* ── Single card ── */
 .news-card {
   display: grid;
   grid-template-rows: auto minmax(72px, auto) auto auto;
@@ -1517,7 +1601,6 @@ section.bbt-FA-img-sec {
   margin-bottom: 12px !important;
 }
 
-/* Title */
 .card-title {
   color: #000;
   font-family: Satoshi;
@@ -1528,7 +1611,6 @@ section.bbt-FA-img-sec {
   min-height: 99px;
 }
 
-/* Image container */
 .card-img {
   margin-top: 18px;
   width: 100%;
@@ -1552,7 +1634,20 @@ section.bbt-FA-img-sec {
   letter-spacing: 0.18px;
 }
 
-/* ── Responsive ── */
+@media(max-width: 1600px) {
+  .news-header h2 {
+    font-size: 44px;
+    line-height: 33px;
+  }
+}
+
+@media(max-width:1440px) {
+  .card-title {
+    font-size: 24px;
+    min-height: 80px;
+  }
+}
+
 @media (max-width: 900px) {
   .news-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1578,6 +1673,16 @@ section.bbt-FA-img-sec {
   }
 }
 
+@media(max-width:767px) {
+  .news-section {
+    padding: 20px 0px 50px;
+  }
+
+  .news-header h2 {
+    font-size: 34px;
+  }
+}
+
 @media (max-width: 580px) {
   .news-section {
     padding: 40px 20px 60px;
@@ -1588,7 +1693,7 @@ section.bbt-FA-img-sec {
   }
 
   .news-header h2 {
-    font-size: 1.8rem;
+    font-size: 30px;
   }
 }
 

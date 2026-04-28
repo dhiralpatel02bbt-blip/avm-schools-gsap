@@ -189,26 +189,31 @@ gsap.registerPlugin(ScrollTrigger);
   var horizontalTween = null;
   var sliderShown = false;
   var activeSlideIndex = -1;
+  var introActive = false;
+  var hasReachedSlider = false;
   var CAMPUS_MASK_DURATION = 1.35;
   var CAMPUS_CIRCLE_DELAY_AFTER_MASK = 0.08;
   var CAMPUS_TEXT_DELAY_AFTER_CIRCLE = 0.68;
 
-  // ─────────────────────────────────────────────────────────
-  // Slide caption animation
-  // Yellow circle comes from bottom-left, text fades in after
-  // ─────────────────────────────────────────────────────────
   function animateSlide(index, immediate, delay) {
     if (!campusSlides.length) return;
 
-    campusSlides.forEach(function (slide, slideIndex) {
+    // campusSlides.forEach(function (slide, slideIndex) {
+    //   var c = slide.querySelector(".campus-slide-circle");
+    //   var t = slide.querySelector(".campus-slide-text");
+    //   if (!c || !t) return;
+    //   gsap.killTweensOf([c, t]);
+    //   if (slideIndex !== index) {
+    //     gsap.set(c, { x: -110, y: 110, autoAlpha: 0 });
+    //     gsap.set(t, { y: 32, autoAlpha: 0 });
+    //   }
+    // });
+    campusSlides.forEach(function (slide) {
       var c = slide.querySelector(".campus-slide-circle");
       var t = slide.querySelector(".campus-slide-text");
-      if (!c || !t) return;
-      gsap.killTweensOf([c, t]);
-      if (slideIndex !== index) {
-        gsap.set(c, { x: -110, y: 110, autoAlpha: 0 });
-        gsap.set(t, { y: 32, autoAlpha: 0 });
-      }
+
+      if (c) gsap.set(c, { x: -110, y: 110, autoAlpha: 0 });
+      if (t) gsap.set(t, { y: 32, autoAlpha: 0 });
     });
 
     var active = campusSlides[index];
@@ -223,7 +228,7 @@ gsap.registerPlugin(ScrollTrigger);
       autoAlpha: 1,
       duration: 0.9,
       ease: "power3.out",
-      delay: d,
+      delay: d + 0.3,
       overwrite: true,
     });
     gsap.to(t, {
@@ -231,7 +236,7 @@ gsap.registerPlugin(ScrollTrigger);
       autoAlpha: 1,
       duration: 0.75,
       ease: "power3.out",
-      delay: d + CAMPUS_TEXT_DELAY_AFTER_CIRCLE,
+      delay: d + 0.9,
       overwrite: true,
     });
   }
@@ -242,12 +247,11 @@ gsap.registerPlugin(ScrollTrigger);
   function setActiveSlide(index, immediate, delay) {
     if (!campusSlides.length) return;
     var safeIndex = Math.max(0, Math.min(index, campusSlides.length - 1));
-    if (safeIndex === activeSlideIndex && !immediate) return;
+    if (safeIndex === activeSlideIndex && !immediate && index !== 0) return;
     activeSlideIndex = safeIndex;
     animateSlide(safeIndex, immediate, delay);
   }
 
-  // buildHorizontalTween — kept for onRefresh compatibility (not used for masking)
   function buildHorizontalTween() {
     return null;
   }
@@ -272,11 +276,6 @@ gsap.registerPlugin(ScrollTrigger);
       CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK,
     );
   }
-
-  // ─────────────────────────────────────────────────────────
-  // Masking transition — neeche se oopar reveal
-  // Har slide ka clip-path control karta hai reveal
-  // ─────────────────────────────────────────────────────────
   var maskAnimating = false;
   var lastMaskedIndex = -1;
 
@@ -318,16 +317,11 @@ gsap.registerPlugin(ScrollTrigger);
     });
   }
 
-  // ─────────────────────────────────────────────────────────
-  // Show / hide slider
-  // ─────────────────────────────────────────────────────────
   function showSlider() {
     if (sliderShown) return;
     sliderShown = true;
     campusSliderShell.style.pointerEvents = "auto";
-    // Shell instantly visible — masking handles the reveal
     gsap.set(campusSliderShell, { autoAlpha: 1 });
-    // First slide should appear cleanly; mask animation starts from the next slide change.
     lastMaskedIndex = -1;
     revealSlideWithMask(0, true);
     setActiveSlide(0, true);
@@ -345,10 +339,6 @@ gsap.registerPlugin(ScrollTrigger);
     });
     resetHorizontalTrack();
   }
-
-  // ─────────────────────────────────────────────────────────
-  // MOBILE — no scroll magic, show everything flat
-  // ─────────────────────────────────────────────────────────
   if (!isDesktop) {
     if (campusText) gsap.set(campusText, { clearProps: "all" });
     if (campusHalfCircle) gsap.set(campusHalfCircle, { clearProps: "all" });
@@ -365,22 +355,17 @@ gsap.registerPlugin(ScrollTrigger);
       if (c) gsap.set(c, { clearProps: "all" });
       if (t) gsap.set(t, { clearProps: "all" });
       if (visual) gsap.set(visual, { clearProps: "clipPath" });
-      // Mobile pe clip-path clear karo
       gsap.set(slide, { clearProps: "zIndex" });
     });
     return;
   }
 
-  // ─────────────────────────────────────────────────────────
-  // DESKTOP — initial hidden states
-  // ─────────────────────────────────────────────────────────
   gsap.set(campusText, { autoAlpha: 0, x: -96, filter: "blur(14px)" });
   gsap.set(campusHalfCircle, { xPercent: -22 });
   gsap.set(campusSliderShell, { autoAlpha: 0 });
   campusSliderShell.style.pointerEvents = "none";
   if (campusTrack) gsap.set(campusTrack, { y: 0 });
 
-  // Initial clip-path states — pehli slide visible, baaki hidden
   campusSlides.forEach(function (slide, i) {
     var visual = slide.querySelector(".campus-slide-visual");
     if (i === 0) {
@@ -392,20 +377,34 @@ gsap.registerPlugin(ScrollTrigger);
     }
   });
   lastMaskedIndex = 0;
-  setActiveSlide(0, true);
+  setActiveSlide(0, false, 0.2);
 
-  // ─────────────────────────────────────────────────────────
-  // PHASE 1 — page load: circle slides in, then text slides in
-  // ─────────────────────────────────────────────────────────
-  function playLoadAnim() {
-    if (!campusText || loadTL) return;
-    loadTL = gsap.timeline({ delay: 0.2 });
+  function playLoadAnim(isReentry) {
+    if (!campusText) return;
+    if (loadTL) {
+      loadTL.kill();
+      loadTL = null;
+    }
+
+    introActive = true;
+
+    gsap.killTweensOf([campusHalfCircle, campusText]);
+    gsap.set(campusHalfCircle, { xPercent: -40, autoAlpha: 0 });
+    gsap.set(campusText, { x: -96, autoAlpha: 0, filter: "blur(14px)" });
+
+    loadTL = gsap.timeline({
+      delay: isReentry ? 0 : 0.2,
+      onComplete: function () {
+        introActive = false;
+      },
+    });
 
     if (campusHalfCircle) {
       loadTL.to(
         campusHalfCircle,
         {
           xPercent: 0,
+          autoAlpha: 1,
           duration: 1.3,
           ease: "power3.out",
         },
@@ -422,14 +421,22 @@ gsap.registerPlugin(ScrollTrigger);
         duration: 1.0,
         ease: "power3.out",
       },
-      0.4,
+      0.6,
     );
   }
 
   if (document.readyState === "complete") {
-    requestAnimationFrame(playLoadAnim);
+    requestAnimationFrame(function () {
+      playLoadAnim(false);
+    });
   } else {
-    window.addEventListener("load", playLoadAnim, { once: true });
+    window.addEventListener(
+      "load",
+      function () {
+        playLoadAnim(false);
+      },
+      { once: true },
+    );
   }
 
   if (!campusViewport) return;
@@ -510,17 +517,42 @@ gsap.registerPlugin(ScrollTrigger);
     onUpdate: function (self) {
       var p = self.progress;
 
-      // Phase 2 (0 → 0.50): exit text + circle
-      var exitP = Math.min(p / 0.5, 1);
-      exitTL.progress(exitP);
+      // ── Phase 2: scroll-driven exit (0 → 0.50) ──────────────
+      // introActive ke dauran skip karo — playLoadAnim apne elements khud control karta hai
+      if (!introActive) {
+        var exitP = Math.min(p / 0.5, 1);
+        exitTL.progress(exitP);
+      }
 
-      // Phase 3 (0.50 → 1.00): slider slides
-      if (p >= 0.5) {
+      // ── Phase 3: slider (0.50 → 1.00) ───────────────────────
+      if (p >= 0.03) {
+        hasReachedSlider = true;
         showSlider();
+
+        // 🔴 BLUE PART HIDE KARO (IMPORTANT)
+        gsap.to(campusHalfCircle, {
+          autoAlpha: 0,
+          xPercent: -100,
+          duration: 0.4,
+          overwrite: true,
+        });
+
+        gsap.to(campusText, {
+          autoAlpha: 0,
+          x: -120,
+          duration: 0.4,
+          overwrite: true,
+        });
+
         var sliderP = (p - 0.5) / 0.5;
         updateHorizontalTrack(Math.min(sliderP, 1));
       } else {
         hideSlider();
+        if (hasReachedSlider && p < 0.03 && !introActive) {
+          hasReachedSlider = false;
+          exitTL.progress(0);
+          playLoadAnim(true);
+        }
       }
     },
     onLeave: function () {

@@ -50,15 +50,6 @@
     object-position: center center;
 }
 
-.campus-static-media::after,
-.campus-slider-shell::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.42) 100%);
-}
-
 .campus-slider-shell {
     position: absolute;
     inset: 0;
@@ -552,6 +543,7 @@ section.development-sec {
     align-items: flex-start;
     min-height: 0;
     padding-bottom: 0;
+    padding-left: 20px;
 }
 
 .dev-track {
