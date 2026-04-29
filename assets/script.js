@@ -1186,7 +1186,7 @@ contactTL
 
 // Image parallax
 gsap.to(".contact-sec .image-container", {
-  y: -80,
+  y: 20,
   ease: "none",
   scrollTrigger: {
     trigger: ".contact-sec",
