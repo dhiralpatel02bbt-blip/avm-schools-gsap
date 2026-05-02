@@ -102,8 +102,8 @@ img.teacher-img-full {
 body.pedagogy-page .campus-section .body-txt {
     position: relative;
     z-index: 5;
-    max-width: min(32vw, 460px);
-    margin: 0 0 0 6vw;
+    max-width: min(32vw, 550px);
+    margin: 0 0 0 5vw;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -747,7 +747,6 @@ section.tabbing-sec .tab-items {
     width: 107px;
     height: 30px;
     background-color: #FC8B5F;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #playtrails .feature-block:last-child .img-block:after {
@@ -758,7 +757,6 @@ section.tabbing-sec .tab-items {
     width: 148px;
     height: 30px;
     background-color: #FC8B5F;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #playtrails .feature-block:last-child .img-block:before {
@@ -769,7 +767,6 @@ section.tabbing-sec .tab-items {
     width: 104px;
     height: 30px;
     background-color: #F7DF00;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #primary .feature-block:first-child .img-block:after {
@@ -780,7 +777,6 @@ section.tabbing-sec .tab-items {
     width: 191px;
     height: 30px;
     background-color: #F7DF00;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #primary .feature-block:first-child .img-block:before {
@@ -791,7 +787,6 @@ section.tabbing-sec .tab-items {
     width: 107px;
     height: 30px;
     background-color: #BEACFF;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #primary .feature-block:last-child .img-block:after {
@@ -802,7 +797,6 @@ section.tabbing-sec .tab-items {
     width: 104px;
     height: 30px;
     background-color: #F7DF00;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #primary .feature-block:last-child .img-block:before {
@@ -813,7 +807,6 @@ section.tabbing-sec .tab-items {
     width: 168px;
     height: 30px;
     background-color: #BEACFF;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #secondary .feature-block:nth-child(2) .img-block:after {
@@ -824,7 +817,6 @@ section.tabbing-sec .tab-items {
     width: 107px;
     height: 30px;
     background-color: #F7DF00;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #secondary .feature-block:nth-child(2) .img-block:before {
@@ -835,7 +827,6 @@ section.tabbing-sec .tab-items {
     width: 191px;
     height: 30px;
     background-color: #FC8B5F;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #secondary .feature-block:nth-child(3) .img-block:after {
@@ -846,7 +837,6 @@ section.tabbing-sec .tab-items {
     width: 107px;
     height: 30px;
     background-color: #BEACFF;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #secondary .feature-block:nth-child(3) .img-block:before {
@@ -857,23 +847,6 @@ section.tabbing-sec .tab-items {
     width: 191px;
     height: 30px;
     background-color: #FC8B5F;
-    animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
-}
-
-@keyframes bounceLeftRight {
-    0% {
-        transform: translateX(0px);
-    }
-
-    100% {
-        transform: translateX(100%);
-    }
-}
-
-@media (max-width: 600px) {
-    section.tabbing-sec .row {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* tabbing section css End */

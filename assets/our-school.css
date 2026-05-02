@@ -261,6 +261,11 @@ body.our-school-page {
     .campus-section .panel-title {
         font-size: 40px;
     }
+
+    .campus-section .half-circle {
+        width: 1760px;
+        height: 1800px;
+    }
 }
 
 @media(max-width:1023px) {
@@ -611,6 +616,8 @@ section.development-sec {
     }
 
     .dev-horizontal {
+        width: 85%;
+        margin: 0 auto;
         overflow: visible;
         padding-inline: 24px;
     }
@@ -792,6 +799,13 @@ section.development-sec {
     text-decoration: underline;
 }
 
+@media(max-width: 1600px) {
+    .campus-heading {
+        font-size: 44px;
+        line-height: 50.48px;
+    }
+}
+
 @media(max-width: 1440px) {
     .location-section {
         padding: 80px 0;
@@ -831,6 +845,7 @@ section.development-sec {
 
     .campus-heading {
         font-size: 40px;
+        flex: 0 0 70px;
     }
 }
 

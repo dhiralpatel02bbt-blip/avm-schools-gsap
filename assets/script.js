@@ -629,27 +629,8 @@ gsap.registerPlugin(ScrollTrigger);
       var slide = slides[index];
       if (!slide) return 0;
 
-      if (index === 0) {
-        return sectionLeftEdge - slide.offsetLeft;
-      }
-
-      if (index === slides.length - 1) {
-        return (
-          viewportWidth -
-          sectionRightGap -
-          (slide.offsetLeft + slide.offsetWidth)
-        );
-      }
-
-      var centeredX =
-        viewportWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2);
-      var maxX = -slides[0].offsetLeft;
-      var minX =
-        viewportWidth -
-        (slides[slides.length - 1].offsetLeft +
-          slides[slides.length - 1].offsetWidth);
-
-      return Math.max(Math.min(centeredX, maxX), minX);
+      // Sabhi slides left-aligned — left edge se sectionLeftEdge pe aayenge
+      return sectionLeftEdge - slide.offsetLeft;
     }
 
     var slideOffsets = slides.map(function (_, index) {

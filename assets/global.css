@@ -67,7 +67,8 @@ img {
   padding: 0 20px;
 } */
 .container-xxl {
-    max-width: 1728px;
+    max-width: 85%;
+    /* max-width: 1728px; */
     margin: 0 auto;
 }
 
@@ -251,13 +252,37 @@ header .main-btn:hover::before {
     display: none;
 }
 
-@media (max-width: 1200px) {
-    .logo img {
-        width: 170px;
+@media (max-width: 1600px) {
+    header .main-menu ul li a {
+        font-size: 20px;
     }
 
     nav.main-menu ul {
-        gap: 39px;
+        gap: 58px;
+    }
+}
+
+@media (max-width: 1366px) {
+    .logo img {
+        width: 217px;
+    }
+
+    header .main-menu ul li a {
+        font-size: 18px;
+    }
+
+    nav.main-menu ul {
+        gap: 35px;
+    }
+}
+
+@media (max-width: 1200px) {
+    header {
+        padding-top: 30px;
+    }
+
+    .logo img {
+        width: 170px;
     }
 }
 
@@ -508,6 +533,7 @@ body {
 .contact-sec .content {
     max-width: 630px;
     width: 100%;
+    padding: 0;
 }
 
 .contact-sec .inner-content,
@@ -638,11 +664,18 @@ body {
     width: 674.24px;
     height: 674.244px;
     transition: transform 0.2s ease;
+    padding: 0;
 }
 
 .slide-left {
     opacity: 1;
     transform: none;
+}
+
+@media (max-width: 1718px) {
+    .contact-sec .row {
+        gap: 30px;
+    }
 }
 
 @media (max-width: 1600px) {
@@ -659,6 +692,20 @@ body {
 
     .contact-sec form.apply-form {
         margin-top: 50px;
+    }
+
+    .contact-sec .content {
+        max-width: 580px;
+    }
+
+    .contact-sec .image-container {
+        width: 580px;
+        height: 600px;
+    }
+
+    .contact-sec .form-actions {
+        gap: 76px;
+        margin-top: 60px;
     }
 }
 
@@ -688,7 +735,7 @@ body {
     }
 
     .contact-sec .content {
-        width: 40%;
+        width: 50%;
     }
 
     .contact-sec .form-actions {
@@ -699,6 +746,39 @@ body {
     .contact-sec .download-link {
         font-size: 20px;
     }
+
+    .contact-sec .apply-form input {
+        height: 58.52px;
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 1366px) {
+    .contact-sec .row {
+        gap: 30px;
+    }
+
+    .contact-sec .content {
+        width: 48%;
+    }
+
+    .contact-sec .image-container {
+        width: 470px;
+        height: 470px;
+    }
+
+    .contact-sec .form-actions {
+        margin-top: 60px;
+    }
+
+    .contact-sec a.apply-btn {
+        font-size: 18px;
+        padding: 18px 45px;
+    }
+
+    .contact-sec .download-link {
+        font-size: 18px;
+    }
 }
 
 /* 1200px — compress content & image slightly */
@@ -708,7 +788,7 @@ body {
     }
 
     .contact-sec .row {
-        padding: 0 24px;
+        padding: 0 0px;
         gap: 50px;
     }
 
@@ -725,11 +805,12 @@ body {
     .contact-sec .inner-content h3 {
         font-size: 22px;
         line-height: 60px;
+        padding-bottom: 0px;
     }
 
     .contact-sec .image-container {
-        width: 440px;
-        height: 440px;
+        width: 360px;
+        height: 360px;
         bottom: -120px;
     }
 
@@ -1213,7 +1294,7 @@ body {
 .bbt-FA-main-footer .footer-container .divi {
     height: 1px;
     background: rgba(255, 255, 255, 0.9);
-    margin-bottom: 44px;
+    margin-bottom: 66px;
 }
 
 .bbt-FA-main-footer .footer-top {
@@ -1286,7 +1367,7 @@ body {
     font-size: 16px;
     line-height: 1.5;
     margin-top: 34px;
-    padding: 28px 0;
+    padding: 28px 0 85px;
 }
 
 .bbt-FA-main-footer .footer-text p {
@@ -1303,8 +1384,16 @@ body {
 }
 
 @media (max-width: 1400px) {
+    .contact-sec {
+        padding: 100px 0;
+    }
+
     .bbt-FA-main-footer .container.footer-container {
         padding: 100px 40px;
+    }
+
+    .bbt-FA-main-footer .footer-text {
+        padding: 28px 0 55px;
     }
 
     .bbt-FA-main-footer .main {
@@ -1322,6 +1411,35 @@ body {
     .bbt-FA-main-footer img.footer-logo {
         width: 260px;
         height: auto;
+    }
+
+    .bbt-FA-main-footer .footer-text p {
+        font-size: 16px;
+    }
+
+    .bbt-FA-main-footer .icon {
+        width: 63px;
+        height: 61px;
+    }
+}
+
+@media(max-width: 1366px) {
+    .bbt-FA-main-footer .footer-middle a {
+        font-size: 18px;
+    }
+
+    .bbt-FA-main-footer .footer-middle {
+        gap: 30px;
+    }
+
+    .bbt-FA-main-footer .icon {
+        width: 53px;
+        height: 51px;
+    }
+
+    .ft-social .icon img {
+        width: 25px;
+        height: 25px;
     }
 }
 
