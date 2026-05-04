@@ -253,12 +253,24 @@ header .main-btn:hover::before {
 }
 
 @media (max-width: 1600px) {
+    header {
+        padding-top: 44px;
+    }
+
+    .logo img {
+        width: clamp(172px, 12vw, 190px);
+    }
+
     header .main-menu ul li a {
-        font-size: 20px;
+        font-size: clamp(14px, 1.05vw, 16px);
     }
 
     nav.main-menu ul {
-        gap: 58px;
+        gap: clamp(62px, 5.2vw, 75px);
+    }
+
+    header .main-btn {
+        padding: 10px 28px;
     }
 }
 

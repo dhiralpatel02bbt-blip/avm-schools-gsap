@@ -996,7 +996,7 @@ if (videoWrapper && video && playBtn) {
     ".video-container",
     { clipPath: "inset(40% 44% 40% 44%)" },
     {
-      clipPath: "inset(10% 11% 0% 11%)",
+      clipPath: "inset(0% 0% 0% 0%)",
       ease: "none",
       scrollTrigger: {
         trigger: ".video-section",

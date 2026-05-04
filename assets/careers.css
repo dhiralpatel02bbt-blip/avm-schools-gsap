@@ -1,0 +1,273 @@
+.careers-page {
+  background: #fff8ee;
+}
+
+.careers-page header .main-menu ul li a {
+  color: #000;
+}
+
+.careers-hero {
+  min-height: 100vh;
+  padding: 180px 0 90px;
+  background: #fff8ee;
+  overflow: hidden;
+}
+
+.careers-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  align-items: center;
+  gap: 56px;
+}
+
+.careers-hero-content {
+  max-width: 720px;
+}
+
+.careers-eyebrow {
+  color: #ff7e50;
+  font-family: "Satoshi";
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 22px !important;
+}
+
+.careers-hero h1,
+.careers-intro h2,
+.open-roles h2 {
+  color: #0a3d9c;
+  font-family: "Satoshi";
+  font-weight: 700;
+}
+
+.careers-hero h1 {
+  font-size: clamp(54px, 5.2vw, 96px);
+  line-height: 1;
+  max-width: 760px;
+}
+
+.careers-hero-content > p:not(.careers-eyebrow) {
+  color: #222;
+  font-size: 22px;
+  line-height: 1.55;
+  max-width: 650px;
+  margin: 30px 0 44px !important;
+}
+
+.careers-hero-image {
+  position: relative;
+  min-height: 620px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.careers-hero-image::before {
+  content: "";
+  position: absolute;
+  width: min(94%, 610px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f7df00;
+  right: 2%;
+  bottom: 0;
+}
+
+.careers-hero-image::after {
+  content: "";
+  position: absolute;
+  width: 52%;
+  height: 30px;
+  background: #ff7f50;
+  right: 0;
+  bottom: 0;
+}
+
+.careers-hero-image img {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 690px);
+  height: auto;
+  object-fit: contain;
+}
+
+.careers-intro {
+  padding: 120px 0;
+  background: #ffffff;
+}
+
+.careers-copy {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(300px, 1fr);
+  gap: 60px;
+  align-items: start;
+  margin-bottom: 62px;
+}
+
+.careers-copy h2,
+.open-roles h2 {
+  font-size: clamp(42px, 4vw, 70px);
+  line-height: 1.08;
+}
+
+.careers-copy p,
+.open-roles-heading p {
+  color: #222;
+  font-size: 21px;
+  line-height: 1.65;
+}
+
+.careers-values {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.career-card {
+  border: 2px solid rgba(10, 61, 156, 0.16);
+  border-radius: 8px;
+  padding: 32px;
+  background: #fff;
+}
+
+.career-card span {
+  color: #ff7f50;
+  display: block;
+  font-family: "Satoshi";
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 34px;
+}
+
+.career-card h3,
+.role-row h3 {
+  color: #0a3d9c;
+  font-family: "Satoshi";
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px !important;
+}
+
+.career-card p,
+.role-row p {
+  color: #252525;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.open-roles {
+  padding: 110px 0 130px;
+  background: #f7df00;
+}
+
+.open-roles-heading {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(300px, 1fr);
+  gap: 70px;
+  align-items: start;
+  margin-bottom: 54px;
+}
+
+.role-list {
+  display: grid;
+  gap: 18px;
+}
+
+.role-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+  align-items: center;
+  padding: 30px 34px;
+  border-radius: 8px;
+  background: #fff8ee;
+}
+
+.role-row a {
+  flex: 0 0 auto;
+  color: #000;
+  font-family: "Satoshi";
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: #ff7f50;
+}
+
+.role-row a:hover {
+  color: #0a3d9c;
+}
+
+@media (max-width: 1199px) {
+  .careers-hero {
+    padding-top: 150px;
+  }
+
+  .careers-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .careers-hero-image {
+    min-height: 520px;
+  }
+
+  .careers-values {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 991px) {
+  .careers-copy,
+  .open-roles-heading {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .careers-intro,
+  .open-roles {
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .careers-hero {
+    min-height: auto;
+    padding: 135px 0 60px;
+  }
+
+  .careers-hero h1 {
+    font-size: 46px;
+  }
+
+  .careers-hero-content > p:not(.careers-eyebrow),
+  .careers-copy p,
+  .open-roles-heading p {
+    font-size: 18px;
+  }
+
+  .careers-hero-image {
+    min-height: 360px;
+  }
+
+  .role-row {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .careers-hero h1 {
+    font-size: 40px;
+  }
+
+  .careers-copy h2,
+  .open-roles h2 {
+    font-size: 36px;
+  }
+
+  .career-card h3,
+  .role-row h3 {
+    font-size: 25px;
+  }
+}
