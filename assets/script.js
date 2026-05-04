@@ -604,7 +604,7 @@ gsap.registerPlugin(ScrollTrigger);
 
     gsap.set(devTrack, { clearProps: "x" });
 
-    if (window.innerWidth < 1200) return;
+    if (window.innerWidth < 992) return;
 
     var slides = Array.from(devTrack.querySelectorAll(".dev-slide"));
     if (!slides.length) return;

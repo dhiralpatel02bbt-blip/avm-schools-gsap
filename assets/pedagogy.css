@@ -65,10 +65,10 @@ body.pedagogy-page .campus-section .panel {
 body.pedagogy-page .campus-section .half-circle {
     will-change: transform;
     position: absolute;
-    top: 76%;
-    left: -30%;
-    width: 2000px;
-    height: 2000px;
+    top: 90%;
+    left: -38%;
+    width: 2165px;
+    height: 2165px;
     border-radius: 50%;
     background: #0a43a4;
     transform: translateY(-50%);
@@ -106,7 +106,7 @@ body.pedagogy-page .campus-section .body-txt {
     margin: 0 0 0 5vw;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 47.9px;
     pointer-events: auto;
 }
 
@@ -607,20 +607,21 @@ section.tabbing-sec .tab-content.active {
 
 section.tabbing-sec .yellow-box {
     background: #F7DF00;
-    padding: 30px 90px;
+    padding: 47px 93px 49.93px 94px;
     left: 50%;
     transform: translateX(-50%);
     bottom: -50px;
+    width: 71%;
 }
 
 section.tabbing-sec .yellow-box p {
     color: #000;
     text-align: center;
     font-family: Satoshi;
-    font-size: 26px;
+    font-size: 44px;
     font-style: normal;
     font-weight: 700;
-    line-height: 30px;
+    line-height: 55px;
 }
 
 section.tabbing-sec h5.sub-title {
@@ -980,21 +981,6 @@ section.tabbing-sec .tab-items {
     width: 86px;
     height: 32px;
     background: #A793EC;
-    animation: bounceeffLR 9s infinite ease-in-out;
-}
-
-@keyframes bounceeffLR {
-    0% {
-        left: 0px;
-    }
-
-    50% {
-        left: 91%;
-    }
-
-    100% {
-        left: 0px;
-    }
 }
 
 .aym-img-col:after {
@@ -1005,21 +991,6 @@ section.tabbing-sec .tab-items {
     width: 160px;
     height: 32px;
     background: #FF7F50;
-    animation: bounceeffRL 9s infinite ease-in-out;
-}
-
-@keyframes bounceeffRL {
-    0% {
-        left: 86px;
-    }
-
-    50% {
-        left: 83%;
-    }
-
-    100% {
-        left: 86px;
-    }
 }
 
 .aym-img-col {
@@ -1166,21 +1137,6 @@ svg.lines {
     width: 86px;
     height: 32px;
     background: #A793EC;
-    animation: bounceLR 9s infinite ease-in-out;
-}
-
-@keyframes bounceLR {
-    0% {
-        left: 160px;
-    }
-
-    50% {
-        left: 91%;
-    }
-
-    100% {
-        left: 160px;
-    }
 }
 
 .avm-img-col:after {
@@ -1191,21 +1147,6 @@ svg.lines {
     width: 160px;
     height: 32px;
     background: #FF7F50;
-    animation: bounceRL 9s infinite ease-in-out;
-}
-
-@keyframes bounceRL {
-    0% {
-        left: 0px;
-    }
-
-    50% {
-        left: 83%;
-    }
-
-    100% {
-        left: 0px;
-    }
 }
 
 .avm-img-col {

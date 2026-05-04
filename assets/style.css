@@ -1024,11 +1024,16 @@
   }
 
   .horizontal-section .panel img {
-    max-width: 546px;
+    max-width: 460px;
   }
 
   .horizontal-section .yellow h2 {
     font-size: 44px;
+    padding-top: 44px;
+  }
+
+  .horizontal-section .horizontal-wrapper {
+    padding: 40px 20px 0;
   }
 }
 
