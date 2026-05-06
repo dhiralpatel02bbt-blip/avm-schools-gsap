@@ -373,13 +373,6 @@
   }
 }
 
-
-
-
-
-
-
-
 /* hero section css End */
 
 /* About section css Start */
@@ -529,11 +522,15 @@
 
 @media (max-width: 1366px) {
   .bbt-dp-about {
-    padding: 118px 0 0px;
+    padding: 50px 0 21px;
   }
 
   .about-paragraph {
     padding: 0px 0 0 70px;
+  }
+
+  .bbt-dp-about .row::before {
+    top: -50px;
   }
 }
 
@@ -626,32 +623,6 @@
   }
 }
 
-@media(max-width: 767px) {
-  .about-img .yellow-shape {
-    height: 300px;
-    top: 16%;
-  }
-
-  .about-img {
-    margin: 0 auto;
-  }
-
-  .bbt-dp-about .row::before {
-    right: 73%;
-  }
-}
-
-@media (max-width: 576.9px) {
-  .about-img .yellow-shape {
-    height: 50%;
-  }
-
-  .bbt-dp-about .orange-wrapper .shape {
-    width: 35px;
-    height: 70px;
-  }
-}
-
 .bbt-dp-about {
   --about-text-size: clamp(1rem, 1.302vw, 1.5625rem);
   --about-line-height: 169%;
@@ -685,72 +656,6 @@
 
   .about-paragraph {
     padding: var(--about-content-offset) 0 0;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991.9px) {
-  .bbt-dp-about {
-    --about-text-size: clamp(1rem, 1.85vw, 1.125rem);
-    --about-content-offset: clamp(0rem, 2vw, 1.25rem);
-    --about-button-gap: clamp(1.25rem, 3vw, 1.875rem);
-    padding: clamp(4.5rem, 10vw, 5.625rem) 0 clamp(3rem, 7vw, 4rem);
-  }
-
-  .bbt-dp-about .row {
-    flex-direction: row;
-  }
-
-  .bbt-dp-about .row>div {
-    width: 50%;
-    flex: 0 0 50%;
-  }
-
-  .bbt-dp-about .content-part {
-    padding-left: clamp(1rem, 4vw, 2.5rem);
-  }
-
-  .about-paragraph {
-    padding-top: var(--about-content-offset);
-  }
-}
-
-@media (max-width: 767.9px) {
-  .bbt-dp-about .row {
-    flex-direction: column;
-  }
-
-  .bbt-dp-about .row>div {
-    width: 100%;
-    flex: 0 0 100%;
-  }
-}
-
-@media (max-width: 576.9px) {
-  .bbt-dp-about {
-    --about-text-size: clamp(0.9375rem, 4.1vw, 1.0625rem);
-    --about-button-gap: 1.5rem;
-  }
-
-  .about-paragraph p {
-    font-size: var(--about-text-size) !important;
-    line-height: 1.65 !important;
-  }
-
-  .secondary-btn {
-    font-size: var(--about-text-size) !important;
-    line-height: normal !important;
-  }
-}
-
-@media (min-width: 577px) and (max-width: 991.9px) {
-  .about-paragraph p {
-    font-size: var(--about-text-size) !important;
-    line-height: var(--about-line-height) !important;
-  }
-
-  .secondary-btn {
-    font-size: var(--about-text-size) !important;
-    line-height: normal !important;
   }
 }
 

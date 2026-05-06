@@ -715,13 +715,17 @@ body {
     transform: none;
 }
 
-@media (max-width: 1718px) {
+@media (max-width: 1728px) {
     .contact-sec .row {
         gap: 30px;
     }
 }
 
 @media (max-width: 1600px) {
+    .contact-sec {
+        padding: 120px 0 133px;
+    }
+
     .contact-sec .inner-content h2 {
         width: 560px;
     }
@@ -783,6 +787,10 @@ body {
 }
 
 @media (max-width: 1366px) {
+    .contact-sec {
+        padding: 70px 0;
+    }
+
     .contact-sec .row {
         gap: 30px;
     }
@@ -1271,10 +1279,6 @@ body {
 }
 
 @media (max-width: 1400px) {
-    .contact-sec {
-        padding: 100px 0;
-    }
-
     .bbt-FA-main-footer .container.footer-container {
         padding: 100px 40px;
     }
