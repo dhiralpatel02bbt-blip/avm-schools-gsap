@@ -1091,16 +1091,16 @@ if (videoWrapper && video && playBtn) {
 gsap.registerPlugin(ScrollTrigger);
 
 // Recognition section
-gsap.from(".section-title", {
-  y: -80,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out",
-  scrollTrigger: {
-    trigger: ".recognition-sec",
-    start: "top 80%",
-  },
-});
+// gsap.from(".section-title", {
+//   y: -80,
+//   opacity: 0,
+//   duration: 1,
+//   ease: "power3.out",
+//   scrollTrigger: {
+//     trigger: ".recognition-sec",
+//     start: "top 80%",
+//   },
+// });
 
 gsap.from(".award .leaf", {
   scale: 0.7,
@@ -2067,3 +2067,27 @@ if (path && dots.length && wrapper) {
     dot.style.top = point.y + "px";
   });
 }
+
+// section fade animation on home page
+document.addEventListener("DOMContentLoaded", function () {
+  const animatedSections = document.querySelectorAll(
+    ".news-header, .news-grid, .recognition-sec, .contact-sec",
+  );
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate");
+        }
+      });
+    },
+    {
+      threshold: 0.2,
+    },
+  );
+
+  animatedSections.forEach((section) => {
+    observer.observe(section);
+  });
+});

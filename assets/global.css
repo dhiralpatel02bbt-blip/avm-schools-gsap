@@ -37,9 +37,10 @@ html {
     /* font-size: clamp(16px, 1.041vw, 20px); */
     /* font-size: 20px;
     line-height: 1.2; */
+    font-size: clamp(0.8125rem, -0.06250000000000011rem + 1.09375vw, 1.25rem);
 }
 
-@media(min-width: 1651px) and (max-width: 1920px) {
+/* @media(min-width: 1651px) and (max-width: 1920px) {
     body {
         font-size: 20px;
     }
@@ -73,7 +74,7 @@ html {
     body {
         font-size: 13px;
     }
-}
+} */
 
 dl,
 ol,
@@ -577,6 +578,9 @@ body {
     max-width: 630px;
     width: 100%;
     padding: 0;
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: all 1s ease;
 }
 
 .contact-sec .inner-content,
@@ -708,11 +712,21 @@ body {
     height: 674.244px;
     transition: transform 0.2s ease;
     padding: 0;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 1s ease;
 }
 
-.slide-left {
+/* ACTIVE STATE */
+.contact-sec.animate .content,
+.contact-sec.animate .image-container {
     opacity: 1;
-    transform: none;
+    transform: translateX(0);
+}
+
+/* Optional smooth delay */
+.contact-sec .image-container {
+    transition-delay: 0.2s;
 }
 
 @media (max-width: 1728px) {
