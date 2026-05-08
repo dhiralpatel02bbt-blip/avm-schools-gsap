@@ -1679,6 +1679,12 @@ if (tl) {
   ].map(function (s) {
     return diagramSec.querySelector(s);
   });
+  var labelTitles = labels.map(function (label) {
+    return label ? label.querySelector(".strong") : null;
+  });
+  var labelBodies = labels.map(function (label) {
+    return label ? label.querySelector("p:not(.strong)") : null;
+  });
 
   // ── MOBILE: flat, no animation ──────────────────────────
   if (window.innerWidth < 768) {
@@ -1757,7 +1763,13 @@ if (tl) {
       if (n) gsap.set(n, { width: 22, height: 22, opacity: 0.35 });
     });
     labels.forEach(function (l) {
-      if (l) gsap.set(l, { opacity: 0.25 });
+      if (l) gsap.set(l, { opacity: 1, y: 0 });
+    });
+    labelTitles.forEach(function (title) {
+      if (title) gsap.set(title, { opacity: 0.35 });
+    });
+    labelBodies.forEach(function (body) {
+      if (body) gsap.set(body, { opacity: 0, y: 12 });
     });
 
     // ── Step 2: Page-load animation ──────────────────────
@@ -1931,10 +1943,16 @@ if (tl) {
           },
           s,
         );
-        if (labels[i - 1])
+        if (labelTitles[i - 1])
           scrollTL.to(
-            labels[i - 1],
-            { opacity: 0.22, y: 0, duration: slice * 0.22 },
+            labelTitles[i - 1],
+            { opacity: 0.35, duration: slice * 0.2 },
+            s,
+          );
+        if (labelBodies[i - 1])
+          scrollTL.to(
+            labelBodies[i - 1],
+            { opacity: 0, y: 12, duration: slice * 0.22 },
             s,
           );
       }
@@ -1953,10 +1971,17 @@ if (tl) {
           mid,
         );
       }
-      if (labels[i]) {
+      if (labelTitles[i]) {
         scrollTL.to(
-          labels[i],
-          { opacity: 1, y: -8, duration: slice * 0.38, ease: "power3.out" },
+          labelTitles[i],
+          { opacity: 1, duration: slice * 0.28, ease: "power3.out" },
+          mid,
+        );
+      }
+      if (labelBodies[i]) {
+        scrollTL.to(
+          labelBodies[i],
+          { opacity: 1, y: 0, duration: slice * 0.38, ease: "power3.out" },
           mid,
         );
       }
@@ -2020,53 +2045,168 @@ tabs.forEach((tab) => {
 });
 
 // AYM diagram section
-function cx(el) {
-  const r = el.getBoundingClientRect(),
-    pr = el.offsetParent.getBoundingClientRect();
-  return r.left - pr.left + r.width / 2;
-}
-function cy(el) {
-  const r = el.getBoundingClientRect(),
-    pr = el.offsetParent.getBoundingClientRect();
-  return r.top - pr.top + r.height / 2;
-}
-function draw() {
-  const svg = document.getElementById("lines");
-  const c = document.getElementById("c");
-  svg.innerHTML = "";
-  ["s1", "s2", "s3", "s4", "s5"].forEach((id) => {
-    const s = document.getElementById(id);
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", cx(c));
-    line.setAttribute("y1", cy(c));
-    line.setAttribute("x2", cx(s));
-    line.setAttribute("y2", cy(s));
-    line.setAttribute("stroke", "#0A3D9C");
-    line.setAttribute("stroke-width", "1.5");
-    line.setAttribute("stroke-dasharray", "5 4");
-    svg.appendChild(line);
+(function initAymDiagram() {
+  const center = document.getElementById("c");
+  const satellites = ["s1", "s2", "s3", "s4", "s5"]
+    .map((id) => document.getElementById(id))
+    .filter(Boolean);
+  let animationStarted = false;
+
+  if (!center || !satellites.length) return;
+
+  function animateAymDiagram() {
+    if (animationStarted || typeof gsap === "undefined") return;
+    animationStarted = true;
+
+    gsap.set(center, { scale: 0, autoAlpha: 0 });
+    gsap.set(satellites, { autoAlpha: 0, "--line-opacity": 0 });
+
+    ScrollTrigger.create({
+        trigger: ".aym-diagram-sec",
+        start: "top 70%",
+        once: true,
+        onEnter: () => {
+          const timeline = gsap.timeline();
+
+          timeline
+            .fromTo(
+              center,
+              { scale: 0, autoAlpha: 0 },
+              {
+                scale: 1,
+                autoAlpha: 1,
+                duration: 0.7,
+                ease: "back.out(1.6)",
+              },
+            );
+
+          satellites.forEach((satellite) => {
+            timeline
+              .to(satellite, {
+                "--line-opacity": 1,
+                duration: 0.28,
+                ease: "power1.out",
+              })
+              .to(satellite, {
+                autoAlpha: 1,
+                duration: 0.42,
+                ease: "power2.out",
+              });
+          });
+        },
+      },
+    );
+  }
+
+  setTimeout(animateAymDiagram, 120);
+  window.addEventListener("load", () => {
+    animateAymDiagram();
   });
-}
-setTimeout(draw, 100);
-window.addEventListener("resize", draw);
+})();
 
 // developer diagram section
-const path = document.querySelector("#arcPath");
-const dots = document.querySelectorAll(".dot");
-const wrapper = document.querySelector(".circle-wrapper");
+(function initTeacherDevDiagram() {
+  const section = document.querySelector(".teacher-dev");
+  const wrapper = document.querySelector(".teacher-dev .circle-wrapper");
+  const path = document.querySelector("#arcPath");
+  const dots = Array.from(document.querySelectorAll(".teacher-dev .dot"));
+  const centerCircle = document.querySelector(".teacher-dev .center-circle");
+  const contentByDot = [
+    document.querySelector(".teacher-dev .content.left-bottom"),
+    document.querySelector(".teacher-dev .content.left-top"),
+    document.querySelector(".teacher-dev .content.top"),
+    document.querySelector(".teacher-dev .content.right-top"),
+    document.querySelector(".teacher-dev .content.right-bottom"),
+  ].filter(Boolean);
+  let animationStarted = false;
 
-if (path && dots.length && wrapper) {
-  const length = path.getTotalLength();
-  const rect = wrapper.getBoundingClientRect();
+  if (!section || !wrapper || !path || !dots.length || !centerCircle || !contentByDot.length) {
+    return;
+  }
 
-  dots.forEach((dot, i) => {
-    const point = path.getPointAtLength((i / (dots.length - 1)) * length);
+  function positionTeacherDots() {
+    const length = path.getTotalLength();
 
-    // Position relative to wrapper
-    dot.style.left = point.x + "px";
-    dot.style.top = point.y + "px";
+    dots.forEach((dot, index) => {
+      const point = path.getPointAtLength((index / (dots.length - 1)) * length);
+      dot.style.left = `${point.x}px`;
+      dot.style.top = `${point.y}px`;
+    });
+  }
+
+  function animateTeacherDevDiagram() {
+    if (animationStarted || typeof gsap === "undefined") return;
+    animationStarted = true;
+
+    const pathLength = path.getTotalLength();
+
+    gsap.set(path, {
+      strokeDasharray: pathLength,
+      strokeDashoffset: pathLength,
+    });
+    gsap.set(centerCircle, {
+      autoAlpha: 0,
+      scale: 0.85,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(dots, {
+      autoAlpha: 0,
+      scale: 0,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(contentByDot, {
+      autoAlpha: 0,
+      y: 18,
+    });
+
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 65%",
+        once: true,
+        onRefresh: positionTeacherDots,
+      },
+    });
+
+    timeline
+      .to(centerCircle, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.65,
+        ease: "power2.out",
+      })
+      .to(path, {
+        strokeDashoffset: 0,
+        duration: 0.9,
+        ease: "power1.inOut",
+      });
+
+    dots.forEach((dot, index) => {
+      timeline
+        .to(dot, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.22,
+          ease: "back.out(1.8)",
+        })
+        .to(contentByDot[index], {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.45,
+          ease: "power2.out",
+        });
+    });
+  }
+
+  positionTeacherDots();
+  setTimeout(positionTeacherDots, 100);
+  setTimeout(animateTeacherDevDiagram, 120);
+  window.addEventListener("load", () => {
+    positionTeacherDots();
+    animateTeacherDevDiagram();
   });
-}
+  window.addEventListener("resize", positionTeacherDots);
+})();
 
 // section fade animation on home page
 document.addEventListener("DOMContentLoaded", function () {
