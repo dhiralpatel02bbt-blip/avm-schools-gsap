@@ -2062,40 +2062,38 @@ tabs.forEach((tab) => {
     gsap.set(satellites, { autoAlpha: 0, "--line-opacity": 0 });
 
     ScrollTrigger.create({
-        trigger: ".aym-diagram-sec",
-        start: "top 70%",
-        once: true,
-        onEnter: () => {
-          const timeline = gsap.timeline();
+      trigger: ".aym-diagram-sec",
+      start: "top 70%",
+      once: true,
+      onEnter: () => {
+        const timeline = gsap.timeline();
 
+        timeline.fromTo(
+          center,
+          { scale: 0, autoAlpha: 0 },
+          {
+            scale: 1,
+            autoAlpha: 1,
+            duration: 0.7,
+            ease: "back.out(1.6)",
+          },
+        );
+
+        satellites.forEach((satellite) => {
           timeline
-            .fromTo(
-              center,
-              { scale: 0, autoAlpha: 0 },
-              {
-                scale: 1,
-                autoAlpha: 1,
-                duration: 0.7,
-                ease: "back.out(1.6)",
-              },
-            );
-
-          satellites.forEach((satellite) => {
-            timeline
-              .to(satellite, {
-                "--line-opacity": 1,
-                duration: 0.28,
-                ease: "power1.out",
-              })
-              .to(satellite, {
-                autoAlpha: 1,
-                duration: 0.42,
-                ease: "power2.out",
-              });
-          });
-        },
+            .to(satellite, {
+              "--line-opacity": 1,
+              duration: 0.28,
+              ease: "power1.out",
+            })
+            .to(satellite, {
+              autoAlpha: 1,
+              duration: 0.42,
+              ease: "power2.out",
+            });
+        });
       },
-    );
+    });
   }
 
   setTimeout(animateAymDiagram, 120);
@@ -2120,7 +2118,14 @@ tabs.forEach((tab) => {
   ].filter(Boolean);
   let animationStarted = false;
 
-  if (!section || !wrapper || !path || !dots.length || !centerCircle || !contentByDot.length) {
+  if (
+    !section ||
+    !wrapper ||
+    !path ||
+    !dots.length ||
+    !centerCircle ||
+    !contentByDot.length
+  ) {
     return;
   }
 
@@ -2231,3 +2236,142 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(section);
   });
 });
+
+// ============================================================
+// EXTRA SECTION - Sticky Pin + one wheel step per slide
+// ============================================================
+(function () {
+  var section = document.querySelector(".extra-section");
+  var swiperEl = document.querySelector(".extra-swiper");
+  if (!section || !swiperEl || typeof Swiper === "undefined") return;
+
+  var swiper = new Swiper(".extra-swiper", {
+    slidesPerView: 2,
+    spaceBetween: 30,
+    loop: false,
+    speed: 650,
+    allowTouchMove: true,
+    grabCursor: true,
+    breakpoints: {
+      0: { slidesPerView: 1, spaceBetween: 20 },
+      768: { slidesPerView: 1.5, spaceBetween: 24 },
+      1200: { slidesPerView: 2, spaceBetween: 30 },
+    },
+  });
+
+  var pinST = null;
+  var wheelLocked = false;
+  var syncingScroll = false;
+
+  function getMaxIndex() {
+    if (!swiper || !swiper.snapGrid) return 0;
+    return Math.max(0, swiper.snapGrid.length - 1);
+  }
+
+  function getTargetScroll(index) {
+    var maxIndex = getMaxIndex();
+    if (!pinST || !maxIndex) return window.scrollY;
+    return pinST.start + (pinST.end - pinST.start) * (index / maxIndex);
+  }
+
+  function syncScrollToSlide(index) {
+    if (!pinST) return;
+    syncingScroll = true;
+    window.scrollTo({ top: getTargetScroll(index), behavior: "auto" });
+    requestAnimationFrame(function () {
+      syncingScroll = false;
+    });
+  }
+
+  function goToSlide(index) {
+    var maxIndex = getMaxIndex();
+    var nextIndex = Math.max(0, Math.min(index, maxIndex));
+    if (nextIndex === swiper.activeIndex) return;
+
+    wheelLocked = true;
+    swiper.slideTo(nextIndex, 650);
+    syncScrollToSlide(nextIndex);
+
+    window.setTimeout(function () {
+      wheelLocked = false;
+    }, 720);
+  }
+
+  function buildPin() {
+    if (pinST) pinST.kill();
+
+    pinST = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: function () {
+        return "+=" + Math.max(1, getMaxIndex()) * window.innerHeight;
+      },
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onEnter: function () {
+        wheelLocked = false;
+        swiper.slideTo(0, 0);
+      },
+      onEnterBack: function () {
+        wheelLocked = false;
+        swiper.slideTo(getMaxIndex(), 0);
+      },
+      onUpdate: function (self) {
+        if (!self.isActive || syncingScroll || wheelLocked) return;
+        var maxIndex = getMaxIndex();
+        var nextIndex = Math.round(self.progress * maxIndex);
+        if (swiper.activeIndex !== nextIndex) {
+          swiper.slideTo(nextIndex, 650);
+        }
+      },
+    });
+  }
+
+  function onWheel(event) {
+    if (!pinST || wheelLocked) return;
+
+    var inPinnedRange =
+      window.scrollY >= pinST.start - 1 && window.scrollY <= pinST.end + 1;
+    if (!inPinnedRange) return;
+
+    var direction = event.deltaY > 0 ? 1 : -1;
+    var maxIndex = getMaxIndex();
+    var atFirst = swiper.activeIndex <= 0;
+    var atLast = swiper.activeIndex >= maxIndex;
+
+    if ((direction < 0 && atFirst) || (direction > 0 && atLast)) return;
+
+    event.preventDefault();
+    goToSlide(swiper.activeIndex + direction);
+  }
+
+  function initPin() {
+    buildPin();
+    ScrollTrigger.refresh();
+  }
+
+  if (document.readyState === "complete") {
+    window.setTimeout(initPin, 120);
+  } else {
+    window.addEventListener(
+      "load",
+      function () {
+        window.setTimeout(initPin, 120);
+      },
+      { once: true },
+    );
+  }
+
+  var wheelOptions = { passive: false, capture: true };
+  window.addEventListener("wheel", onWheel, wheelOptions);
+  document.addEventListener("wheel", onWheel, wheelOptions);
+  section.addEventListener("wheel", onWheel, wheelOptions);
+  swiper.on("slideChange", function () {
+    syncScrollToSlide(swiper.activeIndex);
+  });
+  swiper.on("breakpoint resize", function () {
+    ScrollTrigger.refresh();
+  });
+})();

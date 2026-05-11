@@ -1,4 +1,13 @@
 /* ------------------------------ Pedagogy page css Start ------------------------------ */
+body.pedagogy-page {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+body.pedagogy-page::-webkit-scrollbar {
+    display: none;
+}
+
 body.pedagogy-page .pedagogy-hero-stage {
     position: relative;
     width: 100%;
@@ -121,6 +130,27 @@ body.pedagogy-page .campus-section .panel-body {
     font-size: 1em;
     line-height: 154%;
     color: rgba(255, 255, 255, 0.84);
+}
+
+@media (max-width: 1650px) {
+    body.pedagogy-page .campus-section .half-circle {
+        top: 81%;
+        left: -45%;
+    }
+}
+
+@media(max-width: 1366px) {
+    body.pedagogy-page .campus-section .half-circle {
+        top: 95%;
+        left: -54%;
+    }
+}
+
+@media (max-width: 1280px) {
+    body.pedagogy-page .campus-section .half-circle {
+        top: 93%;
+        left: -62%;
+    }
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -317,26 +347,177 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     transform: translateY(-50%);
 }
 
-@media (max-width: 1199.98px) {
-    .diagram-layout {
-        min-height: 700px;
+@media (max-width: 1728px) {
+    .diagram-sec .node1 {
+        top: 14.5%;
+        left: 35.6%;
     }
 
-    .diagram-sec .orbit {
-        width: 360px;
-        height: 360px;
+    .diagram-sec .node2 {
+        top: 14.5%;
+        left: 64.2%;
     }
 
-    .diagram-sec .label.top {
-        left: 2%;
+    .diagram-sec .node3 {
+        left: 73.5%;
     }
 
-    .diagram-sec .label.right-top {
-        right: 7%;
+    .diagram-sec .node4 {
+        left: 65%;
+    }
+
+    .diagram-sec .node5 {
+        left: 35%;
+    }
+
+    .diagram-sec .node6 {
+        left: 26.5%;
     }
 
     .diagram-sec .label.right-mid {
-        right: -1%;
+        right: -2%;
+    }
+
+    .diagram-sec .label.left-mid {
+        left: 2%;
+    }
+}
+
+@media (max-width: 1650px) {
+    .diagram-sec .orbit {
+        width: 666px;
+        height: 666px;
+    }
+
+    .diagram-sec .node3 {
+        left: 74.3%;
+    }
+
+    .diagram-sec .node6 {
+        left: 25.6%;
+    }
+
+    .diagram-sec .label.top {
+        top: 3%;
+        left: 8%;
+    }
+
+    .diagram-sec .label.right-mid {
+        right: -3%;
+    }
+
+    .diagram-sec .label.left-mid {
+        left: -1%;
+        top: 45.5%;
+    }
+
+    .diagram-sec .label.left-bottom {
+        left: 9%;
+    }
+}
+
+@media (max-width: 1440px) {
+    .diagram-sec .orbit {
+        width: 636px;
+        height: 636px;
+    }
+
+    .diagram-sec .center {
+        width: 200px;
+        height: 200px;
+    }
+
+    .diagram-sec .node3 {
+        left: 76.7%;
+        top: 51.8%;
+    }
+
+    .diagram-sec .node6 {
+        left: 23.3%;
+        top: 51.8%;
+    }
+
+    .diagram-sec .label.left-mid {
+        left: -4%;
+    }
+
+    .diagram-sec .label.right-mid {
+        top: 48.5%;
+        right: -5%;
+    }
+}
+
+@media (max-width: 1366px) {
+    .diagram-sec .orbit {
+        width: 600px;
+        height: 600px;
+    }
+
+    .diagram-sec .node2,
+    .diagram-sec .node1 {
+        top: 16.5%;
+    }
+
+    .diagram-sec .node4,
+    .diagram-sec .node5 {
+        top: 82.2%;
+    }
+
+    .diagram-sec .label.top {
+        left: 8%;
+    }
+
+    .diagram-sec .label.right-mid {
+        width: 22%;
+    }
+
+    .diagram-sec .label.bottom {
+        right: 10%;
+        bottom: 1%;
+        width: 22%;
+    }
+
+    .diagram-sec .label.left-bottom {
+        bottom: 1%;
+        left: 9%;
+    }
+
+    .diagram-sec .label.left-mid,
+    .diagram-sec .label.right-mid {
+        top: 55.5%;
+    }
+
+    .diagram-sec .label .strong {
+        padding-bottom: 12px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .diagram-sec .center {
+        width: 180px;
+        height: 180px;
+    }
+
+    .diagram-sec .node3 {
+        left: 78.3%;
+    }
+
+    .diagram-sec .node4,
+    .diagram-sec .node5 {
+        top: 83.2%;
+    }
+
+    .diagram-sec .node6 {
+        left: 21.6%;
+    }
+
+    .diagram-sec .label.right-mid {
+        top: 49%;
+        right: -7%;
+    }
+
+    .diagram-sec .label.left-mid {
+        left: -7%;
     }
 }
 
@@ -644,15 +825,50 @@ section.tabbing-sec .tab-items {
     background-color: #FC8B5F;
 }
 
+@media(max-width: 1728px) {
+    section.tabbing-sec .yellow-box {
+        padding: 37px 83px 39.93px 84px;
+    }
+
+    section.tabbing-sec .section-grid {
+        padding-top: 123.48px;
+    }
+
+    section.tabbing-sec .text-block {
+        gap: 95px;
+    }
+}
+
+@media(max-width: 1650px) {
+    section.tabbing-sec {
+        padding: 100px 0;
+    }
+}
+
 /* tabbing section css End */
 
 /* extra section css Start */
 .extra-section {
     background: #0A3D9C;
-    padding: 147px 0 236px;
+    padding: clamp(48px, 6vh, 72px) 0 50px;
     position: relative;
-    /* height: 100vh; */
+    /* height fixed so pin works cleanly */
+    height: 100vh;
+    height: 100svh;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     overflow: hidden;
+}
+
+.extra-bg-clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .blue-circle {
@@ -669,7 +885,7 @@ section.tabbing-sec .tab-items {
 
 .text-content {
     max-width: 51%;
-    margin-bottom: 153px;
+    margin-bottom: clamp(42px, 6vh, 78px);
     z-index: 1;
     position: relative;
 }
@@ -681,7 +897,7 @@ section.tabbing-sec .tab-items {
     font-style: normal;
     font-weight: 700;
     line-height: 112%;
-    padding-bottom: 57.57px;
+    padding-bottom: clamp(24px, 4vh, 40px);
 }
 
 .text-content p {
@@ -693,29 +909,61 @@ section.tabbing-sec .tab-items {
     line-height: 154%;
 }
 
-.extra-section .cards {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
+/* Extra Section — Swiper Slider */
+.extra-slider-clip {
+    /* overflow-x: hidden; */
+    overflow-y: visible;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-left: 7.5vw;
+    padding-right: 0;
+    box-sizing: border-box;
+}
+
+.extra-swiper {
+    width: 100%;
+    /* overflow: visible so card-label (bottom: -40px) shows below image */
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+}
+
+/* Clip only horizontal overflow (for slide transition), allow vertical */
+.extra-section .swiper-clip {
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.extra-swiper .swiper-wrapper {
+    align-items: flex-start;
+}
+
+.extra-swiper .swiper-slide {
+    /* Each slide has bottom padding to accommodate card-label overhang */
+    /* padding-bottom: clamp(92px, 12vh, 120px); */
+    box-sizing: border-box;
 }
 
 .extra-section .card {
     position: relative;
-    width: 48%;
     border: none;
     outline: none;
+    width: 100%;
 }
 
 .extra-section .card img {
     width: 100%;
+    height: clamp(260px, calc(100svh - 390px), 510px);
+    object-fit: cover;
     display: block;
 }
 
 .extra-section .card-label {
     position: absolute;
-    bottom: -40px;
+    bottom: -32px;
     left: 0;
-    padding: 33px 38px 34px;
+    padding: 26px 34px 28px;
     width: 85%;
 }
 
@@ -801,6 +1049,18 @@ section.tabbing-sec .tab-items {
     line-height: 154%;
 }
 
+@media(max-width: 1728px) {
+    .aym-section {
+        padding: 156.88px 0 169px;
+    }
+}
+
+@media(max-width: 1650px) {
+    .aym-section {
+        padding: 100px 0 113px;
+    }
+}
+
 /* AYM section css End */
 
 /* AYM diagram section css Start  */
@@ -874,7 +1134,7 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.top {
-    top: 0;
+    top: 60px;
     left: 50%;
     --line-length: 209px;
     --line-angle: 90deg;
@@ -890,7 +1150,7 @@ section.tabbing-sec .tab-items {
 
 .sat.right {
     top: 31%;
-    right: -390px;
+    right: -370px;
     --line-length: 188px;
     --line-angle: 160deg;
 }
@@ -900,7 +1160,7 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.bottom-right {
-    bottom: 80px;
+    bottom: 140px;
     right: -220px;
     --line-length: 286px;
     --line-angle: -144deg;
@@ -912,7 +1172,7 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.bottom-left {
-    bottom: 80px;
+    bottom: 140px;
     left: -114px;
     --line-length: 228px;
     --line-angle: -41deg;
@@ -925,7 +1185,7 @@ section.tabbing-sec .tab-items {
 
 .sat.left {
     top: 31%;
-    left: -390px;
+    left: -370px;
     --line-length: 178px;
     --line-angle: 20deg;
 }
@@ -939,6 +1199,102 @@ svg.lines {
     pointer-events: none;
     z-index: 1;
     display: none;
+}
+
+@media(max-width: 1728px) {
+    .aym-diagram-sec {
+        margin: 0;
+    }
+
+    .sat.top {
+        top: 90px;
+    }
+
+    .sat.left {
+        top: 33%;
+        left: -340px;
+    }
+
+    .sat.right {
+        top: 33%;
+        right: -340px;
+    }
+
+    .sat.bottom-left {
+        bottom: 170px;
+        left: -105px;
+    }
+
+    .sat.bottom-right {
+        bottom: 170px;
+        right: -205px;
+    }
+}
+
+@media(max-width: 1650px) {
+    .center-node {
+        width: 245px;
+        height: 245px;
+    }
+
+    .sat {
+        padding: 28px 65px 24px;
+    }
+
+    .sat.left {
+        left: -320px;
+    }
+
+    .sat.right {
+        right: -320px;
+    }
+}
+
+@media(max-width: 1440px) {
+    .sat {
+        padding: 28px 65px 24px;
+    }
+
+    .sat.right {
+        right: -290px;
+    }
+
+    .sat.left {
+        left: -290px;
+    }
+
+    .sat.bottom-right {
+        bottom: 130px;
+        right: -190px;
+    }
+}
+
+@media(max-width: 1366px) {
+    .sat.bottom-right {
+        bottom: 70px;
+        right: -130px;
+    }
+
+    .sat.bottom-left {
+        bottom: 70px;
+        left: -84px;
+    }
+}
+
+
+
+@media(max-width: 1280px) {
+    .sat.top {
+        top: 20px;
+    }
+
+    .sat.left {
+        left: -260px;
+    }
+
+    .sat.right {
+        right: -260px;
+    }
 }
 
 /* AYM diagram section css End  */
@@ -998,6 +1354,12 @@ svg.lines {
     line-height: 154%;
 }
 
+@media(max-width: 1728px) {
+    .avm-section {
+        padding: 0;
+    }
+}
+
 /* AVM section css End */
 
 /* development diagram section css Start */
@@ -1049,9 +1411,9 @@ svg.lines {
     color: #000;
     text-align: center;
     font-family: Satoshi;
-    font-size: 25px;
+    font-size: 1.4em;
     font-weight: 700;
-    line-height: 30px;
+    line-height: 119%;
 }
 
 .teacher-dev .dot {
@@ -1127,6 +1489,89 @@ svg.lines {
 .teacher-dev .right-bottom h4,
 .teacher-dev .right-bottom p {
     text-align: left;
+}
+
+@media(max-width: 1728px) {
+    .teacher-dev {
+        padding: 100px 0px 0;
+        margin: 20px 0 0px 0;
+    }
+}
+
+@media(max-width: 1650px) {
+    .teacher-dev .left-bottom {
+        top: 230px;
+        left: -420px;
+    }
+
+    .teacher-dev .left-top {
+        left: -380px;
+    }
+
+    .teacher-dev .top {
+        top: -170px;
+    }
+
+    .teacher-dev .right-top {
+        right: -370px;
+    }
+
+    .teacher-dev .right-bottom {
+        top: 240px;
+        right: -410px;
+    }
+}
+
+@media(max-width: 1440px) {
+    .teacher-dev .left-bottom {
+        left: -360px;
+    }
+
+    .teacher-dev .right-bottom {
+        right: -360px;
+    }
+
+    .teacher-dev .right-top {
+        right: -310px;
+    }
+
+    .teacher-dev .left-top {
+        left: -320px;
+    }
+
+    .teacher-dev .top {
+        top: -120px;
+    }
+
+    .teacher-dev .center-circle {
+        bottom: -40px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .teacher-dev .center-circle {
+        bottom: -30px;
+    }
+
+    .teacher-dev .left-bottom {
+        left: -300px;
+    }
+
+    .teacher-dev .left-top {
+        left: -270px;
+    }
+
+    .teacher-dev .top {
+        top: -110px;
+    }
+
+    .teacher-dev .right-top {
+        right: -270px;
+    }
+
+    .teacher-dev .right-bottom {
+        right: -300px;
+    }
 }
 
 /* development diagram section css End */

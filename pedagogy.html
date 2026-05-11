@@ -873,7 +873,10 @@
 
     <!-- extra section Start -->
     <section class="extra-section">
-      <div class="blue-circle"></div>
+      <!-- Blue circle clip wrapper: clips the decorative circle without affecting swiper -->
+      <div class="extra-bg-clip">
+        <div class="blue-circle"></div>
+      </div>
       <div class="container-xxl">
         <div class="text-content">
           <h2>
@@ -885,34 +888,90 @@
             academic learning with real-world skills and experiences.
           </p>
         </div>
-
-        <div class="cards">
-          <!-- Card 1 -->
-          <div class="card">
-            <img src="images/extra-1.jpg" alt="Arts activity" />
-            <div class="card-label orange">
-              <h3>Arts that build expression and confidence</h3>
-              <p>
-                Music, dance, theatre and visual arts help students express
-                ideas, build discipline and develop creativity and stage
-                confidence.
-              </p>
+      </div>
+      <!-- Swiper Clip Wrapper: horizontal overflow hidden, vertical visible -->
+      <div class="extra-slider-clip">
+        <!-- Swiper Slider -->
+        <div class="swiper extra-swiper">
+          <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <img src="images/extra-1.jpg" alt="Arts activity" />
+                <div class="card-label orange">
+                  <h3>Arts that build expression and confidence</h3>
+                  <p>
+                    Music, dance, theatre and visual arts help students express
+                    ideas, build discipline and develop creativity and stage
+                    confidence.
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <!-- Card 2 -->
-          <div class="card">
-            <img src="images/extra-2.jpg" alt="Sports activity" />
-            <div class="card-label yellow">
-              <h3>Sports that shape resilience and teamwork</h3>
-              <p>
-                From individual sports to team games, students learn fitness,
-                focus, perseverance and how to handle both success and setbacks.
-              </p>
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <img src="images/extra-2.jpg" alt="Sports activity" />
+                <div class="card-label yellow">
+                  <h3>Sports that shape resilience and teamwork</h3>
+                  <p>
+                    From individual sports to team games, students learn
+                    fitness, focus, perseverance and how to handle both success
+                    and setbacks.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <img src="images/extra-1.jpg" alt="Arts activity" />
+                <div class="card-label orange">
+                  <h3>Arts that build expression and confidence</h3>
+                  <p>
+                    Music, dance, theatre and visual arts help students express
+                    ideas, build discipline and develop creativity and stage
+                    confidence.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <img src="images/extra-2.jpg" alt="Sports activity" />
+                <div class="card-label yellow">
+                  <h3>Sports that shape resilience and teamwork</h3>
+                  <p>
+                    From individual sports to team games, students learn
+                    fitness, focus, perseverance and how to handle both success
+                    and setbacks.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <img src="images/extra-1.jpg" alt="Arts activity" />
+                <div class="card-label orange">
+                  <h3>Arts that build expression and confidence</h3>
+                  <p>
+                    Music, dance, theatre and visual arts help students express
+                    ideas, build discipline and develop creativity and stage
+                    confidence.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- end clip wrapper -->
     </section>
     <!-- extra section End -->
 
@@ -1177,6 +1236,7 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="assets/script.js"></script>
   </body>
 </html>
