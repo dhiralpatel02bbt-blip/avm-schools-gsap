@@ -1165,18 +1165,6 @@ contactTL
     "-=0.3",
   );
 
-// Image parallax
-gsap.to(".contact-sec .image-container", {
-  y: 20,
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".contact-sec",
-    start: "top bottom",
-    end: "bottom top",
-    scrub: true,
-  },
-});
-
 // Form validation
 const form = document.querySelector(".apply-form");
 
@@ -2025,6 +2013,40 @@ if (tl) {
   });
 })();
 
+// Featured News slider
+(function initFeaturedNewsSlider() {
+  var sliderEl = document.querySelector(".news-and-events-page .news-slider");
+  if (!sliderEl || sliderEl.swiper || typeof Swiper === "undefined") return;
+
+  new Swiper(sliderEl, {
+    slidesPerView: "auto",
+    centeredSlides: true,
+    loop: true,
+    speed: 650,
+    spaceBetween: 58,
+    grabCursor: true,
+    pagination: {
+      el: ".news-slider-pagination",
+      clickable: true,
+    },
+    navigation: {
+      prevEl: ".news-slider-prev",
+      nextEl: ".news-slider-next",
+    },
+    breakpoints: {
+      0: {
+        spaceBetween: 22,
+      },
+      768: {
+        spaceBetween: 36,
+      },
+      1200: {
+        spaceBetween: 58,
+      },
+    },
+  });
+})();
+
 // --------- tabbing section
 const tabs = document.querySelectorAll(".tab");
 const contents = document.querySelectorAll(".tab-content");
@@ -2373,5 +2395,58 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   swiper.on("breakpoint resize", function () {
     ScrollTrigger.refresh();
+  });
+})();
+
+// ── Feature Block Scroll Animation ──────────────────────────
+(function () {
+  var observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fb-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 },
+  );
+
+  function observeBlocks() {
+    document
+      .querySelectorAll("section.tabbing-sec .feature-block")
+      .forEach(function (block) {
+        observer.observe(block);
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", observeBlocks);
+
+  // Tab switch hone pe naye blocks bhi observe ho
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("section.tabbing-sec .tab")) {
+      setTimeout(observeBlocks, 80);
+    }
+  });
+
+  // AYM + AVM section observer
+  var sectionObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          sectionObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 },
+  );
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .querySelectorAll(".aym-section, .avm-section")
+      .forEach(function (sec) {
+        sectionObserver.observe(sec);
+      });
   });
 })();

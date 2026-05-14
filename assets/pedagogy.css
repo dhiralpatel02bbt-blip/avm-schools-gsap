@@ -147,6 +147,10 @@ body.pedagogy-page .campus-section .panel-body {
 }
 
 @media (max-width: 1280px) {
+    body.pedagogy-page .campus-section .body-txt {
+        gap: 37.9px;
+    }
+
     body.pedagogy-page .campus-section .half-circle {
         top: 93%;
         left: -62%;
@@ -633,7 +637,6 @@ section.tabbing-sec .text-block {
     display: flex;
     flex-direction: column;
     gap: 105px;
-    animation: slideInLeft 0.8s ease-out both;
 }
 
 section.tabbing-sec .feature {
@@ -643,26 +646,31 @@ section.tabbing-sec .feature {
     width: 70%;
 }
 
-section.tabbing-sec .text-block .feature:nth-child(1) {
-    animation: slideInLeft 0.8s ease-out 0.2s both;
-}
-
 section.tabbing-sec .text-block .feature:nth-child(2) {
     padding-left: 32%;
     width: 100%;
-    animation: slideInLeft 0.8s ease-out 0.5s both;
 }
 
-@keyframes slideInLeft {
-    0% {
-        transform: translateX(-80px);
-        opacity: 0;
-    }
+/* ── Feature Block Scroll Animations ─────────────────────── */
 
-    100% {
-        transform: translateX(0px);
-        opacity: 1;
-    }
+/* Initial hidden state */
+section.tabbing-sec .feature-block>*:nth-child(1) {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+section.tabbing-sec .feature-block>*:nth-child(2) {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+}
+
+/* Triggered when .fb-visible is added to .feature-block */
+section.tabbing-sec .feature-block.fb-visible>*:nth-child(1),
+section.tabbing-sec .feature-block.fb-visible>*:nth-child(2) {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 section.tabbing-sec .feature-title {
@@ -842,6 +850,25 @@ section.tabbing-sec .tab-items {
 @media(max-width: 1650px) {
     section.tabbing-sec {
         padding: 100px 0;
+    }
+}
+
+@media(max-width: 1280px) {
+    section.tabbing-sec .tab-content {
+        padding: 50px 0;
+    }
+
+    section.tabbing-sec h2.title-txt {
+        padding-bottom: 77px;
+    }
+
+    section.tabbing-sec .section-grid {
+        gap: 70px;
+        padding-top: 73.48px;
+    }
+
+    section.tabbing-sec .feature-block {
+        gap: 84px;
     }
 }
 
@@ -1361,6 +1388,43 @@ svg.lines {
 }
 
 /* AVM section css End */
+
+/* ── AYM + AVM Section Scroll Animations ─────────────────── */
+
+/* AYM: img-col is left, text is right */
+.aym-section .aym-img-col {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.aym-section .aym-text {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.75s ease 0.15s, transform 0.75s ease 0.15s;
+}
+
+/* AVM: text is left, img-col is right */
+.avm-section .avm-text {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.avm-section .avm-img-col {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: opacity 0.75s ease 0.15s, transform 0.75s ease 0.15s;
+}
+
+/* Visible state */
+.aym-section.in-view .aym-img-col,
+.aym-section.in-view .aym-text,
+.avm-section.in-view .avm-text,
+.avm-section.in-view .avm-img-col {
+    opacity: 1;
+    transform: translateX(0);
+}
 
 /* development diagram section css Start */
 .teacher-dev {

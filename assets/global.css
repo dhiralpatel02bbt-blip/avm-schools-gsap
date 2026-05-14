@@ -229,13 +229,18 @@ nav.main-menu ul {
 }
 
 header .main-menu ul li a {
-    color: #000;
+    color: #fff;
     font-size: 1.159em;
     font-family: 'Satoshi';
     text-decoration: underline;
     font-weight: 700;
     text-decoration-color: #FF7F50;
     transition: 0.3s all;
+}
+
+body.index-page header .main-menu ul li a,
+body.our-school-page header .main-menu ul li a {
+    color: #000;
 }
 
 header .main-menu ul li a:hover {

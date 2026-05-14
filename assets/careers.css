@@ -1,273 +1,405 @@
-.careers-page {
-  background: #fff8ee;
-}
-
-.careers-page header .main-menu ul li a {
-  color: #000;
-}
-
-.careers-hero {
-  min-height: 100vh;
-  padding: 180px 0 90px;
-  background: #fff8ee;
-  overflow: hidden;
-}
-
-.careers-hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
-  align-items: center;
-  gap: 56px;
-}
-
-.careers-hero-content {
-  max-width: 720px;
-}
-
-.careers-eyebrow {
-  color: #ff7e50;
-  font-family: "Satoshi";
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 22px !important;
-}
-
-.careers-hero h1,
-.careers-intro h2,
-.open-roles h2 {
-  color: #0a3d9c;
-  font-family: "Satoshi";
-  font-weight: 700;
-}
-
-.careers-hero h1 {
-  font-size: clamp(54px, 5.2vw, 96px);
-  line-height: 1;
-  max-width: 760px;
-}
-
-.careers-hero-content > p:not(.careers-eyebrow) {
-  color: #222;
-  font-size: 22px;
-  line-height: 1.55;
-  max-width: 650px;
-  margin: 30px 0 44px !important;
-}
-
-.careers-hero-image {
-  position: relative;
-  min-height: 620px;
+/*  Careers about section css start */
+.hero {
+  width: 100%;
+  height: 100vh;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  overflow: hidden;
+  justify-content: space-between;
+  background: #010101;
 }
 
-.careers-hero-image::before {
-  content: "";
-  position: absolute;
-  width: min(94%, 610px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #f7df00;
-  right: 2%;
-  bottom: 0;
-}
-
-.careers-hero-image::after {
-  content: "";
-  position: absolute;
-  width: 52%;
-  height: 30px;
-  background: #ff7f50;
-  right: 0;
-  bottom: 0;
-}
-
-.careers-hero-image img {
+/* LEFT SIDE */
+.hero-left {
   position: relative;
-  z-index: 1;
-  width: min(100%, 690px);
-  height: auto;
-  object-fit: contain;
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
+  width: 33%;
 }
 
-.careers-intro {
-  padding: 120px 0;
-  background: #ffffff;
-}
-
-.careers-copy {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.85fr) minmax(300px, 1fr);
-  gap: 60px;
-  align-items: start;
-  margin-bottom: 62px;
-}
-
-.careers-copy h2,
-.open-roles h2 {
-  font-size: clamp(42px, 4vw, 70px);
-  line-height: 1.08;
-}
-
-.careers-copy p,
-.open-roles-heading p {
-  color: #222;
-  font-size: 21px;
-  line-height: 1.65;
-}
-
-.careers-values {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 26px;
-}
-
-.career-card {
-  border: 2px solid rgba(10, 61, 156, 0.16);
-  border-radius: 8px;
-  padding: 32px;
-  background: #fff;
-}
-
-.career-card span {
-  color: #ff7f50;
+.hero-left:before {
+  content: "";
+  position: absolute;
+  top: -170px;
+  left: -980px;
+  z-index: 0;
   display: block;
-  font-family: "Satoshi";
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 34px;
+  width: 1900px;
+  height: 1900px;
+  background: rgb(10, 61, 156);
+  border-radius: 50%;
 }
 
-.career-card h3,
-.role-row h3 {
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-content h2 {
+  color: #FFF;
+  font-family: Satoshi;
+  font-size: 2.7em;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 112%;
+}
+
+@media (max-width: 1728px) {
+  .hero-left {
+    width: 40%;
+  }
+
+  .hero-left:before {
+    left: -1150px;
+  }
+}
+
+/*  Careers about section css end */
+
+/* table section css start */
+.bbt-fa-table-sec {
+  padding: 121.52px 0 132px;
+}
+
+.bbt-fa-table-sec h2 {
+  color: #0a3d9c;
+  text-align: center;
+  font-family: "Satoshi";
+  font-size: 2.4em;
+  font-weight: 700;
+  line-height: 112%;
+}
+
+.bbt-fa-table-sec .bbt-table-wrapper {
+  margin-top: 96.42px;
+  background-color: #f1edff;
+  padding: 66px 67px 68px 65px;
+}
+
+.bbt-fa-table-sec .bbt-openings-table tbody tr:last-child td {
+  padding-bottom: 0;
+}
+
+.bbt-fa-table-sec .bbt-openings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bbt-fa-table-sec .bbt-openings-table thead tr {
+  border-bottom: 1px solid #0a3d9c;
+}
+
+.bbt-fa-table-sec .bbt-openings-table thead th {
   color: #0a3d9c;
   font-family: "Satoshi";
-  font-size: 30px;
+  font-size: 1.25em;
+  font-style: normal;
   font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 16px !important;
+  line-height: 119%;
+  padding: 0px 0px 37.89px;
 }
 
-.career-card p,
-.role-row p {
-  color: #252525;
-  font-size: 18px;
-  line-height: 1.55;
+.bbt-fa-table-sec .bbt-openings-table tbody tr {
+  border-bottom: 1px solid #0a3d9c;
 }
 
-.open-roles {
-  padding: 110px 0 130px;
-  background: #f7df00;
+.bbt-fa-table-sec .bbt-openings-table tbody tr:last-child {
+  border-bottom: none;
 }
 
-.open-roles-heading {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.8fr) minmax(300px, 1fr);
-  gap: 70px;
-  align-items: start;
-  margin-bottom: 54px;
+.bbt-fa-table-sec .bbt-openings-table tbody td {
+  color: #000;
+  font-family: "Poppins";
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 154%;
+  padding-top: 28px;
+  padding-bottom: 31px;
 }
 
-.role-list {
-  display: grid;
-  gap: 18px;
+@media(max-width: 1728px) {
+  .bbt-fa-table-sec {
+    padding: 101.52px 0 112px;
+  }
+
+  .bbt-fa-table-sec .bbt-table-wrapper {
+    margin-top: 76.42px;
+  }
+
+  .bbt-fa-table-sec .bbt-table-wrapper {
+    padding: 56px 57px 58px 55px;
+  }
 }
 
-.role-row {
+@media (max-width: 1400px) {
+  .bbt-fa-table-sec h2 {
+    padding-top: 80px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .bbt-fa-table-sec .bbt-openings-table tbody td {
+    padding-top: 20px;
+    padding-bottom: 24px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .bbt-fa-table-sec .bbt-table-wrapper {
+    padding: 24px 27px 27px 27px;
+  }
+
+  .bbt-fa-news-sec .card h3 {
+    font-size: 17px;
+  }
+
+  .bbt-fa-news-sec h3.new-text {
+    padding-bottom: 26px;
+  }
+}
+
+/* table section css end */
+
+/* Openings section start  */
+section.bbt-fa-Openings-sec {
+  padding: 0px 0 135.12px;
+}
+
+.bbt-fa-Openings-sec h2.Openings-text {
+  color: #0a3d9c;
+  text-align: center;
+  font-family: Satoshi;
+  font-size: 2.4em;
+  font-weight: 700;
+  line-height: 112%;
+}
+
+.custom-dropdown {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.bbt-fa-Openings-sec select {
+  border: 2px solid #0043c0;
   display: flex;
   justify-content: space-between;
-  gap: 28px;
+  padding: 0 50px 0 20px;
   align-items: center;
-  padding: 30px 34px;
-  border-radius: 8px;
-  background: #fff8ee;
+  height: 65px;
+  cursor: pointer;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url("../images/down-arrow.png") no-repeat right 20px center;
+  background-size: 18px;
+  color: #0A3D9C;
+  font-family: Poppins;
+  font-size: 0.9em;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
-.role-row a {
-  flex: 0 0 auto;
+.bbt-fa-Openings-sec input.name {
+  border: 1.5px solid #0a3d9c;
+  background: #f9f9f9;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Poppins;
+  font-size: 18px;
+  width: 100%;
+  height: 65px;
+  padding-left: 20px;
+  margin-bottom: 24px;
+  outline: none;
+}
+
+.bbt-fa-Openings-sec input.name:last-child {
+  margin-bottom: 0;
+}
+
+.bbt-fa-Openings-sec .upload-sec {
+  padding: 88.34px 0px 92.35px;
+}
+
+.bbt-fa-Openings-sec .career-img {
+  width: 60%;
+  max-width: 725px;
+  padding-left: 10px;
+  padding-top: 35px;
+}
+
+.bbt-fa-Openings-sec .career-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 127.61px 0 0;
+  gap: 100px;
+}
+
+.bbt-fa-Openings-sec .career-form {
+  width: 40%;
+  padding-right: 50px;
+}
+
+.bbt-fa-Openings-sec .upload-sec p {
   color: #000;
-  font-family: "Satoshi";
-  font-size: 20px;
-  font-weight: 700;
+  font-family: Poppins;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.bbt-fa-Openings-sec .upload-select {
+  margin-top: 20px;
+}
+
+.bbt-fa-Openings-sec .upload-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 21px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.bbt-fa-Openings-sec .upload-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.bbt-fa-Openings-sec .upload-row button {
+  border: none;
+  background: none;
+  cursor: pointer;
   text-decoration: underline;
-  text-decoration-color: #ff7f50;
+  color: #000;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-color: #fc8b5f;
+  text-decoration-thickness: 10%;
+  text-underline-offset: 14.5%;
+  text-underline-position: from-font;
 }
 
-.role-row a:hover {
-  color: #0a3d9c;
+.bbt-fa-Openings-sec span {
+  color: rgba(0, 0, 0, 0.46);
+  font-family: Poppins;
+  font-size: 18px;
 }
 
-@media (max-width: 1199px) {
-  .careers-hero {
-    padding-top: 150px;
-  }
-
-  .careers-hero-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .careers-hero-image {
-    min-height: 520px;
-  }
-
-  .careers-values {
-    grid-template-columns: 1fr;
-  }
+.bbt-fa-Openings-sec button.submit-btn {
+  border-radius: 122px;
+  background: #f7df00;
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.1em;
+  font-weight: 600;
+  width: 239px;
+  height: 68px;
+  border: none;
+  cursor: pointer;
 }
 
-@media (max-width: 991px) {
-  .careers-copy,
-  .open-roles-heading {
-    grid-template-columns: 1fr;
-    gap: 28px;
+@media(max-width: 1728px) {
+  .bbt-fa-Openings-sec .career-wrapper {
+    padding: 107.61px 0 0;
   }
 
-  .careers-intro,
-  .open-roles {
-    padding: 80px 0;
-  }
-}
-
-@media (max-width: 767px) {
-  .careers-hero {
-    min-height: auto;
-    padding: 135px 0 60px;
+  .bbt-fa-Openings-sec .career-img {
+    padding-top: 15px;
   }
 
-  .careers-hero h1 {
-    font-size: 46px;
+  .bbt-fa-Openings-sec .upload-sec {
+    padding: 68.34px 0px 72.35px;
   }
 
-  .careers-hero-content > p:not(.careers-eyebrow),
-  .careers-copy p,
-  .open-roles-heading p {
-    font-size: 18px;
+  .bbt-fa-Openings-sec .career-form {
+    padding-right: 0;
   }
 
-  .careers-hero-image {
-    min-height: 360px;
-  }
-
-  .role-row {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 26px;
+  .bbt-fa-Openings-sec .career-form,
+  .bbt-fa-Openings-sec .career-img {
+    width: 50%;
   }
 }
 
-@media (max-width: 480px) {
-  .careers-hero h1 {
-    font-size: 40px;
+/*  Openings section end */
+
+/* Careers about section css start */
+section.bbt-fa-careers-about-sec {
+  background-color: #0A3D9C;
+  padding: 188.48px 0px;
+}
+
+.bbt-fa-careers-about-sec .career-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 180px;
+}
+
+.bbt-fa-careers-about-sec .avm-image-wrap {
+  width: 50%;
+}
+
+.bbt-fa-careers-about-sec .avm-text {
+  width: 50%;
+  margin-top: 118px;
+}
+
+.bbt-fa-careers-about-sec img {
+  max-width: 730px;
+  object-fit: cover;
+  max-height: 646px;
+  margin-left: 16px;
+}
+
+.bbt-fa-careers-about-sec p.text-p {
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 1.1em;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 172%;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 1728px) {
+  section.bbt-fa-careers-about-sec {
+    padding: 168.48px 0px;
   }
 
-  .careers-copy h2,
-  .open-roles h2 {
-    font-size: 36px;
-  }
-
-  .career-card h3,
-  .role-row h3 {
-    font-size: 25px;
+  .bbt-fa-careers-about-sec .avm-text {
+    margin-top: 148px;
   }
 }
+
+@media (max-width: 1440px) {
+  .bbt-fa-careers-about-sec .career-wrapper {
+    gap: 112px;
+  }
+
+  .bbt-fa-careers-about-sec .avm-text {
+    margin-top: 85px;
+  }
+
+  .bbt-fa-careers-about-sec p.text-p {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .bbt-fa-careers-about-sec .avm-text {
+    margin-top: 61px;
+  }
+}
+
+/* Careers about section css end */
