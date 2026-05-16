@@ -568,7 +568,7 @@ body {
 /* contact sec CSS start */
 .contact-sec {
     background: #0a3d9c;
-    padding: 140px 0 153px;
+    padding: 98px 0 91.46px;
     overflow: hidden;
 }
 
@@ -580,8 +580,7 @@ body {
 }
 
 .contact-sec .content {
-    max-width: 630px;
-    width: 100%;
+    width: 45%;
     padding: 0;
     opacity: 0;
     transform: translateX(-100px);
@@ -589,7 +588,6 @@ body {
 }
 
 .contact-sec .inner-content,
-.contact-sec .form-group,
 .contact-sec .form-actions {
     opacity: 1;
     transform: none;
@@ -598,27 +596,18 @@ body {
 .contact-sec .inner-content h3 {
     font-family: "Satoshi";
     color: #ffffff;
-    font-size: 1.9em;
+    font-size: 1.6em;
     font-weight: 500;
-    line-height: 205.263%;
+    line-height: 243.75%;
     padding-bottom: 7px;
 }
 
 .contact-sec .inner-content h2 {
     font-family: "Satoshi";
-    width: 680px;
     color: #ffffff;
-    font-size: 2.8em;
+    font-size: 2.9em;
     font-weight: 700;
-    line-height: 125%;
-}
-
-.contact-sec input {
-    transition: all 0.3s ease;
-}
-
-.contact-sec input:focus {
-    box-shadow: 0 0 0 2px #ffd200;
+    line-height: 112%;
 }
 
 .contact-sec .inner-content h3,
@@ -626,77 +615,17 @@ body {
     transform: translateX(0) !important;
 }
 
-.contact-sec form.apply-form {
-    margin-top: 110px;
-}
-
-.contact-sec .apply-form {
-    margin-top: 40px;
-}
-
 .contact-sec a.apply-btn {
-    font-size: 22px;
+    font-size: 1.15em;
     line-height: normal;
     padding: 19px 65px;
-}
-
-.contact-sec .apply-form .form-group {
-    margin-bottom: 26.71px;
-    transform: none;
-}
-
-.contact-sec .apply-form input {
-    width: 100%;
-    height: 68.52px;
-    padding: 20px 23px;
-    border: none;
-    background: #ffffff;
-    color: #fff;
-    font-size: 17.74px;
-    transition: all 0.3s ease;
-}
-
-.contact-sec .apply-form input::placeholder {
-    color: #ffffff;
-    opacity: 0.8;
-}
-
-.contact-sec .apply-form input[name="name"]:focus,
-.contact-sec .apply-form input[name="phone"]:focus,
-.contact-sec .apply-form input[name="email"]:focus {
-    background: #ffffff;
-    font-weight: 600;
-    outline: none;
-}
-
-.contact-sec .apply-form input:focus {
-    outline: none;
-    background: #ffffff;
-    color: #0a3d9c;
-    box-shadow: 0 0 0 4px #a793ec;
-}
-
-.contact-sec .apply-form input:focus::placeholder {
-    color: #0a3d9c;
-}
-
-.contact-sec .apply-form input[name="name"],
-.contact-sec .apply-form input[name="phone"],
-.contact-sec .apply-form input[name="email"] {
-    background: rgba(255, 255, 255, 0.46);
-    color: #fff;
-}
-
-.contact-sec .apply-form input:not(:placeholder-shown) {
-    color: #002ca2;
-    font-weight: 600;
 }
 
 .contact-sec .form-actions {
     display: flex;
     align-items: center;
     gap: 96px;
-    margin-top: 76.14px;
+    margin-top: 87px;
 }
 
 .contact-sec .download-link {
@@ -713,23 +642,27 @@ body {
 }
 
 .contact-sec .image-container {
-    width: 674.24px;
-    height: 674.244px;
+    width: 40%;
     transition: transform 0.2s ease;
     padding: 0;
     opacity: 0;
     transform: translateX(100px);
     transition: all 1s ease;
+    display: flex;
+    justify-content: flex-end;
 }
 
-/* ACTIVE STATE */
+.contact-sec .image-container img {
+    max-width: 407px;
+    max-height: 407px;
+}
+
 .contact-sec.animate .content,
 .contact-sec.animate .image-container {
     opacity: 1;
     transform: translateX(0);
 }
 
-/* Optional smooth delay */
 .contact-sec .image-container {
     transition-delay: 0.2s;
 }
@@ -740,31 +673,14 @@ body {
     }
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1650px) {
     .contact-sec {
-        padding: 120px 0 133px;
-    }
-
-    .contact-sec .inner-content h2 {
-        width: 560px;
-    }
-
-    .contact-sec form.apply-form {
-        margin-top: 50px;
-    }
-
-    .contact-sec .content {
-        max-width: 580px;
-    }
-
-    .contact-sec .image-container {
-        width: 580px;
-        height: 600px;
+        padding: 90px 0 90px;
     }
 
     .contact-sec .form-actions {
         gap: 76px;
-        margin-top: 60px;
+        margin-top: 40px;
     }
 }
 
@@ -782,10 +698,6 @@ body {
         gap: 50px;
     }
 
-    .contact-sec form.apply-form {
-        margin-top: 50px;
-    }
-
     .contact-sec .content {
         width: 50%;
     }
@@ -799,10 +711,6 @@ body {
         font-size: 20px;
     }
 
-    .contact-sec .apply-form input {
-        height: 58.52px;
-        padding: 15px 20px;
-    }
 }
 
 @media (max-width: 1366px) {
@@ -824,11 +732,10 @@ body {
     }
 
     .contact-sec .form-actions {
-        margin-top: 60px;
+        margin-top: 38px;
     }
 
     .contact-sec a.apply-btn {
-        font-size: 18px;
         padding: 18px 45px;
     }
 
@@ -895,19 +802,6 @@ body {
         width: 100%;
     }
 
-    .contact-sec form.apply-form {
-        margin: 50px 0;
-    }
-
-    .contact-sec .apply-form input {
-        width: 100%;
-    }
-
-    .contact-sec .form-group {
-        display: flex;
-        justify-content: flex-start;
-    }
-
     .contact-sec .image-container {
         width: 420px;
         height: 420px;
@@ -936,14 +830,9 @@ body {
         gap: 50px;
     }
 
-    .contact-sec .apply-form input {
-        height: 60px;
-        font-size: 16px;
-    }
-
     .contact-sec .form-actions {
         gap: 40px;
-        margin-top: 50px;
+        margin-top: 36px;
     }
 
     .apply-btn {
@@ -979,20 +868,11 @@ body {
         margin-bottom: 20px;
     }
 
-    .contact-sec form.apply-form {
-        margin: 32px 0;
-    }
-
-    .contact-sec .apply-form input {
-        height: 52px;
-        font-size: 14px;
-    }
-
     .contact-sec .form-actions {
         flex-direction: column;
         gap: 18px;
         align-items: flex-start;
-        margin-top: 36px;
+        margin-top: 28px;
     }
 
     .apply-btn {
@@ -1026,19 +906,9 @@ body {
         gap: 36px;
     }
 
-    .contact-sec form.apply-form {
-        margin: 26px 0;
-    }
-
-    .contact-sec .apply-form input {
-        height: 48px;
-        font-size: 13px;
-        padding: 12px 16px;
-    }
-
     .contact-sec .form-actions {
         gap: 16px;
-        margin-top: 28px;
+        margin-top: 24px;
     }
 
     .apply-btn {

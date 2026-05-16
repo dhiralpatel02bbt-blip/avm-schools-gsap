@@ -1165,20 +1165,6 @@ contactTL
     "-=0.3",
   );
 
-// Form validation
-const form = document.querySelector(".apply-form");
-
-form.addEventListener("submit", function (e) {
-  const name = form.querySelector('input[name="name"]').value;
-  const phone = form.querySelector('input[name="phone"]').value;
-  const email = form.querySelector('input[name="email"]').value;
-
-  if (!name || !phone || !email) {
-    e.preventDefault();
-    alert("Please fill all fields");
-  }
-});
-
 // ============================================================
 // HORIZONTAL SECTION — Unified Pinned Timeline
 // Phase 1: text slides in from left        (1 unit)
