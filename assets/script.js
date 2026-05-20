@@ -1638,17 +1638,24 @@ if (tl) {
   var heroImage = campusSec.querySelector(".img-full");
   var heroGlowCircle = campusSec.querySelector(".hero-glow-circle");
 
-  var nodes = [".node1", ".node2", ".node3", ".node4", ".node5", ".node6"].map(
-    function (s) {
-      return diagramSec.querySelector(s);
-    },
-  );
+  var nodes = [
+    ".node1",
+    ".node2",
+    ".node3",
+    ".node4",
+    ".node5",
+    ".node7",
+    ".node6",
+  ].map(function (s) {
+    return diagramSec.querySelector(s);
+  });
   var labels = [
     ".label.top",
     ".label.right-top",
     ".label.right-mid",
     ".label.bottom",
     ".label.left-bottom",
+    ".label.left-lower",
     ".label.left-mid",
   ].map(function (s) {
     return diagramSec.querySelector(s);
@@ -2006,17 +2013,12 @@ if (tl) {
 
   new Swiper(sliderEl, {
     slidesPerView: "auto",
-    centeredSlides: true,
+    centeredSlides: false,
     loop: true,
     speed: 650,
     spaceBetween: 58,
     grabCursor: true,
-    pagination: {
-      el: ".news-slider-pagination",
-      clickable: true,
-    },
     navigation: {
-      prevEl: ".news-slider-prev",
       nextEl: ".news-slider-next",
     },
     breakpoints: {
@@ -2114,6 +2116,7 @@ tabs.forEach((tab) => {
 (function initTeacherDevDiagram() {
   const section = document.querySelector(".teacher-dev");
   const wrapper = document.querySelector(".teacher-dev .circle-wrapper");
+  const svg = document.querySelector(".teacher-dev .arc-svg");
   const path = document.querySelector("#arcPath");
   const dots = Array.from(document.querySelectorAll(".teacher-dev .dot"));
   const centerCircle = document.querySelector(".teacher-dev .center-circle");
@@ -2129,6 +2132,7 @@ tabs.forEach((tab) => {
   if (
     !section ||
     !wrapper ||
+    !svg ||
     !path ||
     !dots.length ||
     !centerCircle ||
@@ -2139,11 +2143,18 @@ tabs.forEach((tab) => {
 
   function positionTeacherDots() {
     const length = path.getTotalLength();
+    const wrapperBox = wrapper.getBoundingClientRect();
+    const matrix = path.getScreenCTM();
+    if (!matrix) return;
 
     dots.forEach((dot, index) => {
       const point = path.getPointAtLength((index / (dots.length - 1)) * length);
-      dot.style.left = `${point.x}px`;
-      dot.style.top = `${point.y}px`;
+      const svgPoint = svg.createSVGPoint();
+      svgPoint.x = point.x;
+      svgPoint.y = point.y;
+      const screenPoint = svgPoint.matrixTransform(matrix);
+      dot.style.left = `${screenPoint.x - wrapperBox.left}px`;
+      dot.style.top = `${screenPoint.y - wrapperBox.top}px`;
     });
   }
 
@@ -2245,6 +2256,80 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Careers application popup
+document.addEventListener("DOMContentLoaded", function () {
+  const popup = document.querySelector(".careers-page .model-popup");
+  if (!popup) return;
+
+  const openButtons = document.querySelectorAll(".careers-page .apply-now");
+  const closeButton = popup.querySelector(".model-popup-close");
+  const positionSelect = popup.querySelector(".position-select");
+
+  function syncPositionOptions() {
+    if (!positionSelect) return;
+
+    document
+      .querySelectorAll(".careers-page .bbt-fa-careers-openings-sec .card h3")
+      .forEach(function (heading) {
+        const title = heading.textContent.trim().replace(/\s+/g, " ");
+        const exists = Array.from(positionSelect.options).some(function (option) {
+          return option.textContent.trim() === title;
+        });
+
+        if (!exists) {
+          const option = document.createElement("option");
+          option.textContent = title;
+          positionSelect.appendChild(option);
+        }
+      });
+  }
+
+  function openPopup(jobTitle) {
+    syncPositionOptions();
+
+    if (positionSelect && jobTitle) {
+      Array.from(positionSelect.options).forEach(function (option) {
+        option.selected = option.textContent.trim() === jobTitle;
+      });
+    }
+
+    popup.classList.add("is-open");
+    popup.setAttribute("aria-hidden", "false");
+    document.body.classList.add("popup-open");
+    if (positionSelect) positionSelect.focus();
+  }
+
+  function closePopup() {
+    popup.classList.remove("is-open");
+    popup.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("popup-open");
+  }
+
+  openButtons.forEach(function (button) {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      const card = button.closest(".card");
+      const heading = card ? card.querySelector("h3") : null;
+      const jobTitle = heading ? heading.textContent.trim().replace(/\s+/g, " ") : "";
+      openPopup(jobTitle);
+    });
+  });
+
+  if (closeButton) {
+    closeButton.addEventListener("click", closePopup);
+  }
+
+  popup.addEventListener("click", function (event) {
+    if (event.target === popup) closePopup();
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && popup.classList.contains("is-open")) {
+      closePopup();
+    }
+  });
+});
+
 // ============================================================
 // EXTRA SECTION - Sticky Pin + one wheel step per slide
 // ============================================================
@@ -2254,16 +2339,16 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!section || !swiperEl || typeof Swiper === "undefined") return;
 
   var swiper = new Swiper(".extra-swiper", {
-    slidesPerView: 2,
+    slidesPerView: "auto",
     spaceBetween: 30,
     loop: false,
     speed: 650,
     allowTouchMove: true,
     grabCursor: true,
     breakpoints: {
-      0: { slidesPerView: 1, spaceBetween: 20 },
-      768: { slidesPerView: 1.5, spaceBetween: 24 },
-      1200: { slidesPerView: 2, spaceBetween: 30 },
+      0: { spaceBetween: 20 },
+      768: { spaceBetween: 24 },
+      1200: { spaceBetween: 30 },
     },
   });
 

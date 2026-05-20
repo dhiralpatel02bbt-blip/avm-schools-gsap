@@ -78,28 +78,6 @@ body.pedagogy-page .campus-section .half-circle {
     box-shadow: 0 0 120px rgba(10, 67, 164, 0.22);
 }
 
-body.pedagogy-page .campus-section .hero-glow-circle {
-    position: absolute;
-    right: 8.5%;
-    top: 21%;
-    width: clamp(1090px, 18vw, 1200px);
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    background: transparent;
-    z-index: 2;
-    will-change: transform, opacity;
-    border: 150px solid #f0d400;
-    opacity: 0;
-    visibility: hidden;
-}
-
-img.teacher-img-full {
-    position: absolute;
-    bottom: -35px;
-    z-index: 2;
-    left: -2px;
-}
-
 body.pedagogy-page .campus-section .body-txt {
     position: relative;
     z-index: 5;
@@ -157,6 +135,12 @@ body.pedagogy-page .campus-section .panel-body {
     }
 }
 
+@media(max-width:1024px) {
+    body.pedagogy-page .campus-section .half-circle {
+        left: -100%;
+    }
+}
+
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    DIAGRAM SECTION — hidden until scroll phase 2
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -186,7 +170,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     position: relative;
     width: min(100%, 1728px);
     min-height: 760px;
-    margin: 0 auto;
+    margin: -10% auto 0 auto;
 }
 
 .diagram-sec .orbit-stage {
@@ -200,7 +184,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     left: 50%;
     width: 230px;
     height: 230px;
-    background: #b79ceb;
+    background: #DED5FF;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -235,7 +219,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
-    will-change: width, height, opacity, box-shadow;
+    /* will-change: width, height, opacity, box-shadow; */
 }
 
 .diagram-sec .node.big {
@@ -244,33 +228,38 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 }
 
 .diagram-sec .node1 {
-    top: 15.5%;
-    left: 36.6%;
+    top: 12.5%;
+    left: 38.6%;
 }
 
 .diagram-sec .node2 {
-    top: 15.5%;
-    left: 63.2%;
+    top: 12.5%;
+    left: 61.4%;
 }
 
 .diagram-sec .node3 {
-    top: 49.8%;
-    left: 71.1%;
+    top: 47%;
+    left: 71.3%;
 }
 
 .diagram-sec .node4 {
-    top: 84.2%;
-    left: 63.2%;
+    top: 81.2%;
+    left: 65.1%;
 }
 
 .diagram-sec .node5 {
-    top: 84.2%;
-    left: 36.6%;
+    top: 94.2%;
+    left: 50%;
 }
 
 .diagram-sec .node6 {
-    top: 49.8%;
-    left: 28.9%;
+    top: 47%;
+    left: 28.8%;
+}
+
+.diagram-sec .node7 {
+    top: 81.2%;
+    left: 34.8%;
 }
 
 .diagram-sec .label {
@@ -315,8 +304,8 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 }
 
 .diagram-sec .label.right-top {
-    top: 6%;
-    right: 7%;
+    top: 0%;
+    right: 9%;
     width: 23%;
     text-align: center;
 }
@@ -337,8 +326,15 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 }
 
 .diagram-sec .label.left-bottom {
-    bottom: -3%;
-    left: 10%;
+    bottom: -24%;
+    left: 39%;
+    width: 22%;
+    text-align: center;
+}
+
+.diagram-sec .label.left-lower {
+    top: 78%;
+    left: 9%;
     width: 22%;
     text-align: center;
 }
@@ -367,38 +363,61 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .node4 {
-        left: 65%;
-    }
-
-    .diagram-sec .node5 {
-        left: 35%;
+        left: 66.6%;
     }
 
     .diagram-sec .node6 {
         left: 26.5%;
     }
 
+    .diagram-sec .node7 {
+        left: 33.3%;
+    }
+
     .diagram-sec .label.right-mid {
+        top: 41.5%;
         right: -2%;
     }
 
     .diagram-sec .label.left-mid {
+        top: 41.5%;
         left: 2%;
     }
 }
 
 @media (max-width: 1650px) {
     .diagram-sec .orbit {
-        width: 666px;
-        height: 666px;
+        width: 630px;
+        height: 630px;
+    }
+
+    .diagram-sec .node1 {
+        left: 38%;
+    }
+
+    .diagram-sec .node2 {
+        left: 61.7%;
     }
 
     .diagram-sec .node3 {
-        left: 74.3%;
+        left: 72.9%;
+    }
+
+    .diagram-sec .node4 {
+        left: 65.5%;
+        top: 80.2%;
+    }
+
+    .diagram-sec .node5 {
+        top: 91.2%;
     }
 
     .diagram-sec .node6 {
-        left: 25.6%;
+        left: 27%;
+    }
+
+    .diagram-sec .node7 {
+        left: 35%;
     }
 
     .diagram-sec .label.top {
@@ -416,7 +435,12 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .label.left-bottom {
-        left: 9%;
+        bottom: -20%;
+    }
+
+    .diagram-sec .label.bottom {
+        right: 10%;
+        bottom: 3%;
     }
 }
 
@@ -431,14 +455,35 @@ body.pedagogy-page section.diagram-sec .container-xxl {
         height: 200px;
     }
 
+    .diagram-sec .node1 {
+        left: 36%;
+    }
+
+    .diagram-sec .node2 {
+        left: 63.7%;
+    }
+
     .diagram-sec .node3 {
         left: 76.7%;
         top: 51.8%;
     }
 
+    .diagram-sec .node4 {
+        left: 68.5%;
+        top: 80%;
+    }
+
+    .diagram-sec .node5 {
+        top: 91.7%;
+    }
+
     .diagram-sec .node6 {
         left: 23.3%;
         top: 51.8%;
+    }
+
+    .diagram-sec .node7 {
+        left: 32.3%;
     }
 
     .diagram-sec .label.left-mid {
@@ -462,17 +507,30 @@ body.pedagogy-page section.diagram-sec .container-xxl {
         top: 16.5%;
     }
 
-    .diagram-sec .node4,
-    .diagram-sec .node5 {
+    .diagram-sec .node4 {
         top: 82.2%;
     }
 
+    .diagram-sec .node5 {
+        top: 89.4%;
+    }
+
     .diagram-sec .label.top {
+        top: 7%;
         left: 8%;
+    }
+
+    .diagram-sec .label.right-top {
+        top: 8%;
+        right: 8%;
     }
 
     .diagram-sec .label.right-mid {
         width: 22%;
+    }
+
+    .diagram-sec .node4 {
+        left: 65.5%;
     }
 
     .diagram-sec .label.bottom {
@@ -482,8 +540,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .label.left-bottom {
-        bottom: 1%;
-        left: 9%;
+        bottom: -10%;
     }
 
     .diagram-sec .label.left-mid,
@@ -497,47 +554,160 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 }
 
 @media (max-width: 1280px) {
+    .diagram-sec .orbit {
+        width: 500px;
+        height: 500px;
+    }
+
     .diagram-sec .center {
         width: 180px;
         height: 180px;
     }
 
-    .diagram-sec .node3 {
-        left: 78.3%;
+    .diagram-sec .node1 {
+        top: 22.5%;
+        left: 37%;
     }
 
-    .diagram-sec .node4,
+    .diagram-sec .node2 {
+        top: 22.5%;
+        left: 62.7%;
+    }
+
+    .diagram-sec .node3 {
+        top: 50%;
+        left: 73.7%;
+    }
+
+    .diagram-sec .node4 {
+        top: 74.2%;
+        left: 65.7%;
+    }
+
     .diagram-sec .node5 {
-        top: 83.2%;
+        top: 82.7%;
     }
 
     .diagram-sec .node6 {
-        left: 21.6%;
+        left: 26.3%;
+    }
+
+    .diagram-sec .node7 {
+        left: 34%;
+        top: 74.2%;
     }
 
     .diagram-sec .label.right-mid {
-        top: 49%;
-        right: -7%;
+        top: 43%;
+        right: -1%;
     }
 
     .diagram-sec .label.left-mid {
-        left: -7%;
+        left: -1%;
+    }
+
+    .diagram-sec .label.top {
+        top: 14%;
+        left: 9%;
+    }
+
+    .diagram-sec .label.right-top {
+        top: 14%;
+        right: 8%;
+    }
+
+    .diagram-sec .label.bottom {
+        right: 8%;
+        bottom: 13%;
+    }
+
+    .diagram-sec .label.left-bottom {
+        bottom: -5%;
+        width: 29%;
+        left: 36%;
+    }
+
+    .diagram-sec .label.left-lower {
+        top: 73%;
+    }
+}
+
+@media(max-width: 1024px) {
+    .diagram-sec .orbit {
+        width: 470px;
+        height: 470px;
+    }
+
+    .diagram-sec .label.right-top {
+        right: 1%;
+        width: 29%;
+    }
+
+    .diagram-sec .label.top {
+        width: 29%;
+        left: 2%;
+    }
+
+    .diagram-sec .node3 {
+        left: 78%;
+    }
+
+    .diagram-sec .node4 {
+        top: 73.2%;
+        left: 68%;
+    }
+
+    .diagram-sec .node5 {
+        top: 80.7%;
+    }
+
+    .diagram-sec .node6 {
+        left: 22%;
+    }
+
+    .diagram-sec .node7 {
+        left: 33%;
+    }
+
+    .diagram-sec .label.right-mid {
+        top: 43%;
+        right: -9%;
+        width: 24%;
+    }
+
+    .diagram-sec .label.bottom {
+        right: -1%;
+        bottom: 15%;
+        width: 28%;
+    }
+
+    .diagram-sec .label.left-lower {
+        left: 1%;
+        width: 28%;
+    }
+
+    .diagram-sec .label.left-mid {
+        left: -10%;
+        top: 45.5%;
+        width: 24%;
     }
 }
 
 /* tabbing section css Start */
 section.tabbing-sec {
-    padding: 121px 0 133px;
+    padding: 105px 0 178px;
 }
 
 section.tabbing-sec h2.title-txt {
     color: #0A3D9C;
     text-align: center;
     font-family: Satoshi;
-    font-size: 2.6em;
+    font-size: 2.4em;
     font-weight: 700;
     line-height: 112%;
-    padding-bottom: 117px;
+    padding-bottom: 128px;
+    width: 63%;
+    margin: 0 auto !important;
 }
 
 section.tabbing-sec .tabs {
@@ -576,30 +746,11 @@ section.tabbing-sec .tab.active {
 
 section.tabbing-sec .tab-content {
     display: none;
-    padding: 84px 0;
+    padding: 128px 0 0;
 }
 
 section.tabbing-sec .tab-content.active {
     display: block;
-}
-
-section.tabbing-sec .yellow-box {
-    background: #F7DF00;
-    padding: 47px 93px 49.93px 94px;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: -50px;
-    width: 71%;
-}
-
-section.tabbing-sec .yellow-box p {
-    color: #000;
-    text-align: center;
-    font-family: Satoshi;
-    font-size: 2.2em;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 125%;
 }
 
 section.tabbing-sec h5.sub-title {
@@ -616,7 +767,6 @@ section.tabbing-sec h5.sub-title {
 section.tabbing-sec .section-grid {
     display: grid;
     gap: 90px;
-    padding-top: 143.48px;
 }
 
 section.tabbing-sec .feature-block {
@@ -636,7 +786,7 @@ section.tabbing-sec .img-block img {
 section.tabbing-sec .text-block {
     display: flex;
     flex-direction: column;
-    gap: 105px;
+    gap: 115px;
 }
 
 section.tabbing-sec .feature {
@@ -646,14 +796,6 @@ section.tabbing-sec .feature {
     width: 70%;
 }
 
-section.tabbing-sec .text-block .feature:nth-child(2) {
-    padding-left: 32%;
-    width: 100%;
-}
-
-/* ── Feature Block Scroll Animations ─────────────────────── */
-
-/* Initial hidden state */
 section.tabbing-sec .feature-block>*:nth-child(1) {
     opacity: 0;
     transform: translateX(-80px);
@@ -666,7 +808,6 @@ section.tabbing-sec .feature-block>*:nth-child(2) {
     transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
 }
 
-/* Triggered when .fb-visible is added to .feature-block */
 section.tabbing-sec .feature-block.fb-visible>*:nth-child(1),
 section.tabbing-sec .feature-block.fb-visible>*:nth-child(2) {
     opacity: 1;
@@ -675,8 +816,8 @@ section.tabbing-sec .feature-block.fb-visible>*:nth-child(2) {
 
 section.tabbing-sec .feature-title {
     display: flex;
-    align-items: center;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 36.44px;
     color: #0A3D9C;
     font-family: Satoshi;
     font-size: 1.4em;
@@ -690,7 +831,6 @@ section.tabbing-sec .feature-title svg {
 }
 
 section.tabbing-sec .feature p {
-    padding-left: 70px;
     color: #000;
     font-family: Poppins;
     font-size: 1rem;
@@ -717,40 +857,40 @@ section.tabbing-sec .tab-items {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 191px;
-    height: 30px;
-    background-color: #F7DF00;
+    width: 90px;
+    height: 25px;
+    background-color: #FC8B5F;
     animation: bounceLeftRight 2.5s ease-in-out infinite alternate;
 }
 
 #playtrails .feature-block:first-child .img-block:before {
     content: "";
     position: absolute;
-    bottom: -29px;
-    left: 191px;
-    width: 107px;
-    height: 30px;
-    background-color: #FC8B5F;
+    bottom: -24px;
+    left: 90px;
+    width: 90px;
+    height: 25px;
+    background-color: #BEACFF;
 }
 
 #playtrails .feature-block:last-child .img-block:after {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 148px;
-    height: 30px;
-    background-color: #FC8B5F;
+    bottom: 0;
+    right: 90px;
+    width: 90px;
+    height: 25px;
+    background-color: #F7DF00;
 }
 
 #playtrails .feature-block:last-child .img-block:before {
     content: "";
     position: absolute;
-    top: -29px;
-    left: 148px;
-    width: 104px;
-    height: 30px;
-    background-color: #F7DF00;
+    bottom: -24px;
+    right: 0;
+    width: 90px;
+    height: 25px;
+    background-color: #FC8B5F;
 }
 
 #primary .feature-block:first-child .img-block:after {
@@ -834,12 +974,20 @@ section.tabbing-sec .tab-items {
 }
 
 @media(max-width: 1728px) {
+    section.tabbing-sec {
+        padding: 100px 0 170px;
+    }
+
+    section.tabbing-sec .tab-content {
+        padding: 120px 0 0;
+    }
+
     section.tabbing-sec .yellow-box {
         padding: 37px 83px 39.93px 84px;
     }
 
-    section.tabbing-sec .section-grid {
-        padding-top: 123.48px;
+    section.tabbing-sec h2.title-txt {
+        padding-bottom: 100px;
     }
 
     section.tabbing-sec .text-block {
@@ -851,24 +999,40 @@ section.tabbing-sec .tab-items {
     section.tabbing-sec {
         padding: 100px 0;
     }
+
+    section.tabbing-sec .tab-content {
+        padding: 100px 0 0;
+    }
+
+    section.tabbing-sec h2.title-txt {
+        padding-bottom: 80px;
+    }
 }
 
 @media(max-width: 1280px) {
     section.tabbing-sec .tab-content {
-        padding: 50px 0;
+        padding: 50px 0 0;
     }
 
     section.tabbing-sec h2.title-txt {
-        padding-bottom: 77px;
+        width: 64%;
+        padding-bottom: 67px;
     }
 
     section.tabbing-sec .section-grid {
         gap: 70px;
-        padding-top: 73.48px;
     }
 
     section.tabbing-sec .feature-block {
         gap: 84px;
+    }
+
+    section.tabbing-sec .feature {
+        width: 100%;
+    }
+
+    section.tabbing-sec .text-block {
+        gap: 65px;
     }
 }
 
@@ -877,7 +1041,7 @@ section.tabbing-sec .tab-items {
 /* extra section css Start */
 .extra-section {
     background: #0A3D9C;
-    padding: clamp(48px, 6vh, 72px) 0 50px;
+    padding: clamp(32px, 5vh, 56px) 0 42px;
     position: relative;
     /* height fixed so pin works cleanly */
     height: 100vh;
@@ -886,7 +1050,7 @@ section.tabbing-sec .tab-items {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     overflow: hidden;
 }
 
@@ -911,8 +1075,8 @@ section.tabbing-sec .tab-items {
 }
 
 .text-content {
-    max-width: 51%;
-    margin-bottom: clamp(42px, 6vh, 78px);
+    max-width: 53%;
+    margin-bottom: 105px;
     z-index: 1;
     position: relative;
 }
@@ -920,11 +1084,10 @@ section.tabbing-sec .tab-items {
 .text-content h2 {
     color: #FFF;
     font-family: Satoshi;
-    font-size: 2.6em;
+    font-size: 2.7em;
     font-style: normal;
     font-weight: 700;
     line-height: 112%;
-    padding-bottom: clamp(24px, 4vh, 40px);
 }
 
 .text-content p {
@@ -938,19 +1101,17 @@ section.tabbing-sec .tab-items {
 
 /* Extra Section — Swiper Slider */
 .extra-slider-clip {
-    /* overflow-x: hidden; */
-    overflow-y: visible;
+    overflow: visible;
     position: relative;
     z-index: 1;
     width: 100%;
-    padding-left: 7.5vw;
+    padding-left: calc(7.5vw + 20px);
     padding-right: 0;
     box-sizing: border-box;
 }
 
 .extra-swiper {
     width: 100%;
-    /* overflow: visible so card-label (bottom: -40px) shows below image */
     overflow: visible;
     position: relative;
     z-index: 1;
@@ -967,8 +1128,7 @@ section.tabbing-sec .tab-items {
 }
 
 .extra-swiper .swiper-slide {
-    /* Each slide has bottom padding to accommodate card-label overhang */
-    /* padding-bottom: clamp(92px, 12vh, 120px); */
+    width: min(100vw, 1612px);
     box-sizing: border-box;
 }
 
@@ -977,46 +1137,137 @@ section.tabbing-sec .tab-items {
     border: none;
     outline: none;
     width: 100%;
+    display: grid;
+    grid-template-columns: minmax(420px, 48%) 1fr;
+    align-items: stretch;
+    gap: clamp(34px, 4vw, 72px);
+    background: transparent;
+    overflow: visible;
 }
 
 .extra-section .card img {
     width: 100%;
-    height: clamp(260px, calc(100svh - 390px), 510px);
+    height: clamp(300px, calc(100svh - 300px), 520px);
     object-fit: cover;
     display: block;
 }
 
 .extra-section .card-label {
-    position: absolute;
-    bottom: -32px;
-    left: 0;
-    padding: 26px 34px 28px;
-    width: 85%;
+    position: static;
+    width: min(510px, 100%);
+    padding: 0;
+    align-self: center;
+    background: transparent;
 }
 
 .extra-section .card-label h3 {
-    color: #000;
+    color: #fff;
     font-family: Poppins;
-    font-size: 1.1871em;
-    font-weight: 600;
-    line-height: 125%;
+    font-size: clamp(1.08rem, 1.45vw, 1.7rem);
+    font-weight: 400;
+    line-height: 136%;
 }
 
 .extra-section .card-label p {
-    color: #000;
+    color: rgba(255, 255, 255, 0.78);
     font-family: Poppins;
-    font-size: 1rem;
+    font-size: clamp(0.88rem, 0.9vw, 1rem);
     font-weight: 400;
     line-height: 154%;
-    padding-top: 6px;
+    padding-top: 14px;
+    display: none;
 }
 
 .extra-section .orange {
-    background: #FC895F;
+    background: transparent;
 }
 
 .extra-section .yellow {
+    background: transparent;
+}
+
+.extra-swiper .swiper-slide:nth-child(odd) .card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 90px;
+    height: 25px;
     background: #F7DF00;
+}
+
+.extra-swiper .swiper-slide:nth-child(odd) .card::before {
+    content: "";
+    position: absolute;
+    bottom: -25px;
+    left: 90px;
+    width: 90px;
+    height: 25px;
+    background: #FC8B5F;
+}
+
+.extra-swiper .swiper-slide:nth-child(even) .card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 25px;
+    background: #BEACFF;
+}
+
+.extra-swiper .swiper-slide:nth-child(even) .card::before {
+    content: "";
+    position: absolute;
+    top: -25px;
+    left: 90px;
+    width: 90px;
+    height: 25px;
+    background: #FC8B5F;
+}
+
+@media (max-width: 1728px) {
+    .text-content {
+        margin-bottom: 90px;
+    }
+}
+
+@media(max-width: 1280px) {
+    .text-content {
+        max-width: 73%;
+    }
+
+    .extra-section .card img {
+        height: unset;
+    }
+
+    .extra-section .card-label {
+        width: min(350px, 100%);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .text-content {
+        max-width: 86%;
+        margin-bottom: 34px;
+    }
+
+    .extra-slider-clip {
+        padding-left: calc(7.5vw + 20px);
+    }
+
+    .extra-swiper .swiper-slide {
+        width: min(88vw, 760px);
+    }
+
+    .extra-section .card {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .extra-section .card-label {
+        width: 100%;
+    }
 }
 
 /* extra section css End */
@@ -1088,6 +1339,18 @@ section.tabbing-sec .tab-items {
     }
 }
 
+@media(max-width: 1280px) {
+    .aym-text {
+        padding: 0 100px 0 92.98px;
+    }
+}
+
+@media(max-width: 1024px) {
+    .aym-text {
+        padding: 0 40px;
+    }
+}
+
 /* AYM section css End */
 
 /* AYM diagram section css Start  */
@@ -1112,7 +1375,7 @@ section.tabbing-sec .tab-items {
     width: 275px;
     height: 275px;
     border-radius: 50%;
-    background: #F7DF00;
+    background: #FC8B5F;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1130,7 +1393,7 @@ section.tabbing-sec .tab-items {
     --line-opacity: 0;
     --line-length: 58px;
     --line-angle: 0deg;
-    background: #BEACFF;
+    background: #F7DF00;
     border-radius: 100px;
     padding: 38px 75px 34px;
     z-index: 3;
@@ -1148,7 +1411,7 @@ section.tabbing-sec .tab-items {
 .sat::before {
     content: "";
     position: absolute;
-    top: 50%;
+    top: 64%;
     left: 100%;
     width: var(--line-length);
     height: 0;
@@ -1187,9 +1450,9 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.bottom-right {
-    bottom: 140px;
+    bottom: 110px;
     right: -220px;
-    --line-length: 286px;
+    --line-length: 320px;
     --line-angle: -144deg;
 }
 
@@ -1199,9 +1462,9 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.bottom-left {
-    bottom: 140px;
-    left: -114px;
-    --line-length: 228px;
+    bottom: 110px;
+    left: -144px;
+    --line-length: 270px;
     --line-angle: -41deg;
 }
 
@@ -1275,6 +1538,11 @@ svg.lines {
     .sat.right {
         right: -320px;
     }
+
+    .sat.bottom-right {
+        bottom: 110px;
+        right: -155px;
+    }
 }
 
 @media(max-width: 1440px) {
@@ -1290,13 +1558,17 @@ svg.lines {
         left: -290px;
     }
 
-    .sat.bottom-right {
-        bottom: 130px;
-        right: -190px;
+    .sat.bottom-left {
+        bottom: 110px;
+        left: -95px;
     }
 }
 
 @media(max-width: 1366px) {
+    .sat.top {
+        top: 0px;
+    }
+
     .sat.bottom-right {
         bottom: 70px;
         right: -130px;
@@ -1321,6 +1593,35 @@ svg.lines {
 
     .sat.right {
         right: -260px;
+    }
+}
+
+@media(max-width: 1024px) {
+    .center-node {
+        width: 200px;
+        height: 200px;
+    }
+
+    .sat.top {
+        top: 70px;
+    }
+
+    .sat.right {
+        right: -180px;
+    }
+
+    .sat.left {
+        left: -180px;
+    }
+
+    .sat.bottom-right {
+        bottom: 140px;
+        right: -20px;
+    }
+
+    .sat.bottom-left {
+        bottom: 140px;
+        left: -4px;
     }
 }
 
@@ -1384,6 +1685,12 @@ svg.lines {
 @media(max-width: 1728px) {
     .avm-section {
         padding: 0;
+    }
+}
+
+@media(max-width: 1024px) {
+    .avm-text {
+        padding: 0 50px;
     }
 }
 
@@ -1635,6 +1942,77 @@ svg.lines {
 
     .teacher-dev .right-bottom {
         right: -300px;
+    }
+}
+
+@media(max-width: 1024px) {
+    .teacher-dev {
+        min-height: 610px;
+        height: auto;
+        padding: 70px 0 0px;
+    }
+
+    .teacher-dev .circle-wrapper {
+        width: 390px;
+        height: 250px;
+    }
+
+    .teacher-dev .arc-svg {
+        width: 100%;
+        height: 210px;
+    }
+
+    .teacher-dev .center-circle {
+        width: 184px;
+        height: 184px;
+        bottom: -15px;
+    }
+
+    .teacher-dev .center-circle p {
+        font-size: 1.1em;
+    }
+
+    .teacher-dev .dot {
+        width: 18px;
+        height: 18px;
+    }
+
+    .teacher-dev .content {
+        width: 250px;
+    }
+
+    .teacher-dev .content h4 {
+        font-size: 1.12em;
+        white-space: normal;
+    }
+
+    .teacher-dev .content p {
+        font-size: 0.82rem;
+        line-height: 145%;
+    }
+
+    .teacher-dev .top {
+        top: -90px;
+    }
+
+    .teacher-dev .left-top {
+        top: 20px;
+        left: -220px;
+    }
+
+    .teacher-dev .right-top {
+        top: 20px;
+        right: -220px;
+    }
+
+    .teacher-dev .left-bottom {
+        top: 150px;
+        left: -250px;
+    }
+
+    .teacher-dev .right-bottom {
+        top: 150px;
+        right: -270px;
     }
 }
 

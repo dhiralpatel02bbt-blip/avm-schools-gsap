@@ -1,0 +1,199 @@
+.bbt-fa-news-sec .title-warpper-left {
+  width: 50%;
+}
+
+.bbt-fa-news-sec h2.title-text {
+  color: #0a3d9c;
+  font-family: Satoshi;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%;
+  display: inline-block;
+}
+
+section.bbt-fa-news-sec {
+  padding: 100px 0;
+  overflow-x: clip;
+}
+
+.bbt-fa-news-sec .title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 29.99px;
+}
+
+.bbt-fa-news-sec .title-warpper-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.bbt-fa-news-sec .social-icon {
+  margin-bottom: 17px;
+}
+
+.bbt-fa-news-sec .news-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.bbt-fa-news-sec .meta-category {
+  color: #fc8b5f;
+  text-align: right;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 127%; 
+  letter-spacing: 0.2px;
+}
+
+.bbt-fa-news-sec .meta-location {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: right;
+  font-family: Poppins;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 127%; 
+  letter-spacing: 0.19px;
+}
+.bbt-fa-news-sec .blog-detail-content {
+  margin-top: 72.51px;
+  margin-right: 143.98px;
+}
+.bbt-fa-news-sec .blog-quote {
+  color: #0a3d9c;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 176%; 
+}
+
+.bbt-fa-news-sec .blog-detail-content p {
+  color: #2a2a2a;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 176%;
+}
+.bbt-fa-news-sec .blog-pragarph {
+  margin-top: 30px;
+}
+.bbt-fa-news-sec .pragarph {
+    margin-top: 90.37px;
+}
+
+/* news section css start */
+
+/* SECTION */
+.bbt-fa-More-stories-sec {
+  background: #f4f2f2;
+  padding-top: 103px;
+  padding-bottom: 119px;
+}
+
+/* GRID */
+.bbt-fa-More-stories-sec .news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 73px;
+}
+
+.bbt-fa-More-stories-sec h2.more-text {
+  color: #0a3d9c;
+  font-family: Satoshi;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 112%;
+  padding-bottom: 90px;
+}
+
+/* CARD */
+.bbt-fa-More-stories-sec .card {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  background: transparent;
+}
+
+.bbt-fa-More-stories-sec .card h3 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%; 
+  padding-bottom: 26px;
+}
+
+/* IMAGE */
+.bbt-fa-More-stories-sec .card-image {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.bbt-fa-More-stories-sec .card-image img {
+
+  object-fit: cover;
+  
+}
+
+/* META */
+.bbt-fa-More-stories-sec .card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bbt-fa-More-stories-sec .card-meta {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: right;
+  font-family: Poppins;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 127%;;
+  letter-spacing: 0.17px;
+}
+
+/* TAGS */
+.bbt-fa-More-stories-sec .tag {
+  color: #fc8b5f;
+  font-family: Poppins;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 127%;;
+  letter-spacing: 0.17px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1440px) {
+    .bbt-fa-More-stories-sec .news-grid {
+    gap: 73px;
+}
+
+}
+@media (max-width: 1366.9px) {
+  .bbt-fa-More-stories-sec .news-grid {
+    gap: 46px;
+}
+
+}
+@media (max-width: 1280.9px) {
+    .bbt-fa-More-stories-sec .news-grid {
+    gap: 36px;
+}
+
+}
+
+/* news section css end */

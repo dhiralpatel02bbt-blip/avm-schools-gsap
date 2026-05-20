@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   padding-left: 5%;
-  width: 33%;
+  width: 36%;
 }
 
 .hero-left:before {
@@ -56,131 +56,53 @@
 
 /*  Careers about section css end */
 
-/* table section css start */
-.bbt-fa-table-sec {
-  padding: 121.52px 0 132px;
+/* popup css start  */
+.model-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(0, 0, 0, 0.62);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  overflow-y: auto;
 }
 
-.bbt-fa-table-sec h2 {
+.career-wrapper .popup {
+  gap: 132px;
+}
+
+.model-popup.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.popup-open {
+  overflow: hidden;
+}
+
+.model-popup h2.Openings-text {
   color: #0a3d9c;
-  text-align: center;
-  font-family: "Satoshi";
-  font-size: 2.4em;
-  font-weight: 700;
-  line-height: 112%;
-}
-
-.bbt-fa-table-sec .bbt-table-wrapper {
-  margin-top: 96.42px;
-  background-color: #f1edff;
-  padding: 66px 67px 68px 65px;
-}
-
-.bbt-fa-table-sec .bbt-openings-table tbody tr:last-child td {
-  padding-bottom: 0;
-}
-
-.bbt-fa-table-sec .bbt-openings-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.bbt-fa-table-sec .bbt-openings-table thead tr {
-  border-bottom: 1px solid #0a3d9c;
-}
-
-.bbt-fa-table-sec .bbt-openings-table thead th {
-  color: #0a3d9c;
-  font-family: "Satoshi";
-  font-size: 1.25em;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 119%;
-  padding: 0px 0px 37.89px;
-}
-
-.bbt-fa-table-sec .bbt-openings-table tbody tr {
-  border-bottom: 1px solid #0a3d9c;
-}
-
-.bbt-fa-table-sec .bbt-openings-table tbody tr:last-child {
-  border-bottom: none;
-}
-
-.bbt-fa-table-sec .bbt-openings-table tbody td {
-  color: #000;
-  font-family: "Poppins";
-  font-size: 1em;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 154%;
-  padding-top: 28px;
-  padding-bottom: 31px;
-}
-
-@media(max-width: 1728px) {
-  .bbt-fa-table-sec {
-    padding: 101.52px 0 112px;
-  }
-
-  .bbt-fa-table-sec .bbt-table-wrapper {
-    margin-top: 76.42px;
-  }
-
-  .bbt-fa-table-sec .bbt-table-wrapper {
-    padding: 56px 57px 58px 55px;
-  }
-}
-
-@media (max-width: 1400px) {
-  .bbt-fa-table-sec h2 {
-    padding-top: 80px;
-  }
-}
-
-@media (max-width: 1366px) {
-  .bbt-fa-table-sec .bbt-openings-table tbody td {
-    padding-top: 20px;
-    padding-bottom: 24px;
-  }
-}
-
-@media (max-width: 1023px) {
-  .bbt-fa-table-sec .bbt-table-wrapper {
-    padding: 24px 27px 27px 27px;
-  }
-
-  .bbt-fa-news-sec .card h3 {
-    font-size: 17px;
-  }
-
-  .bbt-fa-news-sec h3.new-text {
-    padding-bottom: 26px;
-  }
-}
-
-/* table section css end */
-
-/* Openings section start  */
-section.bbt-fa-Openings-sec {
-  padding: 0px 0 135.12px;
-}
-
-.bbt-fa-Openings-sec h2.Openings-text {
-  color: #0a3d9c;
-  text-align: center;
   font-family: Satoshi;
-  font-size: 2.4em;
+  font-size: 48px;
   font-weight: 700;
-  line-height: 112%;
+  line-height: 125%;
 }
 
 .custom-dropdown {
   position: relative;
-  margin-bottom: 24px;
+  width: 100%;
+  margin-bottom: 15px;
+  z-index: 999;
 }
 
-.bbt-fa-Openings-sec select {
+.model-popup select {
   border: 2px solid #0043c0;
   display: flex;
   justify-content: space-between;
@@ -194,16 +116,10 @@ section.bbt-fa-Openings-sec {
   -moz-appearance: none;
   background: url("../images/down-arrow.png") no-repeat right 20px center;
   background-size: 18px;
-  color: #0A3D9C;
-  font-family: Poppins;
-  font-size: 0.9em;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
 }
 
-.bbt-fa-Openings-sec input.name {
-  border: 1.5px solid #0a3d9c;
+.model-popup .input-field {
+  border: 1px solid rgba(0, 0, 0, 0.20);
   background: #f9f9f9;
   color: rgba(0, 0, 0, 0.5);
   font-family: Poppins;
@@ -211,71 +127,119 @@ section.bbt-fa-Openings-sec {
   width: 100%;
   height: 65px;
   padding-left: 20px;
-  margin-bottom: 24px;
+  margin-bottom: 15px;
   outline: none;
 }
 
-.bbt-fa-Openings-sec input.name:last-child {
+.model-popup .input-field:last-child {
   margin-bottom: 0;
 }
 
-.bbt-fa-Openings-sec .upload-sec {
-  padding: 88.34px 0px 92.35px;
+.model-popup .upload-sec {
+  padding: 49px 0px 61.49px;
 }
 
-.bbt-fa-Openings-sec .career-img {
-  width: 60%;
-  max-width: 725px;
-  padding-left: 10px;
-  padding-top: 35px;
-}
-
-.bbt-fa-Openings-sec .career-wrapper {
+.model-popup .career-img {
+  width: 50%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 127.61px 0 0;
-  gap: 100px;
+  flex-wrap: wrap;
+  gap: 168px;
 }
 
-.bbt-fa-Openings-sec .career-form {
-  width: 40%;
-  padding-right: 50px;
+.model-popup .career-img img.main-img {
+  height: auto;
 }
 
-.bbt-fa-Openings-sec .upload-sec p {
+.model-popup .career-wrapper {
+  position: relative;
+  padding: 72px;
+  max-width: 1296px;
+  width: 100%;
+  background: #fff;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  transform: translateY(18px);
+  transition: transform 0.25s ease;
+}
+
+.model-popup.is-open .career-wrapper {
+  transform: translateY(0);
+}
+
+.model-popup-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.model-popup-close::before,
+.model-popup-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 2px;
+  background: #0a3d9c;
+  transform-origin: center;
+}
+
+.model-popup-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.model-popup-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.model-popup .career-form {
+  width: 50%;
+}
+
+.model-popup .upload-sec p {
   color: #000;
   font-family: Poppins;
-  font-size: 19px;
+  font-size: 0.95em;
   font-weight: 500;
 }
 
-.bbt-fa-Openings-sec .upload-select {
-  margin-top: 20px;
+.model-popup span.icon {
+  color: #FF0004;
 }
 
-.bbt-fa-Openings-sec .upload-row {
+.model-popup .upload-select {
+  margin-top: 24.76px;
+}
+
+.model-popup .upload-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 21px;
-  padding-bottom: 11px;
+  padding: 11.8px 0 20.58px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.bbt-fa-Openings-sec .upload-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 0;
+.model-popup .upload-row:first-child {
+  padding-top: 0;
 }
 
-.bbt-fa-Openings-sec .upload-row button {
+.model-popup .upload-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.model-popup .upload-row button {
   border: none;
   background: none;
   cursor: pointer;
   text-decoration: underline;
   color: #000;
   font-family: Poppins;
-  font-size: 18px;
+  font-size: 0.9em;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -288,50 +252,170 @@ section.bbt-fa-Openings-sec {
   text-underline-position: from-font;
 }
 
-.bbt-fa-Openings-sec span {
+.model-popup span {
   color: rgba(0, 0, 0, 0.46);
   font-family: Poppins;
-  font-size: 18px;
+  font-size: 0.9em;
 }
 
-.bbt-fa-Openings-sec button.submit-btn {
+.model-popup button.submit-btn {
   border-radius: 122px;
   background: #f7df00;
   color: #000;
   text-align: center;
   font-family: Poppins;
-  font-size: 1.1em;
+  font-size: 22px;
   font-weight: 600;
-  width: 239px;
-  height: 68px;
+  width: 181px;
+  height: 62px;
   border: none;
   cursor: pointer;
 }
 
-@media(max-width: 1728px) {
-  .bbt-fa-Openings-sec .career-wrapper {
-    padding: 107.61px 0 0;
+@media (max-width: 991.98px) {
+  .model-popup {
+    padding: 18px;
   }
 
-  .bbt-fa-Openings-sec .career-img {
-    padding-top: 15px;
+  .model-popup .career-wrapper {
+    flex-direction: column;
+    gap: 34px;
+    padding: 64px 28px 34px;
   }
 
-  .bbt-fa-Openings-sec .upload-sec {
-    padding: 68.34px 0px 72.35px;
+  .model-popup .career-img,
+  .model-popup .career-form {
+    width: 100%;
   }
 
-  .bbt-fa-Openings-sec .career-form {
-    padding-right: 0;
+  .model-popup .career-img {
+    gap: 28px;
   }
 
-  .bbt-fa-Openings-sec .career-form,
-  .bbt-fa-Openings-sec .career-img {
-    width: 50%;
+  .model-popup h2.Openings-text {
+    font-size: 32px;
   }
 }
 
-/*  Openings section end */
+/*  popup css end */
+
+/* Ccareers openings section css start */
+
+section.bbt-fa-careers-openings-sec {
+  padding: 131.52px 0px 128px 0px;
+}
+
+.bbt-fa-careers-openings-sec .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 23px;
+  align-items: stretch;
+}
+
+.bbt-fa-careers-openings-sec h2 {
+  color: #0A3D9C;
+  text-align: center;
+  font-family: Satoshi;
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 112%;
+  padding-bottom: 135.48px;
+}
+
+.bbt-fa-careers-openings-sec .card {
+  background: #dcd8f5;
+  border-radius: 0;
+  padding: 43px 41px 37px 41px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  max-width: 547px;
+  max-height: 350px;
+  border-color: transparent;
+}
+
+.bbt-fa-careers-openings-sec .card h3 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 135%;
+}
+
+.bbt-fa-careers-openings-sec .card .details {
+  color: rgba(0, 0, 0, 0.85);
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+  margin-top: 34px;
+}
+
+.bbt-fa-careers-openings-sec .card .apply-now {
+  color: #0a3d9c;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 154%;
+  margin-top: 44px;
+}
+
+@media (max-width: 1650px) {
+  section.bbt-fa-careers-openings-sec {
+    padding: 102.52px 0px 105px 0px;
+  }
+
+  .bbt-fa-careers-openings-sec h2 {
+    padding-bottom: 110.48px;
+  }
+}
+
+@media (max-width: 1650px) {
+  .bbt-fa-careers-openings-sec .card .details {
+    margin-top: 21px;
+  }
+
+  .bbt-fa-careers-openings-sec .card .apply-now {
+    font-size: 23px;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .bbt-fa-careers-openings-sec .card .details {
+    font-size: 15px;
+  }
+
+  .bbt-fa-careers-openings-sec .card .apply-now {
+    font-size: 23px;
+    margin-top: 23px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .bbt-fa-careers-openings-sec .card .details {
+    font-size: 14px;
+  }
+
+  .bbt-fa-careers-openings-sec .card .apply-now {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .bbt-fa-careers-openings-sec .card .details {
+    font-size: 13px;
+  }
+}
+
+/* Ccareers openings section css end */
 
 /* Careers about section css start */
 section.bbt-fa-careers-about-sec {
@@ -364,10 +448,10 @@ section.bbt-fa-careers-about-sec {
 .bbt-fa-careers-about-sec p.text-p {
   color: #FFF;
   font-family: Poppins;
-  font-size: 1.1em;
+  font-size: 1.25em;
   font-style: normal;
   font-weight: 400;
-  line-height: 172%;
+  line-height: 180%;
   display: flex;
   align-items: center;
 }
