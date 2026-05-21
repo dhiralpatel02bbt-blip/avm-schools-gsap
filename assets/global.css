@@ -19,6 +19,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "Poppins";
+    src: url("../font-family/Poppins-Regular.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -161,6 +168,11 @@ p {
 .apply-btn:hover::before {
     opacity: 1;
     transform: rotate(-45deg) translateY(100%);
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: none;
 }
 
 @media(max-width: 1400px) {

@@ -1,3 +1,7 @@
+.news-and-events-page .container-xxl {
+    max-width: 91%;
+}
+
 /* featured news section css Start */
 .featured-news-sec {
     background: #0A3D9C;
@@ -32,7 +36,7 @@
 .featured-news-sec .news-slider {
     overflow: visible;
     padding: 0 0 78px;
-    padding-left: calc(7.5vw + 20px);
+    padding-left: calc(5vw + 20px);
 }
 
 .featured-news-sec .news-slider .swiper-wrapper {

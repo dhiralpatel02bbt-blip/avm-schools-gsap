@@ -1,4 +1,4 @@
-/*  Careers about section css start */
+/*  Careers hero section css start */
 .hero {
   width: 100%;
   height: 100vh;
@@ -6,6 +6,8 @@
   overflow: hidden;
   justify-content: space-between;
   background: #010101;
+  position: relative;
+  isolation: isolate;
 }
 
 /* LEFT SIDE */
@@ -15,24 +17,29 @@
   align-items: center;
   padding-left: 5%;
   width: 36%;
+  z-index: 2;
 }
 
-.hero-left:before {
-  content: "";
+.hero-circle {
   position: absolute;
   top: -170px;
-  left: -980px;
+  left: -1060px;
   z-index: 0;
   display: block;
   width: 1900px;
   height: 1900px;
   background: rgb(10, 61, 156);
   border-radius: 50%;
+  will-change: transform;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
+  will-change: transform, opacity;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-180px);
 }
 
 .hero-content h2 {
@@ -44,17 +51,36 @@
   line-height: 112%;
 }
 
+.hero-right {
+  position: relative;
+  z-index: 1;
+  width: 64%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 @media (max-width: 1728px) {
   .hero-left {
     width: 40%;
   }
 
-  .hero-left:before {
+  .hero-circle {
     left: -1150px;
+  }
+
+  .hero-right {
+    width: 60%;
   }
 }
 
-/*  Careers about section css end */
+/*  Careers hero section css end */
 
 /* popup css start  */
 .model-popup {
@@ -232,7 +258,22 @@ body.popup-open {
   padding-bottom: 0;
 }
 
-.model-popup .upload-row button {
+.model-popup .upload-row label:first-child {
+  color: rgba(0, 0, 0, 0.46);
+  font-family: Poppins;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.model-popup .file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.model-popup .upload-btn {
   border: none;
   background: none;
   cursor: pointer;
@@ -270,6 +311,32 @@ body.popup-open {
   height: 62px;
   border: none;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.model-popup button.submit-btn:before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(0deg, transparent, transparent 30%, #ffd40045);
+  transform: rotate(-45deg);
+  transition: all 0.5s ease;
+}
+
+.model-popup button.submit-btn:hover {
+  background-color: transparent;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ffd40054;
+}
+
+.model-popup button.submit-btn:hover::before {
+  opacity: 1;
+  transform: rotate(-45deg) translateY(100%);
 }
 
 @media (max-width: 991.98px) {
@@ -300,7 +367,6 @@ body.popup-open {
 /*  popup css end */
 
 /* Ccareers openings section css start */
-
 section.bbt-fa-careers-openings-sec {
   padding: 131.52px 0px 128px 0px;
 }
@@ -316,7 +382,7 @@ section.bbt-fa-careers-openings-sec {
   color: #0A3D9C;
   text-align: center;
   font-family: Satoshi;
-  font-size: 54px;
+  font-size: 2.7em;
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
@@ -333,14 +399,13 @@ section.bbt-fa-careers-openings-sec {
   width: 100%;
   height: 100%;
   max-width: 547px;
-  max-height: 350px;
   border-color: transparent;
 }
 
 .bbt-fa-careers-openings-sec .card h3 {
   color: #000;
   font-family: Poppins;
-  font-size: 25px;
+  font-size: 1.25em;
   font-style: normal;
   font-weight: 600;
   line-height: 135%;
@@ -349,7 +414,7 @@ section.bbt-fa-careers-openings-sec {
 .bbt-fa-careers-openings-sec .card .details {
   color: rgba(0, 0, 0, 0.85);
   font-family: Poppins;
-  font-size: 18px;
+  font-size: 0.9em;
   font-style: normal;
   font-weight: 400;
   line-height: 160%;
@@ -359,11 +424,21 @@ section.bbt-fa-careers-openings-sec {
 .bbt-fa-careers-openings-sec .card .apply-now {
   color: #0a3d9c;
   font-family: Poppins;
-  font-size: 24px;
+  font-size: 1.2em;
   font-style: normal;
   font-weight: 600;
   line-height: 154%;
   margin-top: 44px;
+}
+
+@media(max-width: 1728px) {
+  section.bbt-fa-careers-openings-sec {
+    padding: 121.52px 0px 118px 0px;
+  }
+
+  .bbt-fa-careers-openings-sec h2 {
+    padding-bottom: 125.48px;
+  }
 }
 
 @media (max-width: 1650px) {
@@ -374,26 +449,34 @@ section.bbt-fa-careers-openings-sec {
   .bbt-fa-careers-openings-sec h2 {
     padding-bottom: 110.48px;
   }
-}
 
-@media (max-width: 1650px) {
   .bbt-fa-careers-openings-sec .card .details {
     margin-top: 21px;
   }
 
   .bbt-fa-careers-openings-sec .card .apply-now {
-    font-size: 23px;
     margin-top: 24px;
   }
 }
 
 @media (max-width: 1440px) {
+  section.bbt-fa-careers-openings-sec {
+    padding: 92.52px 0px 95px 0px;
+  }
+
+  .bbt-fa-careers-openings-sec h2 {
+    padding-bottom: 80.48px;
+  }
+
   .bbt-fa-careers-openings-sec .card .details {
     font-size: 15px;
   }
 
+  .bbt-fa-careers-openings-sec .card {
+    padding: 33px 31px 27px 31px;
+  }
+
   .bbt-fa-careers-openings-sec .card .apply-now {
-    font-size: 23px;
     margin-top: 23px;
   }
 }
@@ -404,16 +487,11 @@ section.bbt-fa-careers-openings-sec {
   }
 
   .bbt-fa-careers-openings-sec .card .apply-now {
-    font-size: 24px;
     margin-top: 10px;
   }
 }
 
-@media (max-width: 1280px) {
-  .bbt-fa-careers-openings-sec .card .details {
-    font-size: 13px;
-  }
-}
+@media (max-width: 1280px) {}
 
 /* Ccareers openings section css end */
 
@@ -427,15 +505,19 @@ section.bbt-fa-careers-about-sec {
   display: flex;
   justify-content: space-between;
   gap: 180px;
+  opacity: 0.5;
+  will-change: opacity;
+  align-items: center;
 }
 
 .bbt-fa-careers-about-sec .avm-image-wrap {
   width: 50%;
+  will-change: transform, opacity;
 }
 
 .bbt-fa-careers-about-sec .avm-text {
   width: 50%;
-  margin-top: 118px;
+  will-change: transform, opacity;
 }
 
 .bbt-fa-careers-about-sec img {

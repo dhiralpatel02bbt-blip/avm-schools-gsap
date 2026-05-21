@@ -17,7 +17,65 @@
     <link rel="stylesheet" href="assets/global.css" />
     <link rel="stylesheet" href="assets/blog-detail.css" />
   </head>
-  <body>
+  <body class="blog-detail-page">
+    <header class="header">
+      <div class="w-90">
+        <div class="row d-flex">
+          <div class="col-4">
+            <div class="logo">
+              <a href="index.html">
+                <img src="images/logo-black.png" alt="logo" />
+              </a>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="offcanvas-menu">
+              <input type="checkbox" id="toogle-menu" />
+
+              <label for="toogle-menu" class="toogle-open"><span></span></label>
+
+              <nav>
+                <div>
+                  <label for="toogle-menu" class="toogle-close">
+                    <span></span>
+                  </label>
+                </div>
+                <ul>
+                  <li class="menu"><a href="#">About </a></li>
+                  <li class="menu"><a href="pedagogy.html">Pedagogy </a></li>
+                  <li class="menu"><a href="our-school.html">Schools </a></li>
+                  <li class="menu">
+                    <a href="news-and-events.html">News & Events </a>
+                  </li>
+                  <li class="btn-element">
+                    <a class="main-btn" href="#">Apply Now </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <nav class="main-menu">
+              <ul class="d-flex">
+                <li class="menu">
+                  <a href="#">About</a>
+                </li>
+                <li class="menu">
+                  <a href="pedagogy.html">Pedagogy</a>
+                </li>
+                <li class="menu">
+                  <a href="#">Schools</a>
+                </li>
+                <li class="menu">
+                  <a href="news-and-events.html">News & Events</a>
+                </li>
+                <li class="btn-element">
+                  <a href="#" class="main-btn">Apply Now</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
 
     <!-- blog detail section start -->
     <section class="bbt-fa-news-sec">
@@ -81,13 +139,13 @@
           </div>
         </div>
         <div class="blog-detail-img">
-          <img src="img/Rectangle 928.png" alt="Vishv Hindi Diwas" />
+          <img src="images/blog-detail.jpg" alt="Vishv Hindi Diwas" />
         </div>
         <div class="blog-detail-content">
           <h3 class="blog-quote">
             "हिंदी है हम सब की पहचान, हिंदी से जुड़े हमा..."
           </h3>
-          <div class="blog-pragarph">
+          <div class="blog-paragraph">
             <p>
               Arya Vidya Mandir, Juhu celebrated Vishv Hindi Diwas with great
               enthusiasm and linguistic pride on 9th January 2026. The
@@ -96,7 +154,7 @@
               daily lives.
             </p>
           </div>
-          <div class="blog-pragarph">
+          <div class="blog-paragraph">
             <p>
               To mark the occasion, a Hindi Handwriting Competition was
               conducted for students of the Primary Section (Grades I to IV).
@@ -106,7 +164,7 @@
               showcasing neatness, clarity, and dedication in their work.
             </p>
           </div>
-          <div class="blog-pragarph">
+          <div class="blog-paragraph">
             <p>
               In addition to the competition, students were sensitized to the
               importance of speaking in Hindi through engaging discussions and
@@ -119,7 +177,7 @@
               Subject Head.
             </p>
           </div>
-          <div class="blog-pragarph">
+          <div class="blog-paragraph">
             <p>
               The celebration of Vishv Hindi Diwas at Arya Vidya Mandir, Juhu
               was a successful and enriching experience, inspiring students to
@@ -127,11 +185,11 @@
               confidence and joy.
             </p>
           </div>
-        <div class="pragarph">
+        <div class="paragraph">
            <h3 class="blog-quote">
           Lorem ipsum dolor sit amet
           </h3>
-          <div class="blog-pragarph">
+          <div class="blog-paragraph">
             <p>
               Arya Vidya Mandir, Juhu celebrated Vishv Hindi Diwas w
               ith great enthusiasm and linguistic pride on 9th<br>
@@ -140,6 +198,26 @@
             </p>
           </div>
         </div>
+      </div>
+
+      <div class="gallery-slider swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="images/gallery-slider1.jpg" alt="gallery-slider1" /></div>
+          <div class="swiper-slide"><img src="images/gallery-slider2.jpg" alt="gallery-slider2" /></div>
+          <div class="swiper-slide"><img src="images/gallery-slider1.jpg" alt="gallery-slider3" /></div>
+          <div class="swiper-slide"><img src="images/gallery-slider2.jpg" alt="gallery-slider4" /></div>
+          <div class="swiper-slide"><img src="images/gallery-slider1.jpg" alt="gallery-slider5" /></div>
+          <div class="swiper-slide"><img src="images/gallery-slider2.jpg" alt="gallery-slider6" /></div>
+        </div>
+
+        <div class="gallery-slider-controls">
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+
+      <div class="news-btn-wrapper">
+        <a href="#" class="news-btn-link">< Back to all news</a>
       </div>
     </section>
     <!-- blog detail section and -->
@@ -151,52 +229,176 @@
         <!-- NEWS GRID -->
         <div class="news-grid">
           <!-- CARD 1 -->
-          <div class="card">
+          <a href="#" class="card">
             <h3>A historic gold, powered by resilience and endless belief.</h3>
 
             <div class="card-image">
-              <img src="img/Rectangle 910 (1).png" alt="" />
+              <img src="images/blog-detail1.jpg" alt="blog 1" />
             </div>
 
             <div class="card-meta">
               <span class="tag">Sports</span>
               <span>AVM Bandra(E) • 5.10.2025</span>
             </div>
-          </div>
+          </a>
 
           <!-- CARD 2 -->
-          <div class="card">
+          <a href="#" class="card">
             <h3>Young word champions shine at the Hummingbird Spelling Bee</h3>
 
             <div class="card-image">
-              <img src="img/Rectangle 911.png" alt="" />
+              <img src="images/blog-detail2.jpg" alt="blog 2" />
             </div>
 
             <div class="card-meta">
               <span class="tag">Student Enhancement</span>
               <span>AVM Bandra(W) • 14.03.2026</span>
             </div>
-          </div>
+          </a>
 
           <!-- CARD 3 -->
-          <div class="card">
+          <a href="#" class="card">
             <h3>Memories to treasure’ in the playtrails and primary section</h3>
 
             <div class="card-image">
-              <img src="img/Rectangle 912 (1).png" alt="" />
+              <img src="images/blog-detail3.jpg" alt="blog 3" />
             </div>
 
             <div class="card-meta">
               <span class="tag">Student Enhancement</span>
               <span>AVM Bandra(W) • 14.03.2026</span>
             </div>
-          </div>
+          </a>
         </div>
 
       
       </div>
     </section>
   <!-- news section and-->
-  
+  <!-- footer start -->
+    <footer class="bbt-FA-main-footer">
+      <div class="container-xxl footer-container">
+        <div class="divi"></div>
+        <div class="footer-top">
+          <div class="ft-col-logo">
+            <div class="footer-logo">
+              <a href="index.html">
+                <img
+                  src="images/logo.svg"
+                  alt="footer-logo"
+                  class="footer-logo"
+                />
+              </a>
+            </div>
+          </div>
+
+          <div class="ft-col-menu">
+            <ul class="text">
+              <li><a href="#" class="title">Home</a></li>
+              <li><a href="#" class="title">About AVM</a></li>
+              <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
+              <li><a href="our-school.html" class="title">Schools</a></li>
+            </ul>
+          </div>
+
+          <div class="ft-col-menu">
+            <ul class="text">
+              <li><a href="admissions.html" class="title">Admissions</a></li>
+              <li>
+                <a href="news-and-events.html" class="title">News & Events</a>
+              </li>
+              <li><a href="#" class="title">Contact us</a></li>
+              <li><a href="careers.html" class="title">Careers</a></li>
+            </ul>
+          </div>
+
+          <div class="ft-col-menu">
+            <ul class="text">
+              <li><a href="#" class="title">Fee Payment</a></li>
+              <li><a href="#" class="title">Parent Login</a></li>
+              <li><a href="#" class="title">Teacher Login</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-text">
+          <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+          <div class="footer-middle">
+            <div class="ft-meta-phone">
+              <a href="tel:+912261013900">T: +91 22 6101 3900</a>
+            </div>
+
+            <div class="ft-meta-email">
+              <a href="mailto:info@avmschools.ac.in">E: info@avmschools.ac.in</a>
+            </div>
+
+            <div class="ft-social">
+              <div class="icon">
+                <a href="#">
+                  <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
+                </a>
+              </div>
+
+              <div class="icon">
+                <a href="#">
+                  <img src="images/youtube-icon.svg" alt="youtube-icon" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- footer End -->
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      const getGalleryOffset = () => {
+        const width = window.innerWidth;
+
+        if (width < 576) {
+          return 0;
+        }
+
+        const gap = width < 992 ? 18 : 24;
+        const slideWidth = (width - gap * 3) / 3;
+
+        return -((slideWidth + gap) / 2);
+      };
+
+      const gallerySlider = new Swiper('.gallery-slider', {
+        slidesPerView: 'auto',
+        spaceBetween: 24,
+        loop: true,
+        loopAdditionalSlides: 4,
+        slidesOffsetBefore: getGalleryOffset(),
+        speed: 650,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: '.gallery-slider .swiper-button-next',
+          prevEl: '.gallery-slider .swiper-button-prev',
+        },
+        breakpoints: {
+          0: { spaceBetween: 14 },
+          576: { spaceBetween: 18 },
+          992: { spaceBetween: 24 },
+        },
+      });
+
+      window.addEventListener('resize', () => {
+        gallerySlider.params.slidesOffsetBefore = getGalleryOffset();
+        gallerySlider.update();
+      });
+    </script>
+
+    <script src="assets/script.js"></script>
   </body>
 </html>

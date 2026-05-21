@@ -77,6 +77,7 @@
     <!-- Careers Hero section start -->
     <section class="hero">
       <div class="hero-left">
+        <div class="hero-circle" aria-hidden="true"></div>
         <div class="hero-content">
           <h2>
             Shape the future.<br>
@@ -248,32 +249,28 @@
             <div class="upload-sec">
               <p>Please upload the following documents:</p>
 
-              <div class="upload-select">
-                <div class="upload-row">
-                  <span>Updated CV <span class="icon">*</span></span>
-                  <a href="#">
-                    <button onclick="uploadFile()">Upload</button>
-                  </a>
-                </div>
-
-                <div class="upload-row">
-                  <span>Letter of Application <span class="icon">*</span></span>
-                  <a href="#">
-                    <button onclick="uploadFile()">Upload</button>
-                  </a>
-                </div>
-
-                <div class="upload-row">
-                  <span>
-                    Relevant degrees / certifications
-                    <span class="icon">*</span>
-                  </span>
-
-                  <a href="#">
-                    <button onclick="uploadFile()">Upload</button>
-                  </a>
-                </div>
+            <div class="upload-select">
+              <div class="upload-row">
+                <label for="updated-cv">Updated CV <span class="icon">*</span></label>
+                <input id="updated-cv" class="file-input" type="file" name="updated-cv" required />
+                <label class="upload-btn" for="updated-cv">Upload</label>
               </div>
+
+              <div class="upload-row">
+                <label for="application-letter">Letter of Application <span class="icon">*</span></label>
+                <input id="application-letter" class="file-input" type="file" name="application-letter" required />
+                <label class="upload-btn" for="application-letter">Upload</label>
+              </div>
+
+              <div class="upload-row">
+                <label for="certifications">
+                  Relevant degrees / certifications
+                  <span class="icon">*</span>
+                </label>
+                <input id="certifications" class="file-input" type="file" name="certifications" required />
+                <label class="upload-btn" for="certifications">Upload</label>
+              </div>
+            </div>
             </div>
 
             <a href="#">
@@ -314,7 +311,7 @@
 
             <div class="ft-col-menu">
               <ul class="text">
-                <li><a href="#" class="title">Admissions</a></li>
+                <li><a href="admissions.html" class="title">Admissions</a></li>
                 <li><a href="news-and-events.html" class="title">News & Events</a></li>
                 <li><a href="#" class="title">Contact us</a></li>
                 <li><a href="careers.html" class="title">Careers</a></li>

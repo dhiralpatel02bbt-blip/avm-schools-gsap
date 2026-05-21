@@ -2330,6 +2330,115 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Careers hero + about scroll animation
+(function initCareersHeroAnimation() {
+  if (!document.querySelector("body.careers-page")) return;
+
+  const hero = document.querySelector(".careers-page .hero");
+  const heroCircle = document.querySelector(".careers-page .hero-circle");
+  const heroContent = document.querySelector(".careers-page .hero-content");
+  const about = document.querySelector(".careers-page .bbt-fa-careers-about-sec");
+  const aboutWrapper = document.querySelector(
+    ".careers-page .bbt-fa-careers-about-sec .career-wrapper",
+  );
+  const aboutImage = document.querySelector(
+    ".careers-page .bbt-fa-careers-about-sec .avm-image-wrap",
+  );
+  const aboutText = document.querySelector(
+    ".careers-page .bbt-fa-careers-about-sec .avm-text",
+  );
+
+  if (!hero || !heroCircle || !heroContent || typeof gsap === "undefined") {
+    return;
+  }
+
+  function init() {
+    if (window.innerWidth < 768) {
+      gsap.set([heroCircle, heroContent, aboutWrapper, aboutImage, aboutText], {
+        clearProps: "all",
+      });
+      return;
+    }
+
+    gsap.set(heroCircle, {
+      x: "-54vw",
+      scale: 1,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(heroContent, { autoAlpha: 0, x: -180 });
+
+    function initScrollAnimations() {
+      if (typeof ScrollTrigger === "undefined") return;
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "+=110%",
+            pin: true,
+            scrub: 1.1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+        .to(
+          heroContent,
+          { autoAlpha: 0, x: -180, duration: 0.34, ease: "power2.inOut" },
+          0.12,
+        )
+        .to(
+          heroCircle,
+          {
+            scale: 2.45,
+            duration: 1,
+            ease: "power2.inOut",
+          },
+          0,
+        );
+
+      if (about && aboutWrapper && aboutImage && aboutText) {
+        gsap.set(aboutWrapper, { opacity: 0.5 });
+        gsap.set(aboutImage, { autoAlpha: 0.5, x: -90 });
+        gsap.set(aboutText, { autoAlpha: 0.5, x: 90 });
+
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: about,
+              start: "top 78%",
+              end: "top 32%",
+              scrub: 0.9,
+              invalidateOnRefresh: true,
+            },
+          })
+          .to(aboutWrapper, { opacity: 1, duration: 1 }, 0)
+          .to(aboutImage, { autoAlpha: 1, x: 0, duration: 1 }, 0)
+          .to(aboutText, { autoAlpha: 1, x: 0, duration: 1 }, 0);
+      }
+    }
+
+    gsap
+      .timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: initScrollAnimations,
+      })
+      .to(heroCircle, { x: 0, duration: 1.15 })
+      .fromTo(
+        heroContent,
+        { autoAlpha: 0, x: -180 },
+        { autoAlpha: 1, x: 0, duration: 0.95 },
+        "+=0.02",
+      );
+  }
+
+  if (document.readyState === "complete") {
+    init();
+  } else {
+    window.addEventListener("load", init, { once: true });
+  }
+})();
+
 // ============================================================
 // EXTRA SECTION - Sticky Pin + one wheel step per slide
 // ============================================================
