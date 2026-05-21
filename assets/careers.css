@@ -22,7 +22,7 @@
 
 .hero-circle {
   position: absolute;
-  top: -170px;
+  top: -210px;
   left: -1060px;
   z-index: 0;
   display: block;
@@ -497,16 +497,21 @@ section.bbt-fa-careers-openings-sec {
 
 /* Careers about section css start */
 section.bbt-fa-careers-about-sec {
-  background-color: #0A3D9C;
-  padding: 188.48px 0px;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  padding: 0;
+  pointer-events: none;
 }
 
 .bbt-fa-careers-about-sec .career-wrapper {
   display: flex;
   justify-content: space-between;
   gap: 180px;
-  opacity: 0.5;
-  will-change: opacity;
+  opacity: 1;
   align-items: center;
 }
 
@@ -518,6 +523,18 @@ section.bbt-fa-careers-about-sec {
 .bbt-fa-careers-about-sec .avm-text {
   width: 50%;
   will-change: transform, opacity;
+}
+
+@media (min-width: 768px) {
+  .bbt-fa-careers-about-sec .avm-image-wrap {
+    opacity: 0;
+    transform: translateX(-120px);
+  }
+
+  .bbt-fa-careers-about-sec .avm-text {
+    opacity: 0;
+    transform: translateX(120px);
+  }
 }
 
 .bbt-fa-careers-about-sec img {
@@ -540,11 +557,11 @@ section.bbt-fa-careers-about-sec {
 
 @media (max-width: 1728px) {
   section.bbt-fa-careers-about-sec {
-    padding: 168.48px 0px;
+    padding: 0;
   }
 
   .bbt-fa-careers-about-sec .avm-text {
-    margin-top: 148px;
+    margin-top: 0;
   }
 }
 
@@ -554,7 +571,7 @@ section.bbt-fa-careers-about-sec {
   }
 
   .bbt-fa-careers-about-sec .avm-text {
-    margin-top: 85px;
+    margin-top: 0;
   }
 
   .bbt-fa-careers-about-sec p.text-p {
@@ -564,7 +581,7 @@ section.bbt-fa-careers-about-sec {
 
 @media (max-width: 1366px) {
   .bbt-fa-careers-about-sec .avm-text {
-    margin-top: 61px;
+    margin-top: 0;
   }
 }
 

@@ -1322,9 +1322,10 @@ section.bbt-FA-img-sec {
   font-family: "Satoshi";
   line-height: 112%;
   margin-bottom: 141px !important;
-  opacity: 0;
-  transform: translateY(-80px);
-  transition: all 1s ease;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.95s ease, transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .recognition-sec .awards-grid {
@@ -1332,9 +1333,20 @@ section.bbt-FA-img-sec {
   flex-wrap: wrap;
   justify-content: center;
   gap: 65px 138.22px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s ease 0.2s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  will-change: opacity, transform;
+}
+
+body.reveal-animations-ready .recognition-sec:not(.animate) .section-title {
   opacity: 0;
-  transform: translateY(80px);
-  transition: all 1s ease;
+  transform: translateY(56px);
+}
+
+body.reveal-animations-ready .recognition-sec:not(.animate) .awards-grid {
+  opacity: 0;
+  transform: translateY(64px);
 }
 
 /* ACTIVE ANIMATION */
@@ -1344,17 +1356,36 @@ section.bbt-FA-img-sec {
   transform: translateY(0);
 }
 
-/* Smooth delay */
-.recognition-sec .awards-grid {
-  transition-delay: 0.3s;
-}
-
 .recognition-sec .award {
   display: flex;
   align-items: center;
   width: 37.3%;
   justify-content: center;
-  transition: all 0.8s ease;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+body.reveal-animations-ready .recognition-sec:not(.animate) .award {
+  opacity: 0;
+  transform: translateY(36px);
+}
+
+.recognition-sec.animate .award {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.recognition-sec.animate .award:nth-child(1),
+.recognition-sec.animate .award:nth-child(2),
+.recognition-sec.animate .award:nth-child(3) {
+  transition-delay: 0.36s;
+}
+
+.recognition-sec.animate .award:nth-child(4),
+.recognition-sec.animate .award:nth-child(5) {
+  transition-delay: 0.52s;
 }
 
 .recognition-sec .award .leaf {
@@ -1511,15 +1542,27 @@ section.bbt-FA-img-sec {
   font-style: normal;
   font-weight: 700;
   line-height: 108%;
-  opacity: 0;
-  transition: all 0.9s ease;
-  transform: translateX(-60px);
+  opacity: 1;
+  transition: opacity 0.95s ease, transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(0);
+  will-change: opacity, transform;
 }
 
 a.see-all.secondary-btn {
   padding-right: 18px;
+  opacity: 1;
+  transition: opacity 0.95s ease, transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(0);
+  will-change: opacity, transform;
+}
+
+.news-section.is-waiting .news-header h2 {
   opacity: 0;
-  transition: all 0.9s ease;
+  transform: translateX(-60px);
+}
+
+.news-section.is-waiting .see-all {
+  opacity: 0;
   transform: translateX(60px);
 }
 
@@ -1534,9 +1577,26 @@ a.see-all.secondary-btn {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 104px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s ease 0.16s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.16s;
+  will-change: opacity, transform;
+}
+
+.news-section.is-waiting .news-grid {
   opacity: 0;
-  transform: translateY(48px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  transform: translateY(-56px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recognition-sec .section-title,
+  .recognition-sec .awards-grid,
+  .recognition-sec .award,
+  .news-header h2,
+  a.see-all.secondary-btn,
+  .news-section .news-grid {
+    transition-duration: 0.01ms;
+  }
 }
 
 /* CARD */

@@ -1093,18 +1093,6 @@ if (videoWrapper && video && playBtn) {
 // Register plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// Recognition section
-// gsap.from(".section-title", {
-//   y: -80,
-//   opacity: 0,
-//   duration: 1,
-//   ease: "power3.out",
-//   scrollTrigger: {
-//     trigger: ".recognition-sec",
-//     start: "top 80%",
-//   },
-// });
-
 gsap.from(".award .leaf", {
   scale: 0.7,
   rotation: -10,
@@ -2116,59 +2104,149 @@ tabs.forEach((tab) => {
 
 // AYM diagram section
 (function initAymDiagram() {
+  const section = document.querySelector(".aym-diagram-sec");
+  const diagram = document.querySelector(".aym-diagram");
   const center = document.getElementById("c");
   const satellites = ["s1", "s2", "s3", "s4", "s5"]
     .map((id) => document.getElementById(id))
     .filter(Boolean);
-  let animationStarted = false;
+  let trigger;
+  let resizeTimer;
 
-  if (!center || !satellites.length) return;
+  if (!section || !diagram || !center || !satellites.length) {
+    return;
+  }
 
-  function animateAymDiagram() {
-    if (animationStarted || typeof gsap === "undefined") return;
-    animationStarted = true;
+  const lineImages = [
+    ".aym-line-136",
+    ".aym-line-137",
+    ".aym-line-138",
+    ".aym-line-141",
+    ".aym-line-140",
+  ].map((selector) => diagram.querySelector(selector));
 
-    gsap.set(center, { scale: 0, autoAlpha: 0 });
-    gsap.set(satellites, { autoAlpha: 0, "--line-opacity": 0 });
+  if (lineImages.some((line) => !line)) {
+    return;
+  }
 
-    ScrollTrigger.create({
-      trigger: ".aym-diagram-sec",
-      start: "top 70%",
-      once: true,
-      onEnter: () => {
-        const timeline = gsap.timeline();
+  function buildAymDiagram() {
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+      return;
+    }
 
-        timeline.fromTo(
-          center,
-          { scale: 0, autoAlpha: 0 },
-          {
-            scale: 1,
-            autoAlpha: 1,
-            duration: 0.7,
-            ease: "back.out(1.6)",
-          },
-        );
+    if (trigger) trigger.kill();
+    diagram.classList.add("is-scroll-animated");
 
-        satellites.forEach((satellite) => {
-          timeline
-            .to(satellite, {
-              "--line-opacity": 1,
-              duration: 0.28,
-              ease: "power1.out",
-            })
-            .to(satellite, {
-              autoAlpha: 1,
-              duration: 0.42,
-              ease: "power2.out",
-            });
-        });
+    if (window.innerWidth < 768) {
+      gsap.set([center, satellites, lineImages], { clearProps: "all" });
+      return;
+    }
+
+    gsap.set(center, {
+      scale: 0.72,
+      autoAlpha: 0,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(satellites, {
+      autoAlpha: 0,
+      scale: 0.94,
+      transformOrigin: "50% 50%",
+      "--line-opacity": 0,
+    });
+
+    function getLineState(index) {
+      if (index === 0) {
+        return {
+          clipStart: "inset(100% 0% 0% 0%)",
+          clipEnd: "inset(0% 0% 0% 0%)",
+        };
+      }
+
+      if (index === 1 || index === 2) {
+        return {
+          clipStart: "inset(0% 100% 0% 0%)",
+          clipEnd: "inset(0% 0% 0% 0%)",
+        };
+      }
+
+      return {
+        clipStart: "inset(0% 0% 0% 100%)",
+        clipEnd: "inset(0% 0% 0% 0%)",
+      };
+    }
+
+    const arms = lineImages.map((line, index) => {
+      const lineState = getLineState(index);
+      const satellite = satellites[index];
+
+      gsap.set(line, {
+        autoAlpha: 0,
+        clipPath: lineState.clipStart,
+      });
+
+      return { line, satellite, lineState };
+    });
+
+    const timeline = gsap.timeline({
+      defaults: { ease: "power2.out" },
+    });
+
+    timeline.fromTo(
+      center,
+      { autoAlpha: 0, scale: 0.72 },
+      {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.9,
+        ease: "power2.out",
       },
+    );
+
+    arms.forEach(({ line, satellite, lineState }) => {
+      timeline
+        .to(line, {
+          autoAlpha: 1,
+          clipPath: lineState.clipEnd,
+          duration: 0.75,
+          ease: "power1.inOut",
+        })
+        .to(
+          satellite,
+          {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.35,
+            ease: "power2.out",
+          },
+          ">-0.12",
+        );
+    });
+
+    trigger = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: () => `+=${window.innerHeight * (arms.length + 1)}`,
+      pin: true,
+      scrub: 0.7,
+      animation: timeline,
+      invalidateOnRefresh: true,
     });
   }
 
-  setTimeout(animateAymDiagram, 120);
-  window.addEventListener("load", () => {
-    animateAymDiagram();
+  function queueBuild(delay) {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      buildAymDiagram();
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+      }
+    }, delay);
+  }
+
+  queueBuild(700);
+  window.addEventListener("load", () => queueBuild(500));
+  window.addEventListener("resize", () => {
+    queueBuild(180);
   });
 })();
 
@@ -2176,7 +2254,6 @@ tabs.forEach((tab) => {
 (function initTeacherDevDiagram() {
   const section = document.querySelector(".teacher-dev");
   const wrapper = document.querySelector(".teacher-dev .circle-wrapper");
-  const svg = document.querySelector(".teacher-dev .arc-svg");
   const path = document.querySelector("#arcPath");
   const dots = Array.from(document.querySelectorAll(".teacher-dev .dot"));
   const centerCircle = document.querySelector(".teacher-dev .center-circle");
@@ -2187,12 +2264,12 @@ tabs.forEach((tab) => {
     document.querySelector(".teacher-dev .content.right-top"),
     document.querySelector(".teacher-dev .content.right-bottom"),
   ].filter(Boolean);
-  let animationStarted = false;
+  let teacherDevTrigger;
+  let teacherResizeTimer;
 
   if (
     !section ||
     !wrapper ||
-    !svg ||
     !path ||
     !dots.length ||
     !centerCircle ||
@@ -2203,24 +2280,21 @@ tabs.forEach((tab) => {
 
   function positionTeacherDots() {
     const length = path.getTotalLength();
-    const wrapperBox = wrapper.getBoundingClientRect();
-    const matrix = path.getScreenCTM();
-    if (!matrix) return;
 
     dots.forEach((dot, index) => {
       const point = path.getPointAtLength((index / (dots.length - 1)) * length);
-      const svgPoint = svg.createSVGPoint();
-      svgPoint.x = point.x;
-      svgPoint.y = point.y;
-      const screenPoint = svgPoint.matrixTransform(matrix);
-      dot.style.left = `${screenPoint.x - wrapperBox.left}px`;
-      dot.style.top = `${screenPoint.y - wrapperBox.top}px`;
+      dot.style.left = `${point.x}px`;
+      dot.style.top = `${point.y}px`;
     });
   }
 
-  function animateTeacherDevDiagram() {
-    if (animationStarted || typeof gsap === "undefined") return;
-    animationStarted = true;
+  function buildTeacherDevDiagram() {
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+      return;
+    }
+
+    if (teacherDevTrigger) teacherDevTrigger.kill();
+    positionTeacherDots();
 
     const pathLength = path.getTotalLength();
 
@@ -2230,7 +2304,7 @@ tabs.forEach((tab) => {
     });
     gsap.set(centerCircle, {
       autoAlpha: 0,
-      scale: 0.85,
+      scale: 0.72,
       transformOrigin: "50% 50%",
     });
     gsap.set(dots, {
@@ -2244,24 +2318,19 @@ tabs.forEach((tab) => {
     });
 
     const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top 65%",
-        once: true,
-        onRefresh: positionTeacherDots,
-      },
+      defaults: { ease: "power2.out" },
     });
 
     timeline
       .to(centerCircle, {
         autoAlpha: 1,
         scale: 1,
-        duration: 0.65,
+        duration: 0.9,
         ease: "power2.out",
       })
       .to(path, {
         strokeDashoffset: 0,
-        duration: 0.9,
+        duration: 1,
         ease: "power1.inOut",
       });
 
@@ -2270,32 +2339,67 @@ tabs.forEach((tab) => {
         .to(dot, {
           autoAlpha: 1,
           scale: 1,
-          duration: 0.22,
+          duration: 0.45,
           ease: "back.out(1.8)",
         })
         .to(contentByDot[index], {
           autoAlpha: 1,
           y: 0,
-          duration: 0.45,
+          duration: 0.5,
           ease: "power2.out",
         });
     });
+
+    teacherDevTrigger = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: () => `+=${window.innerHeight * (dots.length + 2)}`,
+      pin: true,
+      scrub: 0.7,
+      animation: timeline,
+      invalidateOnRefresh: true,
+      onRefresh: positionTeacherDots,
+    });
+  }
+
+  function queueTeacherDevBuild(delay) {
+    clearTimeout(teacherResizeTimer);
+    teacherResizeTimer = setTimeout(() => {
+      buildTeacherDevDiagram();
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+      }
+    }, delay);
   }
 
   positionTeacherDots();
-  setTimeout(positionTeacherDots, 100);
-  setTimeout(animateTeacherDevDiagram, 120);
-  window.addEventListener("load", () => {
-    positionTeacherDots();
-    animateTeacherDevDiagram();
-  });
-  window.addEventListener("resize", positionTeacherDots);
+  queueTeacherDevBuild(700);
+  window.addEventListener("load", () => queueTeacherDevBuild(500));
+  window.addEventListener("resize", () => queueTeacherDevBuild(180));
 })();
 
 // section fade animation on home page
 document.addEventListener("DOMContentLoaded", function () {
   const newsSection = document.querySelector(".news-section");
-  const animatedSections = document.querySelectorAll(".recognition-sec, .contact-sec");
+  const animatedSections = document.querySelectorAll(
+    ".recognition-sec, .contact-sec",
+  );
+
+  document.body.classList.add("reveal-animations-ready");
+
+  const isInRevealRange = (section, offset) => {
+    if (!section) return false;
+    const rect = section.getBoundingClientRect();
+    return rect.top < window.innerHeight * offset && rect.bottom > 0;
+  };
+
+  const revealVisibleSections = () => {
+    animatedSections.forEach((section) => {
+      if (isInRevealRange(section, 0.86)) {
+        section.classList.add("animate");
+      }
+    });
+  };
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -2314,24 +2418,81 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(section);
   });
 
+  revealVisibleSections();
+  window.addEventListener("load", revealVisibleSections, { once: true });
+  window.addEventListener("scroll", revealVisibleSections, { passive: true });
+  window.addEventListener("resize", revealVisibleSections);
+
   if (newsSection) {
+    const newsHeader = newsSection.querySelector(".news-header");
+    const newsGrid = newsSection.querySelector(".news-grid");
+    let newsRevealed = false;
+
+    const revealNews = () => {
+      if (newsRevealed) return;
+      newsRevealed = true;
+      newsSection.classList.remove("is-waiting");
+      newsHeader?.classList.add("animate");
+      newsGrid?.classList.add("animate");
+    };
+
+    const shouldRevealNews = () => {
+      return isInRevealRange(newsSection, 0.86);
+    };
+
+    newsSection.classList.add("is-waiting");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealNews();
+      return;
+    }
+
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      ScrollTrigger.create({
+        trigger: newsSection,
+        start: "top 86%",
+        once: true,
+        onEnter: revealNews,
+      });
+
+      window.setTimeout(() => {
+        ScrollTrigger.refresh();
+        if (shouldRevealNews()) revealNews();
+      }, 120);
+    }
+
     const newsObserver = new IntersectionObserver(
       (entries, observerInstance) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            newsSection.querySelector(".news-header")?.classList.add("animate");
-            newsSection.querySelector(".news-grid")?.classList.add("animate");
-            observerInstance.unobserve(entry.target);
-          }
+          if (!entry.isIntersecting) return;
+
+          revealNews();
+          observerInstance.unobserve(entry.target);
         });
       },
       {
-        threshold: 0.25,
-        rootMargin: "0px 0px -12% 0px",
+        threshold: 0,
+        rootMargin: "0px 0px -14% 0px",
       },
     );
 
-    newsObserver.observe(newsSection);
+    const checkNewsReveal = () => {
+      if (!newsSection.classList.contains("is-waiting")) return;
+      if (!shouldRevealNews()) return;
+
+      revealNews();
+      newsObserver.unobserve(newsSection);
+      window.removeEventListener("scroll", checkNewsReveal);
+      window.removeEventListener("resize", checkNewsReveal);
+    };
+
+    if (shouldRevealNews()) {
+      revealNews();
+    } else {
+      newsObserver.observe(newsSection);
+      window.addEventListener("scroll", checkNewsReveal, { passive: true });
+      window.addEventListener("resize", checkNewsReveal);
+    }
   }
 });
 
@@ -2351,9 +2512,11 @@ document.addEventListener("DOMContentLoaded", function () {
       .querySelectorAll(".careers-page .bbt-fa-careers-openings-sec .card h3")
       .forEach(function (heading) {
         const title = heading.textContent.trim().replace(/\s+/g, " ");
-        const exists = Array.from(positionSelect.options).some(function (option) {
-          return option.textContent.trim() === title;
-        });
+        const exists = Array.from(positionSelect.options).some(
+          function (option) {
+            return option.textContent.trim() === title;
+          },
+        );
 
         if (!exists) {
           const option = document.createElement("option");
@@ -2389,7 +2552,9 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
       const card = button.closest(".card");
       const heading = card ? card.querySelector("h3") : null;
-      const jobTitle = heading ? heading.textContent.trim().replace(/\s+/g, " ") : "";
+      const jobTitle = heading
+        ? heading.textContent.trim().replace(/\s+/g, " ")
+        : "";
       openPopup(jobTitle);
     });
   });
@@ -2416,7 +2581,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const hero = document.querySelector(".careers-page .hero");
   const heroCircle = document.querySelector(".careers-page .hero-circle");
   const heroContent = document.querySelector(".careers-page .hero-content");
-  const about = document.querySelector(".careers-page .bbt-fa-careers-about-sec");
+  const about = document.querySelector(
+    ".careers-page .bbt-fa-careers-about-sec",
+  );
   const aboutWrapper = document.querySelector(
     ".careers-page .bbt-fa-careers-about-sec .career-wrapper",
   );
@@ -2446,6 +2613,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     gsap.set(heroContent, { autoAlpha: 0, x: -180 });
 
+    if (about && aboutWrapper && aboutImage && aboutText) {
+      gsap.set(aboutWrapper, { opacity: 1 });
+      gsap.set(aboutImage, { autoAlpha: 0, x: -120 });
+      gsap.set(aboutText, { autoAlpha: 0, x: 120 });
+    }
+
     function initScrollAnimations() {
       if (typeof ScrollTrigger === "undefined") return;
 
@@ -2474,27 +2647,27 @@ document.addEventListener("DOMContentLoaded", function () {
             ease: "power2.inOut",
           },
           0,
+        )
+        .to(
+          aboutImage,
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.42,
+            ease: "power3.out",
+          },
+          0.72,
+        )
+        .to(
+          aboutText,
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.42,
+            ease: "power3.out",
+          },
+          0.8,
         );
-
-      if (about && aboutWrapper && aboutImage && aboutText) {
-        gsap.set(aboutWrapper, { opacity: 0.5 });
-        gsap.set(aboutImage, { autoAlpha: 0.5, x: -90 });
-        gsap.set(aboutText, { autoAlpha: 0.5, x: 90 });
-
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: about,
-              start: "top 78%",
-              end: "top 32%",
-              scrub: 0.9,
-              invalidateOnRefresh: true,
-            },
-          })
-          .to(aboutWrapper, { opacity: 1, duration: 1 }, 0)
-          .to(aboutImage, { autoAlpha: 1, x: 0, duration: 1 }, 0)
-          .to(aboutText, { autoAlpha: 1, x: 0, duration: 1 }, 0);
-      }
     }
 
     gsap

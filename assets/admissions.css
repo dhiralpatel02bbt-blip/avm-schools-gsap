@@ -3,7 +3,7 @@
     background: url(../images/admissions-hero.jpg);
     background-position: right;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
@@ -26,7 +26,7 @@
 .bbt-dp-hero .main-title h2.hero-txt {
     color: #FFF;
     font-family: Satoshi;
-    font-size: 54px;
+    font-size: 2.7em;
     font-style: normal;
     font-weight: 700;
     line-height: 112%;
@@ -303,18 +303,17 @@
     color: #000;
     text-align: center;
     font-family: Poppins;
-    font-size: 23px;
+    font-size: 1.15em;
     font-style: normal;
     font-weight: 600;
     line-height: 121%;
-    /* 27.83px */
 }
 
 .bbt-fa-circle-sec .circle-card p {
     color: #000;
     text-align: center;
     font-family: Poppins;
-    font-size: 17px;
+    font-size: 0.85em;
     font-style: normal;
     font-weight: 400;
     line-height: 154%;
@@ -381,26 +380,26 @@
 .bbt-fa-admissions-about-sec p.text-p {
     color: #fff;
     font-family: Poppins, sans-serif;
-    font-size: 32px;
+    font-size: 1.6em;
     font-weight: 500;
     line-height: 150%;
     margin: 0 0 54px;
 }
 
-.bbt-fa-admissions-about-sec .author-info h4 {
-    color: #fff;
+.bbt-fa-admissions-about-sec .author-info h4,
+.bbt-fa-admissions-about-sec .author-info span {
     font-family: Poppins, sans-serif;
-    font-size: 22px;
+    font-size: 1.1em;
     font-weight: 400;
     line-height: 150%;
 }
 
+.bbt-fa-admissions-about-sec .author-info h4 {
+    color: #fff;
+}
+
 .bbt-fa-admissions-about-sec .author-info span {
     color: rgba(255, 255, 255, 0.50);
-    font-family: Poppins, sans-serif;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 150%;
 }
 
 .bbt-fa-admissions-about-sec .author-info {
@@ -446,7 +445,7 @@ section.bbt-fa-online-section {
     color: #0a3d9c;
     text-align: center;
     font-family: Satoshi;
-    font-size: 54px;
+    font-size: 2.7em;
     font-style: normal;
     font-weight: 700;
     line-height: 112%;
@@ -456,14 +455,14 @@ section.bbt-fa-online-section {
     color: #000;
     text-align: center;
     font-family: Poppins;
-    font-size: 20px;
+    font-size: 1em;
     font-style: normal;
     font-weight: 400;
     line-height: 160%;
     margin: 0 auto !important;
     display: flex;
     justify-content: center;
-    width: 781px;
+    width: 50%;
     padding-top: 54px;
 }
 
@@ -471,7 +470,7 @@ section.bbt-fa-online-section {
     color: #0a3d9c;
     text-align: center;
     font-family: Satoshi;
-    font-size: 42px;
+    font-size: 2.1em;
     font-style: normal;
     font-weight: 500;
     line-height: 78px;
@@ -498,7 +497,7 @@ section.bbt-fa-online-section {
 }
 
 .bbt-fa-online-section th {
-    font-size: 15px;
+    font-size: 1.25em;
     font-weight: 600;
     color: #1846b5;
     padding-bottom: 39.38px;
@@ -506,7 +505,7 @@ section.bbt-fa-online-section {
 }
 
 .bbt-fa-online-section td {
-    font-size: 14px;
+    font-size: 1.1em;
     color: #222;
     border-bottom: 1px solid #0a3d9c;
     padding: 29.1px 0px 32.38px 0px;
@@ -570,7 +569,7 @@ section.bbt-fa-pincode-section {
     color: #0a3d9c;
     text-align: center;
     font-family: Satoshi;
-    font-size: 42px;
+    font-size: 2.1em;
     font-style: normal;
     font-weight: 500;
     line-height: 78px;
@@ -581,7 +580,7 @@ section.bbt-fa-pincode-section {
     color: #000;
     text-align: center;
     font-family: Poppins;
-    font-size: 20px;
+    font-size: 1em;
     font-style: normal;
     font-weight: 400;
     line-height: 160%;
@@ -601,7 +600,7 @@ section.bbt-fa-pincode-section {
     color: rgba(0, 0, 0, 0.30);
     text-align: center;
     font-family: Poppins;
-    font-size: 22px;
+    font-size: 1.1em;
     font-style: normal;
     font-weight: 600;
     line-height: 154%;
@@ -611,7 +610,7 @@ section.bbt-fa-pincode-section {
     color: #000;
     text-align: center;
     font-family: Poppins;
-    font-size: 22px;
+    font-size: 1.1em;
     font-style: normal;
     font-weight: 600;
     line-height: 154%;
@@ -637,7 +636,7 @@ section.bbt-fa-pincode-section {
 .bbt-fa-pincode-section .box-title {
     color: #000;
     font-family: Poppins;
-    font-size: 22px;
+    font-size: 1.1em;
     font-style: normal;
     font-weight: 400;
     line-height: 154%;
@@ -654,7 +653,7 @@ section.bbt-fa-pincode-section {
 .bbt-fa-pincode-section .pincode-row span {
     color: #000;
     font-family: Poppins;
-    font-size: 22px;
+    font-size: 1.1em;
     font-style: normal;
     font-weight: 400;
     line-height: 154%;
@@ -720,7 +719,7 @@ section.bbt-fa-application-section {
     color: #0a3d9c;
     text-align: center;
     font-family: Satoshi;
-    font-size: 42px;
+    font-size: 2.1em;
     font-style: normal;
     font-weight: 500;
     line-height: 48px;
@@ -743,7 +742,7 @@ section.bbt-fa-application-section {
 .bbt-fa-application-section .section-title {
     color: #0a3d9c;
     font-family: Poppins;
-    font-size: 25px;
+    font-size: 1.25em;
     font-style: normal;
     font-weight: 600;
     line-height: 140%;
@@ -764,7 +763,7 @@ section.bbt-fa-application-section {
     gap: 8px;
     color: #000;
     font-family: Poppins;
-    font-size: 22px;
+    font-size: 1.1em;
     font-style: normal;
     font-weight: 400;
     line-height: 163%;
@@ -819,7 +818,7 @@ section.bbt-fa-abilities-section {
     color: #0a3d9c;
     text-align: center;
     font-family: Satoshi;
-    font-size: 48px;
+    font-size: 2.4em;
     font-style: normal;
     font-weight: 700;
     line-height: 112%;
@@ -846,7 +845,7 @@ section.bbt-fa-abilities-section {
     color: #000;
     text-align: center;
     font-family: Poppins;
-    font-size: 26px;
+    font-size: 1.3em;
     font-style: normal;
     font-weight: 600;
     line-height: 125%;
@@ -919,7 +918,7 @@ section.bbt-fa-notes-section {
     color: #000;
     text-align: center;
     font-family: Poppins;
-    font-size: 22px;
+    font-size: 1.1em;
     font-style: normal;
     font-weight: 600;
     line-height: 125%;
@@ -929,7 +928,7 @@ section.bbt-fa-notes-section {
 .bbt-fa-notes-section a {
     color: #0a3d9c;
     font-family: Poppins;
-    font-size: 18px;
+    font-size: 0.9em;
     font-style: normal;
     font-weight: 600;
     line-height: 149%;
@@ -945,7 +944,7 @@ section.bbt-fa-notes-section {
     color: #000;
     text-align: center;
     font-family: Poppins;
-    font-size: 18px;
+    font-size: 0.9em;
     font-style: normal;
     font-weight: 400;
     line-height: 149%;

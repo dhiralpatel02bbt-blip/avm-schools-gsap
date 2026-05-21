@@ -241,30 +241,16 @@ nav.main-menu ul {
 }
 
 header .main-menu ul li a {
-    color: #fff;
+    color: #000;
     font-size: 1.159em;
     font-family: 'Satoshi';
-    text-decoration: underline;
     font-weight: 700;
-    text-decoration-color: #FF7F50;
     transition: 0.3s all;
 }
 
-body.index-page header .main-menu ul li a,
-body.our-school-page header .main-menu ul li a {
-    color: #000;
-}
-
-header .main-menu ul li a:hover {
-    text-decoration-color: #000;
-}
 
 body.pedagogy-page header .main-menu ul li a {
     color: #fff;
-}
-
-body.pedagogy-page header .main-menu ul li a:hover {
-    text-decoration-color: #fff;
 }
 
 header .main-btn {
@@ -594,8 +580,8 @@ body {
 .contact-sec .content {
     width: 45%;
     padding: 0;
-    opacity: 0;
-    transform: translateX(-100px);
+    opacity: 1;
+    transform: translateX(0);
     transition: all 1s ease;
 }
 
@@ -657,11 +643,21 @@ body {
     width: 40%;
     transition: transform 0.2s ease;
     padding: 0;
-    opacity: 0;
-    transform: translateX(100px);
+    opacity: 1;
+    transform: translateX(0);
     transition: all 1s ease;
     display: flex;
     justify-content: flex-end;
+}
+
+body.reveal-animations-ready .contact-sec:not(.animate) .content {
+    opacity: 0;
+    transform: translateX(-100px);
+}
+
+body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
+    opacity: 0;
+    transform: translateX(100px);
 }
 
 .contact-sec .image-container img {
@@ -996,15 +992,7 @@ body {
     font-size: 1em;
     font-weight: 500;
     line-height: 205%;
-    text-decoration-line: underline;
-    text-decoration-color: #f7df00;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
     transition: color 0.2s ease, text-decoration-color 0.2s ease;
-}
-
-.bbt-FA-main-footer a.title:hover {
-    text-decoration-color: #ffffff;
 }
 
 .bbt-FA-main-footer .text li {
@@ -1129,12 +1117,6 @@ body {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-}
-
-.bbt-FA-main-footer a.title:hover,
-.bbt-FA-main-footer .footer-middle a:hover {
-    color: #f7df00;
-    text-decoration-color: #fff;
 }
 
 .bbt-FA-main-footer .footer-middle {
