@@ -58,7 +58,7 @@
             <nav class="main-menu">
               <ul class="d-flex">
                 <li class="menu">
-                  <a href="#">About</a>
+                  <a href="about-us.html">About</a>
                 </li>
                 <li class="menu">
                   <a href="pedagogy.html">Pedagogy</a>
@@ -139,13 +139,12 @@
         <div class="video-wrapper">
           <div class="video-container">
             <video
-              muted
               loop
               class="bg-video"
               id="mainVideo"
               poster="images/thumbnail1.jpg"
             >
-              <source src="images/video.mp4" type="video/mp4" />
+              <source src="images/student-video.mp4" type="video/mp4" />
             </video>
             <div class="overlay"></div>
 
@@ -175,7 +174,34 @@
         <div class="horizontal-wrapper">
           <div class="panel">
             <div class="d-flex">
-              <img src="images/panel1.jpg" alt="panel 1" />
+              <div class="panel-video-wrap">
+                <video
+                  class="panel-video"
+                  loop
+                  playsinline
+                  poster="images/panel1.jpg"
+                >
+                  <source src="images/video1.mp4" type="video/mp4" />
+                </video>
+                <button
+                  class="panel-video-play"
+                  type="button"
+                  aria-label="Play video"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="79"
+                    height="99"
+                    viewBox="0 0 79 99"
+                    fill="none"
+                  >
+                    <path
+                      d="M78.75 49.3672L3.38375e-06 98.7306L7.32457e-06 0.00373463L78.75 49.3672Z"
+                      fill="#F7DF00"
+                    />
+                  </svg>
+                </button>
+              </div>
               <div class="content">
                 <h3>Learning to question, build and solve.</h3>
                 <p>
@@ -189,7 +215,34 @@
 
           <div class="panel">
             <div class="d-flex">
-              <img src="images/panel2.jpg" alt="panel 2" />
+              <div class="panel-video-wrap">
+                <video
+                  class="panel-video"
+                  loop
+                  playsinline
+                  poster="images/panel2.jpg"
+                >
+                  <source src="images/video2.mp4" type="video/mp4" />
+                </video>
+                <button
+                  class="panel-video-play"
+                  type="button"
+                  aria-label="Play video"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="79"
+                    height="99"
+                    viewBox="0 0 79 99"
+                    fill="none"
+                  >
+                    <path
+                      d="M78.75 49.3672L3.38375e-06 98.7306L7.32457e-06 0.00373463L78.75 49.3672Z"
+                      fill="#F7DF00"
+                    />
+                  </svg>
+                </button>
+              </div>
               <div class="content">
                 <h3>How strong values drive performance</h3>
                 <p>
@@ -203,7 +256,34 @@
           </div>
           <div class="panel">
             <div class="d-flex">
-              <img src="images/panel3.jpg" alt="panel 3" />
+              <div class="panel-video-wrap">
+                <video
+                  class="panel-video"
+                  loop
+                  playsinline
+                  poster="images/panel3.jpg"
+                >
+                  <source src="images/video3.mp4" type="video/mp4" />
+                </video>
+                <button
+                  class="panel-video-play"
+                  type="button"
+                  aria-label="Play video"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="79"
+                    height="99"
+                    viewBox="0 0 79 99"
+                    fill="none"
+                  >
+                    <path
+                      d="M78.75 49.3672L3.38375e-06 98.7306L7.32457e-06 0.00373463L78.75 49.3672Z"
+                      fill="#F7DF00"
+                    />
+                  </svg>
+                </button>
+              </div>
               <div class="content">
                 <h3>Life skills through sport, art and service</h3>
                 <p>
@@ -630,8 +710,8 @@
 
             <div class="ft-col-menu">
               <ul class="text">
-                <li><a href="#" class="title">Home</a></li>
-                <li><a href="#" class="title">About AVM</a></li>
+                <li><a href="index.html" class="title">Home</a></li>
+                <li><a href="about-us.html" class="title">About AVM</a></li>
                 <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
                 <li><a href="our-school.html" class="title">Schools</a></li>
               </ul>
@@ -694,6 +774,40 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      document.querySelectorAll(".panel-video-wrap").forEach((wrap) => {
+        const video = wrap.querySelector(".panel-video");
+        const playButton = wrap.querySelector(".panel-video-play");
+
+        const playWithSound = () => {
+          document.querySelectorAll(".panel-video").forEach((otherVideo) => {
+            if (otherVideo !== video) {
+              otherVideo.pause();
+              otherVideo.closest(".panel-video-wrap")?.classList.remove("is-playing");
+            }
+          });
+
+          video.defaultMuted = false;
+          video.muted = false;
+          video.volume = 1;
+          video.play();
+          wrap.classList.add("is-playing");
+        };
+
+        playButton.addEventListener("click", () => {
+          playWithSound();
+        });
+
+        video.addEventListener("click", () => {
+          if (video.paused) {
+            playWithSound();
+          } else {
+            video.pause();
+            wrap.classList.remove("is-playing");
+          }
+        });
+      });
+    </script>
 
     <script src="assets/script.js"></script>
   </body>

@@ -840,9 +840,50 @@
   gap: 75px;
 }
 
-.horizontal-section .panel img {
+.horizontal-section .panel img,
+.horizontal-section .panel-video-wrap,
+.horizontal-section .panel-video {
   max-width: clamp(28.75rem, 25.292vw + 23.059rem, 50.375rem);
   max-height: clamp(17.813rem, 15.57vw + 14.31rem, 31.125rem);
+}
+
+.horizontal-section .panel-video-wrap {
+  position: relative;
+  width: clamp(28.75rem, 25.292vw + 23.059rem, 50.375rem);
+  height: clamp(17.813rem, 15.57vw + 14.31rem, 31.125rem);
+}
+
+.horizontal-section .panel-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.horizontal-section .panel-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 79px;
+  height: 99px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.horizontal-section .panel-video-play svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.horizontal-section .panel-video-wrap.is-playing .panel-video-play {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.92);
 }
 
 .horizontal-section .yellow {
@@ -966,7 +1007,9 @@
     width: 32%;
   }
 
-  .horizontal-section .panel img {
+  .horizontal-section .panel img,
+  .horizontal-section .panel-video-wrap,
+  .horizontal-section .panel-video {
     max-width: clamp(28.75rem, 23.292vw + 21.059rem, 50.375rem);
   }
 }
@@ -1278,7 +1321,7 @@ section.bbt-FA-img-sec {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 65px 338.26px;
+  gap: 65px 138.22px;
   opacity: 0;
   transform: translateY(80px);
   transition: all 1s ease;
@@ -1345,12 +1388,6 @@ section.bbt-FA-img-sec {
 .recognition-sec .award:nth-child(5) {
   grid-column: 3 / 4;
   justify-self: start;
-}
-
-@media(max-width: 1728px) {
-  .recognition-sec .awards-grid {
-    gap: 65px 288.26px;
-  }
 }
 
 @media (max-width: 1650px) {
@@ -1500,10 +1537,10 @@ a.see-all.secondary-btn {
 .news-section .card h3 {
   color: #000;
   font-family: Satoshi;
-  font-size: clamp(1.188rem, 0.537vw + 1.016rem, 1.75rem);
+  font-size: 1.25em;
   font-style: normal;
   font-weight: 700;
-  line-height: clamp(1.563rem, 0.497vw + 1.404rem, 2.083rem);
+  line-height: 125%;
   padding-bottom: 26px;
   flex-grow: 1;
 }

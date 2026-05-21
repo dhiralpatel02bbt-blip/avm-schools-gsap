@@ -43,7 +43,7 @@
                   </label>
                 </div>
                 <ul>
-                  <li class="menu"><a href="#">About </a></li>
+                  <li class="menu"><a href="about-us.html">About </a></li>
                   <li class="menu"><a href="pedagogy.html">Pedagogy </a></li>
                   <li class="menu"><a href="our-school.html">Schools </a></li>
                   <li class="menu">
@@ -58,13 +58,13 @@
             <nav class="main-menu">
               <ul class="d-flex">
                 <li class="menu">
-                  <a href="#">About</a>
+                  <a href="about-us.html">About</a>
                 </li>
                 <li class="menu">
                   <a href="pedagogy.html">Pedagogy</a>
                 </li>
                 <li class="menu">
-                  <a href="#">Schools</a>
+                  <a href="our-school.html">Schools</a>
                 </li>
                 <li class="menu">
                   <a href="news-and-events.html">News & Events</a>
@@ -451,28 +451,6 @@
     </section>
     <!-- notes section end -->
 
-    <!-- pincode section js start -->
-    <script>
-      document
-        .querySelectorAll(".bbt-fa-pincode-section .tab")
-        .forEach((tab) => {
-          tab.addEventListener("click", () => {
-            // Update active tab button
-            document
-              .querySelectorAll(".bbt-fa-pincode-section .tab")
-              .forEach((t) => t.classList.remove("active"));
-            tab.classList.add("active");
-
-            // Show matching tab content
-            document
-              .querySelectorAll(".bbt-fa-pincode-section .tab-content")
-              .forEach((content) => content.classList.remove("active"));
-            document.getElementById(tab.dataset.tab).classList.add("active");
-          });
-        });
-    </script>
-    <!-- pincode section js end-->
-
     <!-- footer start -->
     <footer class="bbt-FA-main-footer">
       <div class="container-xxl footer-container">
@@ -493,7 +471,7 @@
           <div class="ft-col-menu">
             <ul class="text">
               <li><a href="#" class="title">Home</a></li>
-              <li><a href="#" class="title">About AVM</a></li>
+              <li><a href="about-us.html" class="title">About AVM</a></li>
               <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
               <li><a href="our-school.html" class="title">Schools</a></li>
             </ul>
@@ -560,6 +538,24 @@
 
     <script src="assets/script.js"></script>
     <script>
+      document
+        .querySelectorAll(".bbt-fa-pincode-section .tab")
+        .forEach((tab) => {
+          tab.addEventListener("click", () => {
+            // Update active tab button
+            document
+              .querySelectorAll(".bbt-fa-pincode-section .tab")
+              .forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            // Show matching tab content
+            document
+              .querySelectorAll(".bbt-fa-pincode-section .tab-content")
+              .forEach((content) => content.classList.remove("active"));
+            document.getElementById(tab.dataset.tab).classList.add("active");
+          });
+        });
+
       const avmSwiper = new Swiper(".avm-swiper", {
         loop: true,
         speed: 600,

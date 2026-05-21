@@ -983,6 +983,9 @@ if (videoWrapper && video && playBtn) {
   // ── Click: play / pause toggle ───────────────────────────────────
   videoWrapper.addEventListener("click", () => {
     if (video.paused) {
+      video.defaultMuted = false;
+      video.muted = false;
+      video.volume = 1;
       video.play();
       playBtn.innerHTML = `<span class="pause-icon"></span>`;
     } else {
