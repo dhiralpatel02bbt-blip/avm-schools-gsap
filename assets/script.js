@@ -1225,6 +1225,63 @@ if (horizontal) {
 
 gsap.registerPlugin(ScrollTrigger);
 
+const schoolInfoSection = document.querySelector(".bbt-FA-img-sec");
+
+if (schoolInfoSection) {
+  const schoolCircle = schoolInfoSection.querySelector(".purple-circle");
+  const schoolCircleText = schoolInfoSection.querySelector(".main-title");
+  const schoolHeading = schoolInfoSection.querySelector(".img-text");
+  const schoolTextItems = [schoolCircleText, schoolHeading].filter(Boolean);
+
+  if (schoolCircle && schoolCircleText) {
+    const initSchoolInfoAnimation = () => {
+      gsap.set(schoolCircle, {
+        autoAlpha: 0,
+        scale: 0.35,
+        transformOrigin: "50% 50%",
+      });
+      gsap.set(schoolTextItems, {
+        autoAlpha: 0,
+        y: 24,
+      });
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: schoolInfoSection,
+            start: "top 70%",
+            once: true,
+          },
+        })
+        .to(schoolCircle, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.85,
+          ease: "back.out(1.25)",
+        })
+        .to(
+          schoolTextItems,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.65,
+            ease: "power2.out",
+            stagger: 0.08,
+          },
+          "-=0.18",
+        );
+
+      ScrollTrigger.refresh();
+    };
+
+    if (document.readyState === "complete") {
+      initSchoolInfoAnimation();
+    } else {
+      window.addEventListener("load", initSchoolInfoAnimation, { once: true });
+    }
+  }
+}
+
 const track = document.querySelector("#bubbleTrack");
 const circles = gsap.utils.toArray(".circle");
 let tl;
@@ -2237,9 +2294,8 @@ tabs.forEach((tab) => {
 
 // section fade animation on home page
 document.addEventListener("DOMContentLoaded", function () {
-  const animatedSections = document.querySelectorAll(
-    ".news-header, .news-grid, .recognition-sec, .contact-sec",
-  );
+  const newsSection = document.querySelector(".news-section");
+  const animatedSections = document.querySelectorAll(".recognition-sec, .contact-sec");
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -2257,6 +2313,26 @@ document.addEventListener("DOMContentLoaded", function () {
   animatedSections.forEach((section) => {
     observer.observe(section);
   });
+
+  if (newsSection) {
+    const newsObserver = new IntersectionObserver(
+      (entries, observerInstance) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            newsSection.querySelector(".news-header")?.classList.add("animate");
+            newsSection.querySelector(".news-grid")?.classList.add("animate");
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.25,
+        rootMargin: "0px 0px -12% 0px",
+      },
+    );
+
+    newsObserver.observe(newsSection);
+  }
 });
 
 // Careers application popup

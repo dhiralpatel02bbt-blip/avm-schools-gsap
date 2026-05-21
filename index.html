@@ -783,7 +783,9 @@
           document.querySelectorAll(".panel-video").forEach((otherVideo) => {
             if (otherVideo !== video) {
               otherVideo.pause();
-              otherVideo.closest(".panel-video-wrap")?.classList.remove("is-playing");
+              otherVideo
+                .closest(".panel-video-wrap")
+                ?.classList.remove("is-playing");
             }
           });
 
