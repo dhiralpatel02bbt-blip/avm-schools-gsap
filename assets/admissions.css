@@ -1,5 +1,9 @@
+.admissions-page header .main-menu ul li a {
+    color: #fff;
+}
+
 /* hero section css Start */
-.bbt-dp-hero {
+.admission-hero {
     background: url(../images/admissions-hero.jpg);
     background-position: right;
     background-repeat: no-repeat;
@@ -9,21 +13,22 @@
     box-sizing: border-box;
     height: 100svh;
     --hero-blue-size: clamp(950px, max(92vw, 116vh), 2031.238px);
+    background-color: #cec9c5;
 }
 
-.bbt-dp-hero .main-hero-items,
-.bbt-dp-hero .main-hero-items>.d-flex {
+.admission-hero .main-hero-items,
+.admission-hero .main-hero-items>.d-flex {
     height: 100%;
 }
 
-.bbt-dp-hero .main-title {
+.admission-hero .main-title {
     position: relative;
     z-index: 2;
     padding-left: clamp(20px, 5vw, 136px);
     width: 72%;
 }
 
-.bbt-dp-hero .main-title h2.hero-txt {
+.admission-hero .main-title h2.hero-txt {
     color: #FFF;
     font-family: Satoshi;
     font-size: 2.7em;
@@ -32,7 +37,7 @@
     line-height: 112%;
 }
 
-.bbt-dp-hero .burgundy-bg {
+.admission-hero .blue-half-circle {
     position: absolute;
     top: clamp(-198px, -14vh, -90px);
     left: calc(var(--hero-blue-size) * -0.5);
@@ -40,9 +45,11 @@
     height: var(--hero-blue-size);
     border-radius: 50%;
     background: #0A3D9C;
+    transform-origin: 50% 50%;
+    will-change: transform;
 }
 
-.bbt-dp-hero .burgundy-bg-ele {
+.admission-hero .blue-half-circle-ele {
     display: flex;
     align-items: center;
 }
@@ -54,7 +61,7 @@
     max-width: 780px;
 }
 
-.bbt-dp-hero .main-title span.weight-500 {
+.admission-hero .main-title span.weight-500 {
     display: inline-block;
     font-family: Satoshi;
     font-size: 4em;
@@ -64,7 +71,7 @@
     letter-spacing: -0.697px;
 }
 
-.bbt-dp-hero .main-title span.weight-600 {
+.admission-hero .main-title span.weight-600 {
     font-family: Satoshi;
     font-size: 4.098em;
     font-style: normal;
@@ -73,7 +80,7 @@
     letter-spacing: -0.917px;
 }
 
-.bbt-dp-hero .main-title span.weight-500:last-child {
+.admission-hero .main-title span.weight-500:last-child {
     padding-left: clamp(38px, 10.1vw, 194px);
 }
 
@@ -81,7 +88,7 @@
     position: relative;
 }
 
-.bbt-dp-hero .yellow-circle {
+.admission-hero .yellow-circle {
     position: absolute;
     top: 8.5rem;
     right: clamp(6rem, 10vw, 12rem);
@@ -91,7 +98,7 @@
     background-color: #F7DF00;
 }
 
-.bbt-dp-hero .main-title span.weight-500:last-child {
+.admission-hero .main-title span.weight-500:last-child {
     padding-left: clamp(104px, 8.1vw, 124px);
 }
 
@@ -112,30 +119,30 @@
 }
 
 @media(max-width: 1728px) {
-    .bbt-dp-hero .yellow-circle {
+    .admission-hero .yellow-circle {
         top: 18.5rem;
         right: clamp(6rem, 7vw, 12rem);
     }
 }
 
 @media(max-width: 1650px) {
-    .bbt-dp-hero .yellow-circle {
+    .admission-hero .yellow-circle {
         top: 6.5rem;
     }
 }
 
 @media(max-width: 1600px) {
-    .bbt-dp-hero .yellow-circle {
+    .admission-hero .yellow-circle {
         width: 537.95px;
         height: 537.95px;
     }
 
-    .bbt-dp-hero .burgundy-bg {
+    .admission-hero .blue-half-circle {
         width: 1540px;
         height: 1540px;
     }
 
-    .bbt-dp-hero .main-title {
+    .admission-hero .main-title {
         padding-left: 8%;
     }
 
@@ -146,48 +153,48 @@
 
 
 @media(max-width: 1400px) {
-    .bbt-dp-hero .main-title span {
+    .admission-hero .main-title span {
         font-size: 70px;
         line-height: 90px;
     }
 
-    .bbt-dp-hero .yellow-circle {
+    .admission-hero .yellow-circle {
         right: 12%;
         width: 400px;
         height: 400px;
     }
 
-    .bbt-dp-hero .burgundy-bg {
+    .admission-hero .blue-half-circle {
         width: 1360px;
         height: 1370px;
     }
 }
 
 @media(max-width: 1366px) {
-    .bbt-dp-hero .burgundy-bg {
+    .admission-hero .blue-half-circle {
         width: 1450px;
         height: 1450px;
     }
 
-    .bbt-dp-hero .yellow-circle {
+    .admission-hero .yellow-circle {
         top: 3.5rem;
         right: clamp(4rem, 6vw, 12rem);
         width: 500px;
         height: 500px;
     }
 
-    .bbt-dp-hero .main-title span.weight-500:last-child {
+    .admission-hero .main-title span.weight-500:last-child {
         padding-left: 120px;
     }
 }
 
 @media(max-width: 1280px) {
-    .bbt-dp-hero .burgundy-bg {
+    .admission-hero .blue-half-circle {
         width: 1350px;
         height: 1350px;
     }
 
-    .bbt-dp-hero .yellow-circle {
+    .admission-hero .yellow-circle {
         top: 5.5rem;
         width: 480px;
         height: 480px;
@@ -195,26 +202,26 @@
 }
 
 @media (max-width: 1200px) {
-    .bbt-dp-hero .main-title span.weight-500:last-child {
+    .admission-hero .main-title span.weight-500:last-child {
         padding-left: 50px;
     }
 
-    .bbt-dp-hero .main-title {
+    .admission-hero .main-title {
         padding-left: 10%;
     }
 
-    section.bbt-dp-hero.panel.panel1 {
+    section.admission-hero.panel.panel1 {
         min-height: 58vh;
     }
 
-    .bbt-dp-hero .burgundy-bg {
+    .admission-hero .blue-half-circle {
         width: 1150px;
         height: 1150px;
         left: -42%;
         top: -8.3%;
     }
 
-    .bbt-dp-hero .yellow-circle {
+    .admission-hero .yellow-circle {
         width: 400px;
         height: 400px;
         top: 7.5rem;
@@ -232,18 +239,18 @@
         max-width: 500px;
     }
 
-    section.bbt-dp-hero.panel.panel1 {
+    section.admission-hero.panel.panel1 {
         min-height: 38vh;
     }
 
-    .bbt-dp-hero .burgundy-bg {
+    .admission-hero .blue-half-circle {
         width: 1040px;
         height: 1040px;
         top: -6%;
         left: -47%;
     }
 
-    .bbt-dp-hero .yellow-circle {
+    .admission-hero .yellow-circle {
         width: 350px;
         height: 350px;
         top: 28%;
@@ -260,29 +267,42 @@
 
 /* circle section css start */
 .bbt-fa-circle-sec {
-    background: #003da6;
+    background: #0a3d9c;
     height: 100vh;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 .bbt-fa-circle-sec .journey-wrapper {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: center;
     position: relative;
     gap: 40px;
 }
 
 .bbt-fa-circle-sec .journey-wrapper::before {
-    content: "";
+    display: none;
+}
+
+.bbt-fa-circle-sec .journey-line-segment {
     position: absolute;
     top: 50%;
-    left: 120px;
-    right: 120px;
+    width: 33.333%;
     border-top: 3px dotted #ffffff;
     z-index: 1;
-    transform: translateY(-50%);
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: left center;
+    will-change: transform, opacity;
+}
+
+.bbt-fa-circle-sec .journey-line-segment.segment-1 {
+    left: 16.666%;
+}
+
+.bbt-fa-circle-sec .journey-line-segment.segment-2 {
+    left: 50%;
 }
 
 .bbt-fa-circle-sec .circle-card {
@@ -297,6 +317,13 @@
     z-index: 2;
     padding: 40px;
     flex-shrink: 0;
+    justify-self: center;
+    transform-origin: 50% 50%;
+    will-change: transform, opacity;
+}
+
+.bbt-fa-circle-sec .circle-card .content {
+    will-change: transform, opacity;
 }
 
 .bbt-fa-circle-sec .circle-card h3 {
@@ -339,11 +366,36 @@
     }
 }
 
+@media screen and (max-width: 1199px) {
+    .bbt-fa-circle-sec {
+        height: auto;
+        min-height: 100vh;
+        padding: 110px 0;
+    }
+
+    .bbt-fa-circle-sec .journey-wrapper {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    .bbt-fa-circle-sec .journey-line-segment {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .bbt-fa-circle-sec .circle-card {
+        width: min(86vw, 330px);
+        height: min(86vw, 330px);
+        padding: 28px;
+    }
+}
+
 /* circle section css end */
 
 /* admissions about section css start */
 .bbt-fa-admissions-about-sec {
-    background-color: #003da6;
+    background-color: #0a3d9c;
     min-height: 100vh;
     display: flex;
     align-items: center;

@@ -1011,6 +1011,12 @@
   }
 }
 
+@media (max-width: 1280px) {
+  .horizontal-section .yellow {
+    width: 54%;
+  }
+}
+
 @media (max-width: 1200px) {
   .lavender-circle {
     right: -102vw;
@@ -1589,6 +1595,7 @@ a.see-all.secondary-btn {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .recognition-sec .section-title,
   .recognition-sec .awards-grid,
   .recognition-sec .award,

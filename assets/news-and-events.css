@@ -2,6 +2,10 @@
     max-width: 91%;
 }
 
+.news-and-events-page header .main-menu ul li a {
+    color: #fff;
+}
+
 /* featured news section css Start */
 .featured-news-sec {
     background: #0A3D9C;

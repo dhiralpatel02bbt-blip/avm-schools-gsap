@@ -139,6 +139,201 @@ gsap.registerPlugin(ScrollTrigger);
   });
 })();
 
+// Admissions hero + journey scroll animation
+(function initAdmissionsAnimation() {
+  if (!document.querySelector("body.admissions-page")) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    return;
+  }
+
+  var hero = document.querySelector(".admission-hero");
+  var heroCircle = document.querySelector(".admission-hero .blue-half-circle");
+  var heroTitle = document.querySelector(".admission-hero .main-title");
+  var circleSection = document.querySelector(".bbt-fa-circle-sec");
+  var cards = gsap.utils.toArray(".bbt-fa-circle-sec .circle-card");
+  var contents = gsap.utils.toArray(".bbt-fa-circle-sec .circle-card .content");
+  var segments = gsap.utils.toArray(".bbt-fa-circle-sec .journey-line-segment");
+  var aboutSection = document.querySelector(".bbt-fa-admissions-about-sec");
+  var aboutItems = gsap.utils.toArray(
+    ".bbt-fa-admissions-about-sec .avm-image-wrap, .bbt-fa-admissions-about-sec .avm-text, .bbt-fa-admissions-about-sec .avm-slider-controls",
+  );
+
+  if (!hero || !heroCircle || !heroTitle) return;
+
+  var reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  var isDesktop = window.innerWidth >= 768;
+
+  if (reducedMotion || !isDesktop) {
+    gsap.set([heroCircle, heroTitle, cards, contents, segments, aboutItems], {
+      clearProps: "all",
+    });
+    return;
+  }
+
+  gsap.set(heroCircle, {
+    xPercent: -34,
+    autoAlpha: 1,
+    scale: 1,
+    transformOrigin: "50% 50%",
+  });
+  gsap.set(heroTitle, { autoAlpha: 0, x: -130 });
+
+  if (cards.length) {
+    gsap.set(cards, {
+      autoAlpha: 0,
+      scale: 0.42,
+      y: 70,
+      transformOrigin: "50% 50%",
+    });
+  }
+  if (contents.length) {
+    gsap.set(contents, { autoAlpha: 0, y: 24 });
+  }
+  if (segments.length) {
+    gsap.set(segments, {
+      autoAlpha: 1,
+      scaleX: 0,
+      transformOrigin: "left center",
+    });
+  }
+  if (aboutItems.length) {
+    gsap.set(aboutItems, { autoAlpha: 0, y: 80 });
+  }
+
+  function buildScrollAnimations() {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "+=115%",
+          pin: true,
+          scrub: 1.05,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+      .to(
+        heroTitle,
+        {
+          autoAlpha: 0,
+          x: -160,
+          duration: 0.35,
+          ease: "power2.inOut",
+        },
+        0,
+      )
+      .to(
+        heroCircle,
+        {
+          xPercent: -2,
+          scale: 2.35,
+          duration: 1,
+          ease: "power2.inOut",
+        },
+        0,
+      );
+
+    if (circleSection && cards.length) {
+      var journeyTL = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        scrollTrigger: {
+          trigger: circleSection,
+          start: "top top",
+          end: function () {
+            return "+=" + window.innerHeight * 5.6;
+          },
+          pin: true,
+          scrub: 0.85,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      journeyTL
+        .to(cards[0], { autoAlpha: 1, scale: 1, y: 0, duration: 0.75 })
+        .to(contents[0], { autoAlpha: 1, y: 0, duration: 0.45 })
+        .to(segments[0], { scaleX: 1, duration: 0.72, ease: "power1.inOut" })
+        .to(cards[1], { autoAlpha: 1, scale: 1, y: 0, duration: 0.75 })
+        .to(contents[1], { autoAlpha: 1, y: 0, duration: 0.45 })
+        .to(segments[1], { scaleX: 1, duration: 0.72, ease: "power1.inOut" })
+        .to(cards[2], { autoAlpha: 1, scale: 1, y: 0, duration: 0.75 })
+        .to(contents[2], { autoAlpha: 1, y: 0, duration: 0.45 })
+        .to({}, { duration: 0.45 });
+    }
+
+  if (aboutSection && aboutItems.length) {
+      gsap.to(aboutItems, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.85,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: aboutSection,
+          start: "top 72%",
+          once: true,
+        },
+      });
+    }
+
+    ScrollTrigger.refresh();
+  }
+
+  var onlineIntroItems = gsap.utils.toArray(
+    ".bbt-fa-online-section .main-title, .bbt-fa-online-section .description, .bbt-fa-online-section .sub-title",
+  );
+
+  if (onlineIntroItems.length) {
+    gsap.set(onlineIntroItems, { autoAlpha: 0, y: 48 });
+
+    gsap.to(onlineIntroItems, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.85,
+      stagger: 0.16,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".bbt-fa-online-section",
+        start: "top 72%",
+        once: true,
+      },
+    });
+  }
+
+  function playIntro() {
+    gsap
+      .timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: buildScrollAnimations,
+      })
+      .to(heroCircle, { xPercent: 0, duration: 1.05 })
+      .to(
+        heroTitle,
+        {
+          autoAlpha: 1,
+          x: 0,
+          duration: 0.9,
+        },
+        "+=0.02",
+      );
+  }
+
+  if (document.readyState === "complete") {
+    window.setTimeout(playIntro, 120);
+  } else {
+    window.addEventListener(
+      "load",
+      function () {
+        window.setTimeout(playIntro, 120);
+      },
+      { once: true },
+    );
+  }
+})();
+
 // ============================================================
 // CAMPUS SECTION — Our School Page
 //
@@ -779,6 +974,60 @@ gsap.registerPlugin(ScrollTrigger);
   }
 
   window.addEventListener("resize", handleResize);
+})();
+
+// Our School page location section: short opposite-side reveal.
+(function initLocationSectionReveal() {
+  if (!document.querySelector("body.our-school-page")) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+    return;
+  }
+
+  var section = document.querySelector(".location-section");
+  var leftColumn = document.querySelector(".location-section .campus-heading");
+  var rightColumn = document.querySelector(".location-section .campus-grid");
+
+  if (!section || !leftColumn || !rightColumn) return;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    gsap.set([leftColumn, rightColumn], { clearProps: "all" });
+    return;
+  }
+
+  var hasRevealed = false;
+
+  gsap.set(leftColumn, { autoAlpha: 0, x: -28 });
+  gsap.set(rightColumn, { autoAlpha: 0, x: 28 });
+
+  function revealLocationSection() {
+    if (hasRevealed) return;
+    hasRevealed = true;
+
+    gsap
+      .timeline({
+        defaults: {
+          duration: 0.8,
+          ease: "power3.out",
+        },
+      })
+      .to(leftColumn, { autoAlpha: 1, x: 0 })
+      .to(rightColumn, { autoAlpha: 1, x: 0 }, "-=0.58");
+  }
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top 90%",
+    once: true,
+    onEnter: revealLocationSection,
+  });
+
+  window.addEventListener(
+    "load",
+    function () {
+      ScrollTrigger.refresh();
+    },
+    { once: true },
+  );
 })();
 
 if (

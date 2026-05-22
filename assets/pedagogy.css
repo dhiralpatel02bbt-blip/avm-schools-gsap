@@ -493,51 +493,81 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 
 @media (max-width: 1366px) {
     .diagram-sec .orbit {
-        width: 600px;
-        height: 600px;
+        width: 500px;
+        height: 500px;
     }
 
-    .diagram-sec .node2,
     .diagram-sec .node1 {
-        top: 16.5%;
+        top: 22.5%;
+        left: 38%;
     }
 
-    .diagram-sec .node4,
+    .diagram-sec .node2 {
+        top: 22.5%;
+        left: 61.7%;
+    }
+
+    .diagram-sec .node3 {
+        left: 71.8%;
+        top: 50%;
+    }
+
+    .diagram-sec .node4 {
+        top: 72.2%;
+        left: 65.9%;
+    }
+
     .diagram-sec .node5 {
-        top: 82.2%;
+        top: 82.6%;
+    }
+
+    .diagram-sec .node6 {
+        left: 28%;
+        top: 50%;
+    }
+
+    .diagram-sec .node7 {
+        top: 72.2%;
+        left: 34%;
     }
 
     .diagram-sec .label.top {
-        top: 7%;
-        left: 8%;
+        top: 13%;
+        left: 12%;
     }
 
     .diagram-sec .label.right-top {
-        top: 8%;
-        right: 8%;
+        top: 13%;
+        right: 10%;
     }
 
     .diagram-sec .label.right-mid {
         width: 22%;
+        right: 2%;
     }
 
-    .diagram-sec .node4 {
-        left: 65.5%;
-    }
 
     .diagram-sec .label.bottom {
-        right: 10%;
-        bottom: 1%;
-        width: 22%;
+        right: 8%;
+        bottom: 14%;
+        width: 23%;
     }
 
     .diagram-sec .label.left-bottom {
-        bottom: 1%;
+        bottom: -6%;
+    }
+
+    .diagram-sec .label.left-lower {
+        top: 70%;
+    }
+
+    .diagram-sec .label.left-mid {
+        left: 0%;
     }
 
     .diagram-sec .label.left-mid,
     .diagram-sec .label.right-mid {
-        top: 55.5%;
+        top: 50%;
     }
 
     .diagram-sec .label .strong {
@@ -551,30 +581,51 @@ body.pedagogy-page section.diagram-sec .container-xxl {
         height: 180px;
     }
 
-    .diagram-sec .node3 {
-        left: 78.3%;
+    .diagram-sec .node1 {
+        top: 21.7%;
     }
 
-    .diagram-sec .node4,
-    .diagram-sec .node5 {
-        top: 83.2%;
+    .diagram-sec .node2 {
+        left: 62.7%;
+    }
+
+    .diagram-sec .node3 {
+        left: 73.5%;
+    }
+
+    .diagram-sec .node4 {
+        top: 71.2%;
+        left: 67.6%;
     }
 
     .diagram-sec .node6 {
-        left: 21.6%;
+        left: 26.5%;
     }
 
     .diagram-sec .node7 {
-        left: 24%;
+        left: 33%;
     }
 
     .diagram-sec .label.right-mid {
-        top: 49%;
-        right: -7%;
+        top: 44%;
+        right: 0%;
+    }
+
+    .diagram-sec .label.bottom {
+        right: 5%;
+        bottom: 16%;
+    }
+
+    .diagram-sec .label.left-bottom {
+        bottom: -5%;
     }
 
     .diagram-sec .label.left-mid {
-        left: -7%;
+        left: 0%;
+    }
+
+    .diagram-sec .label.right-top {
+        right: 9%;
     }
 }
 
@@ -1040,9 +1091,9 @@ section.tabbing-sec .tab-items {
 .extra-section .card-label h3 {
     color: #fff;
     font-family: Poppins;
-    font-size: clamp(1.08rem, 1.45vw, 1.7rem);
+    font-size: 1.2em;
     font-weight: 400;
-    line-height: 136%;
+    line-height: 150%;
 }
 
 .extra-section .card-label p {
@@ -1106,6 +1157,13 @@ section.tabbing-sec .tab-items {
 @media (max-width: 1728px) {
     .text-content {
         margin-bottom: 90px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .extra-section .card {
+        grid-template-columns: minmax(420px, 46%) 1fr;
+        gap: clamp(34px, 3vw, 72px);
     }
 }
 
@@ -1278,7 +1336,7 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.top {
-    top: -1%;
+    top: 9.6%;
     left: 50%;
     --line-length: 209px;
     --line-angle: 90deg;
@@ -1292,7 +1350,7 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.right {
-    top: 30%;
+    top: 34.4%;
     right: -62%;
     --line-length: 188px;
     --line-angle: 160deg;
@@ -1303,8 +1361,8 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.bottom-right {
-    bottom: 6%;
-    right: -36%;
+    bottom: 14.9%;
+    right: -36.3%;
     --line-length: 320px;
     --line-angle: -144deg;
 }
@@ -1315,8 +1373,8 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.bottom-left {
-    bottom: 6%;
-    left: -38%;
+    bottom: 14.9%;
+    left: -37.9%;
     --line-length: 270px;
     --line-angle: -41deg;
 }
@@ -1327,7 +1385,7 @@ section.tabbing-sec .tab-items {
 }
 
 .sat.left {
-    top: 30%;
+    top: 34.4%;
     left: -62%;
     --line-length: 178px;
     --line-angle: 20deg;
@@ -1407,51 +1465,49 @@ section.tabbing-sec .tab-items {
     }
 
     .sat.top {
-        top: 90px;
-    }
-
-    .sat.left {
-        top: 33%;
-        left: -240px;
-    }
-
-    .sat.right {
-        top: 33%;
-        right: -240px;
+        top: 10.6%;
     }
 
     .sat.bottom-left {
-        bottom: 105px;
-        left: -135px;
+        bottom: 16%;
     }
 
     .sat.bottom-right {
-        bottom: 105px;
-        right: -135px;
+        bottom: 16%;
     }
 }
 
 @media (max-width: 1650px) {
     .center-node {
-        width: 185px;
-        height: 185px;
+        width: 235px;
+        height: 235px;
+    }
+
+    .aym-diagram .aym-line-141 {
+        top: calc(50% + 89px);
+        height: 211px;
     }
 
     .sat {
         padding: 20px 36px;
+        width: 350px;
+        height: 100px;
     }
 
     .sat.left {
-        left: -225px;
+        left: -50%;
+    }
+
+    .sat.bottom-left {
+        left: -23.9%;
     }
 
     .sat.right {
-        right: -225px;
+        right: -51%;
     }
 
     .sat.bottom-right {
-        bottom: 105px;
-        right: -125px;
+        right: -25.3%;
     }
 }
 
@@ -1459,34 +1515,29 @@ section.tabbing-sec .tab-items {
     .sat {
         padding: 20px 34px;
     }
-
-    .sat.right {
-        right: -210px;
-    }
-
-    .sat.left {
-        left: -210px;
-    }
-
-    .sat.bottom-left {
-        bottom: 105px;
-        left: -115px;
-    }
 }
 
 @media (max-width: 1366px) {
     .sat.top {
-        top: 70px;
+        top: 5.6%;
+    }
+
+    .sat.right {
+        right: -51%;
+        top: 32.4%;
     }
 
     .sat.bottom-right {
-        bottom: 95px;
-        right: -105px;
+        bottom: 10%;
     }
 
     .sat.bottom-left {
-        bottom: 95px;
-        left: -105px;
+        left: -21.9%;
+        bottom: 10%;
+    }
+
+    .sat.left {
+        top: 32.4%;
     }
 }
 
@@ -1496,11 +1547,11 @@ section.tabbing-sec .tab-items {
     }
 
     .sat.left {
-        left: -190px;
+        left: -47%;
     }
 
     .sat.right {
-        right: -190px;
+        right: -46%;
     }
 }
 
