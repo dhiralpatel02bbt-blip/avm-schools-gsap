@@ -617,6 +617,25 @@ section.development-sec {
 /* development section css end */
 
 /* Location section css Start */
+
+/*
+ * Hide heading and grid before JS runs so there's no flash of visible content.
+ * GSAP will set visibility:visible + opacity via autoAlpha when it animates.
+ * If JS is disabled or fails, the @media fallback below makes them visible.
+ */
+.our-school-page .campus-heading,
+.our-school-page .campus-grid {
+    visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .our-school-page .campus-heading,
+    .our-school-page .campus-grid {
+        visibility: visible;
+    }
+}
+
 .location-section {
     background: #FFE600;
     display: flex;

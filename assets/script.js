@@ -264,7 +264,7 @@ gsap.registerPlugin(ScrollTrigger);
         .to({}, { duration: 0.45 });
     }
 
-  if (aboutSection && aboutItems.length) {
+    if (aboutSection && aboutItems.length) {
       gsap.to(aboutItems, {
         autoAlpha: 1,
         y: 0,
@@ -1014,20 +1014,35 @@ gsap.registerPlugin(ScrollTrigger);
       .to(rightColumn, { autoAlpha: 1, x: 0 }, "-=0.58");
   }
 
-  ScrollTrigger.create({
-    trigger: section,
-    start: "top 90%",
-    once: true,
-    onEnter: revealLocationSection,
-  });
-
-  window.addEventListener(
-    "load",
-    function () {
-      ScrollTrigger.refresh();
-    },
-    { once: true },
-  );
+  // FIX: refresh() pehle karo taaki campus + dev section ke pins ki
+  // wajah se scroll height sahi ho, phir trigger register karo.
+  // Pehle create() baad mein refresh() karna galat hai — "once:true" trigger
+  // galat position pe register hota hai aur onEnter kabhi fire nahi hota.
+  if (document.readyState === "complete") {
+    ScrollTrigger.refresh();
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 85%",
+      once: true,
+      onEnter: revealLocationSection,
+      invalidateOnRefresh: true,
+    });
+  } else {
+    window.addEventListener(
+      "load",
+      function () {
+        ScrollTrigger.refresh();
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 85%",
+          once: true,
+          onEnter: revealLocationSection,
+          invalidateOnRefresh: true,
+        });
+      },
+      { once: true },
+    );
+  }
 })();
 
 if (
