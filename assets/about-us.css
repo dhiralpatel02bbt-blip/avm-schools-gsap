@@ -259,11 +259,24 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
 }
 
 /*  Careers about section css end */
-
 /* Awareness section css start */
 section.awareness-about-sec {
   background-color: #0a3d9c;
   padding: clamp(64px, 9vh, 96px) 0 clamp(130px, 13vh, 188px);
+}
+
+@media (min-width: 768px) {
+  section.awareness-about-sec {
+    padding: clamp(130px, 13vh, 188px) 0;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .awareness-about-sec .career-wrapper {
+    transform: translateY(clamp(44px, 8vh, 76px));
+  }
 }
 
 .awareness-about-sec .career-wrapper {
@@ -307,7 +320,6 @@ section.awareness-about-sec {
 }
 
 /*Awareness section css end */
-
 /* Our vision section css start  */
 .our-vision-sec {
   background-image: none;
@@ -322,7 +334,8 @@ section.awareness-about-sec {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  --vision-radial-scale: 0.28;
+  --vision-radial-scale: 0;
+  --vision-radial-opacity: 0;
 }
 
 @supports (height: 100svh) {
@@ -343,7 +356,7 @@ section.awareness-about-sec {
   background-size: cover;
   transform: scale(var(--vision-radial-scale, 0.28));
   transform-origin: center center;
-  opacity: 0.95;
+  opacity: var(--vision-radial-opacity, 0);
   will-change: transform;
   z-index: 0;
 }
@@ -372,6 +385,17 @@ section.awareness-about-sec {
   align-items: center;
   justify-content: center;
   gap: 15px;
+}
+
+@media (min-width: 768px) {
+
+  .our-vision-sec .left-semicircle,
+  .our-vision-sec .right-semicircle,
+  .our-vision-sec .heading-title,
+  .our-vision-sec .para-text {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .left-semicircle img,
@@ -409,7 +433,6 @@ section.awareness-about-sec {
 }
 
 /* Our vision section css end  */
-
 /* core values section css start  */
 .core-value-sec {
   position: relative;
@@ -615,7 +638,6 @@ section.awareness-about-sec {
 }
 
 /* core values section css end  */
-
 /* commitment section css start  */
 .commitment-sec {
   background-color: #ffffff;
@@ -717,7 +739,6 @@ section.awareness-about-sec {
 }
 
 /* commitment section css end  */
-
 /* Governance section css start  */
 .governance-sec {
   background-color: #ffffff;

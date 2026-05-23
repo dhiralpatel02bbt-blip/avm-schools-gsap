@@ -500,54 +500,71 @@
     var titleWidth = visionTitle.getBoundingClientRect().width;
     var attachedOffset = titleWidth / 2 + 15;
 
-    // START: semicircles joined at center (forming a circle), title hidden
-    gsap.set(visionLeft, { x: attachedOffset, autoAlpha: 1 });
-    gsap.set(visionRight, { x: -attachedOffset, autoAlpha: 1 });
+    // START: plain blue section. Radial lines and vision content appear later.
+    gsap.set(visionLeft, { x: attachedOffset, autoAlpha: 0 });
+    gsap.set(visionRight, { x: -attachedOffset, autoAlpha: 0 });
     gsap.set(visionTitle, { autoAlpha: 0 });
     gsap.set(visionPara, { y: 18, autoAlpha: 0 });
-    gsap.set(visionSection, { "--vision-radial-scale": 0 });
+    gsap.set(visionSection, {
+      "--vision-radial-scale": 0,
+      "--vision-radial-opacity": 0,
+    });
+
+    var visionIntroPlayed = false;
+    var visionIntroTL = gsap
+      .timeline({ paused: true, defaults: { ease: "power3.out" } })
+      .to(visionLeft, { x: 0, autoAlpha: 1, duration: 1.0 }, 0)
+      .to(visionRight, { x: 0, autoAlpha: 1, duration: 1.0 }, 0)
+      .to(visionTitle, { autoAlpha: 1, duration: 0.55 }, 0.35)
+      .to(visionPara, { y: 0, autoAlpha: 1, duration: 0.65 }, 0.65);
 
     function resetVisionIntro() {
-      gsap.killTweensOf([visionLeft, visionRight, visionTitle, visionPara]);
-      gsap.set(visionLeft, { x: attachedOffset, autoAlpha: 1 });
-      gsap.set(visionRight, { x: -attachedOffset, autoAlpha: 1 });
+      visionIntroPlayed = false;
+      visionIntroTL.pause(0);
+      gsap.set(visionLeft, { x: attachedOffset, autoAlpha: 0 });
+      gsap.set(visionRight, { x: -attachedOffset, autoAlpha: 0 });
       gsap.set(visionTitle, { autoAlpha: 0 });
       gsap.set(visionPara, { y: 18, autoAlpha: 0 });
     }
 
     function playVisionIntro() {
-      gsap.killTweensOf([visionLeft, visionRight, visionTitle, visionPara]);
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        // Hold joined for 0.3s so it registers as a circle
-        .to(visionLeft, { x: 0, duration: 1.0 }, 0.3)
-        .to(visionRight, { x: 0, duration: 1.0 }, 0.3)
-        // Title fades in only after the vision section is in view.
-        .to(visionTitle, { autoAlpha: 1, duration: 0.55 }, 0.65)
-        // Para fades in after title
-        .to(visionPara, { y: 0, autoAlpha: 1, duration: 0.65 }, 0.9);
+      if (visionIntroPlayed) return;
+      visionIntroPlayed = true;
+      visionIntroTL.play();
     }
-
-    // Start only when the vision section's center reaches the viewport center.
-    visionSplitTrigger = ScrollTrigger.create({
-      trigger: visionSection,
-      start: "center center",
-      invalidateOnRefresh: true,
-      onEnter: playVisionIntro,
-      onLeaveBack: resetVisionIntro,
-    });
 
     visionRadialTrigger = ScrollTrigger.create({
       trigger: visionSection,
-      start: "top 35%",
-      end: "bottom 20%",
-      scrub: 1,
+      start: "top top",
+      end: "+=300%",
+      pin: true,
+      pinType: "fixed",
+      pinReparent: true,
+      pinSpacing: true,
+      anticipatePin: 1,
       invalidateOnRefresh: true,
-      animation: gsap.fromTo(
-        visionSection,
-        { "--vision-radial-scale": 0 },
-        { "--vision-radial-scale": 1, ease: "none" }
-      ),
+      onUpdate: function (self) {
+        var radialProgress = Math.min(self.progress / 0.72, 1);
+
+        gsap.set(visionSection, {
+          "--vision-radial-scale": radialProgress,
+          "--vision-radial-opacity": radialProgress * 0.95,
+        });
+
+        if (self.progress >= 0.78) {
+          playVisionIntro();
+        } else if (self.direction < 0) {
+          visionIntroPlayed = false;
+          visionIntroTL.reverse();
+        }
+      },
+      onLeaveBack: function () {
+        resetVisionIntro();
+        gsap.set(visionSection, {
+          "--vision-radial-scale": 0,
+          "--vision-radial-opacity": 0,
+        });
+      },
     });
   }
 
