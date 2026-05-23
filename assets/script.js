@@ -279,28 +279,203 @@ gsap.registerPlugin(ScrollTrigger);
       });
     }
 
-    ScrollTrigger.refresh();
-  }
+    // ── bbt-fa-online-section: Left/Right slide-in on viewport enter ──
+    var onlineSection = document.querySelector(".bbt-fa-online-section");
 
-  var onlineIntroItems = gsap.utils.toArray(
-    ".bbt-fa-online-section .main-title, .bbt-fa-online-section .description, .bbt-fa-online-section .sub-title",
-  );
+    if (onlineSection) {
+      var onlineLeftItems = gsap.utils.toArray(
+        ".bbt-fa-online-section .main-title, .bbt-fa-online-section .description",
+      );
+      var onlineRightItems = gsap.utils.toArray(
+        ".bbt-fa-online-section .sub-title, .bbt-fa-online-section .table-wrapper",
+      );
 
-  if (onlineIntroItems.length) {
-    gsap.set(onlineIntroItems, { autoAlpha: 0, y: 48 });
+      if (onlineLeftItems.length) {
+        gsap.set(onlineLeftItems, { autoAlpha: 0, x: -110 });
+      }
+      if (onlineRightItems.length) {
+        gsap.set(onlineRightItems, { autoAlpha: 0, x: 110 });
+      }
 
-    gsap.to(onlineIntroItems, {
-      autoAlpha: 1,
-      y: 0,
-      duration: 0.85,
-      stagger: 0.16,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".bbt-fa-online-section",
-        start: "top 72%",
+      ScrollTrigger.create({
+        trigger: onlineSection,
+        start: "top 75%",
         once: true,
-      },
-    });
+        onEnter: function () {
+          if (onlineLeftItems.length) {
+            gsap.to(onlineLeftItems, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.88,
+              stagger: 0.14,
+              ease: "power3.out",
+            });
+          }
+          if (onlineRightItems.length) {
+            gsap.to(onlineRightItems, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.88,
+              stagger: 0.14,
+              delay: 0.12,
+              ease: "power3.out",
+            });
+          }
+        },
+      });
+    }
+
+    // ── bbt-fa-pincode-section: title left, subtitle+tabs+content right ──
+    var pincodeSection = document.querySelector(".bbt-fa-pincode-section");
+    if (pincodeSection) {
+      var pincodeLeft = gsap.utils.toArray(".bbt-fa-pincode-section .title");
+      var pincodeRight = gsap.utils.toArray(
+        ".bbt-fa-pincode-section .subtitle, .bbt-fa-pincode-section .tabs, .bbt-fa-pincode-section .tab-content.active",
+      );
+
+      if (pincodeLeft.length) gsap.set(pincodeLeft, { autoAlpha: 0, x: -100 });
+      if (pincodeRight.length) gsap.set(pincodeRight, { autoAlpha: 0, x: 100 });
+
+      ScrollTrigger.create({
+        trigger: pincodeSection,
+        start: "top 78%",
+        once: true,
+        onEnter: function () {
+          gsap.to(pincodeLeft, {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.85,
+            stagger: 0.12,
+            ease: "power3.out",
+          });
+          gsap.to(pincodeRight, {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.85,
+            stagger: 0.12,
+            delay: 0.1,
+            ease: "power3.out",
+          });
+        },
+      });
+    }
+
+    // ── bbt-fa-application-section: h1 left, mandatory right, optional left ──
+    var appSection = document.querySelector(".bbt-fa-application-section");
+    if (appSection) {
+      var appHeading = appSection.querySelector("h1");
+      var appMandatory = appSection.querySelector(".mandatory");
+      var appOptional = appSection.querySelector(".optional");
+
+      if (appHeading) gsap.set(appHeading, { autoAlpha: 0, x: -110 });
+      if (appMandatory) gsap.set(appMandatory, { autoAlpha: 0, x: 110 });
+      if (appOptional) gsap.set(appOptional, { autoAlpha: 0, x: -110 });
+
+      ScrollTrigger.create({
+        trigger: appSection,
+        start: "top 78%",
+        once: true,
+        onEnter: function () {
+          if (appHeading)
+            gsap.to(appHeading, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.82,
+              ease: "power3.out",
+            });
+          if (appMandatory)
+            gsap.to(appMandatory, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.82,
+              delay: 0.12,
+              ease: "power3.out",
+            });
+          if (appOptional)
+            gsap.to(appOptional, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.82,
+              delay: 0.22,
+              ease: "power3.out",
+            });
+        },
+      });
+    }
+
+    // ── bbt-fa-abilities-section: heading left, button right ──
+    var abilitiesSection = document.querySelector(".bbt-fa-abilities-section");
+    if (abilitiesSection) {
+      var abilitiesHeading = abilitiesSection.querySelector(".hero-heading");
+      var abilitiesBtn = abilitiesSection.querySelector(".cta-button");
+
+      if (abilitiesHeading)
+        gsap.set(abilitiesHeading, { autoAlpha: 0, x: -110 });
+      if (abilitiesBtn) gsap.set(abilitiesBtn, { autoAlpha: 0, x: 110 });
+
+      ScrollTrigger.create({
+        trigger: abilitiesSection,
+        start: "top 80%",
+        once: true,
+        onEnter: function () {
+          if (abilitiesHeading)
+            gsap.to(abilitiesHeading, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.88,
+              ease: "power3.out",
+            });
+          if (abilitiesBtn)
+            gsap.to(abilitiesBtn, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.88,
+              delay: 0.15,
+              ease: "power3.out",
+            });
+        },
+      });
+    }
+
+    // ── bbt-fa-notes-section: h2 left, paragraphs stagger from right ──
+    var notesSection = document.querySelector(".bbt-fa-notes-section");
+    if (notesSection) {
+      var notesHeading = notesSection.querySelector("h2");
+      var notesParagraphs = gsap.utils.toArray(
+        ".bbt-fa-notes-section .notes-wrapper p",
+      );
+
+      if (notesHeading) gsap.set(notesHeading, { autoAlpha: 0, x: -100 });
+      if (notesParagraphs.length)
+        gsap.set(notesParagraphs, { autoAlpha: 0, x: 100 });
+
+      ScrollTrigger.create({
+        trigger: notesSection,
+        start: "top 78%",
+        once: true,
+        onEnter: function () {
+          if (notesHeading)
+            gsap.to(notesHeading, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.82,
+              ease: "power3.out",
+            });
+          if (notesParagraphs.length) {
+            gsap.to(notesParagraphs, {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.78,
+              stagger: 0.13,
+              delay: 0.1,
+              ease: "power3.out",
+            });
+          }
+        },
+      });
+    }
+
+    ScrollTrigger.refresh();
   }
 
   function playIntro() {
@@ -3145,4 +3320,81 @@ document.addEventListener("DOMContentLoaded", function () {
         sectionObserver.observe(sec);
       });
   });
+})();
+
+// ============================================================
+// bbt-fa-news-sec — Viewport-triggered left/right animations
+// ============================================================
+(function initNewsSectionAnimation() {
+  var newsSection = document.querySelector(".bbt-fa-news-sec");
+  if (!newsSection) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
+
+  var reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  if (reducedMotion) return;
+
+  // ── news-top-bar: slide in from left ──
+  var topBar = newsSection.querySelector(".news-top-bar");
+  if (topBar) {
+    gsap.set(topBar, { autoAlpha: 0, x: -90 });
+    ScrollTrigger.create({
+      trigger: topBar,
+      start: "top 85%",
+      once: true,
+      onEnter: function () {
+        gsap.to(topBar, {
+          autoAlpha: 1,
+          x: 0,
+          duration: 0.82,
+          ease: "power3.out",
+        });
+      },
+    });
+  }
+
+  // ── news cards: alternating left/right per column position ──
+  var cards = gsap.utils.toArray(".bbt-fa-news-sec .news-grid .card");
+  cards.forEach(function (card, i) {
+    // 3-column grid: col 0 = left, col 1 = centre→right, col 2 = right
+    // Simple rule: even index → from left, odd index → from right
+    var fromX = i % 2 === 0 ? -100 : 100;
+    gsap.set(card, { autoAlpha: 0, x: fromX });
+
+    ScrollTrigger.create({
+      trigger: card,
+      start: "top 88%",
+      once: true,
+      onEnter: function () {
+        gsap.to(card, {
+          autoAlpha: 1,
+          x: 0,
+          duration: 0.8,
+          delay: (i % 3) * 0.08, // slight stagger within each row
+          ease: "power3.out",
+        });
+      },
+    });
+  });
+
+  // ── load-more: fade up from bottom ──
+  var loadMore = newsSection.querySelector(".load-more-wrapper");
+  if (loadMore) {
+    gsap.set(loadMore, { autoAlpha: 0, y: 40 });
+    ScrollTrigger.create({
+      trigger: loadMore,
+      start: "top 90%",
+      once: true,
+      onEnter: function () {
+        gsap.to(loadMore, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.75,
+          ease: "power3.out",
+        });
+      },
+    });
+  }
 })();
