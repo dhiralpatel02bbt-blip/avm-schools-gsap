@@ -466,21 +466,9 @@
       },
       onLeave: function () {
         gsap.set(hero, { zIndex: 0 });
-        // Blue circle now fully covers the screen — play awareness animation.
-        playAwarenessAnimation();
       },
       onEnterBack: function () {
-        // Slide image back LEFT and text back RIGHT smoothly,
-        // THEN hide the section and raise the hero z-index.
-        awarenessPlayed = false;
-        gsap
-          .timeline({ defaults: { duration: 0.85, ease: "power3.in" } })
-          .to(awarenessImage, { x: -160, autoAlpha: 0 }, 0)
-          .to(awarenessText, { x: 160, autoAlpha: 0 }, 0)
-          .call(function () {
-            gsap.set(hero, { zIndex: 5 });
-            gsap.set(awarenessSection, { autoAlpha: 0 });
-          });
+        gsap.set(hero, { zIndex: 5 });
       },
     });
   }
@@ -518,32 +506,35 @@
     }, 2750);
   }
 
-  var awarenessPlayed = false;
-
-  function playAwarenessAnimation() {
-    if (awarenessPlayed) return;
-    awarenessPlayed = true;
-    if (!awarenessSection || !awarenessImage || !awarenessText) return;
-    gsap.set(awarenessSection, { autoAlpha: 1 });
-    gsap
-      .timeline({ defaults: { duration: 1.1, ease: "power3.out" } })
-      .to(awarenessImage, { x: 0, autoAlpha: 1 }, 0)
-      .to(awarenessText, { x: 0, autoAlpha: 1 }, 0.18);
-  }
-
   function initAwareness() {
     if (!awarenessSection || !awarenessImage || !awarenessText) return;
 
-    awarenessPlayed = false;
     gsap.killTweensOf([awarenessImage, awarenessText]);
 
-    // Keep hidden until hero blue circle fully covers screen (onLeave fires).
-    gsap.set(awarenessSection, { autoAlpha: 0 });
+    gsap.set(awarenessSection, { autoAlpha: 1 });
     gsap.set(awarenessImage, { x: -160, autoAlpha: 0 });
     gsap.set(awarenessText, { x: 160, autoAlpha: 0 });
 
-    // awarenessTrigger is kept as null — animation is triggered by
-    // the hero ScrollTrigger's onLeave callback instead.
+    var awarenessTL = gsap.timeline({
+      defaults: { ease: "power3.out" },
+    });
+
+    awarenessTL
+      .to(awarenessImage, { x: 0, autoAlpha: 1, duration: 0.85 }, 0)
+      .to(awarenessText, { x: 0, autoAlpha: 1, duration: 0.85 }, 0.12)
+      .to({}, { duration: 0.28 });
+
+    awarenessTrigger = ScrollTrigger.create({
+      trigger: awarenessSection,
+      start: "top top",
+      end: "+=95%",
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      scrub: 0.8,
+      animation: awarenessTL,
+      invalidateOnRefresh: true,
+    });
   }
 
   function initVision() {
@@ -575,56 +566,74 @@
       "--vision-radial-opacity": 0,
     });
 
-    var visionIntroPlayed = false;
-    var visionIntroTL = gsap
-      .timeline({ paused: true, defaults: { ease: "power3.out" } })
-      .to(visionLeft, { x: 0, autoAlpha: 1, duration: 1.0 }, 0)
-      .to(visionRight, { x: 0, autoAlpha: 1, duration: 1.0 }, 0)
-      .to(visionTitle, { autoAlpha: 1, duration: 0.55 }, 0.35)
-      .to(visionPara, { y: 0, autoAlpha: 1, duration: 0.65 }, 0.65);
+    var visionPinnedTL = gsap.timeline({
+      defaults: { ease: "none" },
+    });
 
-    function resetVisionIntro() {
-      visionIntroPlayed = false;
-      visionIntroTL.pause(0);
-      gsap.set(visionLeft, { x: attachedOffset, autoAlpha: 0 });
-      gsap.set(visionRight, { x: -attachedOffset, autoAlpha: 0 });
-      gsap.set(visionTitle, { autoAlpha: 0 });
-      gsap.set(visionPara, { y: 18, autoAlpha: 0 });
-    }
-
-    function playVisionIntro() {
-      if (visionIntroPlayed) return;
-      visionIntroPlayed = true;
-      visionIntroTL.play();
-    }
+    visionPinnedTL
+      .to(visionSection, {
+        "--vision-radial-scale": 1,
+        "--vision-radial-opacity": 0.95,
+        duration: 1.45,
+      })
+      .to(visionLeft, {
+        x: 0,
+        autoAlpha: 1,
+        duration: 0.65,
+        ease: "power3.out",
+      })
+      .to(
+        visionRight,
+        {
+          x: 0,
+          autoAlpha: 1,
+          duration: 0.65,
+          ease: "power3.out",
+        },
+        "<"
+      )
+      .to(
+        visionTitle,
+        {
+          autoAlpha: 1,
+          duration: 0.38,
+          ease: "power2.out",
+        },
+        "-=0.34"
+      )
+      .to(
+        visionPara,
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.48,
+          ease: "power2.out",
+        },
+        "-=0.12"
+      )
+      .to({}, { duration: 0.45 });
 
     visionRadialTrigger = ScrollTrigger.create({
       trigger: visionSection,
       start: "top top",
-      end: "+=300%",
-      pin: true,
-      pinType: "fixed",
-      pinReparent: true,
+      end: "+=260%",
+      pin: visionSection,
       pinSpacing: true,
       anticipatePin: 1,
+      scrub: 1,
+      animation: visionPinnedTL,
       invalidateOnRefresh: true,
-      onUpdate: function (self) {
-        var radialProgress = Math.min(self.progress / 0.72, 1);
-
-        gsap.set(visionSection, {
-          "--vision-radial-scale": radialProgress,
-          "--vision-radial-opacity": radialProgress * 0.95,
-        });
-
-        if (self.progress >= 0.78) {
-          playVisionIntro();
-        } else if (self.direction < 0) {
-          visionIntroPlayed = false;
-          visionIntroTL.reverse();
-        }
+      onEnter: function () {
+        gsap.set(visionSection, { zIndex: 2 });
+      },
+      onEnterBack: function () {
+        gsap.set(visionSection, { zIndex: 2 });
+      },
+      onLeave: function () {
+        gsap.set(visionSection, { zIndex: 0 });
       },
       onLeaveBack: function () {
-        resetVisionIntro();
+        gsap.set(visionSection, { zIndex: 0 });
         gsap.set(visionSection, {
           "--vision-radial-scale": 0,
           "--vision-radial-opacity": 0,

@@ -762,7 +762,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     display: flex;
     flex-direction: column;
     gap: 23px;
-    width: 74%;
+    width: 75%;
 }
 
 #primary .text-block .feature:nth-child(2),

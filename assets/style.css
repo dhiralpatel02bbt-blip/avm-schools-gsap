@@ -843,8 +843,8 @@
 .horizontal-section .panel img,
 .horizontal-section .panel-video-wrap,
 .horizontal-section .panel-video {
-  /* width: clamp(28.75rem, 25.292vw + 23.059rem, 50.375rem);
-  height: clamp(17.813rem, 15.57vw + 14.31rem, 31.125rem); */
+  width: clamp(26.75rem, 23.292vw + 21.059rem, 48.375rem);
+  height: clamp(15.813rem, 13.57vw + 12.31rem, 29.125rem);
 }
 
 .horizontal-section .panel-video-wrap {
@@ -983,17 +983,9 @@
   .lavender-circle {
     height: clamp(390px, 64vw, 2193px);
   }
-
-  .horizontal-section .yellow {
-    width: 59%;
-  }
 }
 
 @media(max-width: 1366px) {
-  .horizontal-section .yellow {
-    width: 58%;
-  }
-
   .horizontal-section .horizontal-wrapper {
     padding: 40px 20px 0;
     gap: 56px;
@@ -1007,12 +999,6 @@
   .horizontal-section .panel-video-wrap,
   .horizontal-section .panel-video {
     width: clamp(28.75rem, 23.292vw + 21.059rem, 50.375rem);
-  }
-}
-
-@media (max-width: 1280px) {
-  .horizontal-section .yellow {
-    width: 54%;
   }
 }
 
@@ -1165,7 +1151,7 @@ section.bbt-FA-img-sec {
 .bbt-FA-img-sec .main-title {
   position: absolute;
   right: -16%;
-  top: 45%;
+  top: 49%;
   z-index: 2;
   width: var(--school-circle-size);
   text-align: left;
@@ -1197,9 +1183,20 @@ section.bbt-FA-img-sec {
   color: #fff;
 }
 
-@media (max-width: 1600px) {
+@media(max-width: 1728px) {
+  .bbt-FA-img-sec .main-title {
+    right: -18%;
+    top: 59%;
+  }
+}
+
+@media (max-width: 1650px) {
   section.bbt-FA-img-sec {
     margin: 80px 0 0px;
+  }
+
+  .bbt-FA-img-sec .main-title {
+    top: 54%;
   }
 }
 
@@ -1207,11 +1204,20 @@ section.bbt-FA-img-sec {
   section.bbt-FA-img-sec {
     --school-circle-right: clamp(-80px, -5vw, -10px);
   }
+
+  .bbt-FA-img-sec .main-title {
+    top: 58%;
+    right: -14%;
+  }
 }
 
 @media(max-width: 1280px) {
   section.bbt-FA-img-sec {
     --school-circle-size: clamp(420px, 43vw, 842px);
+  }
+
+  .bbt-FA-img-sec .main-title {
+    top: 61%;
   }
 }
 
@@ -1676,7 +1682,7 @@ a.see-all.secondary-btn {
 
 @media(max-width: 1650px) {
   .news-section {
-    padding: 100px 0px 100px;
+    padding: 150px 0px 100px;
   }
 
   .news-header {
