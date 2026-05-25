@@ -198,8 +198,8 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 676px;
-    height: 676px;
+    width: 636px;
+    height: 636px;
     border: 3px dotted #ff8a5b;
     border-radius: 50%;
     transform: translate(-50%, -50%);
@@ -223,38 +223,38 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 }
 
 .diagram-sec .node1 {
-    top: 12.5%;
-    left: 38.6%;
+    top: 14.5%;
+    left: 39.6%;
 }
 
 .diagram-sec .node2 {
-    top: 12.5%;
-    left: 61.4%;
+    top: 14.5%;
+    left: 60.4%;
 }
 
 .diagram-sec .node3 {
     top: 47%;
-    left: 71.3%;
+    left: 69.8%;
 }
 
 .diagram-sec .node4 {
-    top: 81.2%;
-    left: 65.1%;
+    top: 78.2%;
+    left: 64.6%;
 }
 
 .diagram-sec .node5 {
-    top: 94.2%;
+    top: 91.7%;
     left: 50%;
 }
 
 .diagram-sec .node6 {
     top: 47%;
-    left: 28.8%;
+    left: 30.2%;
 }
 
 .diagram-sec .node7 {
-    top: 81.2%;
-    left: 34.8%;
+    top: 78.2%;
+    left: 35.4%;
 }
 
 .diagram-sec .label {
@@ -292,51 +292,51 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 }
 
 .diagram-sec .label.top {
-    top: 0%;
-    left: 9%;
+    top: 8%;
+    left: 11%;
     width: 22%;
     text-align: center;
 }
 
 .diagram-sec .label.right-top {
-    top: 0%;
-    right: 9%;
+    top: 8%;
+    right: 10%;
     width: 23%;
     text-align: center;
 }
 
 .diagram-sec .label.right-mid {
     top: 51.5%;
-    right: 0%;
+    right: 4%;
     width: 25%;
     transform: translateY(-50%);
     text-align: center;
 }
 
 .diagram-sec .label.bottom {
-    right: 12%;
-    bottom: -3%;
+    right: 13%;
+    bottom: 0%;
     width: 21%;
     text-align: center;
 }
 
 .diagram-sec .label.left-bottom {
-    bottom: -24%;
+    bottom: -22%;
     left: 39%;
     width: 22%;
     text-align: center;
 }
 
 .diagram-sec .label.left-lower {
-    top: 78%;
-    left: 9%;
+    top: 76%;
+    left: 13%;
     width: 22%;
     text-align: center;
 }
 
 .diagram-sec .label.left-mid {
-    top: 51.5%;
-    left: 4%;
+    top: 50%;
+    left: 6%;
     width: 22%;
     text-align: center;
     transform: translateY(-50%);
@@ -395,7 +395,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .node3 {
-        left: 72.9%;
+        left: 72.7%;
     }
 
     .diagram-sec .node4 {
@@ -408,20 +408,27 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .node6 {
-        left: 27%;
+        left: 27.3%;
     }
 
     .diagram-sec .node7 {
-        left: 35%;
+        left: 34.6%;
+        top: 80.2%;
     }
 
     .diagram-sec .label.top {
-        top: 3%;
-        left: 8%;
+        top: 6%;
+        left: 10%;
+    }
+
+    .diagram-sec .label.right-top {
+        top: 8%;
+        right: 9%;
     }
 
     .diagram-sec .label.right-mid {
-        right: -3%;
+        top: 46.5%;
+        right: -2%;
     }
 
     .diagram-sec .label.left-mid {
@@ -445,6 +452,10 @@ body.pedagogy-page section.diagram-sec .container-xxl {
         height: 636px;
     }
 
+    .diagram-sec .label .strong {
+        padding-bottom: 10px;
+    }
+
     .diagram-sec .center {
         width: 200px;
         height: 200px;
@@ -459,8 +470,8 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .node3 {
-        left: 76.7%;
-        top: 51.8%;
+        left: 76.4%;
+        top: 50%;
     }
 
     .diagram-sec .node4 {
@@ -473,12 +484,28 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .node6 {
-        left: 23.3%;
-        top: 51.8%;
+        left: 23.5%;
+        top: 50%;
     }
 
     .diagram-sec .node7 {
-        left: 32.3%;
+        left: 32%;
+    }
+
+    .diagram-sec .label.right-top {
+        right: 7%;
+    }
+
+    .diagram-sec .label.left-lower {
+        left: 8%;
+    }
+
+    .diagram-sec .label.bottom {
+        right: 8%;
+    }
+
+    .diagram-sec .label.left-bottom {
+        bottom: -16%;
     }
 
     .diagram-sec .label.left-mid {
@@ -562,10 +589,10 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .label.left-mid {
+        top: 45%;
         left: 0%;
     }
 
-    .diagram-sec .label.left-mid,
     .diagram-sec .label.right-mid {
         top: 50%;
     }
@@ -630,11 +657,11 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 }
 
 /* tabbing section css Start */
-section.tabbing-sec {
+.tabbing-sec {
     padding: 105px 0 178px;
 }
 
-section.tabbing-sec h2.title-txt {
+.tabbing-sec h2.title-txt {
     color: #0a3d9c;
     text-align: center;
     font-family: Satoshi;
@@ -651,13 +678,13 @@ section.tabbing-sec h2.title-txt {
     width: 48%;
 }
 
-section.tabbing-sec .tabs {
+.tabbing-sec .tabs {
     display: flex;
     gap: 80px;
     justify-content: center;
 }
 
-section.tabbing-sec .tab {
+.tabbing-sec .tab {
     background: none;
     border: none;
     position: relative;
@@ -671,11 +698,11 @@ section.tabbing-sec .tab {
     line-height: 154%;
 }
 
-section.tabbing-sec .tab:hover {
+.tabbing-sec .tab:hover {
     color: #000;
 }
 
-section.tabbing-sec .tab.active {
+.tabbing-sec .tab.active {
     color: #000;
     text-decoration-line: underline;
     text-decoration-style: solid;
@@ -685,16 +712,16 @@ section.tabbing-sec .tab.active {
     text-underline-offset: 5px;
 }
 
-section.tabbing-sec .tab-content {
+.tabbing-sec .tab-content {
     display: none;
     padding: 128px 0 0;
 }
 
-section.tabbing-sec .tab-content.active {
+.tabbing-sec .tab-content.active {
     display: block;
 }
 
-section.tabbing-sec h5.sub-title {
+.tabbing-sec h5.sub-title {
     color: #000;
     text-align: center;
     font-family: Satoshi;
@@ -705,62 +732,62 @@ section.tabbing-sec h5.sub-title {
     padding-bottom: 22px;
 }
 
-section.tabbing-sec .section-grid {
+.tabbing-sec .section-grid {
     display: grid;
     gap: 90px;
 }
 
-section.tabbing-sec .feature-block {
+.tabbing-sec .feature-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 121px;
     align-items: center;
 }
 
-section.tabbing-sec .img-block img {
+.tabbing-sec .img-block img {
     width: 100%;
     height: auto;
     object-fit: cover;
     display: block;
 }
 
-section.tabbing-sec .text-block {
+.tabbing-sec .text-block {
     display: flex;
     flex-direction: column;
     gap: 115px;
 }
 
-section.tabbing-sec .feature {
+.tabbing-sec .feature {
     display: flex;
     flex-direction: column;
     gap: 23px;
     width: 74%;
 }
 
-#primary .feature:nth-child(2),
-#secondary .feature:nth-child(1) {
+#primary .text-block .feature:nth-child(2),
+#secondary .text-block .feature:nth-child(2) {
     margin-left: 30%;
 }
 
-section.tabbing-sec .feature-block>*:nth-child(1) {
+.tabbing-sec .feature-block>*:nth-child(1) {
     opacity: 0;
     transform: translateX(-80px);
     transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-section.tabbing-sec .feature-block>*:nth-child(2) {
+.tabbing-sec .feature-block>*:nth-child(2) {
     opacity: 0;
     transform: translateX(80px);
     transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
 }
 
-section.tabbing-sec .feature-block.fb-visible>*:nth-child(1),
-section.tabbing-sec .feature-block.fb-visible>*:nth-child(2) {
+.tabbing-sec .feature-block.fb-visible>*:nth-child(1),
+.tabbing-sec .feature-block.fb-visible>*:nth-child(2) {
     opacity: 1;
     transform: translateX(0);
 }
 
-section.tabbing-sec .feature-title {
+.tabbing-sec .feature-title {
     display: flex;
     align-items: flex-start;
     gap: 36.44px;
@@ -772,11 +799,11 @@ section.tabbing-sec .feature-title {
     line-height: 119%;
 }
 
-section.tabbing-sec .feature-title svg {
+.tabbing-sec .feature-title svg {
     flex-shrink: 0;
 }
 
-section.tabbing-sec .feature p {
+.tabbing-sec .feature p {
     color: #000;
     font-family: Poppins;
     font-size: 1rem;
@@ -790,7 +817,7 @@ section.tabbing-sec .feature p {
     padding-left: 90px;
 }
 
-section.tabbing-sec .tab-items {
+.tabbing-sec .tab-items {
     margin-bottom: 50px;
 }
 
@@ -925,56 +952,55 @@ section.tabbing-sec .tab-items {
 }
 
 @media (max-width: 1728px) {
-    section.tabbing-sec {
+    .tabbing-sec {
         padding: 100px 0 170px;
     }
 
-    section.tabbing-sec .tab-content {
+    .tabbing-sec .tab-content {
         padding: 120px 0 0;
     }
 
-    section.tabbing-sec .yellow-box {
+    .tabbing-sec .yellow-box {
         padding: 37px 83px 39.93px 84px;
     }
 
-    section.tabbing-sec h2.title-txt {
+    .tabbing-sec h2.title-txt {
         padding-bottom: 100px;
     }
 
-    section.tabbing-sec .text-block {
+    .tabbing-sec .text-block {
         gap: 95px;
     }
 }
 
 @media (max-width: 1650px) {
-    section.tabbing-sec {
+    .tabbing-sec {
         padding: 100px 0;
     }
 
-    section.tabbing-sec .tab-content {
+    .tabbing-sec .tab-content {
         padding: 100px 0 0;
     }
 
-    section.tabbing-sec h2.title-txt {
+    .tabbing-sec h2.title-txt {
         padding-bottom: 80px;
     }
 }
 
 @media (max-width: 1280px) {
-    section.tabbing-sec .tab-content {
+    .tabbing-sec .tab-content {
         padding: 50px 0 0;
     }
 
-    section.tabbing-sec h2.title-txt {
+    .tabbing-sec h2.title-txt {
         padding-bottom: 77px;
     }
 
-    section.tabbing-sec .section-grid {
+    .tabbing-sec .section-grid {
         gap: 70px;
-        padding-top: 73.48px;
     }
 
-    section.tabbing-sec .feature-block {
+    .tabbing-sec .feature-block {
         gap: 84px;
     }
 }
