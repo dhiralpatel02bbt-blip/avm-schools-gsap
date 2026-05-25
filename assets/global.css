@@ -130,8 +130,8 @@ p {
 }
 
 .apply-btn {
-    background: #ffd200;
-    border: 1px solid #ffd200;
+    background: #F7DF00;
+    border: 1px solid #F7DF00;
     padding: 16px 40px;
     border-radius: 40px;
     font-size: 18px;
@@ -162,7 +162,7 @@ p {
     background-color: transparent;
     transform: scale(1.05);
     box-shadow: 0 0 20px #ffd40054;
-    color: #ffd200 !important;
+    color: #F7DF00 !important;
 }
 
 .apply-btn:hover::before {

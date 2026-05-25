@@ -389,7 +389,7 @@
   right: 33.5%;
   width: clamp(10.5rem, 25.585vw + 4.743rem, 32.375rem);
   height: 34px;
-  background: #A793EC;
+  background: #BEACFF;
   transform: translateX(var(--purpleMove, 200px));
 }
 
@@ -459,8 +459,8 @@
   font-size: 1.25em;
   color: #000;
   font-family: 'Poppins';
-  font-weight: 400;
-  line-height: 169%;
+  font-weight: 500;
+  line-height: 180%;
 }
 
 .secondary-btn {
@@ -624,7 +624,6 @@
 .bbt-dp-about {
   --about-text-size: clamp(1rem, 1.302vw, 1.5625rem);
   --about-line-height: 169%;
-  --about-button-gap: clamp(1.875rem, 3.021vw, 3.625rem);
   --about-content-offset: clamp(2rem, 5.573vw, 6.6875rem);
   --about-image-text-gap: clamp(2.5rem, 13.854vw, 16.625rem);
 }
@@ -638,7 +637,7 @@
 }
 
 .about-paragraph .secondary-btn {
-  margin-top: var(--about-button-gap);
+  margin-top: 43px;
 }
 
 @media (max-width: 991.9px) {
