@@ -1,9 +1,18 @@
-body.about-us-page {
+body {
   background-color: #0a3d9c;
 }
 
-.about-us-page header .main-menu ul li a {
+body.about-us-page header .main-menu ul li a {
   color: #fff;
+}
+
+body.about-us-page.about-hero-loading {
+  height: 100svh;
+  overflow: hidden;
+}
+
+body.about-us-page.about-hero-loading .bbt-yp-hero {
+  touch-action: none;
 }
 
 /*  Careers about section css start */
@@ -35,7 +44,7 @@ body.about-us-page {
 .bbt-yp-hero .main-title h2.hero-txt {
   color: #fff;
   font-family: Satoshi;
-  font-size: 2.4em;
+  font-size: 2.3em;
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
@@ -259,6 +268,7 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
 }
 
 /*  Careers about section css end */
+
 /* Awareness section css start */
 section.awareness-about-sec {
   background-color: #0a3d9c;
@@ -320,6 +330,7 @@ section.awareness-about-sec {
 }
 
 /*Awareness section css end */
+
 /* Our vision section css start  */
 .our-vision-sec {
   background-image: none;
@@ -328,6 +339,7 @@ section.awareness-about-sec {
   width: 100%;
   height: 100vh;
   min-height: 100vh;
+  margin-top: -1px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -433,6 +445,7 @@ section.awareness-about-sec {
 }
 
 /* Our vision section css end  */
+
 /* core values section css start  */
 .core-value-sec {
   position: relative;
@@ -532,6 +545,7 @@ section.awareness-about-sec {
   font-weight: 600;
   line-height: 154%;
   /* 43.12px */
+  margin-top: 9px !important;
 }
 
 .text-wrapper .first-para p,
@@ -638,6 +652,7 @@ section.awareness-about-sec {
 }
 
 /* core values section css end  */
+
 /* commitment section css start  */
 .commitment-sec {
   background-color: #ffffff;
@@ -739,6 +754,7 @@ section.awareness-about-sec {
 }
 
 /* commitment section css end  */
+
 /* Governance section css start  */
 .governance-sec {
   background-color: #ffffff;

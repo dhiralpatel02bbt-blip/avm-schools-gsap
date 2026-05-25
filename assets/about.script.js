@@ -3,6 +3,60 @@
   var aboutBody = document.querySelector("body.about-us-page");
   if (!aboutBody) return;
 
+  var initialHeroLocked = aboutBody.classList.contains("about-hero-loading");
+  var scrollKeys = {
+    ArrowDown: true,
+    ArrowLeft: true,
+    ArrowRight: true,
+    ArrowUp: true,
+    End: true,
+    Home: true,
+    PageDown: true,
+    PageUp: true,
+    " ": true,
+  };
+
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  function keepAtHeroTop() {
+    if (window.scrollY !== 0) {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function stopInitialHeroScroll(event) {
+    if (!initialHeroLocked) return;
+    if (event.type === "keydown" && !scrollKeys[event.key]) return;
+    event.preventDefault();
+    keepAtHeroTop();
+  }
+
+  function lockInitialHeroScroll() {
+    initialHeroLocked = true;
+    keepAtHeroTop();
+    window.addEventListener("wheel", stopInitialHeroScroll, { passive: false });
+    window.addEventListener("touchmove", stopInitialHeroScroll, {
+      passive: false,
+    });
+    window.addEventListener("keydown", stopInitialHeroScroll, false);
+    window.addEventListener("scroll", keepAtHeroTop, { passive: true });
+  }
+
+  function unlockInitialHeroScroll() {
+    if (!initialHeroLocked) return;
+    initialHeroLocked = false;
+    window.removeEventListener("wheel", stopInitialHeroScroll);
+    window.removeEventListener("touchmove", stopInitialHeroScroll);
+    window.removeEventListener("keydown", stopInitialHeroScroll, false);
+    window.removeEventListener("scroll", keepAtHeroTop);
+    aboutBody.classList.remove("about-hero-loading");
+    keepAtHeroTop();
+  }
+
+  lockInitialHeroScroll();
+
   function initNativeAboutFallback() {
     var fallbackHero = document.querySelector(".bbt-yp-hero");
     var fallbackCircle = fallbackHero
@@ -155,7 +209,11 @@
         fallbackCommitment.getBoundingClientRect().top <=
           window.innerHeight * 0.72
       ) {
-        if (!commitmentShown && fallbackCommitmentText && fallbackCommitmentImage) {
+        if (
+          !commitmentShown &&
+          fallbackCommitmentText &&
+          fallbackCommitmentImage
+        ) {
           commitmentShown = true;
           fallbackCommitmentText.style.opacity = "1";
           fallbackCommitmentText.style.transform = "translateX(0)";
@@ -165,7 +223,8 @@
       } else if (
         commitmentShown &&
         fallbackCommitment &&
-        fallbackCommitment.getBoundingClientRect().top > window.innerHeight * 0.78
+        fallbackCommitment.getBoundingClientRect().top >
+          window.innerHeight * 0.78
       ) {
         commitmentShown = false;
         if (fallbackCommitmentText && fallbackCommitmentImage) {
@@ -181,7 +240,11 @@
         fallbackGovernance.getBoundingClientRect().top <=
           window.innerHeight * 0.72
       ) {
-        if (!governanceShown && fallbackGovernanceText && fallbackGovernanceImage) {
+        if (
+          !governanceShown &&
+          fallbackGovernanceText &&
+          fallbackGovernanceImage
+        ) {
           governanceShown = true;
           fallbackGovernanceImage.style.opacity = "1";
           fallbackGovernanceImage.style.transform = "translateX(0)";
@@ -191,7 +254,8 @@
       } else if (
         governanceShown &&
         fallbackGovernance &&
-        fallbackGovernance.getBoundingClientRect().top > window.innerHeight * 0.78
+        fallbackGovernance.getBoundingClientRect().top >
+          window.innerHeight * 0.78
       ) {
         governanceShown = false;
         if (fallbackGovernanceText && fallbackGovernanceImage) {
@@ -205,7 +269,7 @@
 
     window.setTimeout(function () {
       introDone = true;
-      aboutBody.classList.remove("about-hero-loading");
+      unlockInitialHeroScroll();
       updateFallbackScroll();
     }, 2750);
 
@@ -274,6 +338,7 @@
   if (!hero || !circle || typeof ScrollTrigger === "undefined") return;
 
   if (window.innerWidth < 768) {
+    window.setTimeout(unlockInitialHeroScroll, 2750);
     return;
   }
 
@@ -444,7 +509,7 @@
     if (studentImage) gsap.set(studentImage, { x: 0, opacity: 1 });
 
     window.setTimeout(function () {
-      aboutBody.classList.remove("about-hero-loading");
+      unlockInitialHeroScroll();
       if (titleHeading) gsap.set(titleHeading, { x: 0, autoAlpha: 1 });
       if (titleBody) gsap.set(titleBody, { x: 0, autoAlpha: 1 });
       gsap.set(circle, { x: 0, scale: 1 });
