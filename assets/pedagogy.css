@@ -56,7 +56,7 @@ body.pedagogy-page .campus-section .panel {
     position: absolute;
     inset: 0;
     z-index: 4;
-    width: min(50vw, 700px);
+    width: min(50vw, 780px);
     display: flex;
     align-items: center;
     overflow: visible;
@@ -99,9 +99,10 @@ body.pedagogy-page .campus-section .panel-body {
 }
 
 body.pedagogy-page .campus-section .panel-title {
-    font-family: "Poppins", sans-serif;
+    font-family: Satoshi;
     font-size: 2.4em;
     line-height: 112%;
+    font-weight: 700;
 }
 
 body.pedagogy-page .campus-section .panel-body {
@@ -345,7 +346,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 @media (max-width: 1728px) {
     .diagram-sec .node1 {
         top: 14.5%;
-        left: 35.6%;
+        left: 38.6%;
     }
 
     .diagram-sec .node2 {
@@ -354,23 +355,23 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 
     .diagram-sec .node3 {
-        left: 73.5%;
+        left: 71.8%;
     }
 
     .diagram-sec .node4 {
-        left: 66.6%;
+        left: 66%;
     }
 
     .diagram-sec .node6 {
-        left: 26.5%;
+        left: 28%;
     }
 
     .diagram-sec .node7 {
-        left: 33.3%;
+        left: 33.9%;
     }
 
     .diagram-sec .label.right-mid {
-        top: 41.5%;
+        top: 48.5%;
         right: -2%;
     }
 

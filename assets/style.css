@@ -843,8 +843,8 @@
 .horizontal-section .panel img,
 .horizontal-section .panel-video-wrap,
 .horizontal-section .panel-video {
-  width: clamp(28.75rem, 25.292vw + 23.059rem, 50.375rem);
-  height: clamp(17.813rem, 15.57vw + 14.31rem, 31.125rem);
+  /* width: clamp(28.75rem, 25.292vw + 23.059rem, 50.375rem);
+  height: clamp(17.813rem, 15.57vw + 14.31rem, 31.125rem); */
 }
 
 .horizontal-section .panel-video-wrap {
@@ -1133,7 +1133,7 @@ section.bbt-FA-img-sec {
 .bbt-FA-img-sec .img-text {
   position: absolute;
   top: clamp(2.5rem, 5.702vw + 1.217rem, 7.375rem);
-  left: clamp(3.688rem, 4.386vw + 2.701rem, 7.438rem);
+  left: clamp(3.687rem, 3.185vw + 2.701rem, 7.438rem);
   z-index: 3;
 }
 
@@ -1164,14 +1164,10 @@ section.bbt-FA-img-sec {
 
 .bbt-FA-img-sec .main-title {
   position: absolute;
-  right: var(--school-circle-right);
-  bottom: var(--school-circle-bottom);
+  right: -16%;
+  top: 45%;
   z-index: 2;
   width: var(--school-circle-size);
-  height: var(--school-circle-size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: left;
   opacity: 0;
   transform: translateY(24px);
@@ -1615,10 +1611,10 @@ a.see-all.secondary-btn {
 
 .news-section .card h3 {
   color: #000;
-  font-family: Satoshi;
+  font-family: Poppins;
   font-size: 1.25em;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 125%;
   padding-bottom: 26px;
   flex-grow: 1;
