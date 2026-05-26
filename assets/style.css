@@ -633,7 +633,7 @@
 }
 
 .about-paragraph {
-  padding: var(--about-content-offset) 0 0 clamp(0rem, 5.573vw, 6.6875rem);
+  padding: var(--about-content-offset) 0 0 clamp(0rem, 4.573vw, 6.6875rem);
 }
 
 .about-paragraph .secondary-btn {
