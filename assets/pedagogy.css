@@ -24,6 +24,7 @@ body.pedagogy-page .campus-section {
     inset: 0;
     z-index: 2;
     overflow: hidden;
+    transform: translateZ(0);
 }
 
 /* Full-bleed background image */
@@ -31,6 +32,8 @@ body.pedagogy-page .campus-section .img-full {
     position: absolute;
     inset: 0;
     z-index: 1;
+    will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 body.pedagogy-page .campus-section .img-full::after {
@@ -64,7 +67,8 @@ body.pedagogy-page .campus-section .panel {
 }
 
 body.pedagogy-page .campus-section .half-circle {
-    will-change: transform;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
     position: absolute;
     top: 73%;
     left: -32%;
@@ -155,6 +159,8 @@ body.pedagogy-page section.diagram-sec {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    will-change: opacity, visibility;
+    transform: translateZ(0);
 }
 
 body.pedagogy-page section.diagram-sec .container-xxl {
@@ -215,7 +221,8 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
-    /* will-change: width, height, opacity, box-shadow; */
+    will-change: width, height, opacity;
+    backface-visibility: hidden;
 }
 
 .diagram-sec .node.big {
@@ -741,7 +748,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 .tabbing-sec .feature-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 121px;
+    gap: 104px;
     align-items: center;
 }
 
@@ -762,24 +769,25 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     display: flex;
     flex-direction: column;
     gap: 23px;
-    width: 75%;
 }
 
 #primary .text-block .feature:nth-child(2),
 #secondary .text-block .feature:nth-child(2) {
-    margin-left: 30%;
+    margin-left: 6%;
 }
 
 .tabbing-sec .feature-block>*:nth-child(1) {
     opacity: 0;
     transform: translateX(-80px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
 }
 
 .tabbing-sec .feature-block>*:nth-child(2) {
     opacity: 0;
     transform: translateX(80px);
-    transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+    will-change: opacity, transform;
 }
 
 .tabbing-sec .feature-block.fb-visible>*:nth-child(1),
@@ -798,6 +806,11 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     font-style: normal;
     font-weight: 700;
     line-height: 119%;
+    width: 75%;
+}
+
+.tabbing-sec .feature:nth-child(2) .feature-title {
+    width: 70%;
 }
 
 .tabbing-sec .feature-title svg {
@@ -811,6 +824,7 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     font-style: normal;
     font-weight: 400;
     line-height: 154%;
+    width: 90%;
 }
 
 #primary .feature p,
@@ -957,6 +971,10 @@ body.pedagogy-page section.diagram-sec .container-xxl {
         padding: 100px 0 170px;
     }
 
+    .tabbing-sec .feature-block {
+        gap: 84px;
+    }
+
     .tabbing-sec .tab-content {
         padding: 120px 0 0;
     }
@@ -988,6 +1006,52 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 }
 
+@media(max-width: 1440px) {
+    .tabbing-sec .feature-title {
+        width: 80%;
+        align-items: center;
+    }
+
+    #primary .feature-block:first-child .img-block:after {
+        width: 171px;
+        height: 20px;
+    }
+
+    #primary .feature-block:first-child .img-block:before {
+        bottom: -19px;
+        right: 171px;
+        width: 87px;
+        height: 20px;
+    }
+
+    #primary .feature-block:last-child .img-block:before {
+        top: -19px;
+        left: -148px;
+        width: 148px;
+        height: 20px;
+    }
+
+    #primary .feature-block:last-child .img-block:after {
+        width: 94px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 1366px) {
+    .tabbing-sec .feature-title {
+        gap: 26.44px;
+    }
+
+    #primary .feature p,
+    #secondary .feature p {
+        padding-left: 75px;
+    }
+
+    .tabbing-sec .feature p {
+        width: 86%;
+    }
+}
+
 @media (max-width: 1280px) {
     .tabbing-sec .tab-content {
         padding: 50px 0 0;
@@ -1003,6 +1067,10 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 
     .tabbing-sec .feature-block {
         gap: 84px;
+    }
+
+    .tabbing-sec .text-block {
+        gap: 85px;
     }
 }
 

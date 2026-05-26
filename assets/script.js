@@ -2202,6 +2202,7 @@ if (tl) {
         x: -circleW,
         scale: 1,
         transformOrigin: "center center",
+        force3D: true,
       });
     }
 
@@ -2228,7 +2229,15 @@ if (tl) {
 
     // Nodes dim
     nodes.forEach(function (n) {
-      if (n) gsap.set(n, { width: 22, height: 22, opacity: 0.35 });
+      if (n) {
+        gsap.set(n, {
+          width: 22,
+          height: 22,
+          opacity: 0.35,
+          transformOrigin: "50% 50%",
+          force3D: false,
+        });
+      }
     });
     labels.forEach(function (l) {
       if (l) gsap.set(l, { opacity: 1, y: 0 });
@@ -2248,7 +2257,12 @@ if (tl) {
     // t=1.45  Paragraph slides in from left, opacity 0→1
     // t=1.55  Kicker fades in (subtle, last)
 
-    var loadTL = gsap.timeline({ delay: 0.3 });
+    var loadTL = gsap.timeline({
+      delay: 0.3,
+      onComplete: function () {
+        loadTL = null;
+      },
+    });
 
     // 1. Blue half-circle slides in from fully off-screen left
     if (halfCircle) {
@@ -2258,6 +2272,7 @@ if (tl) {
           x: -(circleW * 0.5),
           duration: 1.1,
           ease: "power3.out",
+          force3D: true,
         },
         0,
       );
@@ -2345,6 +2360,7 @@ if (tl) {
           transformOrigin: "center center",
           ease: "power2.inOut",
           duration: 0.35,
+          force3D: true,
         },
         0,
       );
@@ -2431,8 +2447,7 @@ if (tl) {
             width: BIG,
             height: BIG,
             opacity: 1,
-            boxShadow:
-              "0 0 0 16px rgba(255,138,91,0.22), 0 0 0 34px rgba(255,138,91,0.09)",
+            boxShadow: "none",
             duration: slice * 0.38,
             ease: "back.out(1.7)",
           },
@@ -2457,7 +2472,7 @@ if (tl) {
         scrollTL.to(
           nodes[i],
           {
-            boxShadow: "0 0 0 0px rgba(255,138,91,0)",
+            boxShadow: "none",
             duration: slice * 0.3,
             ease: "power2.in",
           },
@@ -2474,10 +2489,14 @@ if (tl) {
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,
-      scrub: 1.2,
+      scrub: 1.6,
+      animation: scrollTL,
       invalidateOnRefresh: true,
       onUpdate: function (self) {
-        scrollTL.progress(self.progress);
+        if (self.progress > 0.001 && loadTL) {
+          loadTL.kill();
+          loadTL = null;
+        }
       },
     });
   }
@@ -3157,8 +3176,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var syncingScroll = false;
 
   function getMaxIndex() {
-    if (!swiper || !swiper.snapGrid) return 0;
-    return Math.max(0, swiper.snapGrid.length - 1);
+    if (!swiper || !swiper.slides) return 0;
+    return Math.max(0, swiper.slides.length - 1);
   }
 
   function getTargetScroll(index) {
@@ -3188,6 +3207,19 @@ document.addEventListener("DOMContentLoaded", function () {
     window.setTimeout(function () {
       wheelLocked = false;
     }, 720);
+  }
+
+  function releasePinnedSection(direction) {
+    if (!pinST) return;
+    wheelLocked = true;
+    var targetScroll =
+      direction > 0
+        ? pinST.end + window.innerHeight + 2
+        : Math.max(pinST.start - 2, 0);
+    window.scrollTo({ top: targetScroll, behavior: "auto" });
+    window.setTimeout(function () {
+      wheelLocked = false;
+    }, 180);
   }
 
   function buildPin() {
@@ -3234,7 +3266,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var atFirst = swiper.activeIndex <= 0;
     var atLast = swiper.activeIndex >= maxIndex;
 
-    if ((direction < 0 && atFirst) || (direction > 0 && atLast)) return;
+    if ((direction < 0 && atFirst) || (direction > 0 && atLast)) {
+      event.preventDefault();
+      releasePinnedSection(direction);
+      return;
+    }
 
     event.preventDefault();
     goToSlide(swiper.activeIndex + direction);

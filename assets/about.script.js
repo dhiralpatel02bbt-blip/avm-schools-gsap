@@ -522,12 +522,33 @@
     awarenessTL
       .to(awarenessImage, { x: 0, autoAlpha: 1, duration: 0.85 }, 0)
       .to(awarenessText, { x: 0, autoAlpha: 1, duration: 0.85 }, 0.12)
-      .to({}, { duration: 0.28 });
+      .to({}, { duration: 0.34 })
+      .to(
+        awarenessImage,
+        {
+          x: "-42vw",
+          autoAlpha: 0,
+          duration: 0.72,
+          ease: "power2.inOut",
+        },
+        ">"
+      )
+      .to(
+        awarenessText,
+        {
+          x: "42vw",
+          autoAlpha: 0,
+          duration: 0.72,
+          ease: "power2.inOut",
+        },
+        "<"
+      )
+      .to({}, { duration: 0.16 });
 
     awarenessTrigger = ScrollTrigger.create({
       trigger: awarenessSection,
       start: "top top",
-      end: "+=95%",
+      end: "+=150%",
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,

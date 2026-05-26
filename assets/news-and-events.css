@@ -77,7 +77,7 @@
 .featured-news-sec .news-title {
     color: #fff;
     text-align: left;
-    font-family: Satoshi;
+    font-family: Poppins;
     font-size: 1.6em;
     font-weight: 500;
     line-height: 125%;
@@ -288,7 +288,7 @@
 
 .bbt-fa-news-sec .card h3 {
     color: #000;
-    font-family: Satoshi;
+    font-family: Poppins;
     font-size: 1.25em;
     font-style: normal;
     font-weight: 500;
@@ -321,12 +321,21 @@
 .bbt-fa-news-sec .tag {
     color: #fc8b5f;
     font-family: Poppins;
-    font-size: 0.85em;
+    font-size: 0.8em;
     font-style: normal;
     font-weight: 600;
     line-height: 127%;
     letter-spacing: 0.17px;
     text-transform: uppercase;
+}
+
+.bbt-fa-news-sec .tag+span {
+    font-family: Poppins;
+    font-size: 0.8em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 127%;
+    letter-spacing: 0.17px;
 }
 
 .bbt-fa-news-sec .load-more-wrapper {
