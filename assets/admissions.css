@@ -208,6 +208,7 @@
 
     .admission-hero .main-title {
         padding-left: 10%;
+        width: 84%;
     }
 
     section.admission-hero.panel.panel1 {
@@ -217,8 +218,8 @@
     .admission-hero .blue-half-circle {
         width: 1150px;
         height: 1150px;
-        left: -42%;
-        top: -8.3%;
+        left: -63%;
+        top: -7.3%;
     }
 
     .admission-hero .yellow-circle {
@@ -246,8 +247,8 @@
     .admission-hero .blue-half-circle {
         width: 1040px;
         height: 1040px;
-        top: -6%;
-        left: -47%;
+        top: -3%;
+        left: -57%;
     }
 
     .admission-hero .yellow-circle {
@@ -260,6 +261,88 @@
     .hero-student-img {
         display: flex;
         justify-content: flex-end;
+    }
+}
+
+@media(max-width: 991px) {
+    .admission-hero {
+        height: 100svh;
+        background-position: center top;
+        background-size: cover;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+    }
+
+    .admission-hero .main-hero-items,
+    .admission-hero .main-hero-items>.d-flex {
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .admission-hero .main-hero-items .d-flex>.col-md-6:last-child {
+        display: none !important;
+    }
+
+    .admission-hero .blue-half-circle-ele {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        /* position: relative; */
+        min-height: 46vw;
+    }
+
+    .admission-hero .blue-half-circle {
+        --mobile-circle: max(130vw, 420px);
+        width: var(--mobile-circle);
+        height: var(--mobile-circle);
+        left: 50%;
+        top: 70%;
+        bottom: calc(var(--mobile-circle) * -0.46);
+        transform: translateX(-50%);
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    .admission-hero .main-title {
+        position: relative;
+        z-index: 2;
+        width: 84%;
+        max-width: 420px;
+        padding-left: 0;
+        text-align: center;
+        margin: 0 auto;
+        padding-bottom: clamp(24px, 8vw, 56px);
+    }
+
+    .admission-hero .main-title h2.hero-txt {
+        font-size: 28px;
+        line-height: 118%;
+        text-align: center;
+    }
+
+    .admission-hero .yellow-circle {
+        display: none;
+    }
+}
+
+@media(max-width: 576px) {
+    .admission-hero {
+        background: url(../images/lab-student.png);
+        background-repeat: no-repeat;
+        margin-top: -23px;
+    }
+
+    .admission-hero .blue-half-circle {
+        --mobile-circle: max(150vw, 420px);
+        top: 67%;
     }
 }
 
@@ -366,7 +449,21 @@
     }
 }
 
-@media screen and (max-width: 1199px) {
+@media(max-width: 1440px) {
+    .bbt-fa-circle-sec .circle-card {
+        width: 347px;
+        height: 347px;
+    }
+}
+
+@media(max-width: 1280px) {
+    .bbt-fa-circle-sec .circle-card {
+        width: 293px;
+        height: 293px;
+    }
+}
+
+@media (max-width: 1023px) {
     .bbt-fa-circle-sec {
         height: auto;
         min-height: 100vh;
@@ -375,7 +472,19 @@
 
     .bbt-fa-circle-sec .journey-wrapper {
         grid-template-columns: 1fr;
-        gap: 34px;
+        gap: 73px;
+    }
+
+    .bbt-fa-circle-sec .journey-wrapper::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        border-left: 3px dotted #ffffff;
+        transform: translateX(-50%);
+        z-index: 1;
     }
 
     .bbt-fa-circle-sec .journey-line-segment {
@@ -383,12 +492,32 @@
     }
 }
 
-@media screen and (max-width: 575px) {
+@media(max-width: 991px) {
+    .bbt-fa-circle-sec {
+        padding: 80px 0 0;
+    }
+}
+
+@media(max-width: 767px) {
+    .bbt-fa-circle-sec .circle-card h3 {
+        font-size: 18px;
+        line-height: 140%;
+    }
+
+    .bbt-fa-circle-sec .circle-card p {
+        font-size: 14px;
+        line-height: 150%;
+        padding-top: 11px;
+    }
+}
+
+@media(max-width: 576px) {
     .bbt-fa-circle-sec .circle-card {
-        width: min(86vw, 330px);
-        height: min(86vw, 330px);
+        width: min(86vw, 293px);
+        height: min(86vw, 293px);
         padding: 28px;
     }
+
 }
 
 /* circle section css end */
@@ -458,6 +587,10 @@
     padding-top: 54px;
 }
 
+.bbt-fa-admissions-about-sec .author-info span {
+    display: block;
+}
+
 /* Controls */
 .bbt-fa-admissions-about-sec .avm-slider-controls {
     display: flex;
@@ -485,11 +618,99 @@
     background: #fff !important;
 }
 
+@media(max-width: 991px) {
+    .bbt-fa-admissions-about-sec {
+        min-height: auto;
+        padding: 47px 0 70px;
+    }
+
+    .bbt-fa-admissions-about-sec .Admissions-wrapper {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .bbt-fa-admissions-about-sec .avm-text {
+        display: contents;
+    }
+
+    .bbt-fa-admissions-about-sec p.text-p {
+        order: 1;
+        width: min(100%, 640px);
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .bbt-fa-admissions-about-sec .avm-image-wrap {
+        order: 2;
+        width: min(52vw, 360px);
+        margin-top: 72px;
+    }
+
+    .bbt-fa-admissions-about-sec .avm-photo {
+        display: block;
+        width: 100%;
+    }
+
+    .bbt-fa-admissions-about-sec .author-info {
+        order: 3;
+        padding-top: 30px;
+        text-align: center;
+    }
+
+    .bbt-fa-admissions-about-sec .author-info h4 {
+        margin: 0;
+    }
+
+    .bbt-fa-admissions-about-sec .author-info span:last-child {
+        color: rgba(255, 255, 255, 0.42);
+    }
+
+    .bbt-fa-admissions-about-sec .avm-slider-controls {
+        gap: 0;
+        margin-top: 74px;
+    }
+
+    .bbt-fa-admissions-about-sec .avm-pagination {
+        gap: 6px;
+    }
+
+    .bbt-fa-admissions-about-sec .avm-pagination .swiper-pagination-bullet {
+        width: 6px;
+        height: 6px;
+    }
+}
+
+@media(max-width: 767px) {
+    .bbt-fa-admissions-about-sec {
+        padding: 129px 0 88.21px;
+    }
+
+    .bbt-fa-admissions-about-sec p.text-p {
+        font-size: 20px;
+        line-height: 160%;
+    }
+
+    .bbt-fa-admissions-about-sec .author-info h4 {
+        font-size: 18px;
+        line-height: 140%;
+    }
+
+    .bbt-fa-admissions-about-sec .author-info span:first-child {
+        font-size: 15px;
+        line-height: 160%;
+    }
+
+    .bbt-fa-admissions-about-sec .author-info span:first-child {
+        font-size: 14px;
+        line-height: 167%;
+    }
+}
+
 /* admissions about section css start */
 
 /* online section css start  */
 
-section.bbt-fa-online-section {
+.bbt-fa-online-section {
     padding: 163px 0 159.2px;
 }
 
@@ -569,8 +790,7 @@ section.bbt-fa-online-section {
 }
 
 @media (max-width: 1728px) {
-
-    section.bbt-fa-online-section {
+    .bbt-fa-online-section {
         padding: 150px 0 150.2px;
     }
 
@@ -580,7 +800,7 @@ section.bbt-fa-online-section {
 }
 
 @media (max-width: 1650px) {
-    section.bbt-fa-online-section {
+    .bbt-fa-online-section {
         padding: 141px 0 140.2px;
     }
 
@@ -590,7 +810,7 @@ section.bbt-fa-online-section {
 }
 
 @media (max-width: 1440px) {
-    section.bbt-fa-online-section {
+    .bbt-fa-online-section {
         padding: 129px 0 119.2px;
     }
 
@@ -600,7 +820,7 @@ section.bbt-fa-online-section {
 }
 
 @media (max-width: 1366px) {
-    section.bbt-fa-online-section {
+    .bbt-fa-online-section {
         padding: 113px 0 103.2px;
     }
 
@@ -609,11 +829,85 @@ section.bbt-fa-online-section {
     }
 }
 
+@media(max-width:991px) {
+    .bbt-fa-online-section {
+        padding: 103px 0 93.2px;
+    }
+
+    .bbt-fa-online-section .sub-title {
+        padding-top: 75.18px;
+    }
+
+    .bbt-fa-online-section th {
+        padding-bottom: 29.38px;
+    }
+
+    .bbt-fa-online-section td {
+        padding: 19.1px 0px 22.38px 0px;
+    }
+}
+
+@media(max-width: 767px) {
+    .bbt-fa-online-section {
+        padding: 55px 0 73px;
+    }
+
+    .bbt-fa-online-section .main-title {
+        font-size: 28px;
+        line-height: 118%;
+        text-align: left;
+    }
+
+    .bbt-fa-online-section .description {
+        text-align: left;
+        justify-content: flex-start;
+        width: 100%;
+        padding-top: 30px;
+    }
+
+    .bbt-fa-online-section .sub-title {
+        padding-top: 72px;
+        color: #0A3D9C;
+        font-family: Satoshi;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 112%;
+        text-align: left;
+    }
+
+    .bbt-fa-online-section .table-wrapper {
+        width: calc(100vw - 36px);
+        margin-left: calc(50% - 50vw + 18px);
+        margin-right: calc(50% - 50vw + 18px);
+        padding: 30px 18px 24px 21px;
+    }
+
+    .bbt-fa-online-section th {
+        padding-bottom: 23px;
+        color: #0A3D9C;
+        font-family: Poppins;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 119%;
+    }
+
+    .bbt-fa-online-section td {
+        padding: 21px 0px 22px 0px;
+        color: #000;
+        font-family: Poppins;
+        font-size: 14.5px;
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: 0.145px;
+    }
+}
+
 /* online section css end  */
 
 /* pincode section css start */
 
-section.bbt-fa-pincode-section {
+.bbt-fa-pincode-section {
     padding: 0 0 195.96px;
 }
 
@@ -724,7 +1018,7 @@ section.bbt-fa-pincode-section {
         padding-bottom: 95px;
     }
 
-    section.bbt-fa-pincode-section {
+    .bbt-fa-pincode-section {
         padding: 0 0 180.96px;
     }
 }
@@ -734,7 +1028,7 @@ section.bbt-fa-pincode-section {
         padding-bottom: 90px;
     }
 
-    section.bbt-fa-pincode-section {
+    .bbt-fa-pincode-section {
         padding: 0 0 170.96px;
     }
 }
@@ -744,7 +1038,7 @@ section.bbt-fa-pincode-section {
         padding-bottom: 80px;
     }
 
-    section.bbt-fa-pincode-section {
+    .bbt-fa-pincode-section {
         padding: 0 0 145.96px;
     }
 }
@@ -754,8 +1048,101 @@ section.bbt-fa-pincode-section {
         padding-bottom: 72px;
     }
 
-    section.bbt-fa-pincode-section {
+    .bbt-fa-pincode-section {
         padding: 0px 0 118.96px;
+    }
+}
+
+@media (max-width: 991px) {
+    .bbt-fa-pincode-section {
+        padding: 0px 0 100px;
+    }
+
+    .bbt-fa-pincode-section .subtitle {
+        padding-bottom: 62px;
+    }
+
+    .bbt-fa-pincode-section .pincode-box {
+        padding: 59.84px 76.38px 60.72px;
+    }
+}
+
+@media(max-width: 767px) {
+    .bbt-fa-pincode-section {
+        padding: 0px 0 73px;
+    }
+
+    .bbt-fa-pincode-section .title {
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 112%;
+        text-align: left;
+        padding-bottom: 20px;
+    }
+
+    .bbt-fa-pincode-section .subtitle {
+        font-size: 14.5px;
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: 0.145px;
+        text-align: left;
+        padding-bottom: 44px;
+    }
+
+    .bbt-fa-pincode-section .subtitle br {
+        display: none;
+    }
+
+    .bbt-fa-pincode-section .tabs {
+        gap: 59px;
+        padding-bottom: 24px;
+    }
+
+    .bbt-fa-pincode-section .tab.active {
+        font-size: 14.5px;
+        text-decoration-thickness: 20%;
+    }
+
+    .bbt-fa-pincode-section .tab {
+        color: rgba(0, 0, 0, 0.20);
+        font-size: 14.5px;
+    }
+
+    .bbt-fa-pincode-section .pincode-box {
+        padding: 24px 20px 22px 21px;
+        width: calc(100vw - 36px);
+        max-height: none;
+        margin-left: calc(50% - 50vw + 18px);
+        margin-right: calc(50% - 50vw + 18px);
+    }
+
+    .bbt-fa-pincode-section .box-title {
+        padding-bottom: 17px;
+    }
+
+    .bbt-fa-pincode-section .pincode-row {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 0;
+    }
+
+    .bbt-fa-pincode-section .pincode-row span {
+        padding: 17px 0;
+        font-size: 14.5px;
+        line-height: 150%;
+        letter-spacing: 0.145px;
+    }
+
+    .bbt-fa-pincode-section .pincode-row span:nth-child(4) {
+        position: relative;
+    }
+
+    .bbt-fa-pincode-section .pincode-row span:nth-child(4)::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 300%;
+        border-top: 1px solid #0a3d9c;
     }
 }
 
@@ -763,7 +1150,7 @@ section.bbt-fa-pincode-section {
 
 /* application section css start  */
 
-section.bbt-fa-application-section {
+.bbt-fa-application-section {
     padding: 0 0 255px;
 }
 
@@ -774,7 +1161,7 @@ section.bbt-fa-application-section {
     font-size: 2.1em;
     font-style: normal;
     font-weight: 500;
-    line-height: 48px;
+    line-height: 114.286%;
     padding-bottom: 72.39px;
 }
 
@@ -829,7 +1216,7 @@ section.bbt-fa-application-section {
 }
 
 @media (max-width: 1728px) {
-    section.bbt-fa-application-section {
+    .bbt-fa-application-section {
         padding: 0px 0 240px;
     }
 }
@@ -842,7 +1229,7 @@ section.bbt-fa-application-section {
 }
 
 @media (max-width: 1440px) {
-    section.bbt-fa-application-section {
+    .bbt-fa-application-section {
         padding: 0px 0 200px;
     }
 }
@@ -852,15 +1239,64 @@ section.bbt-fa-application-section {
         padding-bottom: 60.39px;
     }
 
-    section.bbt-fa-application-section {
+    .bbt-fa-application-section {
         padding: 0px 0 167px;
+    }
+}
+
+@media (max-width: 991px) {
+    .bbt-fa-application-section {
+        padding: 0px 0 130px;
+    }
+
+    .bbt-fa-application-section .box {
+        padding: 74px 70px 65px 70px;
+    }
+}
+
+@media (max-width: 767px) {
+    .bbt-fa-application-section {
+        padding: 0px 0 83px;
+    }
+
+    .bbt-fa-application-section h1 {
+        padding-bottom: 30px;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 120%;
+        text-align: left;
+    }
+
+    .bbt-fa-application-section .box {
+        padding: 33px 18px 30px 21px;
+        width: calc(100vw - 36px);
+        max-height: unset;
+        margin-left: calc(50% - 50vw + 18px);
+        margin-right: calc(50% - 50vw + 18px);
+        grid-template-columns: 1fr;
+        gap: 43px;
+    }
+
+    .bbt-fa-application-section .section-title {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 119%;
+    }
+
+    .bbt-fa-application-section ul {
+        padding-top: 16px;
+    }
+
+    .bbt-fa-application-section ul li {
+        font-size: 14.5px;
+        line-height: 150%;
     }
 }
 
 /* application section css end  */
 
 /* abilities section css start  */
-section.bbt-fa-abilities-section {
+.bbt-fa-abilities-section {
     padding: 183px 0px 131.38px 0px;
     background-color: #f7df00;
 }
@@ -874,7 +1310,7 @@ section.bbt-fa-abilities-section {
     font-style: normal;
     font-weight: 700;
     line-height: 112%;
-    max-width: 752px;
+    width: 47%;
 }
 
 .bbt-fa-abilities-section .abilities-wrapper {
@@ -929,26 +1365,60 @@ section.bbt-fa-abilities-section {
 }
 
 @media (max-width: 1728px) {
-    section.bbt-fa-abilities-section {
+    .bbt-fa-abilities-section {
         padding: 173px 0px 121.38px 0px;
     }
 }
 
 @media (max-width: 1650px) {
-    section.bbt-fa-abilities-section {
+    .bbt-fa-abilities-section {
         padding: 163px 0px 106.38px 0px;
     }
 }
 
 @media (max-width: 1440px) {
-    section.bbt-fa-abilities-section {
+    .bbt-fa-abilities-section {
         padding: 146px 0px 99.38px 0px;
     }
 }
 
 @media (max-width: 1366px) {
-    section.bbt-fa-abilities-section {
+    .bbt-fa-abilities-section {
         padding: 129px 0px 89.38px 0px;
+    }
+}
+
+@media (max-width: 991px) {
+    .bbt-fa-abilities-section {
+        padding: 109px 0px 79.38px 0px;
+    }
+
+    .bbt-fa-abilities-section .hero-heading {
+        padding-bottom: 50px;
+        width: 60%;
+    }
+
+    .bbt-fa-abilities-section .cta-button {
+        padding: 21.81px 37px 22.19px 36px;
+    }
+}
+
+@media(max-width: 767px) {
+    .bbt-fa-abilities-section {
+        padding: 95px 0px 70px 0px;
+    }
+
+    .bbt-fa-abilities-section .hero-heading {
+        font-size: 26px;
+        line-height: 115%;
+        width: 100%;
+    }
+
+    .bbt-fa-abilities-section .cta-button {
+        padding: 9px 13px;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: normal;
     }
 }
 
@@ -956,7 +1426,7 @@ section.bbt-fa-abilities-section {
 
 /* notes section css start  */
 
-section.bbt-fa-notes-section {
+.bbt-fa-notes-section {
     padding: 68.26px 0px 107px 0px;
     background-color: #f7df00;
     border-top: 1px solid rgba(0, 0, 0, 0.2);
@@ -1004,20 +1474,54 @@ section.bbt-fa-notes-section {
 }
 
 @media (max-width: 1650px) {
-    section.bbt-fa-notes-section {
+    .bbt-fa-notes-section {
         padding: 68.26px 0px 90px 0px;
     }
 }
 
 @media (max-width: 1440px) {
-    section.bbt-fa-notes-section {
+    .bbt-fa-notes-section {
         padding: 68.26px 0px 78px 0px;
     }
 }
 
 @media (max-width: 1366px) {
-    section.bbt-fa-notes-section {
+    .bbt-fa-notes-section {
         padding: 63.26px 0px 72px 0px;
+    }
+}
+
+@media (max-width: 991px) {
+    .bbt-fa-notes-section {
+        padding: 53.26px 0px 62px 0px;
+    }
+
+    .bbt-fa-notes-section h2 {
+        padding-bottom: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .bbt-fa-notes-section {
+        padding: 0px 0px 80px 0px;
+        border-top: none;
+    }
+
+    .bbt-fa-notes-section .container-xxl {
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+        padding-top: 54px;
+    }
+
+    .bbt-fa-notes-section h2 {
+        padding-bottom: 33px;
+        font-size: 18px;
+        line-height: 140%;
+        text-align: left;
+    }
+
+    .bbt-fa-notes-section p {
+        font-size: 14px;
+        text-align: left;
     }
 }
 

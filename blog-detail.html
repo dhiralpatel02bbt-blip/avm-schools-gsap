@@ -22,9 +22,14 @@
       <div class="w-90">
         <div class="row d-flex">
           <div class="col-4">
-            <div class="logo">
+            <div class="logo white-logo">
               <a href="index.html">
-                <img src="images/logo-black.png" alt="logo" />
+                <img src="images/logo.svg" alt="logo" />
+              </a>
+            </div>
+            <div class="logo black-logo">
+              <a href="index.html">
+                <img src="images/black-logo.png" alt="logo" />
               </a>
             </div>
           </div>
@@ -35,22 +40,46 @@
               <label for="toogle-menu" class="toogle-open"><span></span></label>
 
               <nav>
-                <div>
+                <div class="mobile-menu-header">
+                  <div class="logo nav-logo">
+                    <a href="index.html">
+                      <img src="images/black-logo.png" alt="logo" />
+                    </a>
+                  </div>
                   <label for="toogle-menu" class="toogle-close">
                     <span></span>
                   </label>
                 </div>
                 <ul>
-                  <li class="menu"><a href="about-us.html">About </a></li>
-                  <li class="menu"><a href="pedagogy.html">Pedagogy </a></li>
+                  <li class="menu"><a href="index.html">Home </a></li>
+                  <li class="menu"><a href="about-us.html">About AVM</a></li>
                   <li class="menu"><a href="our-school.html">Schools </a></li>
+                  <li class="menu"><a href="pedagogy.html">Pedagogy </a></li>
+                  <li class="menu">
+                    <a href="admissions.html">Admissions </a>
+                  </li>
                   <li class="menu">
                     <a href="news-and-events.html">News & Events </a>
                   </li>
-                  <li class="btn-element">
-                    <a class="main-btn" href="#">Apply Now </a>
+                  <li class="menu">
+                    <a href="careers.html">Careers</a>
                   </li>
                 </ul>
+                <div class="nav-menu-ft-social">
+                  <div class="icon">
+                    <a href="#">
+                      <img
+                        src="images/Instagram-icon.svg"
+                        alt="Instagram-icon"
+                      />
+                    </a>
+                  </div>
+                  <div class="icon">
+                    <a href="#">
+                      <img src="images/youtube-icon.svg" alt="youtube-icon" />
+                    </a>
+                  </div>
+                </div>
               </nav>
             </div>
             <nav class="main-menu">
@@ -62,7 +91,7 @@
                   <a href="pedagogy.html">Pedagogy</a>
                 </li>
                 <li class="menu">
-                  <a href="#">Schools</a>
+                  <a href="our-school.html">Schools</a>
                 </li>
                 <li class="menu">
                   <a href="news-and-events.html">News & Events</a>
@@ -143,7 +172,7 @@
         </div>
         <div class="blog-detail-content">
           <h3 class="blog-quote">
-            "हिंदी है हम सब की पहचान, हिंदी से जुड़े हमा..."
+            "हिंदी है हम सब की पहचान, हिंदी से जुड़े हमारा अभिमान।"
           </h3>
           <div class="blog-paragraph">
             <p>
@@ -361,8 +390,13 @@
       const getGalleryOffset = () => {
         const width = window.innerWidth;
 
-        if (width < 576) {
-          return 0;
+        if (width < 768) {
+          const sliderEl = document.querySelector('.gallery-slider');
+          const offset = sliderEl
+            ? getComputedStyle(sliderEl).getPropertyValue('--gallery-mobile-offset')
+            : '';
+
+          return parseFloat(offset) || Math.min(Math.max(width * 0.092, 28), 48);
         }
 
         const gap = width < 992 ? 18 : 24;

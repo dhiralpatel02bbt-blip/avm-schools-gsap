@@ -1,14 +1,18 @@
-/* ------------------------------ Pedagogy page css Start ------------------------------ */
-body.pedagogy-page {
+body.pedagogy-page header .black-logo {
+    display: none;
+}
+
+/* hero section start */
+.pedagogy-page {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
-body.pedagogy-page::-webkit-scrollbar {
+.pedagogy-page::-webkit-scrollbar {
     display: none;
 }
 
-body.pedagogy-page .pedagogy-hero-stage {
+.pedagogy-page .pedagogy-hero-stage {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -19,7 +23,7 @@ body.pedagogy-page .pedagogy-hero-stage {
     overflow: hidden;
 }
 
-body.pedagogy-page .campus-section {
+.pedagogy-page .campus-section {
     position: absolute;
     inset: 0;
     z-index: 2;
@@ -28,7 +32,7 @@ body.pedagogy-page .campus-section {
 }
 
 /* Full-bleed background image */
-body.pedagogy-page .campus-section .img-full {
+.pedagogy-page .campus-section .img-full {
     position: absolute;
     inset: 0;
     z-index: 1;
@@ -36,7 +40,7 @@ body.pedagogy-page .campus-section .img-full {
     transform: translateZ(0);
 }
 
-body.pedagogy-page .campus-section .img-full::after {
+.pedagogy-page .campus-section .img-full::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -47,7 +51,7 @@ body.pedagogy-page .campus-section .img-full::after {
     z-index: 1;
 }
 
-body.pedagogy-page .campus-section .img-full img {
+.pedagogy-page .campus-section .img-full img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -55,7 +59,7 @@ body.pedagogy-page .campus-section .img-full img {
     display: block;
 }
 
-body.pedagogy-page .campus-section .panel {
+.pedagogy-page .campus-section .panel {
     position: absolute;
     inset: 0;
     z-index: 4;
@@ -66,7 +70,7 @@ body.pedagogy-page .campus-section .panel {
     pointer-events: none;
 }
 
-body.pedagogy-page .campus-section .half-circle {
+.pedagogy-page .campus-section .half-circle {
     will-change: transform, opacity;
     backface-visibility: hidden;
     position: absolute;
@@ -82,7 +86,7 @@ body.pedagogy-page .campus-section .half-circle {
     box-shadow: 0 0 120px rgba(10, 67, 164, 0.22);
 }
 
-body.pedagogy-page .campus-section .body-txt {
+.pedagogy-page .campus-section .body-txt {
     width: 80%;
     position: relative;
     z-index: 5;
@@ -94,22 +98,22 @@ body.pedagogy-page .campus-section .body-txt {
     pointer-events: auto;
 }
 
-body.pedagogy-page .campus-section .panel-title,
-body.pedagogy-page .campus-section .panel-body {
+.pedagogy-page .campus-section .panel-title,
+.pedagogy-page .campus-section .panel-body {
     will-change: transform, opacity;
     color: #fff;
     opacity: 0;
     visibility: hidden;
 }
 
-body.pedagogy-page .campus-section .panel-title {
+.pedagogy-page .campus-section .panel-title {
     font-family: Satoshi;
     font-size: 2.4em;
     line-height: 112%;
     font-weight: 700;
 }
 
-body.pedagogy-page .campus-section .panel-body {
+.pedagogy-page .campus-section .panel-body {
     font-family: "Poppins", sans-serif;
     font-size: 1em;
     line-height: 154%;
@@ -117,35 +121,127 @@ body.pedagogy-page .campus-section .panel-body {
 }
 
 @media (max-width: 1650px) {
-    body.pedagogy-page .campus-section .half-circle {
+    .pedagogy-page .campus-section .half-circle {
         top: 81%;
         left: -45%;
     }
 }
 
 @media (max-width: 1366px) {
-    body.pedagogy-page .campus-section .half-circle {
+    .pedagogy-page .campus-section .half-circle {
         top: 95%;
         left: -54%;
     }
 }
 
 @media (max-width: 1280px) {
-    body.pedagogy-page .campus-section .body-txt {
+    .pedagogy-page .campus-section .body-txt {
         gap: 37.9px;
     }
 
-    body.pedagogy-page .campus-section .half-circle {
+    .pedagogy-page .campus-section .half-circle {
         top: 93%;
         left: -62%;
     }
 }
 
+@media (max-width: 1200px) {
+    .pedagogy-page .campus-section .half-circle {
+        left: -92%;
+        top: 86%;
+    }
+}
+
+@media(max-width: 1023px) {
+    .pedagogy-page .campus-section .half-circle {
+        left: -100%;
+    }
+}
+
+@media(max-width: 991.98px) {
+    .pedagogy-page .campus-section .half-circle {
+        left: -80%;
+        width: 1865px;
+        height: 1865px;
+        top: 81%;
+    }
+}
+
+@media(max-width: 767px) {
+    .pedagogy-page .campus-section .img-full img {
+        height: 70%;
+        object-position: 100%;
+    }
+
+    .pedagogy-page .campus-section .panel {
+        width: 100%;
+        display: unset;
+    }
+
+    .pedagogy-page .campus-section .half-circle {
+        left: 50%;
+        width: 1021px;
+        height: 821px;
+        top: 52%;
+        transform: translateX(-50%);
+    }
+
+    .pedagogy-page .campus-section .body-txt {
+        display: flex;
+        position: absolute;
+        bottom: 70px;
+        left: 0;
+        width: unset;
+        max-width: unset;
+        margin: 0 30px;
+    }
+
+    .pedagogy-page .campus-section .panel-title br {
+        display: none;
+    }
+
+    .pedagogy-page .campus-section .panel-title {
+        width: 80%;
+    }
+}
+
+@media(max-width: 576px) {
+    .pedagogy-page .campus-section .img-full img {
+        height: 60%;
+        object-position: 89%;
+    }
+
+    .pedagogy-page .campus-section .panel {
+        width: 100%;
+        display: unset;
+    }
+
+    .pedagogy-page .campus-section .half-circle {
+        width: 721px;
+        height: 721px;
+    }
+
+    .pedagogy-page .campus-section .body-txt {
+        display: unset;
+    }
+
+    .pedagogy-page .campus-section .panel-title {
+        width: 100%;
+        padding-bottom: 42px;
+    }
+
+    .pedagogy-page .campus-section .panel-title br {
+        display: block;
+    }
+
+}
+
+/* hero section end */
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    DIAGRAM SECTION — hidden until scroll phase 2
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-body.pedagogy-page section.diagram-sec {
+.pedagogy-page section.diagram-sec {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -163,7 +259,7 @@ body.pedagogy-page section.diagram-sec {
     transform: translateZ(0);
 }
 
-body.pedagogy-page section.diagram-sec .container-xxl {
+.pedagogy-page section.diagram-sec .container-xxl {
     width: 100%;
     position: relative;
 }
@@ -348,6 +444,10 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     width: 22%;
     text-align: center;
     transform: translateY(-50%);
+}
+
+.diagram-tab {
+    display: none;
 }
 
 @media (max-width: 1728px) {
@@ -664,6 +764,188 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 }
 
+@media(max-width: 1200px) {
+    .diagram-sec .node3 {
+        left: 74%;
+    }
+
+    .diagram-sec .node4 {
+        left: 68.3%;
+    }
+
+    .diagram-sec .node6 {
+        left: 26%;
+    }
+
+    .diagram-sec .node7 {
+        left: 32.4%;
+    }
+}
+
+@media(max-width: 1023px) {
+    .diagram-sec {
+        display: none !important;
+    }
+
+    .diagram-tab {
+        display: block;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        overflow: hidden;
+        background: #0a43a4;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .diagram-tab .title-txt {
+        color: #FFF;
+        text-align: center;
+        font-family: Satoshi;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 118%;
+        position: absolute;
+        top: clamp(58px, 10vh, 96px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(86vw, 560px);
+    }
+
+    .diagram-tab .circle-card .content {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .diagram-tab .circle-card {
+        width: min(467px, 82vw);
+        height: min(467px, 82vw);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: absolute;
+        top: 52%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        padding: clamp(28px, 6vw, 40px);
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .diagram-tab .card-title {
+        color: #000;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 140%;
+    }
+
+    .diagram-tab p {
+        color: #000;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        /* 19.5px */
+    }
+
+    .diagram-tab .orange {
+        background: #FC8B5F;
+    }
+
+    .diagram-tab .yellow {
+        background: #f7df00;
+    }
+
+    .diagram-tab .purple {
+        background: #BEACFF;
+    }
+
+}
+
+@media(max-width: 991.98px) {
+    .pedagogy-page .pedagogy-hero-stage {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .pedagogy-page .campus-section {
+        position: relative;
+        height: 100vh;
+        min-height: 540px;
+    }
+
+    .pedagogy-page .campus-section .panel-title,
+    .pedagogy-page .campus-section .panel-body {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    .pedagogy-page .diagram-tab {
+        position: relative;
+        inset: auto;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        padding: 82px 0 90px;
+    }
+
+    .pedagogy-page .diagram-tab .title-txt {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 0 auto 38px !important;
+    }
+
+    .pedagogy-page .diagram-tab .container-xxl {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .pedagogy-page .diagram-tab .circle-card {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@media(max-width: 767px) {
+    .diagram-tab .circle-card {
+        width: 335px;
+        height: 335px;
+    }
+
+    .pedagogy-page .campus-section .panel-title {
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 115%;
+    }
+}
+
+/* Diagram section css End */
 /* tabbing section css Start */
 .tabbing-sec {
     padding: 105px 0 178px;
@@ -1074,6 +1356,184 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 }
 
+@media(max-width: 1023px) {
+    .tabbing-sec {
+        padding: 80px 0;
+    }
+
+    .tabbing-sec .feature-block {
+        gap: 64px;
+    }
+
+    .tabbing-sec .feature-title,
+    .tabbing-sec .feature:nth-child(2) .feature-title,
+    .tabbing-sec .feature p {
+        width: 100%;
+    }
+
+    .tabbing-sec .feature {
+        gap: 15px;
+    }
+
+    .tabbing-sec .text-block {
+        gap: 60px;
+    }
+
+    #playtrails .feature-block:first-child .img-block:after,
+    #playtrails .feature-block:first-child .img-block:before,
+    #playtrails .feature-block:last-child .img-block:before,
+    #playtrails .feature-block:last-child .img-block:after,
+    #primary .feature-block:last-child .img-block:before,
+    #primary .feature-block:last-child .img-block:after,
+    #primary .feature-block:first-child .img-block:after,
+    #primary .feature-block:first-child .img-block:before,
+    #secondary .feature-block:nth-child(2) .img-block:before,
+    #secondary .feature-block:nth-child(2) .img-block:after,
+    #secondary .feature-block:nth-child(3) .img-block:before,
+    #secondary .feature-block:nth-child(3) .img-block:after {
+        display: none;
+    }
+
+    #primary h2.title-txt,
+    #secondary h2.title-txt {
+        width: 50%;
+    }
+}
+
+@media(max-width: 991px) {
+
+    #primary h2.title-txt,
+    #secondary h2.title-txt {
+        width: 65%;
+    }
+
+    .tabbing-sec .tabs {
+        gap: 60px;
+    }
+
+    .tabbing-sec h2.title-txt {
+        width: 100%;
+        padding-bottom: 57px;
+    }
+
+    .tabbing-sec .feature-block {
+        gap: 20px;
+    }
+
+    .tabbing-sec .feature-title svg {
+        width: 20px;
+    }
+
+    .tabbing-sec .feature-block {
+        gap: 20px;
+    }
+
+    #primary .feature p,
+    #secondary .feature p {
+        padding-left: 45px;
+    }
+}
+
+@media(max-width: 767px) {
+    .tabbing-sec {
+        padding: 49px 0 107px;
+    }
+
+    .tabbing-sec .tab {
+        text-align: center;
+        font-size: 13px;
+        line-height: 140%;
+    }
+
+    .tabbing-sec .tab.active {
+        text-decoration: none;
+        position: relative;
+    }
+
+    .tabbing-sec .tabs {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+    }
+
+    .tabbing-sec .tab.active::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -12px;
+        transform: translateX(-50%);
+        width: 134.333px;
+        height: 5px;
+        background-color: #FC8B5F;
+    }
+
+    .tabbing-sec .tab-content {
+        padding: 79px 0 0;
+    }
+
+    .tabbing-sec h2.title-txt {
+        font-size: 26px;
+        line-height: 115%;
+        padding-bottom: 60px;
+    }
+
+    .tabbing-sec .feature-block {
+        grid-template-columns: 1fr;
+    }
+
+    .tabbing-sec .feature-block {
+        gap: 67px;
+    }
+
+    .tabbing-sec .feature p {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 160%;
+    }
+
+    .tabbing-sec .feature-title {
+        gap: 21.99px;
+        align-items: flex-start;
+    }
+
+    .tabbing-sec #playtrails .feature-title svg {
+        width: 12.007px;
+        height: 24.013px;
+    }
+
+    #primary h2.title-txt,
+    #secondary h2.title-txt {
+        width: 100%;
+    }
+
+    #primary .text-block .feature:nth-child(2),
+    #secondary .text-block .feature:nth-child(2) {
+        margin-left: 0;
+    }
+
+    .tabbing-sec #playtrails .feature-block:nth-child(2) .img-block,
+    .tabbing-sec #primary .feature-block:nth-child(2) .img-block,
+    .tabbing-sec #primary .feature-block:nth-child(4) .img-block,
+    .tabbing-sec #secondary .feature-block:nth-child(1) .img-block,
+    .tabbing-sec #secondary .feature-block:nth-child(3) .img-block {
+        order: 1;
+    }
+
+    .tabbing-sec #playtrails .feature-block:nth-child(2) .text-block,
+    .tabbing-sec #primary .feature-block:nth-child(2) .feature,
+    .tabbing-sec #primary .feature-block:nth-child(4) .text-block,
+    .tabbing-sec #secondary .feature-block:nth-child(1) .text-block,
+    .tabbing-sec #secondary .feature-block:nth-child(3) .text-block {
+        order: 2;
+    }
+}
+
+@media(max-width: 576px) {
+    .tabbing-sec .tabs {
+        gap: 0;
+    }
+}
+
 /* tabbing section css End */
 
 /* extra section css Start */
@@ -1277,29 +1737,135 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 }
 
-@media (max-width: 991.98px) {
-    .text-content {
-        max-width: 86%;
-        margin-bottom: 34px;
-    }
-
+@media(max-width: 1200px) {
     .extra-slider-clip {
-        padding-left: calc(7.5vw + 20px);
-    }
-
-    .extra-swiper .swiper-slide {
-        width: min(88vw, 760px);
-    }
-
-    .extra-section .card {
-        grid-template-columns: 1fr;
-        gap: 24px;
+        padding-left: calc(6.5vw + 20px);
     }
 
     .extra-section .card-label {
-        width: 100%;
+        width: min(420px, 100%);
+    }
+
+    .text-content {
+        max-width: 62%;
     }
 }
+
+@media(max-width: 1023px) {
+    .extra-section .card {
+        grid-template-columns: minmax(420px, 53%) 1fr;
+    }
+
+    .extra-section .card-label {
+        width: min(300px, 100%);
+    }
+
+    .text-content {
+        max-width: 64%;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .extra-section {
+        height: auto;
+        min-height: 0;
+        padding: 74px 0 88px;
+        justify-content: flex-start;
+        overflow: visible;
+    }
+
+    .extra-bg-clip {
+        display: none;
+    }
+
+    .text-content {
+        max-width: 100%;
+        margin: 0 0 94px;
+    }
+
+    .text-content h2 {
+        font-size: 32px;
+        line-height: 114%;
+    }
+
+    .extra-slider-clip {
+        padding: 0 70px;
+        overflow: visible;
+    }
+
+    .extra-swiper,
+    .extra-section .swiper-clip {
+        overflow: visible;
+    }
+
+    .extra-swiper .swiper-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 73px;
+        transform: none !important;
+        height: auto !important;
+    }
+
+    .extra-swiper .swiper-slide {
+        width: 100% !important;
+        margin: 0 !important;
+        transform: none !important;
+    }
+
+    .extra-section .card {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 0;
+    }
+
+    .extra-section .card img {
+        height: auto;
+        aspect-ratio: 1.08 / 1;
+        object-fit: cover;
+    }
+
+    .extra-section .card-label,
+    .extra-section .orange,
+    .extra-section .yellow {
+        width: 100%;
+        padding: 27px 25px 26px 20px;
+        background: #f7df00;
+    }
+
+    .extra-swiper .swiper-slide:nth-child(even) .card-label {
+        background: #beacff;
+    }
+
+    .extra-section .card-label h3 {
+        color: #000;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 160%;
+        letter-spacing: 0.13px;
+    }
+
+    .extra-swiper .swiper-slide .card::before,
+    .extra-swiper .swiper-slide .card::after {
+        display: none;
+    }
+}
+
+@media(max-width: 767px) {
+    .text-content h2 {
+        font-size: 28px;
+        line-height: 118%;
+    }
+
+    .extra-section {
+        padding: 91px 0;
+    }
+
+    .extra-slider-clip {
+        padding: 0px 40px;
+    }
+}
+
 
 /* extra section css End */
 
@@ -1350,6 +1916,10 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     line-height: 125%;
 }
 
+.mob-aym-section-title {
+    display: none;
+}
+
 .aym-text p {
     color: #000;
     font-family: Poppins;
@@ -1367,6 +1937,96 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 @media (max-width: 1650px) {
     .aym-section {
         padding: 100px 0 113px;
+    }
+}
+
+@media(max-width: 1200px) {
+    .aym-section {
+        padding: 100px 0 100px;
+    }
+
+    .aym-text {
+        padding: 0 84px 0 84px;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .aym-section {
+        padding: 80px 0 0px;
+    }
+
+    .aym-img-col:before {
+        top: -22px;
+        width: 76px;
+        height: 22px;
+    }
+
+    .aym-img-col:after {
+        left: 76px;
+        width: 150px;
+        height: 22px;
+    }
+
+    .aym-text {
+        padding: 0 61px 0 71px;
+    }
+}
+
+@media(max-width: 991px) {
+    .aym-section {
+        flex-direction: column;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .mob-aym-section-title {
+        display: block !important;
+        margin: 0 auto 69px 0;
+        width: 84%;
+    }
+
+    .mob-aym-section-title h2 {
+        color: #0A3D9C;
+        font-family: Satoshi;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 118%;
+        text-align: left;
+    }
+
+    .mob-aym-section-title h2 br {
+        display: none;
+    }
+
+    .desk-aym-section-title {
+        display: none;
+    }
+
+    .aym-img-col:before {
+        top: 0px;
+        width: 49px;
+        height: 15px;
+    }
+
+    .aym-img-col:after {
+        left: 49px;
+        top: -15px;
+        width: 57px;
+        height: 15px;
+    }
+
+    .aym-section .aym-img-col {
+        margin-bottom: 40px;
+    }
+
+    .aym-section .aym-text {
+        font-family: Poppins;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 160%;
+        letter-spacing: 0.15px;
+        padding: 0 0px;
     }
 }
 
@@ -1695,7 +2355,200 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 }
 
-@media(max-width: 1024px) {}
+@media(max-width: 1200px) {
+    .sat.right {
+        right: -40%;
+    }
+
+    .aym-diagram .aym-line-137 {
+        top: calc(48% - 83px);
+    }
+
+    .sat.bottom-right {
+        bottom: 15%;
+    }
+
+    .sat.bottom-left {
+        bottom: 15%;
+    }
+
+    .sat.left {
+        left: -40%;
+    }
+
+    .aym-diagram .aym-line-140 {
+        right: calc(45% + 73px);
+        top: calc(49% - 101px);
+    }
+
+    .aym-diagram .aym-line-136 {
+        top: calc(50% - 266px);
+    }
+}
+
+@media(max-width: 1024.9px) {
+    .sat {
+        width: 250px;
+        height: 70px;
+    }
+
+    .sat.top {
+        top: 100px;
+    }
+
+    .sat.right {
+        right: -28%;
+        top: 34.4%;
+    }
+
+    .sat.bottom-right {
+        right: -14.3%;
+        bottom: 18%;
+    }
+
+    .sat.bottom-left {
+        bottom: 18%;
+        left: -13.9%;
+    }
+
+    .sat.left {
+        left: -30%;
+    }
+}
+
+@media(max-width: 991.98px) {
+    .aym-diagram-sec {
+        margin: 100px 0;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .aym-diagram {
+        --aym-mobile-circle-size: min(91vw, 76vh);
+        --aym-mobile-row-height: calc(var(--aym-mobile-circle-size) / 5);
+        width: 100%;
+        max-width: none;
+        height: max(468px, calc(var(--aym-mobile-circle-size) + 14vh));
+        min-height: max(468px, calc(var(--aym-mobile-circle-size) + 14vh));
+        margin: 0;
+        overflow: hidden;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .aym-diagram svg.lines,
+    .aym-diagram .aym-line-img {
+        display: none !important;
+    }
+
+    .center-node {
+        top: 50%;
+        left: calc(var(--aym-mobile-circle-size) * -0.5);
+        width: var(--aym-mobile-circle-size);
+        height: var(--aym-mobile-circle-size);
+        padding: 0 6vw 0 calc(var(--aym-mobile-circle-size) * 0.59);
+        transform: translateY(-50%);
+        border-radius: 50%;
+        background: #f7df00;
+        justify-content: space-around;
+        color: #000;
+        text-align: left;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 140%;
+    }
+
+    .sat,
+    .sat.top,
+    .sat.right,
+    .sat.bottom-right,
+    .sat.bottom-left,
+    .sat.left {
+        position: absolute;
+        left: 48%;
+        right: 0;
+        top: auto;
+        bottom: auto;
+        width: 52%;
+        height: var(--aym-mobile-row-height);
+        padding: 0 30px 0 0;
+        transform: none;
+        border-radius: 0;
+        border: 0;
+        background: transparent;
+        color: #0A3D9C;
+        justify-content: flex-start;
+        text-align: left;
+        font-family: "Poppins";
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 126%;
+    }
+
+    .sat::before {
+        display: none;
+    }
+
+    .sat::after {
+        content: "";
+        position: absolute;
+        left: calc(var(--aym-mobile-circle-size) * -0.68);
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: #fc8b5f;
+    }
+
+    .sat.bottom-left::after {
+        display: none;
+    }
+
+    .sat.top {
+        top: calc(50% - (var(--aym-mobile-circle-size) / 2));
+        order: 1;
+    }
+
+    .sat.left {
+        top: calc(50% - (var(--aym-mobile-circle-size) / 2) + var(--aym-mobile-row-height));
+        order: 2;
+    }
+
+    .sat.right {
+        top: calc(50% - (var(--aym-mobile-circle-size) / 2) + (var(--aym-mobile-row-height) * 2));
+        order: 3;
+    }
+
+    .sat.bottom-right {
+        top: calc(50% - (var(--aym-mobile-circle-size) / 2) + (var(--aym-mobile-row-height) * 3));
+        order: 4;
+    }
+
+    .sat.bottom-left {
+        top: calc(50% - (var(--aym-mobile-circle-size) / 2) + (var(--aym-mobile-row-height) * 4));
+        order: 5;
+    }
+}
+
+@media(max-width: 767px) {
+    .center-node {
+        font-family: Poppins;
+        font-size: 18px;
+        font-weight: 600;
+    }
+}
+
+@media(max-width: 576px) {
+
+    .sat,
+    .sat.top,
+    .sat.right,
+    .sat.bottom-right,
+    .sat.bottom-left,
+    .sat.left {
+        font-size: 14px;
+        line-height: 134%;
+        left: 51%;
+    }
+}
 
 /* AYM diagram section css End  */
 
@@ -1731,6 +2584,10 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     position: relative;
 }
 
+.mob-avm-img-col {
+    display: none;
+}
+
 .avm-text {
     padding: 0 100px;
     display: flex;
@@ -1757,6 +2614,92 @@ body.pedagogy-page section.diagram-sec .container-xxl {
 @media (max-width: 1728px) {
     .avm-section {
         padding: 0;
+    }
+}
+
+@media(max-width: 1200px) {
+    .avm-text {
+        padding: 0 84px;
+    }
+}
+
+@media(max-width: 1023px) {
+    .avm-text {
+        padding: 0 50px 0 71px;
+        gap: 30px;
+    }
+
+    .avm-img-col:before {
+        bottom: -25px;
+        left: 150px;
+        width: 76px;
+        height: 25px;
+    }
+
+    .avm-img-col:after {
+        width: 150px;
+        height: 25px;
+    }
+}
+
+@media(max-width: 991px) {
+    .avm-img-col {
+        display: none;
+    }
+
+    .avm-text {
+        padding: 0 50px 0 71px;
+        gap: 0px;
+    }
+
+    .avm-text h2 {
+        width: 80%;
+    }
+
+    .mob-avm-img-col {
+        display: block;
+        position: relative;
+        margin: 69px auto 40px;
+    }
+
+    .mob-avm-img-col::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 57px;
+        height: 15px;
+        background: #BEACFF;
+    }
+
+    .mob-avm-img-col::after {
+        content: "";
+        position: absolute;
+        top: -15px;
+        left: 57px;
+        width: 49px;
+        height: 15px;
+        background: #FC8B5F;
+    }
+}
+
+@media(max-width: 767px) {
+    .avm-text {
+        padding: 0 39px;
+    }
+
+    .avm-text h2 {
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 118%;
+        width: 91%;
+    }
+
+    .avm-text p {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 160%;
+        letter-spacing: 0.15px;
     }
 }
 
@@ -1928,6 +2871,10 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     text-align: left;
 }
 
+.mob-teacher-dev {
+    display: none;
+}
+
 @media (max-width: 1728px) {
     .teacher-dev {
         padding: 100px 0px 0;
@@ -2011,6 +2958,156 @@ body.pedagogy-page section.diagram-sec .container-xxl {
     }
 }
 
-/* development diagram section css End */
+@media(max-width: 1200px) {
+    .teacher-dev .circle-wrapper {
+        width: 500px;
+        height: 307px;
+    }
 
-/* ------------------------------ Pedagogy page css End ------------------------------ */
+    .teacher-dev .arc-svg {
+        width: 500px;
+        height: 307px;
+    }
+}
+
+@media(max-width:1023px) {
+    .teacher-dev .center-circle {
+        bottom: -10px;
+    }
+
+    .teacher-dev .circle-wrapper {
+        width: 400px;
+        height: 307px;
+    }
+
+    .teacher-dev .arc-svg {
+        width: 400px;
+        height: 307px;
+    }
+}
+
+@media(max-width: 991px) {
+    .teacher-dev {
+        display: none;
+    }
+
+    .mob-teacher-dev {
+        display: block;
+        margin: 140px 0 124px;
+    }
+
+    .mob-teacher-dev .container-xxl {
+        max-width: 86%;
+    }
+
+    .development-diagram {
+        --teacher-dev-width: clamp(320px, 58vw, 680px);
+        width: min(100%, var(--teacher-dev-width));
+        margin: 0 auto;
+    }
+
+    .development-circle {
+        background: #F7DF00;
+        width: 100%;
+        aspect-ratio: 2 / 1;
+        border-radius: 999px 999px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 1.5rem;
+        text-align: center;
+    }
+
+    .development-circle .title {
+        color: #000;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 25px;
+        font-weight: 600;
+        line-height: 140%;
+    }
+
+    .development-part {
+        padding: clamp(52px, 7vw, 76px) 0 0 52px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 63px;
+    }
+
+    .development-part:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        background: #ff7f50;
+    }
+
+    .development-part .content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .development-part .content h4 {
+        color: #0A3D9C;
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 134%;
+    }
+
+    .development-part .content p {
+        color: #000;
+        font-family: Poppins;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 150%;
+    }
+
+    span.orange-dot {
+        width: 22px;
+        height: 22px;
+        display: block;
+        background: #FC8B5F;
+        border-radius: 50%;
+        position: absolute;
+        top: 3px;
+        left: -63px;
+    }
+}
+
+@media(max-width: 767px) {
+    .development-diagram {
+        --teacher-dev-width: min(100%, 443px);
+    }
+}
+
+@media(max-width: 576px) {
+    .mob-teacher-dev {
+        margin: 96px 0;
+    }
+
+    .mob-teacher-dev .container-xxl {
+        max-width: 80%;
+    }
+
+    .development-diagram {
+        --teacher-dev-width: 100%;
+    }
+
+    .development-circle .title {
+        font-size: 18px;
+    }
+
+    span.orange-dot {
+        width: 16px;
+        height: 16px;
+        left: -59px;
+    }
+}
+
+/* development diagram section css End */

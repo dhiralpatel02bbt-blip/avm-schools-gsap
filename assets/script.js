@@ -163,7 +163,7 @@ gsap.registerPlugin(ScrollTrigger);
   var reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  var isDesktop = window.innerWidth >= 768;
+  var isDesktop = window.innerWidth >= 992;
 
   if (reducedMotion || !isDesktop) {
     gsap.set([heroCircle, heroTitle, cards, contents, segments, aboutItems], {
@@ -1836,6 +1836,212 @@ if (tl) {
   let bubbleTimeline;
   let resizeTimer;
 
+  function drawBubbleConnectors() {
+    const clusterWidth =
+      Math.max(
+        cluster.offsetWidth,
+        ...bubbleCircles.map(
+          (circle) => circle.offsetLeft + circle.offsetWidth,
+        ),
+      ) + 20;
+    const clusterHeight =
+      Math.max(
+        cluster.offsetHeight,
+        ...bubbleCircles.map(
+          (circle) => circle.offsetTop + circle.offsetHeight,
+        ),
+      ) + 20;
+
+    gsap.set(cluster, {
+      width: clusterWidth,
+      height: clusterHeight,
+    });
+
+    connectorsSvg.setAttribute(
+      "viewBox",
+      `0 0 ${clusterWidth} ${clusterHeight}`,
+    );
+
+    connectorSegments.forEach((segment, index) => {
+      const fromCircle = bubbleCircles[index];
+      const toCircle = bubbleCircles[index + 1];
+
+      if (!fromCircle || !toCircle) return;
+
+      const x1 = fromCircle.offsetLeft + fromCircle.offsetWidth / 2;
+      const y1 = fromCircle.offsetTop + fromCircle.offsetHeight / 2;
+      const x2 = toCircle.offsetLeft + toCircle.offsetWidth / 2;
+      const y2 = toCircle.offsetTop + toCircle.offsetHeight / 2;
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const length = Math.hypot(dx, dy) || 1;
+      const ux = dx / length;
+      const uy = dy / length;
+      const startRadius = fromCircle.offsetWidth / 2;
+      const endRadius = toCircle.offsetWidth / 2;
+      const startX = x1 + ux * startRadius;
+      const startY = y1 + uy * startRadius;
+      const endX = x2 - ux * endRadius;
+      const endY = y2 - uy * endRadius;
+
+      segment.setAttribute(
+        "d",
+        `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(1)} ${endY.toFixed(1)}`,
+      );
+      segment._bubbleConnector = { startX, startY, endX, endY };
+    });
+  }
+
+  function setConnectorDrawProgress(segment, progress) {
+    const line = segment._bubbleConnector;
+    if (!line) return;
+
+    const currentX = line.startX + (line.endX - line.startX) * progress;
+    const currentY = line.startY + (line.endY - line.startY) * progress;
+
+    segment.setAttribute(
+      "d",
+      `M ${line.startX.toFixed(1)} ${line.startY.toFixed(1)} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`,
+    );
+  }
+
+  function buildMobileBubbleTimeline() {
+    if (bubbleTimeline) {
+      bubbleTimeline.scrollTrigger?.kill();
+      bubbleTimeline.kill();
+      bubbleTimeline = null;
+    }
+
+    gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
+    drawBubbleConnectors();
+
+    const viewportHeight = window.innerHeight;
+    const viewportCenter = viewportHeight / 2;
+    const focusY = bubbleCircles.map((circle) => {
+      return viewportCenter - (circle.offsetTop + circle.offsetHeight / 2);
+    });
+
+    gsap.set(bubbleTrack, {
+      x: 0,
+      y: focusY[0] || 0,
+    });
+    gsap.set(bubbleCircles, {
+      scale: 0.72,
+      autoAlpha: 0,
+      zIndex: 2,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(".bbt-FA-circle-sec .circle h2, .bbt-FA-circle-sec .circle p", {
+      autoAlpha: 0,
+      y: 16,
+    });
+
+    connectorSegments.forEach((segment) => {
+      setConnectorDrawProgress(segment, 0);
+      gsap.set(segment, {
+        autoAlpha: 0,
+        strokeDasharray: "0 8",
+        strokeDashoffset: 0,
+      });
+    });
+
+    const segmentDuration = 1;
+    const scrollDistance = Math.max(
+      bubbleCircles.length * viewportHeight * 1.18,
+      viewportHeight * 7,
+    );
+
+    bubbleTimeline = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: `+=${scrollDistance}`,
+        scrub: 1,
+        pin: stickyViewport,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    bubbleCircles.forEach((circle, index) => {
+      const heading = circle.querySelector("h2");
+      const body = circle.querySelector("p");
+      const connector = connectorSegments[index];
+      const at = index * segmentDuration;
+
+      if (index > 0) {
+        bubbleTimeline.to(
+          bubbleTrack,
+          {
+            y: focusY[index],
+            duration: 0.24,
+            ease: "power2.inOut",
+          },
+          at,
+        );
+      }
+
+      bubbleTimeline.to(
+        circle,
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.18,
+          ease: "back.out(1.45)",
+        },
+        at + 0.08,
+      );
+
+      if (heading) {
+        bubbleTimeline.to(
+          heading,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.16,
+            ease: "power2.out",
+          },
+          at + 0.28,
+        );
+      }
+
+      if (body) {
+        bubbleTimeline.to(
+          body,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.16,
+            ease: "power2.out",
+          },
+          at + 0.46,
+        );
+      }
+
+      if (connector && index < bubbleCircles.length - 1) {
+        const lineDraw = { progress: 0 };
+        bubbleTimeline.to(
+          lineDraw,
+          {
+            progress: 1,
+            duration: 0.28,
+            ease: "power2.inOut",
+            onStart: () => {
+              gsap.set(connector, { autoAlpha: 0.92 });
+            },
+            onUpdate: () => {
+              setConnectorDrawProgress(connector, lineDraw.progress);
+            },
+          },
+          at + 0.68,
+        );
+      }
+    });
+
+    bubbleTimeline.to({}, { duration: 0.2 });
+  }
+
   function buildBubbleTimeline() {
     if (bubbleTimeline) {
       bubbleTimeline.scrollTrigger?.kill();
@@ -1843,7 +2049,12 @@ if (tl) {
     }
 
     gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
-    gsap.set(bubbleTrack, { clearProps: "x" });
+    gsap.set(bubbleTrack, { clearProps: "transform" });
+
+    if (window.matchMedia("(max-width: 767.98px)").matches) {
+      buildMobileBubbleTimeline();
+      return;
+    }
 
     const clusterWidth =
       Math.max(
@@ -2116,6 +2327,7 @@ if (tl) {
   var stage = document.querySelector(".pedagogy-hero-stage");
   var campusSec = document.querySelector(".campus-section");
   var diagramSec = document.querySelector("section.diagram-sec");
+  var diagramTab = document.querySelector("section.diagram-tab");
   if (!stage || !campusSec || !diagramSec) return;
 
   var halfCircle = campusSec.querySelector(".half-circle");
@@ -2124,6 +2336,8 @@ if (tl) {
   var panelBody = campusSec.querySelector(".panel-body");
   var heroImage = campusSec.querySelector(".img-full");
   var heroGlowCircle = campusSec.querySelector(".hero-glow-circle");
+  var isTabDiagram = window.matchMedia("(max-width: 1023px)").matches;
+  var isStaticHeroDiagram = window.matchMedia("(max-width: 991.98px)").matches;
 
   var nodes = [
     ".node1",
@@ -2154,18 +2368,55 @@ if (tl) {
     return label ? label.querySelector("p:not(.strong)") : null;
   });
 
-  // ── MOBILE: flat, no animation ──────────────────────────
-  if (window.innerWidth < 768) {
-    [panelKicker, panelTitle, panelBody].forEach(function (el) {
-      if (!el) return;
-      el.style.opacity = "1";
-      el.style.visibility = "visible";
-      el.style.transform = "none";
+  // ── Immediately hide text so there's no flash before init() ──
+  if (isStaticHeroDiagram) {
+    gsap.set([panelKicker, panelTitle, panelBody].filter(Boolean), {
+      opacity: 1,
+      x: 0,
+      visibility: "visible",
+      clearProps: "transform",
     });
+    if (halfCircle) {
+      gsap.set(halfCircle, {
+        x: 0,
+        scale: 1,
+        clearProps: "transform",
+      });
+    }
+    if (heroGlowCircle) {
+      gsap.set(heroGlowCircle, {
+        opacity: 1,
+        scale: 1,
+        visibility: "visible",
+        clearProps: "transform",
+      });
+    }
+    gsap.set(diagramSec, {
+      opacity: 0,
+      visibility: "hidden",
+      pointerEvents: "none",
+    });
+    if (diagramTab) {
+      gsap.set(diagramTab, {
+        opacity: 1,
+        visibility: "visible",
+        pointerEvents: "auto",
+        clearProps: "transform",
+      });
+      gsap.set(".diagram-tab .title-txt, .diagram-tab .circle-card", {
+        opacity: 1,
+        visibility: "visible",
+        scale: 1,
+        x: 0,
+        y: 0,
+        xPercent: 0,
+        yPercent: 0,
+        clearProps: "transform",
+      });
+    }
     return;
   }
 
-  // ── Immediately hide text so there's no flash before init() ──
   if (panelKicker) {
     panelKicker.style.opacity = "0";
     panelKicker.style.visibility = "hidden";
@@ -2181,6 +2432,11 @@ if (tl) {
   if (heroGlowCircle) {
     heroGlowCircle.style.opacity = "0";
     heroGlowCircle.style.visibility = "hidden";
+  }
+  if (isTabDiagram && diagramTab) {
+    diagramTab.style.opacity = "0";
+    diagramTab.style.visibility = "hidden";
+    diagramTab.style.pointerEvents = "none";
   }
 
   // ── DESKTOP ─────────────────────────────────────────────
@@ -2219,6 +2475,205 @@ if (tl) {
         scale: 0.7,
         visibility: "visible",
       });
+
+    if (isTabDiagram && diagramTab) {
+      var tabCards = gsap.utils.toArray(".diagram-tab .circle-card");
+      var tabTitle = diagramTab.querySelector(".title-txt");
+
+      gsap.set(diagramSec, {
+        opacity: 0,
+        visibility: "hidden",
+        pointerEvents: "none",
+      });
+      gsap.set(diagramTab, {
+        opacity: 0,
+        visibility: "hidden",
+        pointerEvents: "none",
+      });
+      if (tabTitle) {
+        gsap.set(tabTitle, { autoAlpha: 0, y: 24 });
+      }
+      gsap.set(tabCards, {
+        autoAlpha: 0,
+        scale: 0.22,
+        xPercent: -50,
+        yPercent: -50,
+        y: 46,
+        transformOrigin: "50% 50%",
+      });
+
+      var tabLoadTL = gsap.timeline({
+        delay: 0.3,
+        onComplete: function () {
+          tabLoadTL = null;
+        },
+      });
+
+      if (halfCircle) {
+        tabLoadTL.to(
+          halfCircle,
+          {
+            x: -(circleW * 0.5),
+            duration: 1.1,
+            ease: "power3.out",
+            force3D: true,
+          },
+          0,
+        );
+      }
+      if (heroGlowCircle) {
+        tabLoadTL.to(
+          heroGlowCircle,
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.65,
+            ease: "back.out(1.6)",
+          },
+          0.6,
+        );
+      }
+      if (panelTitle) {
+        tabLoadTL.to(
+          panelTitle,
+          { opacity: 1, x: 0, duration: 0.85, ease: "power3.out" },
+          0.85,
+        );
+      }
+      if (panelBody) {
+        tabLoadTL.to(
+          panelBody,
+          { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
+          1.45,
+        );
+      }
+      if (panelKicker) {
+        tabLoadTL.to(
+          panelKicker,
+          { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
+          1.55,
+        );
+      }
+
+      var tabScrollTL = gsap.timeline({ paused: true });
+
+      if (halfCircle) {
+        tabScrollTL.fromTo(
+          halfCircle,
+          {
+            x: -(circleW * 0.5),
+            scale: 1,
+            transformOrigin: "center center",
+          },
+          {
+            x: centeredCircleX,
+            scale: 14,
+            transformOrigin: "center center",
+            ease: "power2.inOut",
+            duration: 0.32,
+            force3D: true,
+          },
+          0,
+        );
+      }
+
+      if (heroGlowCircle)
+        tabScrollTL.to(heroGlowCircle, { opacity: 0, duration: 0.18 }, 0.01);
+      if (panelKicker)
+        tabScrollTL.fromTo(
+          panelKicker,
+          { opacity: 1, x: 0 },
+          { opacity: 0, x: -30, duration: 0.16 },
+          0.02,
+        );
+      if (panelTitle)
+        tabScrollTL.fromTo(
+          panelTitle,
+          { opacity: 1, x: 0 },
+          { opacity: 0, x: -40, duration: 0.18 },
+          0.05,
+        );
+      if (panelBody)
+        tabScrollTL.fromTo(
+          panelBody,
+          { opacity: 1, x: 0 },
+          { opacity: 0, x: -30, duration: 0.16 },
+          0.08,
+        );
+
+      tabScrollTL
+        .set(diagramTab, { visibility: "visible", pointerEvents: "auto" }, 0.36)
+        .to(
+          diagramTab,
+          { opacity: 1, duration: 0.08, ease: "power2.out" },
+          0.38,
+        );
+
+      if (tabTitle) {
+        tabScrollTL.to(
+          tabTitle,
+          { autoAlpha: 1, y: 0, duration: 0.12, ease: "power3.out" },
+          0.42,
+        );
+      }
+
+      var cardStart = 0.48;
+      var cardSlice = tabCards.length ? 0.48 / tabCards.length : 0;
+
+      tabCards.forEach(function (card, index) {
+        var start = cardStart + index * cardSlice;
+
+        if (index > 0) {
+          tabScrollTL.to(
+            tabCards[index - 1],
+            {
+              autoAlpha: 0,
+              scale: 0.86,
+              y: -34,
+              duration: cardSlice * 0.28,
+              ease: "power2.in",
+            },
+            start,
+          );
+        }
+
+        tabScrollTL.to(
+          card,
+          {
+            autoAlpha: 1,
+            scale: 1,
+            y: 0,
+            duration: cardSlice * 0.55,
+            ease: "back.out(1.45)",
+          },
+          start + cardSlice * 0.12,
+        );
+      });
+
+      tabScrollTL.to({}, { duration: 0.12 });
+
+      ScrollTrigger.create({
+        trigger: stage,
+        start: "top top",
+        end: function () {
+          return "+=" + window.innerHeight * (tabCards.length + 2);
+        },
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        scrub: 1.05,
+        animation: tabScrollTL,
+        invalidateOnRefresh: true,
+        onUpdate: function (self) {
+          if (self.progress > 0.001 && tabLoadTL) {
+            tabLoadTL.kill();
+            tabLoadTL = null;
+          }
+        },
+      });
+
+      return;
+    }
 
     // Diagram: hidden
     gsap.set(diagramSec, {
@@ -2520,7 +2975,8 @@ if (tl) {
   new Swiper(sliderEl, {
     slidesPerView: "auto",
     centeredSlides: false,
-    loop: true,
+    loop: false,
+    rewind: true,
     speed: 650,
     spaceBetween: 58,
     grabCursor: true,
@@ -2595,7 +3051,8 @@ tabs.forEach((tab) => {
     if (trigger) trigger.kill();
     diagram.classList.add("is-scroll-animated");
 
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 992) {
+      diagram.classList.remove("is-scroll-animated");
       gsap.set([center, satellites, lineImages], { clearProps: "all" });
       return;
     }
@@ -2738,11 +3195,25 @@ tabs.forEach((tab) => {
 
   function positionTeacherDots() {
     const length = path.getTotalLength();
+    const svg = path.ownerSVGElement;
+    const viewBox = svg.viewBox.baseVal;
+    const svgRect = svg.getBoundingClientRect();
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const scale = Math.min(
+      svgRect.width / viewBox.width,
+      svgRect.height / viewBox.height,
+    );
+    const renderedWidth = viewBox.width * scale;
+    const renderedHeight = viewBox.height * scale;
+    const offsetX =
+      svgRect.left - wrapperRect.left + (svgRect.width - renderedWidth) / 2;
+    const offsetY =
+      svgRect.top - wrapperRect.top + (svgRect.height - renderedHeight) / 2;
 
     dots.forEach((dot, index) => {
       const point = path.getPointAtLength((index / (dots.length - 1)) * length);
-      dot.style.left = `${point.x}px`;
-      dot.style.top = `${point.y}px`;
+      dot.style.left = `${offsetX + (point.x - viewBox.x) * scale}px`;
+      dot.style.top = `${offsetY + (point.y - viewBox.y) * scale}px`;
     });
   }
 
@@ -2752,6 +3223,7 @@ tabs.forEach((tab) => {
     }
 
     if (teacherDevTrigger) teacherDevTrigger.kill();
+
     positionTeacherDots();
 
     const pathLength = path.getTotalLength();
@@ -2768,6 +3240,8 @@ tabs.forEach((tab) => {
     gsap.set(dots, {
       autoAlpha: 0,
       scale: 0,
+      xPercent: -50,
+      yPercent: -50,
       transformOrigin: "50% 50%",
     });
     gsap.set(contentByDot, {
@@ -3156,6 +3630,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var section = document.querySelector(".extra-section");
   var swiperEl = document.querySelector(".extra-swiper");
   if (!section || !swiperEl || typeof Swiper === "undefined") return;
+  if (window.matchMedia("(max-width: 991.98px)").matches) return;
 
   var swiper = new Swiper(".extra-swiper", {
     slidesPerView: "auto",

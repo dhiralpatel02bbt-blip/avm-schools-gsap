@@ -15,6 +15,22 @@ body.about-us-page.about-hero-loading .bbt-yp-hero {
   touch-action: none;
 }
 
+body.about-us-page header .black-logo {
+  display: none;
+}
+
+@media(max-width: 991px) {
+  body.about-us-page header .black-logo {
+    display: none;
+  }
+
+  body.about-us-page .offcanvas-menu label span,
+  body.about-us-page .offcanvas-menu label span::before,
+  body.about-us-page .offcanvas-menu label span::after {
+    background-color: #fff;
+  }
+}
+
 /*  Careers about section css start */
 .bbt-yp-hero {
   background: url(../images/background-image.png);
@@ -1136,6 +1152,76 @@ section.awareness-about-sec {
   }
 }
 
+@media(max-width: 1023px) {
+  .commitment-sec {
+    padding: 80px 0 80px 70px;
+  }
+}
+
+@media(max-width: 991px) {
+  .commitment-sec {
+    padding: 80px 0 80px 53px;
+  }
+
+  .main-wrapper {
+    gap: 50px;
+  }
+
+  .image-wrapper::before {
+    top: -20px;
+    width: 80px;
+    height: 20px;
+  }
+
+  .image-wrapper::after {
+    right: 80px;
+    top: 0;
+    width: 80px;
+    height: 20px;
+  }
+}
+
+@media(max-width: 767px) {
+  .commitment-sec {
+    padding: 80px 30px 118px 30px;
+  }
+
+  .main-wrapper {
+    flex-direction: column-reverse;
+  }
+
+  .main-wrapper .image-wrapper,
+  .main-wrapper .content-sec {
+    width: 100%;
+  }
+
+  .main-wrapper {
+    gap: 43px;
+  }
+
+  .image-wrapper::before {
+    top: unset;
+    bottom: 0;
+    right: 80px;
+  }
+
+  .image-wrapper::after {
+    right: 0;
+    top: unset;
+  }
+
+  .main-wrapper .content-sec h2 {
+    font-size: 28px;
+    line-height: 118%;
+  }
+
+  .main-wrapper .content-sec p {
+    font-size: 14.5px;
+    line-height: 150%;
+    letter-spacing: 0.145px;
+  }
+}
+
 /* commitment section css end  */
 
 /* Governance section css start  */
@@ -1202,6 +1288,54 @@ section.awareness-about-sec {
 @media (max-width: 1280.9px) {
   .governance-sec {
     padding: 0 110px 109px 0;
+  }
+}
+
+@media(max-width: 1200px) {
+  .governance-sec {
+    padding: 0 84px 110px 0;
+  }
+}
+
+@media(max-width: 1023px) {
+  .governance-sec {
+    padding: 0 70px 110px 0;
+  }
+}
+
+@media (max-width: 991px) {
+  .governance-sec {
+    padding: 0 53px 110px 0;
+  }
+}
+
+@media(max-width: 767px) {
+  .governance-sec {
+    padding: 0 30px 110px 30px;
+  }
+
+  .governance-sec .main-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .main-wrapper.reverse-wrapper .content-sec,
+  .main-wrapper.reverse-wrapper .image-wrapper {
+    width: 100%;
+  }
+
+  .governance-sec .image-wrapper::before {
+    top: unset;
+    left: unset;
+    bottom: -24px;
+    right: 0;
+  }
+
+  .governance-sec .image-wrapper.left-blocks::after {
+    top: unset;
+    left: unset;
+    bottom: 0;
+    right: 90px;
   }
 }
 
