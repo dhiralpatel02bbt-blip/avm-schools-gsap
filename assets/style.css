@@ -91,6 +91,7 @@
 }
 
 .bbt-dp-hero .main-title span.weight-600 {
+  display: inline-block;
   font-family: Satoshi;
   font-size: 4.587400000000001em;
   font-style: normal;

@@ -1261,10 +1261,10 @@ gsap.set(".burgundy-bg", { x: -220 });
 // Yellow circle — aur neeche (screen ke bahar se thoda andar)
 gsap.set(".yellow-circle", { y: 380 });
 
-// Text — spans ko individually hide karo
-gsap.set(".main-title .line1", { xPercent: -150, opacity: 0 });
-gsap.set(".main-title .line2", { xPercent: -150, opacity: 0 });
-gsap.set(".main-title .line3", { xPercent: -150, opacity: 0 });
+// Text — spans ko individually hide karo (10% left se aayenge)
+gsap.set(".main-title .line1", { x: "-10vw", opacity: 0 });
+gsap.set(".main-title .line2", { x: "-10vw", opacity: 0 });
+gsap.set(".main-title .line3", { x: "-10vw", opacity: 0 });
 
 // Orange bar — hidden
 gsap.set(".orange-bg-element", { x: -300, opacity: 0 });
@@ -1330,10 +1330,10 @@ heroTL
   .to(
     ".main-title .line1",
     {
-      xPercent: 0,
+      x: 0,
       opacity: 1,
-      duration: 0.8,
-      ease: "power3.out",
+      duration: 0.9,
+      ease: "power2.out",
     },
     0.3,
   )
@@ -1342,24 +1342,24 @@ heroTL
   .to(
     ".main-title .line2",
     {
-      xPercent: 0,
+      x: 0,
       opacity: 1,
-      duration: 0.8,
-      ease: "power3.out",
+      duration: 0.9,
+      ease: "power2.out",
     },
-    0.5,
+    0.55,
   )
 
   // Line 3 "for the world."
   .to(
     ".main-title .line3",
     {
-      xPercent: 0,
+      x: 0,
       opacity: 1,
-      duration: 0.8,
-      ease: "power3.out",
+      duration: 0.9,
+      ease: "power2.out",
     },
-    0.7,
+    0.8,
   );
 
 const aboutSection = document.querySelector(".bbt-dp-about");

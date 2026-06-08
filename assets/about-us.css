@@ -146,12 +146,12 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
 @keyframes aboutHeroYellowIn {
   from {
     opacity: 0;
-    transform: translateY(42%) scale(0.92);
+    transform: translateY(42%) scale(0.88);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0) scale(0.96);
   }
 }
 
@@ -167,13 +167,14 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
 }
 .bbt-yp-hero .yellow-circle {
   position: absolute;
-  bottom: -52%;
+  bottom: -57%;
   right: -5%;
   width: 980px;
   height: 980px;
   border-radius: 50%;
   background-color: #f7df00;
   transform-origin: bottom center;
+  transform: translateY(0) scale(0.96);
   will-change: transform;
   z-index: 0;
 }

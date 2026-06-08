@@ -133,11 +133,11 @@
     if (fallbackAwarenessImage && fallbackAwarenessText) {
       fallbackAwareness.style.opacity = "0";
       fallbackAwarenessImage.style.opacity = "0";
-      fallbackAwarenessImage.style.transform = "translateX(-160px)";
+      fallbackAwarenessImage.style.transform = "translateY(90px)";
       fallbackAwarenessImage.style.transition =
         "opacity 1.1s ease, transform 1.1s cubic-bezier(0.16, 1, 0.3, 1)";
       fallbackAwarenessText.style.opacity = "0";
-      fallbackAwarenessText.style.transform = "translateX(160px)";
+      fallbackAwarenessText.style.transform = "translateY(90px)";
       fallbackAwarenessText.style.transition =
         "opacity 1.1s ease 0.18s, transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.18s";
     }
@@ -205,9 +205,8 @@
           "translateX(" + -60 * fadeProgress + "px) translateY(30%)";
       }
       if (fallbackYellow) {
-        fallbackYellow.style.opacity = 1 - fadeProgress;
-        fallbackYellow.style.transform =
-          "translateY(" + 360 * fadeProgress + "px)";
+        fallbackYellow.style.opacity = "1";
+        fallbackYellow.style.transform = "translateY(0) scale(0.96)";
       }
       if (fallbackStudent) {
         fallbackStudent.style.opacity = "1";
@@ -224,9 +223,9 @@
         if (fallbackAwarenessImage && fallbackAwarenessText) {
           fallbackAwareness.style.opacity = "1";
           fallbackAwarenessImage.style.opacity = "1";
-          fallbackAwarenessImage.style.transform = "translateX(0)";
+          fallbackAwarenessImage.style.transform = "translateY(0)";
           fallbackAwarenessText.style.opacity = "1";
-          fallbackAwarenessText.style.transform = "translateX(0)";
+          fallbackAwarenessText.style.transform = "translateY(0)";
         }
       }
 
@@ -446,31 +445,6 @@
       );
     }
 
-    if (yellowCircle) {
-      coverTL.to(
-        yellowCircle,
-        {
-          opacity: 0,
-          y: 360,
-          duration: 0.35,
-          ease: "none",
-        },
-        0.03
-      );
-    }
-
-    if (studentImage) {
-      coverTL.to(
-        studentImage,
-        {
-          x: 0,
-          duration: 0.35,
-          ease: "none",
-        },
-        0.05
-      );
-    }
-
     heroScrollTrigger = ScrollTrigger.create({
       trigger: hero,
       start: "top top",
@@ -513,7 +487,7 @@
       force3D: true,
     });
     gsap.set(title, { x: 0, opacity: 1 });
-    if (yellowCircle) gsap.set(yellowCircle, { y: 0, opacity: 1 });
+    if (yellowCircle) gsap.set(yellowCircle, { y: 0, scale: 0.96, opacity: 1 });
     if (studentImage) gsap.set(studentImage, { x: 0, opacity: 1 });
 
     window.setTimeout(function () {
@@ -521,6 +495,7 @@
       if (titleHeading) gsap.set(titleHeading, { x: 0, autoAlpha: 1 });
       if (titleBody) gsap.set(titleBody, { x: 0, autoAlpha: 1 });
       gsap.set(circle, { x: 0, scale: 1 });
+      if (yellowCircle) gsap.set(yellowCircle, { y: 0, scale: 0.96, opacity: 1 });
       createHeroScrollAnimation(measurements);
       ScrollTrigger.refresh();
     }, 2750);
@@ -532,16 +507,23 @@
     gsap.killTweensOf([awarenessImage, awarenessText]);
 
     gsap.set(awarenessSection, { autoAlpha: 1 });
-    gsap.set(awarenessImage, { x: -160, autoAlpha: 0 });
-    gsap.set(awarenessText, { x: 160, autoAlpha: 0 });
+    gsap.set([awarenessImage, awarenessText], { x: 0, y: 90, autoAlpha: 0 });
 
     var awarenessTL = gsap.timeline({
       defaults: { ease: "power3.out" },
     });
 
     awarenessTL
-      .to(awarenessImage, { x: 0, autoAlpha: 1, duration: 0.85 }, 0)
-      .to(awarenessText, { x: 0, autoAlpha: 1, duration: 0.85 }, 0.12)
+      .to(
+        awarenessImage,
+        { y: 0, autoAlpha: 1, duration: 0.85 },
+        0
+      )
+      .to(
+        awarenessText,
+        { y: 0, autoAlpha: 1, duration: 0.85 },
+        0.12
+      )
       .to({}, { duration: 0.34 })
       .to(
         [awarenessImage, awarenessText],
