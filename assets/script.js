@@ -1261,10 +1261,10 @@ gsap.set(".burgundy-bg", { x: -220 });
 // Yellow circle — aur neeche (screen ke bahar se thoda andar)
 gsap.set(".yellow-circle", { y: 380 });
 
-// Text — spans ko individually hide karo (10% left se aayenge)
-gsap.set(".main-title .line1", { x: "-10vw", opacity: 0 });
-gsap.set(".main-title .line2", { x: "-10vw", opacity: 0 });
-gsap.set(".main-title .line3", { x: "-10vw", opacity: 0 });
+// Text — spans ko individually hide karo
+gsap.set(".main-title .line1", { xPercent: -150, opacity: 0 });
+gsap.set(".main-title .line2", { xPercent: -150, opacity: 0 });
+gsap.set(".main-title .line3", { xPercent: -150, opacity: 0 });
 
 // Orange bar — hidden
 gsap.set(".orange-bg-element", { x: -300, opacity: 0 });
@@ -1330,10 +1330,10 @@ heroTL
   .to(
     ".main-title .line1",
     {
-      x: 0,
+      xPercent: 0,
       opacity: 1,
-      duration: 0.9,
-      ease: "power2.out",
+      duration: 0.8,
+      ease: "power3.out",
     },
     0.3,
   )
@@ -1342,24 +1342,24 @@ heroTL
   .to(
     ".main-title .line2",
     {
-      x: 0,
+      xPercent: 0,
       opacity: 1,
-      duration: 0.9,
-      ease: "power2.out",
+      duration: 0.8,
+      ease: "power3.out",
     },
-    0.55,
+    0.5,
   )
 
   // Line 3 "for the world."
   .to(
     ".main-title .line3",
     {
-      x: 0,
+      xPercent: 0,
       opacity: 1,
-      duration: 0.9,
-      ease: "power2.out",
+      duration: 0.8,
+      ease: "power3.out",
     },
-    0.8,
+    0.7,
   );
 
 const aboutSection = document.querySelector(".bbt-dp-about");
@@ -1582,11 +1582,30 @@ const horizontal = document.querySelector(".horizontal-wrapper");
 if (horizontal) {
   const panelScrollWidth = () => horizontal.scrollWidth - window.innerWidth;
 
+  // Calculate scale needed to fill entire section from bottom-right origin
+  const getFillScale = () => {
+    const section = document.querySelector(".horizontal-section");
+    const circle = document.querySelector(".lavender-circle");
+    if (!section || !circle) return 4;
+    // From bottom-right corner, circle needs to reach top-left
+    // diagonal distance = sqrt(sW² + sH²), circle radius ≈ cW/2
+    const sW = section.offsetWidth;
+    const sH = section.offsetHeight;
+    const cW = circle.offsetWidth;
+    const cH = circle.offsetHeight;
+    const scaleX = sW / (cW * 0.5);
+    const scaleY = sH / cH;
+    return Math.max(scaleX, scaleY) * 1.1;
+  };
+
   gsap.set(".horizontal-section .yellow h2", { x: -160, opacity: 0 });
+
+  // Circle starts small at bottom-right corner (visible before pin)
   gsap.set(".lavender-circle", {
-    scale: 1,
+    scale: 0.22,
     transformOrigin: "bottom right",
   });
+
   gsap.set(horizontal, { x: () => window.innerWidth });
 
   const hTL = gsap.timeline({
@@ -1601,6 +1620,7 @@ if (horizontal) {
   });
 
   hTL
+    // Phase 1 (0→0.5): title + circle grow to original size together
     .to(".horizontal-section .yellow h2", {
       x: 0,
       opacity: 1,
@@ -1610,17 +1630,28 @@ if (horizontal) {
     .to(
       ".lavender-circle",
       {
-        scale: 12,
-        ease: "power1.inOut",
+        scale: 1,
+        ease: "power2.out",
         duration: 0.5,
       },
       "<",
     )
+    // Phase 2 (0.5→4.5): first 3 panels scroll — circle stays at scale:1
     .to(horizontal, {
       x: () => -panelScrollWidth(),
       ease: "none",
-      duration: 5,
-    });
+      duration: 4,
+    })
+    // Phase 3 (4.5→5.5): last slide arrives — circle expands to fill full section
+    .to(
+      ".lavender-circle",
+      {
+        scale: () => getFillScale(),
+        ease: "power2.inOut",
+        duration: 1,
+      },
+      "-=1", // starts 1 unit before panels finish = exactly last slide
+    );
 }
 
 // ============================================================
