@@ -91,7 +91,6 @@
 }
 
 .bbt-dp-hero .main-title span.weight-600 {
-  display: inline-block;
   font-family: Satoshi;
   font-size: 4.587400000000001em;
   font-style: normal;
@@ -963,7 +962,7 @@
   height: 100vh;
   position: relative;
   margin-top: 150px;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
   overflow-x: clip;
 }
 
@@ -2177,15 +2176,16 @@ a.see-all.secondary-btn {
   min-height: 100vh;
   z-index: 1;
   isolation: isolate;
-  background: #fff;
+  background: #f7df00;
 }
 
 .bbt-FA-circle-sec .sticky-viewport {
   position: relative;
   height: 100vh;
   overflow: hidden;
-  background: #fff;
+  background: #f7df00;
   z-index: 1;
+
 }
 
 .bbt-FA-circle-sec .slides-track {

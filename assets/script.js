@@ -2075,6 +2075,19 @@ if (tl) {
       },
     });
 
+    // Yellow → White fade: both section + stickyViewport, just before c1 appears
+    // gsap.set forces inline style so GSAP can tween it (overrides CSS background)
+    gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
+    bubbleTimeline.to(
+      [section, stickyViewport],
+      {
+        backgroundColor: "#ffffff",
+        duration: 0.18,
+        ease: "power2.inOut",
+      },
+      -0.05, // finishes just before c1 appears at 0.08
+    );
+
     bubbleCircles.forEach((circle, index) => {
       const heading = circle.querySelector("h2");
       const body = circle.querySelector("p");
@@ -2286,6 +2299,36 @@ if (tl) {
       { x: startX },
       { x: endX, duration: travelDistance },
       0,
+    );
+
+    // c1 (index=0) phaseOneStart = max(0, startX + c1Center - viewportCenter - viewportWidth*0.28)
+    // bg fade should complete just before c1 becomes visible
+    // We use a small fixed window at the very start of scroll (before track moves much)
+    const c1 = bubbleCircles[0];
+    const c1Center = clusterOffset + c1.offsetLeft + c1.offsetWidth / 2;
+    const c1FocusTime = gsap.utils.clamp(
+      0,
+      travelDistance,
+      startX + c1Center - viewportCenter,
+    );
+    const c1PhaseOne = gsap.utils.clamp(
+      0,
+      travelDistance,
+      c1FocusTime - viewportWidth * 0.28,
+    );
+    const bgFadeEnd = Math.max(c1PhaseOne - viewportWidth * 0.05, 0);
+    const bgFadeDuration = Math.max(viewportWidth * 0.2, 100);
+    const bgFadeStart = Math.max(bgFadeEnd - bgFadeDuration, 0);
+
+    gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
+    bubbleTimeline.to(
+      [section, stickyViewport],
+      {
+        backgroundColor: "#ffffff",
+        duration: bgFadeDuration,
+        ease: "power2.inOut",
+      },
+      bgFadeStart,
     );
 
     bubbleCircles.forEach((circle, index) => {
