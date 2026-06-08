@@ -83,7 +83,7 @@
 .bbt-dp-hero .main-title span.weight-500 {
   display: inline-block;
   font-family: Satoshi;
-  font-size: 4em;
+  font-size: 3.48645em;
   font-style: normal;
   font-weight: 500;
   line-height: 112%;
@@ -92,7 +92,7 @@
 
 .bbt-dp-hero .main-title span.weight-600 {
   font-family: Satoshi;
-  font-size: 4.098em;
+  font-size: 4.587400000000001em;
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
@@ -802,7 +802,7 @@
 
 /* video section CSS start  */
 .video-section {
-  height: 400vh;
+  height: 100vh;
   position: relative;
   overflow-x: clip;
 }
@@ -971,11 +971,12 @@
   bottom: 0;
   right: -39vw;
   width: clamp(780px, 120vw, 2193px);
-  height: clamp(390px, 59vw, 2193px);
+  height: clamp(390px, 60vw, 1097px);
   background: #f7df00;
   border-radius: 1500px 1500px 0 0;
-  z-index: -1;
+  z-index: 0;
   transform-origin: bottom right;
+  pointer-events: none;
 }
 
 .horizontal-section .horizontal-wrapper {
@@ -1090,7 +1091,8 @@
   position: absolute;
   left: 20px;
   right: 20px;
-  bottom: 24px;
+  /* bottom: 24px; */
+  bottom: 60px;
   z-index: 3;
   margin-top: 0;
 }
@@ -1342,11 +1344,19 @@ section.bbt-FA-img-sec {
   --school-circle-right: clamp(-141px, -22vw, -18px);
   --school-circle-bottom: clamp(-120px, -35vw, -120px);
   margin: 80px 0 0px;
-  /* overflow: hidden; */
+  overflow: visible;
 }
 
 .bbt-FA-img-sec .img-box {
   position: relative;
+  overflow: visible;
+}
+
+/* Mask wrapper — clip-path reveal from bottom */
+.bbt-FA-img-sec .img-mask {
+  clip-path: inset(100% 0% 0% 0%);
+  will-change: clip-path;
+  overflow: hidden;
 }
 
 .bbt-FA-img-sec .img-box img {
@@ -1354,6 +1364,11 @@ section.bbt-FA-img-sec {
   max-height: 100vh;
   display: block;
   object-fit: cover;
+  width: 100%;
+  transform: scale(1.08);
+  /* slight scale so parallax doesn't show edges */
+  transform-origin: center bottom;
+  will-change: transform;
 }
 
 .bbt-FA-img-sec .img-text {
@@ -1382,9 +1397,6 @@ section.bbt-FA-img-sec {
   border-radius: 50%;
   color: #fff;
   z-index: 1;
-  opacity: 0;
-  transform: scale(0.35);
-  transform-origin: center center;
   will-change: transform, opacity;
 }
 
@@ -1395,14 +1407,10 @@ section.bbt-FA-img-sec {
   z-index: 2;
   width: 53%;
   text-align: left;
-  opacity: 0;
-  transform: translateY(24px);
   will-change: opacity, transform;
 }
 
 .bbt-FA-img-sec .img-text {
-  opacity: 0;
-  transform: translateY(24px);
   will-change: opacity, transform;
 }
 
@@ -1611,9 +1619,11 @@ section.bbt-FA-img-sec {
 
 /* recognition-sec CSS start */
 .recognition-sec {
-  background: #f7df00;
+  background: linear-gradient(to bottom, #fff 0%, #f7df00 14%);
   padding: 110px 0px 135.9px;
   text-align: center;
+  position: relative;
+  z-index: 5;
 }
 
 .recognition-sec .section-title {
@@ -1867,7 +1877,16 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
 
 /* blog section css start */
 .news-section {
-  padding: 266px 0px 174px;
+  padding: 120px 0px 174px;
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  margin-top: -80px;
+  /* border-radius: 40px 40px 0 0; */
+  /* rounded top edge for clean swipe-up feel */
+  transform: translateY(80px);
+  /* starts below — GSAP will animate to 0 */
+  will-change: transform;
 }
 
 .news-header {
@@ -1919,16 +1938,6 @@ a.see-all.secondary-btn {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 104px;
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 1s ease 0.16s,
-    transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.16s;
-  will-change: opacity, transform;
-}
-
-.news-section.is-waiting .news-grid {
-  opacity: 0;
-  transform: translateY(-56px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1937,8 +1946,7 @@ a.see-all.secondary-btn {
   .recognition-sec .awards-grid,
   .recognition-sec .award,
   .news-header h2,
-  a.see-all.secondary-btn,
-  .news-section .news-grid {
+  a.see-all.secondary-btn {
     transition-duration: 0.01ms;
   }
 }
@@ -1949,6 +1957,23 @@ a.see-all.secondary-btn {
   flex-direction: column;
   border: none;
   background: transparent;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.news-section .card.card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-section .card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .news-section .card h3 {

@@ -2,6 +2,12 @@ body.pedagogy-page header .black-logo {
     display: none;
 }
 
+.offcanvas-menu label span,
+.offcanvas-menu label span::before,
+.offcanvas-menu label span::after {
+    background: #fff;
+}
+
 /* hero section start */
 .pedagogy-page {
     -ms-overflow-style: none;
@@ -66,8 +72,12 @@ body.pedagogy-page header .black-logo {
     width: min(50vw, 780px);
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     overflow: visible;
     pointer-events: none;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
 }
 
 .pedagogy-page .campus-section .half-circle {
@@ -875,80 +885,36 @@ body.pedagogy-page header .black-logo {
 
 }
 
-@media(max-width: 991.98px) {
-    .pedagogy-page .pedagogy-hero-stage {
-        height: auto;
-        min-height: 0;
-        overflow: visible;
-    }
-
-    .pedagogy-page .campus-section {
-        position: relative;
-        height: 100vh;
-        min-height: 540px;
-    }
-
-    .pedagogy-page .campus-section .panel-title,
-    .pedagogy-page .campus-section .panel-body {
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-    }
-
-    .pedagogy-page .diagram-tab {
-        position: relative;
-        inset: auto;
-        height: auto;
-        min-height: 100vh;
-        overflow: visible;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        padding: 82px 0 90px;
-    }
-
-    .pedagogy-page .diagram-tab .title-txt {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        margin: 0 auto 38px !important;
-    }
-
-    .pedagogy-page .diagram-tab .container-xxl {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-    }
-
-    .pedagogy-page .diagram-tab .circle-card {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        opacity: 1;
-        visibility: visible;
-    }
-}
-
 @media(max-width: 767px) {
     .diagram-tab .circle-card {
         width: 335px;
         height: 335px;
     }
-
-    .pedagogy-page .campus-section .panel-title {
-        font-size: 26px;
-        font-weight: 700;
-        line-height: 115%;
-    }
 }
 
 /* Diagram section css End */
+
 /* tabbing section css Start */
 .tabbing-sec {
-    padding: 105px 0 178px;
+    padding: 0 0 178px;
+}
+
+.tabbing-sec .tabs-sticky-bar {
+    background: #ffffff;
+    width: 100%;
+    padding: 22px 0 18px;
+}
+
+/* Sticky tabs wrapper */
+.tabbing-sec .tabs-container {
+    position: relative;
+    padding-top: 105px;
+}
+
+.tabbing-sec .tabs {
+    display: flex;
+    gap: 80px;
+    justify-content: center;
 }
 
 .tabbing-sec h2.title-txt {
@@ -968,11 +934,6 @@ body.pedagogy-page header .black-logo {
     width: 48%;
 }
 
-.tabbing-sec .tabs {
-    display: flex;
-    gap: 80px;
-    justify-content: center;
-}
 
 .tabbing-sec .tab {
     background: none;
@@ -986,6 +947,10 @@ body.pedagogy-page header .black-logo {
     font-style: normal;
     font-weight: 600;
     line-height: 154%;
+}
+
+.tabbing-sec .tab br {
+    display: none;
 }
 
 .tabbing-sec .tab:hover {
@@ -1445,6 +1410,10 @@ body.pedagogy-page header .black-logo {
         line-height: 140%;
     }
 
+    .tabbing-sec .tab br {
+        display: block;
+    }
+
     .tabbing-sec .tab.active {
         text-decoration: none;
         position: relative;
@@ -1454,6 +1423,7 @@ body.pedagogy-page header .black-logo {
         width: 100vw;
         margin-left: calc(50% - 50vw);
         margin-right: calc(50% - 50vw);
+        justify-content: space-between;
     }
 
     .tabbing-sec .tab.active::after {
@@ -3111,3 +3081,48 @@ body.pedagogy-page header .black-logo {
 }
 
 /* development diagram section css End */
+/* ══════════════════════════════════════════════════════════
+   SECTION OVERLAP / CROSSFADE — hero stage → tabbing-sec
+   ══════════════════════════════════════════════════════════ */
+
+.pedagogy-page .diagram-bottom-fade {
+    height: 340px !important;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(10, 61, 156, 0.55) 38%,
+            rgba(255, 255, 255, 0.9) 76%,
+            #ffffff 100%) !important;
+}
+
+.pedagogy-page .tabbing-sec {
+    margin-top: -120px !important;
+    border-radius: 28px 28px 0 0;
+    box-shadow: 0 -16px 60px rgba(10, 61, 156, 0.09);
+}
+
+@media (max-width: 767px) {
+    .pedagogy-page .tabbing-sec {
+        margin-top: -60px !important;
+        border-radius: 16px 16px 0 0;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════
+   WIPE MASK CONTAINERS — created by JS at parse time
+   No opacity/transform overrides — CSS opacity:0 on the
+   columns is intentional and used by the wipe animation.
+   ══════════════════════════════════════════════════════════ */
+
+.aym-img-col .aym-img-mask,
+.avm-img-col .avm-img-mask {
+    display: block;
+    overflow: hidden;
+    will-change: clip-path;
+}
+
+.aym-img-col .aym-img-mask img,
+.avm-img-col .avm-img-mask img {
+    display: block;
+    width: 100%;
+    will-change: transform;
+}

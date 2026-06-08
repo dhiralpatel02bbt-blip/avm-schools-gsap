@@ -57,6 +57,33 @@
 
   lockInitialHeroScroll();
 
+  function initMobileStickyButton() {
+    var contactSection = document.querySelector(".contact-sec");
+    var stickyButton = document.querySelector(".mob-sticky-btn");
+    if (!contactSection || !stickyButton) return;
+
+    function updateMobileStickyButton() {
+      if (window.innerWidth > 767) {
+        aboutBody.classList.remove("about-hide-mob-sticky");
+        return;
+      }
+
+      var contactTop = contactSection.getBoundingClientRect().top;
+      aboutBody.classList.toggle(
+        "about-hide-mob-sticky",
+        contactTop <= window.innerHeight
+      );
+    }
+
+    updateMobileStickyButton();
+    window.addEventListener("scroll", updateMobileStickyButton, {
+      passive: true,
+    });
+    window.addEventListener("resize", updateMobileStickyButton);
+  }
+
+  initMobileStickyButton();
+
   function initNativeAboutFallback() {
     var fallbackHero = document.querySelector(".bbt-yp-hero");
     var fallbackCircle = fallbackHero
@@ -183,9 +210,8 @@
           "translateY(" + 360 * fadeProgress + "px)";
       }
       if (fallbackStudent) {
-        fallbackStudent.style.opacity = 1 - fadeProgress;
-        fallbackStudent.style.transform =
-          "translateX(" + 110 * fadeProgress + "px)";
+        fallbackStudent.style.opacity = "1";
+        fallbackStudent.style.transform = "translateX(0)";
       }
 
       if (
@@ -337,11 +363,6 @@
 
   if (!hero || !circle || typeof ScrollTrigger === "undefined") return;
 
-  if (window.innerWidth < 768) {
-    window.setTimeout(unlockInitialHeroScroll, 2750);
-    return;
-  }
-
   function killTriggers() {
     if (heroScrollTrigger) heroScrollTrigger.kill();
     if (awarenessTrigger) awarenessTrigger.kill();
@@ -442,8 +463,7 @@
       coverTL.to(
         studentImage,
         {
-          opacity: 0,
-          x: 110,
+          x: 0,
           duration: 0.35,
           ease: "none",
         },
@@ -524,25 +544,22 @@
       .to(awarenessText, { x: 0, autoAlpha: 1, duration: 0.85 }, 0.12)
       .to({}, { duration: 0.34 })
       .to(
-        awarenessImage,
+        [awarenessImage, awarenessText],
         {
-          x: "-42vw",
-          autoAlpha: 0,
-          duration: 0.72,
-          ease: "power2.inOut",
+          x: 0,
+          y: -90,
+          autoAlpha: 1,
+          duration: 1.05,
+          ease: "power2.out",
         },
         ">"
       )
-      .to(
-        awarenessText,
-        {
-          x: "42vw",
-          autoAlpha: 0,
-          duration: 0.72,
-          ease: "power2.inOut",
-        },
-        "<"
-      )
+      .to([awarenessImage, awarenessText], {
+        y: -120,
+        autoAlpha: 0,
+        duration: 0.55,
+        ease: "power2.inOut",
+      })
       .to({}, { duration: 0.16 });
 
     awarenessTrigger = ScrollTrigger.create({
@@ -585,6 +602,7 @@
     gsap.set(visionSection, {
       "--vision-radial-scale": 0,
       "--vision-radial-opacity": 0,
+      "--vision-radial-reveal": "0%",
     });
 
     var visionPinnedTL = gsap.timeline({
@@ -595,6 +613,7 @@
       .to(visionSection, {
         "--vision-radial-scale": 1,
         "--vision-radial-opacity": 0.95,
+        "--vision-radial-reveal": "85%",
         duration: 1.45,
       })
       .to(visionLeft, {
@@ -658,6 +677,7 @@
         gsap.set(visionSection, {
           "--vision-radial-scale": 0,
           "--vision-radial-opacity": 0,
+          "--vision-radial-reveal": "0%",
         });
       },
     });
@@ -670,46 +690,62 @@
     var whiteCircle = coreSection.querySelector(".white-circle");
     var circleHeading = whiteCircle ? whiteCircle.querySelector("h2") : null;
     var circleSubtitle = whiteCircle ? whiteCircle.querySelector("p") : null;
-
-    var items = [
-      {
-        dot: coreSection.querySelector(".first-para .timeline-dot"),
-        text: coreSection.querySelector(".first-para"),
-      },
-      {
-        dot: coreSection.querySelector(".second-para .timeline-dot"),
-        text: coreSection.querySelector(".second-para"),
-      },
-      {
-        dot: coreSection.querySelector(".third-para .timeline-dot"),
-        text: coreSection.querySelector(".third-para"),
-      },
-    ];
-
-    // The yellow vertical line is a ::before pseudo-element on .text-wrapper.
-    // We replicate it as a real element so GSAP can animate its height.
     var textWrapper = coreSection.querySelector(".text-wrapper");
     if (!textWrapper) return;
 
+    var items = Array.prototype.slice
+      .call(textWrapper.querySelectorAll(".core-para"))
+      .map(function (item) {
+        return {
+          dot: item.querySelector(".timeline-dot"),
+          text: item,
+        };
+      });
+    if (!items.length) return;
+
+    function showCoreValuesStatic() {
+      var oldLine = textWrapper.querySelector(".avm-cv-anim-line");
+      if (oldLine) oldLine.remove();
+
+      if (whiteCircle) whiteCircle.removeAttribute("style");
+      if (circleHeading) circleHeading.removeAttribute("style");
+      if (circleSubtitle) circleSubtitle.removeAttribute("style");
+
+      textWrapper.removeAttribute("style");
+      items.forEach(function (item) {
+        if (item.dot) item.dot.removeAttribute("style");
+        item.text.querySelectorAll("h3, p").forEach(function (textNode) {
+          textNode.removeAttribute("style");
+        });
+      });
+    }
+
+    if (typeof ScrollTrigger === "undefined") {
+      showCoreValuesStatic();
+      return;
+    }
+
+    // The yellow vertical line is a ::before pseudo-element on .text-wrapper.
+    // We replicate it as a real element so GSAP can animate its height.
     var oldAnimLine = textWrapper.querySelector(".avm-cv-anim-line");
     if (oldAnimLine) oldAnimLine.remove();
 
     // Inject an animated line overlay (sits on top of the CSS pseudo ::before)
     var animLine = document.createElement("span");
     animLine.className = "avm-cv-anim-line";
+    var timelineStyles = window.getComputedStyle(textWrapper);
+    var timelineLeft =
+      timelineStyles.getPropertyValue("--core-timeline-x").trim() || "-87px";
+    var contentIndent =
+      timelineStyles.getPropertyValue("--core-content-indent").trim() || "0px";
     animLine.style.cssText =
-      "position:absolute;left:-32px;top:14px;width:1px;height:1px;background:#f7df00;z-index:2;pointer-events:none;transform:scaleY(0);transform-origin:top center;";
+      "position:absolute;left:calc(" +
+      contentIndent +
+      " + " +
+      timelineLeft +
+      ");top:14px;width:1px;height:1px;background:#f7df00;z-index:2;pointer-events:none;transform:scaleY(0);transform-origin:top center;";
     textWrapper.style.position = "relative";
     textWrapper.insertBefore(animLine, textWrapper.firstChild);
-
-    // Hide the CSS ::before line so only our animated one shows
-    if (!document.getElementById("avm-cv-hide-static-line")) {
-      var styleTag = document.createElement("style");
-      styleTag.id = "avm-cv-hide-static-line";
-      styleTag.textContent =
-        ".core-value-sec .text-wrapper::before{display:none!important;}";
-      document.head.appendChild(styleTag);
-    }
 
     // ── Initial states ──────────────────────────────────────────────────────
 
@@ -739,29 +775,21 @@
     });
 
     // ── Helper: get the full line height (distance from top to last dot bottom)
-    function getFullLineHeight() {
-      if (!items[0].dot || !items[2].dot) return 880;
+    function getDotCenter(index) {
+      if (!items[index] || !items[index].dot) return 0;
       var wrapperRect = textWrapper.getBoundingClientRect();
-      var lastDotBottom = items[2].dot.getBoundingClientRect().bottom;
-      var lineToWrapperBottom = wrapperRect.height - 28;
-      var lineToLastDotBottom = lastDotBottom - wrapperRect.top - 14;
-      var sectionBottom = coreSection.getBoundingClientRect().bottom;
-      var lineToSectionBottom = sectionBottom - wrapperRect.top - 14;
-      return Math.max(
-        lineToWrapperBottom,
-        lineToLastDotBottom,
-        lineToSectionBottom
-      );
+      var dotRect = items[index].dot.getBoundingClientRect();
+      return dotRect.top + dotRect.height / 2 - wrapperRect.top;
     }
 
-    // Height checkpoints: line grows to reach each dot
-    function getDotLineHeight(index) {
-      if (!items[0].dot || !items[index].dot) return 0;
-      var wrapperTop = textWrapper.getBoundingClientRect().top;
-      var dotCenter =
-        items[index].dot.getBoundingClientRect().top +
-        items[index].dot.offsetHeight / 2;
-      return dotCenter - wrapperTop - 14;
+    function getWrapperY(index) {
+      var sectionRect = coreSection.getBoundingClientRect();
+      var wrapperRect = textWrapper.getBoundingClientRect();
+      var itemRect = items[index].text.getBoundingClientRect();
+      var itemCenter = itemRect.top + itemRect.height / 2 - wrapperRect.top;
+      var targetCenter = sectionRect.height * 0.52;
+      var wrapperOffset = wrapperRect.top - sectionRect.top;
+      return targetCenter - wrapperOffset - itemCenter;
     }
 
     // ── Build the master scrub timeline ─────────────────────────────────────
@@ -769,11 +797,23 @@
     // Section is pinned for the duration of the scroll.
 
     var masterTL = gsap.timeline({ paused: true });
-    var lineFullHeight = getFullLineHeight();
-    var lineToDotTwo = getDotLineHeight(1);
-    var lineToDotThree = getDotLineHeight(2);
+    var firstDotCenter = getDotCenter(0);
+    var lastDotCenter = getDotCenter(items.length - 1);
+    var lineFullHeight = Math.max(1, lastDotCenter - firstDotCenter);
+    var itemPositions = items.map(function (_item, index) {
+      return {
+        y: getWrapperY(index),
+        lineProgress:
+          lineFullHeight > 0
+            ? (getDotCenter(index) - firstDotCenter) / lineFullHeight
+            : 0,
+      };
+    });
+    var startY = itemPositions[0].y;
 
+    gsap.set(textWrapper, { y: startY });
     gsap.set(animLine, {
+      top: firstDotCenter,
       height: lineFullHeight,
       scaleY: 0,
       transformOrigin: "top center",
@@ -801,16 +841,41 @@
     }
 
     // Phase 1 (0.14–0.22): dot 1 pops + text 1 slides in
-    if (items[0].dot) {
+    items.forEach(function (item, index) {
+      var itemStart = 0.08 + index * 0.18;
+      var itemY = itemPositions[index].y;
+      var lineProgress = itemPositions[index].lineProgress;
+
       masterTL.to(
-        items[0].dot,
-        { scale: 1, autoAlpha: 1, duration: 0.06, ease: "back.out(2)" },
-        0.14
+        textWrapper,
+        {
+          y: itemY,
+          duration: index === 0 ? 0.01 : 0.1,
+          ease: "power1.inOut",
+        },
+        itemStart - 0.03
       );
-    }
-    if (items[0].text) {
+
       masterTL.to(
-        items[0].text.querySelectorAll("h3, p"),
+        animLine,
+        {
+          scaleY: Math.max(0, Math.min(1, lineProgress)),
+          duration: index === 0 ? 0.01 : 0.12,
+          ease: "power1.inOut",
+        },
+        itemStart
+      );
+
+      if (item.dot) {
+        masterTL.to(
+          item.dot,
+          { scale: 1, autoAlpha: 1, duration: 0.06, ease: "back.out(2)" },
+          itemStart + 0.03
+        );
+      }
+
+      masterTL.to(
+        item.text.querySelectorAll("h3, p"),
         {
           autoAlpha: 1,
           x: 0,
@@ -818,95 +883,25 @@
           ease: "power3.out",
           stagger: 0.02,
         },
-        0.17
+        itemStart + 0.06
       );
-    }
-
-    // Phase 2 (0.28–0.44): line grows from top to dot 2 position
-    masterTL.to(
-      animLine,
-      {
-        scaleY: lineToDotTwo / lineFullHeight,
-        duration: 0.16,
-        ease: "power1.inOut",
-      },
-      0.28
-    );
-
-    // Phase 3 (0.45–0.54): dot 2 pops + text 2 slides in
-    if (items[1].dot) {
-      masterTL.to(
-        items[1].dot,
-        { scale: 1, autoAlpha: 1, duration: 0.06, ease: "back.out(2)" },
-        0.45
-      );
-    }
-    if (items[1].text) {
-      masterTL.to(
-        items[1].text.querySelectorAll("h3, p"),
-        {
-          autoAlpha: 1,
-          x: 0,
-          duration: 0.08,
-          ease: "power3.out",
-          stagger: 0.02,
-        },
-        0.48
-      );
-    }
-
-    // Phase 4 (0.58–0.74): line grows from dot 2 to dot 3 position
-    masterTL.to(
-      animLine,
-      {
-        scaleY: lineToDotThree / lineFullHeight,
-        duration: 0.16,
-        ease: "power1.inOut",
-      },
-      0.58
-    );
-
-    // Phase 5 (0.75–0.88): dot 3 pops + text 3 slides in
-    if (items[2].dot) {
-      masterTL.to(
-        items[2].dot,
-        { scale: 1, autoAlpha: 1, duration: 0.06, ease: "back.out(2)" },
-        0.75
-      );
-    }
-    if (items[2].text) {
-      masterTL.to(
-        items[2].text.querySelectorAll("h3, p"),
-        {
-          autoAlpha: 1,
-          x: 0,
-          duration: 0.1,
-          ease: "power3.out",
-          stagger: 0.02,
-        },
-        0.78
-      );
-    }
+    });
 
     // ── ScrollTrigger: pin the section, scrub the timeline ──────────────────
     // Extra scroll space = 3× viewport heights so each phase gets room
-    masterTL.to(
-      animLine,
-      {
-        scaleY: 1,
-        duration: 0.1,
-        ease: "power1.inOut",
-      },
-      0.9
-    );
+    masterTL.to(animLine, {
+      scaleY: 1,
+      duration: 0.1,
+      ease: "power1.inOut",
+    });
 
     // Let the final line settle before ScrollTrigger releases the pinned section.
-    masterTL.to({}, { duration: 0.12 }, 1.0);
+    masterTL.to({}, { duration: 0.18 });
 
     coreValuesTrigger = ScrollTrigger.create({
       trigger: coreSection,
       start: "top top",
-      end: "+=300%",
+      end: "+=" + Math.max(300, items.length * 90) + "%",
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,
@@ -914,41 +909,259 @@
       invalidateOnRefresh: true,
       animation: masterTL,
     });
+
+    function ensureCoreValuesAnimationReady() {
+      if (typeof ScrollTrigger === "undefined" || !coreValuesTrigger) {
+        showCoreValuesStatic();
+      }
+    }
+
+    window.setTimeout(ensureCoreValuesAnimationReady, 1200);
+    window.setTimeout(ensureCoreValuesAnimationReady, 3600);
+  }
+
+  function initCoreValuesMobile() {
+    var mobileSection = document.querySelector(".core-value-mob");
+    if (!mobileSection) return;
+
+    var textWrapper = mobileSection.querySelector(".text-wrapper");
+    var animLine = mobileSection.querySelector(".avm-cv-anim-line");
+    if (!textWrapper || !animLine) return;
+
+    var items = Array.prototype.slice.call(
+      textWrapper.querySelectorAll(".core-para")
+    );
+    if (!items.length) return;
+
+    var dots = items
+      .map(function (item) {
+        return item.querySelector(".timeline-dot");
+      })
+      .filter(Boolean);
+    var textNodes = items.reduce(function (nodes, item) {
+      return nodes.concat(
+        Array.prototype.slice.call(
+          item.querySelectorAll(".value-para h3, .value-para p")
+        )
+      );
+    }, []);
+
+    gsap.killTweensOf([textWrapper, animLine].concat(dots, textNodes));
+    gsap.set(textWrapper, { clearProps: "all" });
+    gsap.set(animLine, { clearProps: "all" });
+    gsap.set(dots, { clearProps: "all" });
+    gsap.set(textNodes, { clearProps: "all" });
+
+    function getDotCenter(index) {
+      var dot = items[index]
+        ? items[index].querySelector(".timeline-dot")
+        : null;
+      if (!dot) return 0;
+      var wrapperRect = textWrapper.getBoundingClientRect();
+      var dotRect = dot.getBoundingClientRect();
+      return dotRect.top + dotRect.height / 2 - wrapperRect.top;
+    }
+
+    function getWrapperY(index) {
+      var sectionRect = mobileSection.getBoundingClientRect();
+      var wrapperRect = textWrapper.getBoundingClientRect();
+      var heading = mobileSection.querySelector(".main-heading");
+      var headingStyle = heading ? window.getComputedStyle(heading) : null;
+      var headingBottom = heading
+        ? heading.getBoundingClientRect().bottom - sectionRect.top
+        : sectionRect.height * 0.22;
+      var headingGap = headingStyle
+        ? parseFloat(headingStyle.marginBottom)
+        : 44;
+      mobileSection.style.setProperty(
+        "--core-mob-mask-height",
+        headingBottom + headingGap + "px"
+      );
+      var anchorIndex = index > 0 ? index - 1 : index;
+      var anchorRect = items[anchorIndex].getBoundingClientRect();
+      var anchorTop = anchorRect.top - wrapperRect.top;
+      var targetTop = headingBottom + headingGap;
+      var wrapperOffset = wrapperRect.top - sectionRect.top;
+      return targetTop - wrapperOffset - anchorTop;
+    }
+
+    var firstDotCenter = getDotCenter(0);
+    var lastDotCenter = getDotCenter(items.length - 1);
+    var lineFullHeight = Math.max(1, lastDotCenter - firstDotCenter);
+    var itemPositions = items.map(function (_item, index) {
+      return {
+        y: getWrapperY(index),
+        lineProgress:
+          lineFullHeight > 0
+            ? (getDotCenter(index) - firstDotCenter) / lineFullHeight
+            : 0,
+      };
+    });
+
+    gsap.set(textWrapper, { y: itemPositions[0].y });
+    gsap.set(animLine, {
+      top: firstDotCenter,
+      height: lineFullHeight,
+      scaleY: 0,
+      transformOrigin: "top center",
+    });
+    gsap.set(dots, {
+      scale: 0,
+      autoAlpha: 0,
+      transformOrigin: "center center",
+    });
+    gsap.set(textNodes, { autoAlpha: 0, x: 28 });
+
+    var mobileTL = gsap.timeline({ paused: true });
+
+    items.forEach(function (item, index) {
+      var itemStart = index * 0.18;
+      var itemText = item.querySelectorAll(".value-para h3, .value-para p");
+      var dot = item.querySelector(".timeline-dot");
+
+      mobileTL.to(
+        textWrapper,
+        {
+          y: itemPositions[index].y,
+          duration: index === 0 ? 0.01 : 0.1,
+          ease: "power1.inOut",
+        },
+        itemStart
+      );
+
+      mobileTL.to(
+        animLine,
+        {
+          scaleY: Math.max(0, Math.min(1, itemPositions[index].lineProgress)),
+          duration: index === 0 ? 0.01 : 0.12,
+          ease: "power1.inOut",
+        },
+        itemStart + 0.01
+      );
+
+      if (dot) {
+        mobileTL.to(
+          dot,
+          { scale: 1, autoAlpha: 1, duration: 0.06, ease: "back.out(2)" },
+          itemStart + 0.03
+        );
+      }
+
+      mobileTL.to(
+        itemText,
+        {
+          autoAlpha: 1,
+          x: 0,
+          duration: 0.08,
+          ease: "power3.out",
+          stagger: 0.02,
+        },
+        itemStart + 0.05
+      );
+
+      if (index > 0) {
+        var previousText = items[index - 1].querySelectorAll(
+          ".value-para h3, .value-para p"
+        );
+        mobileTL.to(
+          previousText,
+          {
+            autoAlpha: 1,
+            duration: 0.08,
+            ease: "power1.out",
+          },
+          itemStart
+        );
+      }
+
+      if (index > 1) {
+        var olderText = items[index - 2].querySelectorAll(
+          ".value-para h3, .value-para p"
+        );
+        mobileTL.to(
+          olderText,
+          {
+            autoAlpha: 0,
+            duration: 0.08,
+            ease: "power1.out",
+          },
+          itemStart
+        );
+      }
+    });
+
+    mobileTL.to(animLine, {
+      scaleY: 1,
+      duration: 0.1,
+      ease: "power1.inOut",
+    });
+    mobileTL.to({}, { duration: 0.16 });
+
+    coreValuesTrigger = ScrollTrigger.create({
+      trigger: mobileSection,
+      start: "top top",
+      end: "+=" + Math.max(320, items.length * 95) + "%",
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      scrub: true,
+      invalidateOnRefresh: true,
+      animation: mobileTL,
+    });
   }
 
   function initCommitment() {
     if (!commitmentSection || !commitmentText || !commitmentImage) return;
 
-    gsap.killTweensOf([commitmentText, commitmentImage]);
+    gsap.killTweensOf([commitmentSection, commitmentText, commitmentImage]);
+
+    // Cross-fade: section background fades from blue to white as it enters
+    gsap.set(commitmentSection, { backgroundColor: "#0a3d9c" });
+
+    // Image wipe: clip-path reveal left-to-right
+    gsap.set(commitmentImage, {
+      clipPath: "inset(0 100% 0 0)",
+      force3D: true,
+      willChange: "clip-path",
+    });
+
+    // Text: slide in from left
     gsap.set(commitmentText, {
       x: -130,
       autoAlpha: 0,
       force3D: true,
       willChange: "transform, opacity",
     });
-    gsap.set(commitmentImage, {
-      x: 150,
-      autoAlpha: 0,
-      force3D: true,
-      willChange: "transform, opacity",
-    });
 
     var commitmentTL = gsap.timeline({
-      defaults: {
-        duration: 1.05,
-        ease: "power3.out",
-      },
+      defaults: { ease: "power3.out" },
     });
 
     commitmentTL
-      .to(commitmentText, { x: 0, autoAlpha: 1 }, 0)
-      .to(commitmentImage, { x: 0, autoAlpha: 1 }, 0.12)
+      // Cross-fade background blue → white over the first half of the scrub
+      .to(
+        commitmentSection,
+        { backgroundColor: "#ffffff", duration: 0.5, ease: "none" },
+        0
+      )
+      // Text slides in
+      .to(commitmentText, { x: 0, autoAlpha: 1, duration: 1.05 }, 0.15)
+      // Image wipes in left → right, slightly after text
+      .to(
+        commitmentImage,
+        {
+          clipPath: "inset(0 0% 0 0)",
+          duration: 1.1,
+          ease: "power2.inOut",
+        },
+        0.25
+      )
       .set([commitmentText, commitmentImage], { clearProps: "willChange" });
 
     commitmentTrigger = ScrollTrigger.create({
       trigger: commitmentSection,
-      start: "top 72%",
-      end: "top 42%",
+      start: "top 15%", // ← was "top 72%", now waits until section is near top
+      end: "top -20%", // ← was "top 42%"
       animation: commitmentTL,
       scrub: 0.7,
       invalidateOnRefresh: true,
@@ -959,12 +1172,14 @@
     if (!governanceSection || !governanceText || !governanceImage) return;
 
     gsap.killTweensOf([governanceImage, governanceText]);
+
+    // Image wipe: reveal right-to-left (since image is on the left side)
     gsap.set(governanceImage, {
-      x: -150,
-      autoAlpha: 0,
+      clipPath: "inset(0 0 0 100%)",
       force3D: true,
-      willChange: "transform, opacity",
+      willChange: "clip-path",
     });
+
     gsap.set(governanceText, {
       x: 130,
       autoAlpha: 0,
@@ -973,21 +1188,28 @@
     });
 
     var governanceTL = gsap.timeline({
-      defaults: {
-        duration: 1.35,
-        ease: "power4.out",
-      },
+      defaults: { ease: "power3.out" },
     });
 
     governanceTL
-      .to(governanceImage, { x: 0, autoAlpha: 1 }, 0)
-      .to(governanceText, { x: 0, autoAlpha: 1 }, 0.16)
+      // Image wipes in right → left
+      .to(
+        governanceImage,
+        {
+          clipPath: "inset(0 0 0 0%)",
+          duration: 1.1,
+          ease: "power2.inOut",
+        },
+        0
+      )
+      // Text slides in from right
+      .to(governanceText, { x: 0, autoAlpha: 1, duration: 1.35 }, 0.16)
       .set([governanceImage, governanceText], { clearProps: "willChange" });
 
     governanceTrigger = ScrollTrigger.create({
       trigger: governanceSection,
-      start: "top 78%",
-      end: "top 32%",
+      start: "top 15%",
+      end: "top -20%",
       animation: governanceTL,
       scrub: 1.15,
       invalidateOnRefresh: true,
@@ -996,6 +1218,14 @@
 
   function init() {
     killTriggers();
+
+    if (window.innerWidth < 768) {
+      window.setTimeout(unlockInitialHeroScroll, 2750);
+      initCoreValuesMobile();
+      ScrollTrigger.refresh();
+      return;
+    }
+
     initHero();
     initAwareness();
     initVision();

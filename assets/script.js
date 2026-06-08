@@ -1,3 +1,5 @@
+gsap.ticker.lagSmoothing(0);
+
 gsap.config({ force3D: true });
 gsap.registerPlugin(ScrollTrigger);
 
@@ -929,7 +931,6 @@ gsap.registerPlugin(ScrollTrigger);
       showSlider();
     },
   });
-
   window.addEventListener("resize", function () {
     horizontalTween = null;
     ScrollTrigger.refresh();
@@ -1465,67 +1466,36 @@ if (videoWrapper && video && playBtn) {
     },
   );
 
-  // ── PHASE 2 + 3: Pinned reveal → hold → cut-upside exit ──────────
-  // Everything lives inside ONE pinned timeline so the exit is
-  // perfectly in sync with scroll — no separate trigger needed.
-  //
-  // Timeline breakdown (total = 4 units of scroll):
-  //   0 → 1.5  : overlay fades in
-  //   0.4 → 1.4: content + play btn rise in
-  //   1.5 → 2.5: hold (viewer reads the text)
-  //   2.5 → 4  : cut-upside — wrapper clips from bottom→top (video exits upward)
-
+  // ── PHASE 2 + 3: Simple reveal on enter, no pin, no extra scroll ────
   gsap.set(".video-wrapper", { clipPath: "inset(0% 0% 0% 0%)" });
 
-  const videoTL = gsap.timeline({
+  // Reveal overlay + content as section enters viewport
+  const videoRevealTL = gsap.timeline({
     scrollTrigger: {
       trigger: ".video-section",
-      start: "top top",
-      end: "+=400%", // 4× viewport of scroll room
-      scrub: 1.5,
-      pin: ".video-wrapper",
-      anticipatePin: 1,
-      pinSpacing: true, // true so scroll space is reserved for all 4 phases
+      start: "top 60%",
+      end: "top top",
+      scrub: 0.8,
     },
   });
 
-  videoTL
-    // Reveal overlay
+  videoRevealTL
     .fromTo(
       ".video-section .overlay",
       { opacity: 0 },
-      { opacity: 1, ease: "none", duration: 1.5 },
+      { opacity: 1, ease: "none", duration: 1 },
     )
-    // Reveal text
     .fromTo(
       ".video-section .content",
       { opacity: 0, yPercent: -40, y: 60 },
-      { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 1 },
-      0.4,
+      { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 0.8 },
+      0.2,
     )
-    // Reveal play btn
     .fromTo(
       "#playBtn",
       { opacity: 0, scale: 0 },
-      { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.8 },
-      0.4,
-    )
-    // Hold — pause at full reveal so user can read
-    .to({}, { duration: 1 })
-
-    // ── PHASE 3: Cut-upside exit ─────────────────────────────────
-    // Fade out content instantly as wipe begins
-    .to([".video-section .content", "#playBtn"], {
-      opacity: 0,
-      ease: "none",
-      duration: 0.2,
-    })
-    // Clip the wrapper downward: inset(bottom) 0%→100% wipes video off screen downward
-    .fromTo(
-      ".video-wrapper",
-      { clipPath: "inset(0% 0% 0% 0%)" },
-      { clipPath: "inset(0% 0% 100% 0%)", ease: "none", duration: 1.5 },
-      "<", // starts at the same time as the fade
+      { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.6 },
+      0.2,
     );
 }
 
@@ -1545,55 +1515,61 @@ gsap.from(".award .leaf", {
   },
 });
 
-// ⭐ Contact Section Animation (Clean version)
-const contactTL = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".contact-sec",
-    start: "top 75%",
-    toggleActions: "play none none none",
-  },
-});
+// ⭐ Contact Section — slide up overlap + content animations
+// Sab kuch viewport mein aane ke baad hi chalta hai
+(function initContactSection() {
+  var contactSec = document.querySelector(".contact-sec");
+  if (!contactSec) return;
 
-contactTL
-  .from(".contact-sec .inner-content h3", {
-    x: -120,
-    opacity: 0,
-    duration: 0.8,
-    ease: "power3.out",
-  })
-
-  .from(
-    ".contact-sec .inner-content h2",
-    {
-      x: -120,
-      opacity: 0,
-      duration: 0.8,
+  // Step 1: Overlap animation — section neeche se upar slide karta hai (scrub)
+  // CSS mein translateY(60px) set hai, GSAP usse 0 pe laata hai
+  gsap.to(contactSec, {
+    y: 0,
+    ease: "none",
+    scrollTrigger: {
+      trigger: contactSec,
+      start: "top bottom", // jab section viewport mein enter kare
+      end: "top 55%", // jab section ka top 55% pe pahunche
+      scrub: 1.2,
     },
-    "-=0.5",
-  )
+  });
 
-  .from(
-    ".contact-sec .form-group",
-    {
-      y: 60,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: "power3.out",
-    },
-    "-=0.4",
-  )
+  // Step 2: Content animations — section kaafi viewport mein aa jaane ke baad
+  var content = contactSec.querySelector(".content");
+  var imageContainer = contactSec.querySelector(".image-container");
+  var h3 = contactSec.querySelector(".inner-content h3");
+  var h2 = contactSec.querySelector(".inner-content h2");
+  var formActions = contactSec.querySelector(".form-actions");
 
-  .from(
-    ".contact-sec .form-actions",
-    {
-      scale: 0.8,
-      opacity: 0,
-      duration: 0.6,
-      ease: "back.out(1.7)",
+  ScrollTrigger.create({
+    trigger: contactSec,
+    start: "top 70%", // jab section thoda andar aa jaaye
+    once: true,
+    onEnter: function () {
+      var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      if (content) {
+        tl.to(content, { opacity: 1, x: 0, duration: 0.85 }, 0);
+      }
+      if (imageContainer) {
+        tl.to(imageContainer, { opacity: 1, x: 0, duration: 0.85 }, 0.15);
+      }
+      if (h3) {
+        tl.from(h3, { x: -80, opacity: 0, duration: 0.7 }, 0.1);
+      }
+      if (h2) {
+        tl.from(h2, { x: -80, opacity: 0, duration: 0.7 }, 0.3);
+      }
+      if (formActions) {
+        tl.from(
+          formActions,
+          { y: 30, opacity: 0, duration: 0.6, ease: "back.out(1.7)" },
+          0.55,
+        );
+      }
     },
-    "-=0.3",
-  );
+  });
+})();
 
 // ============================================================
 // HORIZONTAL SECTION — Unified Pinned Timeline
@@ -1606,43 +1582,40 @@ const horizontal = document.querySelector(".horizontal-wrapper");
 if (horizontal) {
   const panelScrollWidth = () => horizontal.scrollWidth - window.innerWidth;
 
-  // Initial states — panels start completely off-screen to the right
   gsap.set(".horizontal-section .yellow h2", { x: -160, opacity: 0 });
-  gsap.set(".lavender-circle", { scale: 0.2, transformOrigin: "bottom right" });
-  gsap.set(horizontal, { x: () => window.innerWidth }); // hidden off-screen right
+  gsap.set(".lavender-circle", {
+    scale: 1,
+    transformOrigin: "bottom right",
+  });
+  gsap.set(horizontal, { x: () => window.innerWidth });
 
   const hTL = gsap.timeline({
     scrollTrigger: {
       trigger: ".horizontal-section",
       start: "top top",
-      // Total scroll = enough room for text+circle phases (600px each) + full panel travel
-      end: () => "+=" + (window.innerWidth + panelScrollWidth() + 600),
-      scrub: 1.5,
+      end: () => "+=" + (window.innerWidth + panelScrollWidth() + 400),
+      scrub: 1.8,
       pin: true,
       anticipatePin: 1,
     },
   });
 
   hTL
-    // Phase 1a — heading slides in from left  ↘ both run at
     .to(".horizontal-section .yellow h2", {
-      //   the same time
       x: 0,
       opacity: 1,
       ease: "power3.out",
-      duration: 1,
+      duration: 0.5,
     })
-    // Phase 1b — lavender circle grows simultaneously with text
     .to(
       ".lavender-circle",
       {
-        scale: 1,
-        ease: "power2.out",
-        duration: 1,
+        scale: 12,
+        ease: "power1.inOut",
+        duration: 0.5,
       },
       "<",
-    ) // "<" = start at same time as previous tween
-    // Phase 2 — ONLY after both above finish: panels slide in + scroll
+    )
     .to(horizontal, {
       x: () => -panelScrollWidth(),
       ease: "none",
@@ -1650,52 +1623,158 @@ if (horizontal) {
     });
 }
 
+// ============================================================
+// PANEL VIDEO LIGHTBOX — Global handler (all pages)
+// Play button click pe video lightbox mein open hoga
+// ============================================================
+(function initPanelVideoLightbox() {
+  function attachLightbox(wrap) {
+    const playBtn = wrap.querySelector(".panel-video-play");
+    const video = wrap.querySelector(".panel-video");
+    if (!playBtn || !video) return;
+
+    playBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+
+      var src = video.querySelector("source")
+        ? video.querySelector("source").src
+        : video.src;
+
+      // Lightbox overlay
+      var lb = document.createElement("div");
+      lb.style.cssText =
+        "position:fixed;inset:0;background:rgba(0,0,0,0.92);" +
+        "display:flex;align-items:center;justify-content:center;" +
+        "z-index:99999;cursor:pointer;";
+
+      // Video element inside lightbox
+      var lbVideo = document.createElement("video");
+      lbVideo.src = src;
+      lbVideo.controls = true;
+      lbVideo.autoplay = true;
+      lbVideo.playsInline = true;
+      lbVideo.style.cssText =
+        "max-width:90vw;max-height:85vh;border-radius:8px;cursor:default;";
+
+      // Close button
+      var closeBtn = document.createElement("button");
+      closeBtn.innerHTML = "&#x2715;";
+      closeBtn.setAttribute("aria-label", "Close video");
+      closeBtn.style.cssText =
+        "position:absolute;top:24px;right:32px;" +
+        "background:none;border:none;color:#fff;" +
+        "font-size:32px;cursor:pointer;line-height:1;z-index:1;";
+
+      lb.appendChild(lbVideo);
+      lb.appendChild(closeBtn);
+      document.body.appendChild(lb);
+      document.body.style.overflow = "hidden";
+
+      function close() {
+        lbVideo.pause();
+        lb.remove();
+        document.body.style.overflow = "";
+      }
+
+      closeBtn.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        close();
+      });
+      lb.addEventListener("click", function (ev) {
+        if (ev.target === lb) close();
+      });
+      document.addEventListener(
+        "keydown",
+        function (ev) {
+          if (ev.key === "Escape") close();
+        },
+        { once: true },
+      );
+    });
+  }
+
+  // Attach to all existing wraps
+  document.querySelectorAll(".panel-video-wrap").forEach(attachLightbox);
+})();
+
 gsap.registerPlugin(ScrollTrigger);
 
 const schoolInfoSection = document.querySelector(".bbt-FA-img-sec");
 
 if (schoolInfoSection) {
+  const schoolMask = schoolInfoSection.querySelector(".img-mask");
+  const schoolImg = schoolInfoSection.querySelector(".img-mask img");
   const schoolCircle = schoolInfoSection.querySelector(".purple-circle");
-  const schoolCircleText = schoolInfoSection.querySelector(".main-title");
+  const schoolText = schoolInfoSection.querySelector(".main-title");
   const schoolHeading = schoolInfoSection.querySelector(".img-text");
-  const schoolTextItems = [schoolCircleText, schoolHeading].filter(Boolean);
 
-  if (schoolCircle && schoolCircleText) {
+  if (schoolMask && schoolCircle) {
     const initSchoolInfoAnimation = () => {
-      gsap.set(schoolCircle, {
-        autoAlpha: 0,
-        scale: 0.35,
-        transformOrigin: "50% 50%",
-      });
-      gsap.set(schoolTextItems, {
-        autoAlpha: 0,
-        y: 24,
+      // ── Initial states ──────────────────────────────────────
+      gsap.set(schoolMask, { clipPath: "inset(100% 0% 0% 0%)" });
+      gsap.set(schoolImg, { scale: 1.08, transformOrigin: "center bottom" });
+      gsap.set(schoolCircle, { x: "120%", autoAlpha: 0 });
+      gsap.set(schoolHeading, { autoAlpha: 0, y: 24 });
+      gsap.set(schoolText, { autoAlpha: 0, y: 24 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: schoolInfoSection,
+          start: "top 75%",
+          once: true,
+        },
+        defaults: { ease: "power3.out" },
       });
 
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: schoolInfoSection,
-            start: "top 70%",
-            once: true,
-          },
-        })
-        .to(schoolCircle, {
-          autoAlpha: 1,
-          scale: 1,
-          duration: 0.85,
-          ease: "back.out(1.25)",
-        })
+      // Phase 1 — image mask reveal (bottom to top) + subtle parallax
+      tl.to(
+        schoolMask,
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 1.1,
+          ease: "power2.inOut",
+        },
+        0,
+      )
         .to(
-          schoolTextItems,
+          schoolImg,
+          {
+            scale: 1,
+            duration: 1.3,
+            ease: "power2.out",
+          },
+          0,
+        )
+        // heading fades in as image reveals
+        .to(
+          schoolHeading,
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.65,
-            ease: "power2.out",
-            stagger: 0.08,
+            duration: 0.7,
           },
-          "-=0.18",
+          0.5,
+        )
+
+        // Phase 2 — circle slides in from right, then content fades in
+        .to(
+          schoolCircle,
+          {
+            x: "0%",
+            autoAlpha: 1,
+            duration: 1.0,
+            ease: "power3.out",
+          },
+          0.85,
+        )
+        .to(
+          schoolText,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.7,
+          },
+          1.3,
         );
 
       ScrollTrigger.refresh();
@@ -1722,7 +1801,8 @@ if (track) {
     scrollTrigger: {
       trigger: ".bbt-FA-circle-sec",
       start: "top top",
-      end: "+=3000",
+      // end: "+=3000",
+      end: "+=180%",
       scrub: 1.5,
       pin: true,
       anticipatePin: 1,
@@ -2092,10 +2172,11 @@ if (tl) {
     const lastCircleCenter =
       clusterOffset + lastCircle.offsetLeft + lastCircle.offsetWidth / 2;
 
-    const startX = viewportWidth * 0.72 - firstCircleCenter;
-    const endX = viewportWidth * 0.22 - lastCircleCenter;
+    // First circle starts from right side (110% of viewport)
+    const startX = viewportWidth * 1.1 - firstCircleCenter;
+    const endX = viewportWidth * 0.75 - lastCircleCenter;
     const travelDistance = Math.max(startX - endX, viewportWidth * 1.8);
-    const scrollDistance = Math.max(travelDistance * 1.15, viewportWidth * 2.8);
+    const scrollDistance = Math.max(travelDistance * 1.8, viewportWidth * 5.0);
 
     gsap.set(bubbleCircles, {
       scale: 0.12,
@@ -2452,6 +2533,22 @@ if (tl) {
       : 0;
 
     // ── Step 1: Set all initial states ───────────────────
+    // Diagram center and orbit — hidden for scroll-reveal
+    var diagramCenter = diagramSec.querySelector(".center");
+    var diagramOrbit = diagramSec.querySelector(".orbit");
+    if (diagramCenter)
+      gsap.set(diagramCenter, {
+        opacity: 0,
+        scale: 0.6,
+        transformOrigin: "50% 50%",
+      });
+    if (diagramOrbit)
+      gsap.set(diagramOrbit, {
+        opacity: 0,
+        scale: 0.5,
+        transformOrigin: "50% 50%",
+      });
+
     // Circle: fully off-screen left
     if (halfCircle) {
       gsap.set(halfCircle, {
@@ -2695,10 +2792,10 @@ if (tl) {
       }
     });
     labels.forEach(function (l) {
-      if (l) gsap.set(l, { opacity: 1, y: 0 });
+      if (l) gsap.set(l, { opacity: 0, y: 0 });
     });
     labelTitles.forEach(function (title) {
-      if (title) gsap.set(title, { opacity: 0.35 });
+      if (title) gsap.set(title, { opacity: 0 });
     });
     labelBodies.forEach(function (body) {
       if (body) gsap.set(body, { opacity: 0, y: 12 });
@@ -2846,26 +2943,56 @@ if (tl) {
         0.08,
       );
 
-    // Diagram reveal
+    // Diagram reveal — smooth: center fades in first, then orbit ring, then labels
     scrollTL.set(
       diagramSec,
       { visibility: "visible", pointerEvents: "auto" },
-      0.48,
+      0.46,
     );
+    // Whole section fades in
     scrollTL.to(
       diagramSec,
-      { opacity: 1, duration: 0.06, ease: "power2.out" },
-      0.5,
+      { opacity: 1, duration: 0.1, ease: "power2.out" },
+      0.46,
     );
+    // Center circle pops in first
+    if (diagramCenter) {
+      scrollTL.to(
+        diagramCenter,
+        { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(1.6)" },
+        0.48,
+      );
+    }
+    // Orbit ring expands in
+    if (diagramOrbit) {
+      scrollTL.to(
+        diagramOrbit,
+        { opacity: 0.95, scale: 1, duration: 0.22, ease: "power2.out" },
+        0.52,
+      );
+    }
+    // Label titles fade in together with orbit
+    labels.forEach(function (l) {
+      if (l)
+        scrollTL.to(l, { opacity: 1, duration: 0.2, ease: "power2.out" }, 0.54);
+    });
+    labelTitles.forEach(function (t) {
+      if (t)
+        scrollTL.to(
+          t,
+          { opacity: 0.35, duration: 0.2, ease: "power2.out" },
+          0.54,
+        );
+    });
 
     // Nodes highlight one by one
     var SMALL = 22,
       BIG = 74,
       TOTAL = nodes.length;
-    var slice = 0.44 / TOTAL;
+    var slice = 0.48 / TOTAL;
 
     for (var i = 0; i < TOTAL; i++) {
-      var s = 0.56 + i * slice;
+      var s = 0.52 + i * slice;
       var mid = s + slice * 0.15;
       var end = s + slice * 0.85;
 
@@ -2936,6 +3063,11 @@ if (tl) {
       }
     }
 
+    // ── Inject bottom fade div (shown only after last node animates) ──
+    var fadeDiv = document.createElement("div");
+    fadeDiv.className = "diagram-bottom-fade";
+    stage.appendChild(fadeDiv);
+
     // ── Pin stage + scrub ────────────────────────────────
     ScrollTrigger.create({
       trigger: stage,
@@ -2944,13 +3076,19 @@ if (tl) {
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,
-      scrub: 1.6,
+      scrub: 0.8,
       animation: scrollTL,
       invalidateOnRefresh: true,
       onUpdate: function (self) {
         if (self.progress > 0.001 && loadTL) {
           loadTL.kill();
           loadTL = null;
+        }
+        // Show fade only after last node has animated (progress >= 0.95)
+        if (self.progress >= 0.95) {
+          fadeDiv.classList.add("visible");
+        } else {
+          fadeDiv.classList.remove("visible");
         }
       },
     });
@@ -2995,6 +3133,56 @@ if (tl) {
       },
     },
   });
+})();
+
+// --------- tabbing section sticky tabs (JS-driven, CSS sticky unreliable with GSAP pinning)
+(function initStickyTabs() {
+  if (!document.querySelector("body.pedagogy-page")) return;
+
+  var tabbingSec = document.querySelector(".tabbing-sec");
+  var stickyBar = document.querySelector(".tabs-sticky-bar");
+  if (!tabbingSec || !stickyBar) return;
+
+  var barHeight = 0;
+  var placeholder = document.createElement("div");
+  placeholder.style.display = "none";
+  stickyBar.parentNode.insertBefore(placeholder, stickyBar.nextSibling);
+
+  function update() {
+    barHeight = stickyBar.offsetHeight;
+    var secRect = tabbingSec.getBoundingClientRect();
+    var secBottom = secRect.bottom;
+    var secTop = secRect.top;
+
+    // Tabs section has entered viewport from top → fix the bar
+    if (secTop <= 0 && secBottom > barHeight) {
+      if (stickyBar.style.position !== "fixed") {
+        // Reserve space so content doesn't jump
+        placeholder.style.display = "block";
+        placeholder.style.height = barHeight + "px";
+
+        stickyBar.style.position = "fixed";
+        stickyBar.style.top = "0";
+        stickyBar.style.left = "0";
+        stickyBar.style.width = "100%";
+        stickyBar.style.zIndex = "200";
+      }
+    } else {
+      // Reset to normal flow
+      if (stickyBar.style.position === "fixed") {
+        placeholder.style.display = "none";
+        stickyBar.style.position = "";
+        stickyBar.style.top = "";
+        stickyBar.style.left = "";
+        stickyBar.style.width = "";
+        stickyBar.style.zIndex = "";
+      }
+    }
+  }
+
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
+  update();
 })();
 
 // --------- tabbing section
@@ -3313,9 +3501,7 @@ tabs.forEach((tab) => {
 // section fade animation on home page
 document.addEventListener("DOMContentLoaded", function () {
   const newsSection = document.querySelector(".news-section");
-  const animatedSections = document.querySelectorAll(
-    ".recognition-sec, .contact-sec",
-  );
+  const animatedSections = document.querySelectorAll(".recognition-sec");
 
   document.body.classList.add("reveal-animations-ready");
 
@@ -3360,70 +3546,65 @@ document.addEventListener("DOMContentLoaded", function () {
     const newsGrid = newsSection.querySelector(".news-grid");
     let newsRevealed = false;
 
+    newsSection.classList.add("is-waiting");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // Skip animation entirely for users who prefer reduced motion
+      newsSection.classList.remove("is-waiting");
+      newsHeader?.classList.add("animate");
+      newsGrid
+        ?.querySelectorAll(".card")
+        .forEach((c) => c.classList.add("card-visible"));
+      return;
+    }
+
     const revealNews = () => {
       if (newsRevealed) return;
       newsRevealed = true;
       newsSection.classList.remove("is-waiting");
       newsHeader?.classList.add("animate");
-      newsGrid?.classList.add("animate");
+
+      // Stagger cards in one by one as section enters viewport
+      const cards = newsGrid
+        ? Array.from(newsGrid.querySelectorAll(".card"))
+        : [];
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add("card-visible"), i * 280);
+      });
     };
 
-    const shouldRevealNews = () => {
-      return isInRevealRange(newsSection, 0.86);
-    };
-
-    newsSection.classList.add("is-waiting");
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      revealNews();
-      return;
-    }
-
+    // GSAP ScrollTrigger path — most reliable
     if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      gsap.to(newsSection, {
+        y: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".bbt-FA-img-sec",
+          start: "bottom 90%",
+          end: "bottom 40%",
+          scrub: 1.2,
+        },
+      });
+
       ScrollTrigger.create({
         trigger: newsSection,
-        start: "top 86%",
+        start: "top 80%", // fires when section top crosses 80% of viewport
         once: true,
         onEnter: revealNews,
       });
-
-      window.setTimeout(() => {
-        ScrollTrigger.refresh();
-        if (shouldRevealNews()) revealNews();
-      }, 120);
-    }
-
-    const newsObserver = new IntersectionObserver(
-      (entries, observerInstance) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          revealNews();
-          observerInstance.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0,
-        rootMargin: "0px 0px -14% 0px",
-      },
-    );
-
-    const checkNewsReveal = () => {
-      if (!newsSection.classList.contains("is-waiting")) return;
-      if (!shouldRevealNews()) return;
-
-      revealNews();
-      newsObserver.unobserve(newsSection);
-      window.removeEventListener("scroll", checkNewsReveal);
-      window.removeEventListener("resize", checkNewsReveal);
-    };
-
-    if (shouldRevealNews()) {
-      revealNews();
     } else {
-      newsObserver.observe(newsSection);
-      window.addEventListener("scroll", checkNewsReveal, { passive: true });
-      window.addEventListener("resize", checkNewsReveal);
+      // Fallback: plain IntersectionObserver
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            revealNews();
+            obs.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15 },
+      );
+      observer.observe(newsSection);
     }
   }
 });
@@ -3624,7 +3805,7 @@ document.addEventListener("DOMContentLoaded", function () {
 })();
 
 // ============================================================
-// EXTRA SECTION - Sticky Pin + one wheel step per slide
+// EXTRA SECTION — Smooth scrub-driven slide (no wheel handler)
 // ============================================================
 (function () {
   var section = document.querySelector(".extra-section");
@@ -3636,9 +3817,10 @@ document.addEventListener("DOMContentLoaded", function () {
     slidesPerView: "auto",
     spaceBetween: 30,
     loop: false,
-    speed: 650,
-    allowTouchMove: true,
-    grabCursor: true,
+    speed: 600,
+    allowTouchMove: false,
+    grabCursor: false,
+    resistanceRatio: 0,
     breakpoints: {
       0: { spaceBetween: 20 },
       768: { spaceBetween: 24 },
@@ -3646,135 +3828,53 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
 
-  var pinST = null;
-  var wheelLocked = false;
-  var syncingScroll = false;
-
-  function getMaxIndex() {
-    if (!swiper || !swiper.slides) return 0;
-    return Math.max(0, swiper.slides.length - 1);
-  }
-
-  function getTargetScroll(index) {
-    var maxIndex = getMaxIndex();
-    if (!pinST || !maxIndex) return window.scrollY;
-    return pinST.start + (pinST.end - pinST.start) * (index / maxIndex);
-  }
-
-  function syncScrollToSlide(index) {
-    if (!pinST) return;
-    syncingScroll = true;
-    window.scrollTo({ top: getTargetScroll(index), behavior: "auto" });
-    requestAnimationFrame(function () {
-      syncingScroll = false;
-    });
-  }
-
-  function goToSlide(index) {
-    var maxIndex = getMaxIndex();
-    var nextIndex = Math.max(0, Math.min(index, maxIndex));
-    if (nextIndex === swiper.activeIndex) return;
-
-    wheelLocked = true;
-    swiper.slideTo(nextIndex, 650);
-    syncScrollToSlide(nextIndex);
-
-    window.setTimeout(function () {
-      wheelLocked = false;
-    }, 720);
-  }
-
-  function releasePinnedSection(direction) {
-    if (!pinST) return;
-    wheelLocked = true;
-    var targetScroll =
-      direction > 0
-        ? pinST.end + window.innerHeight + 2
-        : Math.max(pinST.start - 2, 0);
-    window.scrollTo({ top: targetScroll, behavior: "auto" });
-    window.setTimeout(function () {
-      wheelLocked = false;
-    }, 180);
+  function getSlideCount() {
+    return swiper.slides ? swiper.slides.length : 1;
   }
 
   function buildPin() {
-    if (pinST) pinST.kill();
+    var slideCount = getSlideCount();
+    var pinLength = Math.max(1, slideCount - 1) * window.innerHeight;
 
-    pinST = ScrollTrigger.create({
+    ScrollTrigger.create({
       trigger: section,
       start: "top top",
-      end: function () {
-        return "+=" + Math.max(1, getMaxIndex()) * window.innerHeight;
-      },
+      end: "+=" + pinLength,
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,
+      scrub: 1,
       invalidateOnRefresh: true,
       onEnter: function () {
-        wheelLocked = false;
         swiper.slideTo(0, 0);
       },
       onEnterBack: function () {
-        wheelLocked = false;
-        swiper.slideTo(getMaxIndex(), 0);
+        swiper.slideTo(slideCount - 1, 0);
       },
       onUpdate: function (self) {
-        if (!self.isActive || syncingScroll || wheelLocked) return;
-        var maxIndex = getMaxIndex();
-        var nextIndex = Math.round(self.progress * maxIndex);
-        if (swiper.activeIndex !== nextIndex) {
-          swiper.slideTo(nextIndex, 650);
-        }
+        var target = Math.round(self.progress * (slideCount - 1));
+        if (swiper.activeIndex !== target) swiper.slideTo(target, 600);
       },
     });
   }
 
-  function onWheel(event) {
-    if (!pinST || wheelLocked) return;
-
-    var inPinnedRange =
-      window.scrollY >= pinST.start - 1 && window.scrollY <= pinST.end + 1;
-    if (!inPinnedRange) return;
-
-    var direction = event.deltaY > 0 ? 1 : -1;
-    var maxIndex = getMaxIndex();
-    var atFirst = swiper.activeIndex <= 0;
-    var atLast = swiper.activeIndex >= maxIndex;
-
-    if ((direction < 0 && atFirst) || (direction > 0 && atLast)) {
-      event.preventDefault();
-      releasePinnedSection(direction);
-      return;
-    }
-
-    event.preventDefault();
-    goToSlide(swiper.activeIndex + direction);
-  }
-
-  function initPin() {
+  function init() {
     buildPin();
     ScrollTrigger.refresh();
   }
 
   if (document.readyState === "complete") {
-    window.setTimeout(initPin, 120);
+    window.setTimeout(init, 120);
   } else {
     window.addEventListener(
       "load",
       function () {
-        window.setTimeout(initPin, 120);
+        window.setTimeout(init, 120);
       },
       { once: true },
     );
   }
 
-  var wheelOptions = { passive: false, capture: true };
-  window.addEventListener("wheel", onWheel, wheelOptions);
-  document.addEventListener("wheel", onWheel, wheelOptions);
-  section.addEventListener("wheel", onWheel, wheelOptions);
-  swiper.on("slideChange", function () {
-    syncScrollToSlide(swiper.activeIndex);
-  });
   swiper.on("breakpoint resize", function () {
     ScrollTrigger.refresh();
   });
@@ -3907,5 +4007,137 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       },
     });
+  }
+})();
+
+// ============================================================
+// MOB STICKY BTN — contact-sec ke andar enter hone pe hide karo
+// ============================================================
+(function initMobStickyBtn() {
+  var stickyBtn = document.querySelector(".mob-sticky-btn");
+  var contactSec = document.querySelector(".contact-sec");
+  if (!stickyBtn || !contactSec) return;
+
+  function updateStickyBtn() {
+    var rect = contactSec.getBoundingClientRect();
+    if (rect.top <= window.innerHeight) {
+      stickyBtn.style.opacity = "0";
+      stickyBtn.style.pointerEvents = "none";
+      stickyBtn.style.transform = "translateY(20px)";
+    } else {
+      stickyBtn.style.opacity = "1";
+      stickyBtn.style.pointerEvents = "auto";
+      stickyBtn.style.transform = "translateY(0)";
+    }
+  }
+
+  stickyBtn.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+
+  window.addEventListener("scroll", updateStickyBtn, { passive: true });
+  window.addEventListener("resize", updateStickyBtn);
+  updateStickyBtn();
+})();
+// ============================================================
+// PEDAGOGY — Wipe Mask Reveal  (AYM + AVM image columns)
+//
+// WHY PREVIOUS ATTEMPTS FAILED:
+//   • CSS had opacity:0 + translateX on .aym-img-col / .avm-img-col
+//     but we kept overriding them with opacity:1 !important which
+//     made images instantly visible — wipe had nothing to reveal.
+//   • IntersectionObserver that adds .in-view never actually fires
+//     (DOMContentLoaded already passed when script.js loads at
+//     bottom of <body>), so those columns stay opacity:0 via CSS.
+//
+// CORRECT FLOW:
+//   1. Immediately wrap <img> in a clip-path mask div (sync,
+//      at parse time) — before anything else can show the image.
+//   2. After window.load + 300ms, register ScrollTrigger.
+//   3. On enter: gsap.set col to opacity:1, then wipe mask open.
+//   NO !important overrides. NO touching the CSS opacity rules.
+// ============================================================
+
+(function initPedagogyWipeMasks() {
+  if (!document.querySelector("body.pedagogy-page")) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // ── Step 1: wrap + hide immediately at parse time ─────────────────
+  // Runs synchronously before DOMContentLoaded, IntersectionObserver,
+  // or any other code that might reveal the image.
+  function wrapNow(colSelector, maskClass) {
+    var col = document.querySelector(colSelector);
+    if (!col) return;
+    var img = col.querySelector("img");
+    if (!img || col.querySelector("." + maskClass)) return;
+
+    var mask = document.createElement("div");
+    mask.className = maskClass;
+    // Inline style: hidden immediately, no CSS specificity fights
+    mask.style.cssText =
+      "display:block;overflow:hidden;" +
+      "clip-path:inset(100% 0% 0% 0%);" +
+      "will-change:clip-path;";
+    img.style.cssText +=
+      ";transform:scale(1.06);transform-origin:center bottom;will-change:transform;";
+    img.parentNode.insertBefore(mask, img);
+    mask.appendChild(img);
+  }
+
+  wrapNow(".aym-section .aym-img-col", "aym-img-mask");
+  wrapNow(".avm-section .avm-img-col", "avm-img-mask");
+
+  // ── Step 2: register ScrollTrigger after load ─────────────────────
+  function registerWipe(colSelector, maskClass) {
+    var col = document.querySelector(colSelector);
+    if (
+      !col ||
+      typeof gsap === "undefined" ||
+      typeof ScrollTrigger === "undefined"
+    )
+      return;
+
+    var mask = col.querySelector("." + maskClass);
+    if (!mask) return;
+    var img = mask.querySelector("img");
+
+    // Hand clip-path from inline style to GSAP
+    gsap.set(mask, { clipPath: "inset(100% 0% 0% 0%)" });
+    mask.style.clipPath = "";
+    if (img) {
+      gsap.set(img, { scale: 1.06, transformOrigin: "center bottom" });
+      img.style.transform = "";
+    }
+
+    ScrollTrigger.create({
+      trigger: col,
+      start: "top 88%",
+      once: true,
+      onEnter: function () {
+        // Make the column visible (CSS has opacity:0 on it)
+        gsap.set(col, { opacity: 1, x: 0, clearProps: "transform" });
+
+        // Wipe the mask open from bottom
+        var tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
+        tl.to(mask, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.1 }, 0);
+        if (img) tl.to(img, { scale: 1, duration: 1.3, ease: "power2.out" }, 0);
+      },
+    });
+  }
+
+  function init() {
+    registerWipe(".aym-section .aym-img-col", "aym-img-mask");
+    registerWipe(".avm-section .avm-img-col", "avm-img-mask");
+    if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
+  }
+
+  if (document.readyState === "complete") {
+    setTimeout(init, 300);
+  } else {
+    window.addEventListener(
+      "load",
+      function () {
+        setTimeout(init, 300);
+      },
+      { once: true },
+    );
   }
 })();

@@ -139,9 +139,9 @@ p {
 .apply-btn {
     background: #f7df00;
     border: 1px solid #f7df00;
-    padding: 16px 40px;
+    padding: 12px 30px;
     border-radius: 40px;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     color: #000 !important;
@@ -183,9 +183,15 @@ button:focus-visible {
 
 @media (max-width: 1400px) {
     .apply-btn {
-        padding: 10px 30px;
-        font-size: 16px;
+        padding: 9px 24px;
+        font-size: 14px;
     }
+}
+
+.offcanvas-menu nav>div label span,
+.offcanvas-menu nav>div label span:before,
+.offcanvas-menu nav>div label span:after {
+    background: #000000;
 }
 
 .mob-sticky-btn {
@@ -270,7 +276,7 @@ header .main-menu ul li a {
     color: #000;
     font-size: 1.159em;
     font-family: "Satoshi";
-    font-weight: 700;
+    font-weight: 600;
     transition: 0.3s all;
 }
 
@@ -613,6 +619,7 @@ header .main-btn:hover::before {
     position: relative;
     max-width: 100%;
     overflow-x: clip;
+    overflow-y: visible;
 }
 
 .panel {
@@ -630,6 +637,11 @@ body {
     background: #0a3d9c;
     padding: 98px 0 91.46px;
     overflow: hidden;
+    position: relative;
+    z-index: 10;
+    margin-top: -60px;
+    transform: translateY(60px);
+    will-change: transform;
 }
 
 .contact-sec .row {
@@ -675,15 +687,12 @@ body {
 .contact-sec .inner-content h2 {
     font-family: "Satoshi";
     color: #ffffff;
-    font-size: 2.9em;
+    font-size: 2.8em;
     font-weight: 700;
     line-height: 112%;
 }
 
-.contact-sec .inner-content h3,
-.contact-sec .inner-content h2 {
-    transform: translateX(0) !important;
-}
+/* GSAP handles h3/h2 animations — no override needed */
 
 .contact-sec a.apply-btn {
     font-size: 1.15em;
@@ -712,7 +721,7 @@ body {
 }
 
 .contact-sec .image-container {
-    width: 40%;
+    width: 37%;
     transition: transform 0.2s ease;
     padding: 0;
     opacity: 1;
@@ -722,12 +731,12 @@ body {
     justify-content: flex-end;
 }
 
-body.reveal-animations-ready .contact-sec:not(.animate) .content {
+body.reveal-animations-ready .contact-sec .content {
     opacity: 0;
     transform: translateX(-100px);
 }
 
-body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
+body.reveal-animations-ready .contact-sec .image-container {
     opacity: 0;
     transform: translateX(100px);
 }
@@ -737,11 +746,7 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     max-height: 407px;
 }
 
-.contact-sec.animate .content,
-.contact-sec.animate .image-container {
-    opacity: 1;
-    transform: translateX(0);
-}
+/* GSAP handles contact-sec content animations */
 
 .contact-sec .image-container {
     transition-delay: 0.2s;
@@ -1092,8 +1097,8 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
 }
 
 .bbt-FA-main-footer img.footer-logo {
-    width: 303.79px;
-    height: 138.66px;
+    width: 273px;
+    height: 124.8px;
 }
 
 .bbt-FA-main-footer .main {
@@ -1169,8 +1174,8 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
 }
 
 .bbt-FA-main-footer .icon {
-    width: 73px;
-    height: 71px;
+    width: 54px;
+    height: 54px;
     background: #f7df00;
     border-radius: 50%;
     display: flex;
@@ -1181,8 +1186,8 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
 }
 
 .bbt-FA-main-footer .icon svg {
-    width: 21px;
-    height: 21px;
+    width: 18px;
+    height: 18px;
     fill: #000;
     transition: all 0.35s ease;
 }
@@ -1242,8 +1247,10 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 56px;
+    /* gap: 56px; */
+    gap: 125px;
     margin-top: 0;
+    width: 52%;
 }
 
 .bbt-FA-main-footer .ft-social {
@@ -1274,6 +1281,7 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     font-style: normal;
     font-weight: 400;
     line-height: 225%;
+    width: 46%;
 }
 
 .bbt-FA-main-footer .icon:hover svg {
@@ -1283,7 +1291,11 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
 .bbt-FA-main-footer.mob-footer {
     display: none;
 }
-
+@media(max-width: 1766px){
+    .bbt-FA-main-footer .footer-middle{
+        gap: 120px;
+    }
+}
 @media (max-width: 1400px) {
     .bbt-FA-main-footer .container.footer-container {
         padding: 100px 40px;
@@ -1306,7 +1318,7 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     }
 
     .bbt-FA-main-footer img.footer-logo {
-        width: 260px;
+        width: 234px;
         height: auto;
     }
 
@@ -1315,8 +1327,8 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     }
 
     .bbt-FA-main-footer .icon {
-        width: 63px;
-        height: 61px;
+        width: 48px;
+        height: 48px;
     }
 }
 
@@ -1326,13 +1338,13 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     }
 
     .bbt-FA-main-footer .icon {
-        width: 53px;
-        height: 51px;
+        width: 44px;
+        height: 44px;
     }
 
     .ft-social .icon img {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
     }
 }
 
@@ -1378,8 +1390,8 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     }
 
     .bbt-FA-main-footer .icon {
-        width: 60px;
-        height: 58px;
+        width: 46px;
+        height: 46px;
     }
 
     .footer-container::before {
@@ -1480,8 +1492,8 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     }
 
     .bbt-FA-main-footer .icon {
-        width: 54px;
-        height: 52px;
+        width: 40px;
+        height: 40px;
     }
 
     .bbt-FA-main-footer .ft-social {
@@ -1549,8 +1561,8 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     }
 
     .mob-footer .icon {
-        width: 44.16px;
-        height: 42.951px;
+        width: 34px;
+        height: 34px;
     }
 
     .bbt-FA-main-footer.mob-footer .text {
@@ -1715,8 +1727,8 @@ body.reveal-animations-ready .contact-sec:not(.animate) .image-container {
     }
 
     .bbt-FA-main-footer .icon {
-        width: 48px;
-        height: 46px;
+        width: 36px;
+        height: 36px;
     }
 
     .bbt-FA-main-footer .apply-btn.footer-btn {

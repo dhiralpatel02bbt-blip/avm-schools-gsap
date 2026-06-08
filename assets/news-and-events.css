@@ -12,9 +12,9 @@
 
 @media (max-width: 991.9px) {
 
-    .news-and-events-page .offcanvas-menu label span,
-    .news-and-events-page .offcanvas-menu label span::before,
-    .news-and-events-page .offcanvas-menu label span::after {
+    .offcanvas-menu label span,
+    .offcanvas-menu label span::before,
+    .offcanvas-menu label span::after {
         background: #fff;
     }
 }

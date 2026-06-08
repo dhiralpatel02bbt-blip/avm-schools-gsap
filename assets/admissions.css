@@ -2,6 +2,10 @@
     color: #fff;
 }
 
+.admissions-page header .logo.black-logo {
+    display: none;
+}
+
 /* hero section css Start */
 .admission-hero {
     background: url(../images/admissions-hero.jpg);
