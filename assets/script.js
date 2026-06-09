@@ -1262,9 +1262,20 @@ gsap.set(".burgundy-bg", { x: -220 });
 gsap.set(".yellow-circle", { y: 380 });
 
 // Text — spans ko individually hide karo
-gsap.set(".main-title .line1", { xPercent: -150, opacity: 0 });
-gsap.set(".main-title .line2", { xPercent: -150, opacity: 0 });
-gsap.set(".main-title .line3", { xPercent: -150, opacity: 0 });
+// Laal bars (|) ki position se start karo — yaani text apni jagah se
+// thoda left pe start ho aur wahan se slide in kare
+// display:inline-block force karo — GSAP x transform inline elements pe kaam nahi karta
+gsap.set(".main-title .line1", { display: "inline-block", x: -80, opacity: 0 });
+gsap.set(".main-title .line2", {
+  display: "inline-block",
+  x: -110,
+  opacity: 0,
+});
+gsap.set(".main-title .line3", {
+  display: "inline-block",
+  x: -150,
+  opacity: 0,
+});
 
 // Orange bar — hidden
 gsap.set(".orange-bg-element", { x: -300, opacity: 0 });
@@ -1326,79 +1337,99 @@ heroTL
     0.2,
   )
 
-  // Line 1 "Shaping"
+  // Line 1 "Shaping" — pehle
   .to(
     ".main-title .line1",
     {
-      xPercent: 0,
+      x: 0,
       opacity: 1,
-      duration: 0.8,
-      ease: "power3.out",
+      duration: 1.1,
+      ease: "expo.out",
     },
     0.3,
   )
 
-  // Line 2 "Indian leaders"
+  // Line 2 "Indian leaders" — line1 ke baad
   .to(
     ".main-title .line2",
     {
-      xPercent: 0,
+      x: 0,
       opacity: 1,
-      duration: 0.8,
-      ease: "power3.out",
+      duration: 1.1,
+      ease: "expo.out",
     },
-    0.5,
+    0.7,
   )
 
-  // Line 3 "for the world."
+  // Line 3 "for the world." — line2 ke baad
   .to(
     ".main-title .line3",
     {
-      xPercent: 0,
+      x: 0,
       opacity: 1,
-      duration: 0.8,
-      ease: "power3.out",
+      duration: 1.1,
+      ease: "expo.out",
     },
-    0.7,
+    1.1,
   );
 
+// ============================================================
+// PINNED PANELS WITH OVERSCROLL
+// Hero pin hoga viewport pe — about section uske upar
+// slide karke aayega jab user scroll karta hai.
+//
+// Technique:
+//   • .bbt-dp-hero  → position:sticky; top:0  (CSS mein set hai)
+//   • .bbt-dp-about → shuru mein y:100vh, scrub se y:0 tak aata hai
+//   • Trigger: hero section ka bottom viewport ke bottom se upar aaye
+// ============================================================
+
 const aboutSection = document.querySelector(".bbt-dp-about");
+const heroSection = document.querySelector(".bbt-dp-hero");
 
-if (aboutSection) {
-  gsap.set(".bbt-dp-about .about-img", {
-    y: 90,
-    opacity: 0,
+if (aboutSection && heroSection) {
+  // About section hero ke neeche se aayega — scroll karte hi upar slide karega
+  gsap.set(aboutSection, { y: window.innerHeight });
+
+  gsap.to(aboutSection, {
+    y: 0,
+    ease: "none",
+    scrollTrigger: {
+      trigger: heroSection,
+      start: "top top",
+      end: () => "+=" + window.innerHeight * 0.5,
+      scrub: true,
+      invalidateOnRefresh: true,
+    },
   });
 
-  gsap.set(".bbt-dp-about .about-paragraph", {
-    x: 100,
-    opacity: 0,
-  });
+  // About section content — viewport mein aate hi animate
+  gsap.set(".bbt-dp-about .about-img", { y: 60, opacity: 0 });
+  gsap.set(".bbt-dp-about .about-paragraph", { x: 80, opacity: 0 });
 
   gsap
     .timeline({
       scrollTrigger: {
         trigger: aboutSection,
-        start: "top 78%",
-        toggleActions: "play none none none",
+        start: "top 80%",
         once: true,
       },
     })
     .to(".bbt-dp-about .about-img", {
       y: 0,
       opacity: 1,
-      duration: 1.5,
-      ease: "power2.out",
+      duration: 1.2,
+      ease: "expo.out",
     })
     .to(
       ".bbt-dp-about .about-paragraph",
       {
         x: 0,
         opacity: 1,
-        duration: 1.5,
-        ease: "power2.out",
+        duration: 1.2,
+        ease: "expo.out",
       },
-      "-=1.1",
+      "-=0.9",
     );
 }
 
@@ -1435,6 +1466,7 @@ if (videoWrapper && video && playBtn) {
   });
 
   // ── PHASE 1: Square → Rectangle (BEFORE reaching viewport) ───────
+  // Phase 1: scrub — section enter hote hi dheere dheere expand (original effect)
   gsap.fromTo(
     ".video-container",
     { clipPath: "inset(40% 44% 40% 44%)" },
@@ -1443,8 +1475,8 @@ if (videoWrapper && video && playBtn) {
       ease: "none",
       scrollTrigger: {
         trigger: ".video-section",
-        start: "top bottom", // fires as section enters viewport bottom
-        end: "top top", // done by the time section reaches viewport top
+        start: "top bottom",
+        end: "top top",
         scrub: 1,
       },
     },
@@ -1466,10 +1498,9 @@ if (videoWrapper && video && playBtn) {
     },
   );
 
-  // ── PHASE 2 + 3: Simple reveal on enter, no pin, no extra scroll ────
+  // Phase 2: viewport mein aate hi overlay + content + play btn reveal
   gsap.set(".video-wrapper", { clipPath: "inset(0% 0% 0% 0%)" });
 
-  // Reveal overlay + content as section enters viewport
   const videoRevealTL = gsap.timeline({
     scrollTrigger: {
       trigger: ".video-section",

@@ -1,17 +1,23 @@
+/* Pinned panels overscroll wrapper */
+.panels {
+  position: relative;
+}
+
 /* hero section css Start */
 .bbt-dp-hero {
   background: url(../images/hero-bg.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
+  position: sticky;
+  top: 0;
   overflow: hidden;
   margin-top: 0;
   padding-top: clamp(82px, 7.5vw, 144px);
   box-sizing: border-box;
-  /* min-height: clamp(520px, 100svh, 110vh); */
   height: 100svh;
   --hero-blue-size: clamp(980px, max(106vw, 126vh), 2031.238px);
+  z-index: 1;
 }
 
 .bbt-dp-hero .main-hero-items,
@@ -480,6 +486,9 @@
   background-color: #fff;
   position: relative;
   padding: 118px 0 80px;
+  z-index: 2;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.12);
 }
 
 .bbt-dp-about .row::before {
