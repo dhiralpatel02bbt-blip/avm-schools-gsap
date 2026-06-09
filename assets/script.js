@@ -1337,101 +1337,106 @@ heroTL
     0.2,
   )
 
-  // Line 1 "Shaping" — pehle
+  // Teeno lines ek saath — slow aur smooth
   .to(
-    ".main-title .line1",
+    [".main-title .line1", ".main-title .line2", ".main-title .line3"],
     {
       x: 0,
       opacity: 1,
-      duration: 1.1,
-      ease: "expo.out",
+      duration: 1.8,
+      ease: "power3.out",
     },
-    0.3,
-  )
-
-  // Line 2 "Indian leaders" — line1 ke baad
-  .to(
-    ".main-title .line2",
-    {
-      x: 0,
-      opacity: 1,
-      duration: 1.1,
-      ease: "expo.out",
-    },
-    0.7,
-  )
-
-  // Line 3 "for the world." — line2 ke baad
-  .to(
-    ".main-title .line3",
-    {
-      x: 0,
-      opacity: 1,
-      duration: 1.1,
-      ease: "expo.out",
-    },
-    1.1,
+    1.2,
   );
 
 // ============================================================
-// PINNED PANELS WITH OVERSCROLL
-// Hero pin hoga viewport pe — about section uske upar
-// slide karke aayega jab user scroll karta hai.
+// HERO STICKY + ABOUT PANEL OVERLAY
 //
-// Technique:
-//   • .bbt-dp-hero  → position:sticky; top:0  (CSS mein set hai)
-//   • .bbt-dp-about → shuru mein y:100vh, scrub se y:0 tak aata hai
-//   • Trigger: hero section ka bottom viewport ke bottom se upar aaye
+// Structure (HTML mein):
+//   .hero-sticky-wrapper  [height: 200vh]
+//     ├── .bbt-dp-hero    [position: sticky; top: 0; height: 100vh]
+//     └── .bbt-dp-about   [position: absolute; top: 0; width: 100%]
+//
+// Flow:
+//   • Page load: about translateY(100vh) → screen ke bilkul neeche,
+//     hero ke peeche (z-index kam)
+//   • Scroll: wrapper ke andar scroll hone se about y: 100vh → 0
+//     (GSAP scrub) → hero ke upar slide karta hai
+//   • About fully visible: content (img + text) animate in
+//
+// Koi extra white space nahi — about absolute hai wrapper mein.
 // ============================================================
 
-const aboutSection = document.querySelector(".bbt-dp-about");
-const heroSection = document.querySelector(".bbt-dp-hero");
+(function initHeroAboutPanelOverlay() {
+  const aboutSection = document.querySelector(".bbt-dp-about");
+  const heroSection = document.querySelector(".bbt-dp-hero");
+  const heroWrapper = document.querySelector(".hero-sticky-wrapper");
 
-if (aboutSection && heroSection) {
-  // About section hero ke neeche se aayega — scroll karte hi upar slide karega
-  gsap.set(aboutSection, { y: window.innerHeight });
+  if (!aboutSection || !heroSection || !heroWrapper) return;
 
+  // ── Wrapper = sirf 200vh (100vh hero pin + 100vh about slide) ───
+  // About position:absolute hai — extra height add nahi karni.
+  // About fully aane ke baad next section turant start hoga.
+  heroWrapper.style.height = window.innerHeight * 2 + "px";
+
+  function setWrapperHeight() {
+    heroWrapper.style.height = window.innerHeight * 2 + "px";
+  }
+
+  // ── Page load pe hero fully visible, about hidden ──────────────
+  heroSection.style.clipPath = "inset(0 0 0% 0)"; // hero = fully visible
+  heroSection.style.willChange = "clip-path";
+
+  // ── About: shuru mein screen ke neeche (hero ke peeche) ─────────
+  gsap.set(aboutSection, {
+    y: window.innerHeight,
+    autoAlpha: 1, // about hidden nahi — sirf y se neeche hai
+    willChange: "transform",
+  });
+
+  // ── Scrub: about neeche se upar hero ke upar aata hai ───────────
+  // Saath mein hero ko clip karo — about jitna aaye hero utna hide ho
   gsap.to(aboutSection, {
     y: 0,
     ease: "none",
     scrollTrigger: {
-      trigger: heroSection,
+      trigger: heroWrapper,
       start: "top top",
-      end: () => "+=" + window.innerHeight * 0.5,
+      end: () => "+=" + window.innerHeight,
       scrub: true,
       invalidateOnRefresh: true,
+      onUpdate(self) {
+        // About jitna upar aaya, hero ka utna hissa clip karo
+        // clipPath bottom se upar: about y = vh*(1-progress), hero clip = same
+        const pct = Math.round(self.progress * 100);
+        heroSection.style.clipPath = `inset(0 0 ${pct}% 0)`;
+      },
+      onRefresh() {
+        setWrapperHeight();
+        if (this.progress === 0) {
+          gsap.set(aboutSection, { y: window.innerHeight });
+          heroSection.style.clipPath = "inset(0 0 0% 0)";
+        }
+      },
     },
   });
 
-  // About section content — viewport mein aate hi animate
-  gsap.set(".bbt-dp-about .about-img", { y: 60, opacity: 0 });
-  gsap.set(".bbt-dp-about .about-paragraph", { x: 80, opacity: 0 });
+  // ── About content: koi animation nahi — hamesha fully visible ──────
+  // About slide hote hi content turant dikhna chahiye
+  // Isliye koi opacity/autoAlpha hide nahi karenge
+  gsap.set(".bbt-dp-about .about-img", { clearProps: "all" });
+  gsap.set(".bbt-dp-about .about-paragraph", { clearProps: "all" });
 
-  gsap
-    .timeline({
-      scrollTrigger: {
-        trigger: aboutSection,
-        start: "top 80%",
-        once: true,
-      },
-    })
-    .to(".bbt-dp-about .about-img", {
-      y: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: "expo.out",
-    })
-    .to(
-      ".bbt-dp-about .about-paragraph",
-      {
-        x: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: "expo.out",
-      },
-      "-=0.9",
-    );
-}
+  // ── Resize: wrapper height + ScrollTrigger refresh ───────────────
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      setWrapperHeight();
+      ScrollTrigger.refresh();
+    }, 150);
+  });
+})();
 
 // ══════════════════════════════════════════════════════════════════
 // VIDEO SECTION — 3-Phase Scroll Animation
@@ -1465,8 +1470,9 @@ if (videoWrapper && video && playBtn) {
     }
   });
 
-  // ── PHASE 1: Square → Rectangle (BEFORE reaching viewport) ───────
-  // Phase 1: scrub — section enter hote hi dheere dheere expand (original effect)
+  // ── PHASE 1: Square → Rectangle ─────────────────────────────────
+  // About section ke visible hote hi video expand shuru ho jaaye
+  // start: "top 100%" → jaise hi video section screen pe aaye turant shuru
   gsap.fromTo(
     ".video-container",
     { clipPath: "inset(40% 44% 40% 44%)" },
@@ -1475,14 +1481,14 @@ if (videoWrapper && video && playBtn) {
       ease: "none",
       scrollTrigger: {
         trigger: ".video-section",
-        start: "top bottom",
+        start: "top 100%", // screen pe enter hote hi
         end: "top top",
         scrub: 1,
       },
     },
   );
 
-  // Parallax on video during Phase 1
+  // Parallax
   gsap.fromTo(
     ".bg-video",
     { y: "8%" },
@@ -1491,20 +1497,20 @@ if (videoWrapper && video && playBtn) {
       ease: "none",
       scrollTrigger: {
         trigger: ".video-section",
-        start: "top bottom",
+        start: "top 100%",
         end: "top top",
         scrub: 1,
       },
     },
   );
 
-  // Phase 2: viewport mein aate hi overlay + content + play btn reveal
+  // Phase 2: overlay + content + play btn reveal
   gsap.set(".video-wrapper", { clipPath: "inset(0% 0% 0% 0%)" });
 
   const videoRevealTL = gsap.timeline({
     scrollTrigger: {
       trigger: ".video-section",
-      start: "top 60%",
+      start: "top 80%", // pehle 60% tha — ab thoda pehle shuru
       end: "top top",
       scrub: 0.8,
     },

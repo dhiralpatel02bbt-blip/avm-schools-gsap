@@ -3,6 +3,17 @@
   position: relative;
 }
 
+/* Hero wrapper —
+   height: 200vh  → 100vh hero pin + 100vh about slide scroll space
+   overflow: hidden → hero wrapper ke baad kuch bhi nahi dikhega
+   About section absolute hai wrapper mein; baaki page sections
+   wrapper ke theek baad normal flow mein aate hain. */
+.hero-sticky-wrapper {
+  position: relative;
+  height: 200vh;
+  overflow: hidden;
+}
+
 /* hero section css Start */
 .bbt-dp-hero {
   background: url(../images/hero-bg.jpg);
@@ -18,6 +29,8 @@
   height: 100svh;
   --hero-blue-size: clamp(980px, max(106vw, 126vh), 2031.238px);
   z-index: 1;
+  /* About ke neeche hero completely hide ho — no peek */
+  isolation: isolate;
 }
 
 .bbt-dp-hero .main-hero-items,
@@ -484,11 +497,17 @@
 /* About section css Start */
 .bbt-dp-about {
   background-color: #fff;
-  position: relative;
-  padding: 118px 0 80px;
-  z-index: 2;
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.12);
+  /* Panel overlay — FINAL technique:
+     position:absolute → wrapper ki height count nahi hogi (correct for overlay)
+     Wrapper overflow:hidden → about + hero dono clip ho jaate hain wrapper ke baad
+     Baaki page sections wrapper ke normal flow ke baad aate hain — koi extra space nahi */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 118px 0 40px;
+  z-index: 10;
+  will-change: transform;
 }
 
 .bbt-dp-about .row::before {
@@ -505,7 +524,6 @@
 .about-img {
   position: relative;
   width: 90%;
-  will-change: transform, opacity;
 }
 
 .bbt-dp-about .row {
@@ -561,7 +579,6 @@
 
 .about-paragraph {
   padding: 103px 0 0 107px;
-  will-change: transform, opacity;
 }
 
 .about-paragraph p {
