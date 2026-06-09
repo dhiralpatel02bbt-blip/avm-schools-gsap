@@ -1374,40 +1374,53 @@ heroTL
 
   if (!aboutSection || !heroSection || !heroWrapper) return;
 
-  // ── Wrapper = sirf 200vh (100vh hero pin + 100vh about slide) ───
-  // About position:absolute hai — extra height add nahi karni.
-  // About fully aane ke baad next section turant start hoga.
-  heroWrapper.style.height = window.innerHeight * 2 + "px";
+  // ── Strategy ────────────────────────────────────────────────────
+  // Wrapper height = 100vh (hero) + about ki poori height
+  // Hero: position sticky, top:0, height:100vh  → apni jagah fixed
+  // About: position absolute, top:0             → hero ke upar layer
+  // JS: about translateY(100vh → 0) scrub       → slide up effect
+  // Wrapper overflow:hidden                     → about clip nahi hoga
+  //   kyunki wrapper khud itna lamba hai
+  // Baad mein: video section wrapper ke theek baad — no gap
+  // ────────────────────────────────────────────────────────────────
 
   function setWrapperHeight() {
-    heroWrapper.style.height = window.innerHeight * 2 + "px";
+    // Wrapper = hero (100vh) + about poori height
+    // Taaki about fully visible ho sake aur clip na ho
+    const aboutH = aboutSection.offsetHeight;
+    heroWrapper.style.height = window.innerHeight + aboutH + "px";
   }
 
-  // ── Page load pe hero fully visible, about hidden ──────────────
-  heroSection.style.clipPath = "inset(0 0 0% 0)"; // hero = fully visible
+  // About ki height pehle measure karo (display block chahiye)
+  // aboutSection position:absolute hai, toh offsetHeight sahi aayega
+  setWrapperHeight();
+
+  // ── Hero: page load pe fully visible ────────────────────────────
+  heroSection.style.clipPath = "inset(0 0 0% 0)";
   heroSection.style.willChange = "clip-path";
 
-  // ── About: shuru mein screen ke neeche (hero ke peeche) ─────────
+  // ── About: shuru mein viewport ke neeche ────────────────────────
   gsap.set(aboutSection, {
     y: window.innerHeight,
-    autoAlpha: 1, // about hidden nahi — sirf y se neeche hai
+    autoAlpha: 1,
     willChange: "transform",
   });
 
-  // ── Scrub: about neeche se upar hero ke upar aata hai ───────────
-  // Saath mein hero ko clip karo — about jitna aaye hero utna hide ho
+  // ── Scrub: first 100vh scroll mein about y:100vh→0 ──────────────
+  // end: "+=100vh" matlab sirf 100vh scroll mein animation complete
+  // Uske baad wrapper ka remaining scroll space = about ki height
+  // jo naturally consume hoti hai jab user about padh raha hota hai
   gsap.to(aboutSection, {
     y: 0,
     ease: "none",
     scrollTrigger: {
       trigger: heroWrapper,
       start: "top top",
-      end: () => "+=" + window.innerHeight,
+      end: () => "+=" + window.innerHeight, // 100vh mein slide complete
       scrub: true,
       invalidateOnRefresh: true,
       onUpdate(self) {
-        // About jitna upar aaya, hero ka utna hissa clip karo
-        // clipPath bottom se upar: about y = vh*(1-progress), hero clip = same
+        // Hero ko neeche se clip karo jitna about aaya
         const pct = Math.round(self.progress * 100);
         heroSection.style.clipPath = `inset(0 0 ${pct}% 0)`;
       },
@@ -1421,13 +1434,9 @@ heroTL
     },
   });
 
-  // ── About content: koi animation nahi — hamesha fully visible ──────
-  // About slide hote hi content turant dikhna chahiye
-  // Isliye koi opacity/autoAlpha hide nahi karenge
   gsap.set(".bbt-dp-about .about-img", { clearProps: "all" });
   gsap.set(".bbt-dp-about .about-paragraph", { clearProps: "all" });
 
-  // ── Resize: wrapper height + ScrollTrigger refresh ───────────────
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
@@ -1471,22 +1480,17 @@ if (videoWrapper && video && playBtn) {
   });
 
   // ── PHASE 1: Square → Rectangle ─────────────────────────────────
-  // About section ke visible hote hi video expand shuru ho jaaye
-  // start: "top 100%" → jaise hi video section screen pe aaye turant shuru
-  gsap.fromTo(
-    ".video-container",
-    { clipPath: "inset(40% 44% 40% 44%)" },
-    {
-      clipPath: "inset(0% 0% 0% 0%)",
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".video-section",
-        start: "top 100%", // screen pe enter hote hi
-        end: "top top",
-        scrub: 1,
-      },
+  // Video expand: wrapper padding 0 tak animate → container-xxl se full viewport
+  gsap.to(".video-wrapper", {
+    padding: "0px",
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".video-section",
+      start: "top 80%",
+      end: "top 30%",
+      scrub: 1,
     },
-  );
+  });
 
   // Parallax
   gsap.fromTo(
@@ -1497,8 +1501,8 @@ if (videoWrapper && video && playBtn) {
       ease: "none",
       scrollTrigger: {
         trigger: ".video-section",
-        start: "top 100%",
-        end: "top top",
+        start: "top 80%",
+        end: "top 30%",
         scrub: 1,
       },
     },
@@ -1673,22 +1677,18 @@ if (horizontal) {
       },
       "<",
     )
-    // Phase 2 (0.5→4.5): first 3 panels scroll — circle stays at scale:1
+    // Phase 1b (0.5→1.5): circle grows to fill entire section
+    .to(".lavender-circle", {
+      scale: () => getFillScale(),
+      ease: "power2.inOut",
+      duration: 1,
+    })
+    // Phase 2 (1.5→5.5): panels scroll — circle stays filled
     .to(horizontal, {
       x: () => -panelScrollWidth(),
       ease: "none",
       duration: 4,
-    })
-    // Phase 3 (4.5→5.5): last slide arrives — circle expands to fill full section
-    .to(
-      ".lavender-circle",
-      {
-        scale: () => getFillScale(),
-        ease: "power2.inOut",
-        duration: 1,
-      },
-      "-=1", // starts 1 unit before panels finish = exactly last slide
-    );
+    });
 }
 
 // ============================================================
