@@ -1668,15 +1668,14 @@ section.bbt-FA-img-sec {
 
 /* recognition-sec CSS start */
 .recognition-sec {
-  background: #fffff0;
+  background: #f7df00;
   padding: 110px 0px 135.9px;
   text-align: center;
   position: relative;
   z-index: 5;
   margin-top: -1px;
-  transform: translateY(80px);
-  /* starts below — GSAP will animate to 0 */
-  will-change: transform;
+  transform: translateY(0);
+  will-change: auto;
 }
 
 .recognition-sec .section-title {
@@ -1933,7 +1932,7 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
   padding: 120px 0px 174px;
   position: relative;
   z-index: 2;
-  background: #fffff0;
+  background: #ffffff;
   margin-top: -80px;
   /* border-radius: 40px 40px 0 0; */
   /* rounded top edge for clean swipe-up feel */
