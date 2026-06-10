@@ -1401,8 +1401,9 @@ section.bbt-FA-img-sec {
 }
 
 /* Mask wrapper — clip-path reveal from bottom */
+/* Default: fully visible. GSAP sets inset(100%) before animation starts. */
 .bbt-FA-img-sec .img-mask {
-  clip-path: inset(100% 0% 0% 0%);
+  clip-path: inset(0% 0% 0% 0%);
   will-change: clip-path;
   overflow: hidden;
 }
@@ -1413,8 +1414,8 @@ section.bbt-FA-img-sec {
   display: block;
   object-fit: cover;
   width: 100%;
-  transform: scale(1.08);
-  /* slight scale so parallax doesn't show edges */
+  transform: scale(1);
+  /* GSAP sets scale(1.08) before animation; default stays 1 so clearProps doesn't jump */
   transform-origin: center bottom;
   will-change: transform;
 }

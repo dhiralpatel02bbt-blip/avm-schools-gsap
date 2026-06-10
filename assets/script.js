@@ -1993,98 +1993,98 @@ gsap.from(".award .leaf", {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// const schoolInfoSection = document.querySelector(".bbt-FA-img-sec");
+const schoolInfoSection = document.querySelector(".bbt-FA-img-sec");
 
-// if (schoolInfoSection) {
-//   const schoolMask = schoolInfoSection.querySelector(".img-mask");
-//   const schoolImg = schoolInfoSection.querySelector(".img-mask img");
-//   const schoolCircle = schoolInfoSection.querySelector(".purple-circle");
-//   const schoolText = schoolInfoSection.querySelector(".main-title");
-//   const schoolHeading = schoolInfoSection.querySelector(".img-text");
+if (schoolInfoSection) {
+  const schoolMask = schoolInfoSection.querySelector(".img-mask");
+  const schoolImg = schoolInfoSection.querySelector(".img-mask img");
+  const schoolCircle = schoolInfoSection.querySelector(".purple-circle");
+  const schoolText = schoolInfoSection.querySelector(".main-title");
+  const schoolHeading = schoolInfoSection.querySelector(".img-text");
 
-// if (
-//   schoolMask &&
-//   schoolCircle &&
-//   !document.querySelector(".index-page .bbt-FA-circle-sec")
-// ) {
-//   const initSchoolInfoAnimation = () => {
-//     // ── Initial states ──────────────────────────────────────
-//     gsap.set(schoolMask, { clipPath: "inset(100% 0% 0% 0%)" });
-//     gsap.set(schoolImg, { scale: 1.08, transformOrigin: "center bottom" });
-//     gsap.set(schoolCircle, { x: "120%", autoAlpha: 0 });
-//     gsap.set(schoolHeading, { autoAlpha: 0, y: 24 });
-//     gsap.set(schoolText, { autoAlpha: 0, y: 24 });
+  // if (
+  //   schoolMask &&
+  //   schoolCircle &&
+  //   !document.querySelector(".index-page .bbt-FA-circle-sec")
+  // ) {
+  //   const initSchoolInfoAnimation = () => {
+  //     // ── Initial states ──────────────────────────────────────
+  //     gsap.set(schoolMask, { clipPath: "inset(100% 0% 0% 0%)" });
+  //     gsap.set(schoolImg, { scale: 1.08, transformOrigin: "center bottom" });
+  //     gsap.set(schoolCircle, { x: "120%", autoAlpha: 0 });
+  //     gsap.set(schoolHeading, { autoAlpha: 0, y: 24 });
+  //     gsap.set(schoolText, { autoAlpha: 0, y: 24 });
 
-//     const tl = gsap.timeline({
-//       scrollTrigger: {
-//         trigger: schoolInfoSection,
-//         start: "top 75%",
-//         once: true,
-//       },
-//       defaults: { ease: "power3.out" },
-//     });
+  //     const tl = gsap.timeline({
+  //       scrollTrigger: {
+  //         trigger: schoolInfoSection,
+  //         start: "top 75%",
+  //         once: true,
+  //       },
+  //       defaults: { ease: "power3.out" },
+  //     });
 
-//     // Phase 1 — image mask reveal (bottom to top) + subtle parallax
-//     tl.to(
-//       schoolMask,
-//       {
-//         clipPath: "inset(0% 0% 0% 0%)",
-//         duration: 1.1,
-//         ease: "power2.inOut",
-//       },
-//       0,
-//     )
-//       .to(
-//         schoolImg,
-//         {
-//           scale: 1,
-//           duration: 1.3,
-//           ease: "power2.out",
-//         },
-//         0,
-//       )
-//       // heading fades in as image reveals
-//       .to(
-//         schoolHeading,
-//         {
-//           autoAlpha: 1,
-//           y: 0,
-//           duration: 0.7,
-//         },
-//         0.5,
-//       )
+  //     // Phase 1 — image mask reveal (bottom to top) + subtle parallax
+  //     tl.to(
+  //       schoolMask,
+  //       {
+  //         clipPath: "inset(0% 0% 0% 0%)",
+  //         duration: 1.1,
+  //         ease: "power2.inOut",
+  //       },
+  //       0,
+  //     )
+  //       .to(
+  //         schoolImg,
+  //         {
+  //           scale: 1,
+  //           duration: 1.3,
+  //           ease: "power2.out",
+  //         },
+  //         0,
+  //       )
+  //       // heading fades in as image reveals
+  //       .to(
+  //         schoolHeading,
+  //         {
+  //           autoAlpha: 1,
+  //           y: 0,
+  //           duration: 0.7,
+  //         },
+  //         0.5,
+  //       )
 
-//       // Phase 2 — circle slides in from right, then content fades in
-//       .to(
-//         schoolCircle,
-//         {
-//           x: "0%",
-//           autoAlpha: 1,
-//           duration: 1.0,
-//           ease: "power3.out",
-//         },
-//         0.85,
-//       )
-//       .to(
-//         schoolText,
-//         {
-//           autoAlpha: 1,
-//           y: 0,
-//           duration: 0.7,
-//         },
-//         1.3,
-//       );
+  //       // Phase 2 — circle slides in from right, then content fades in
+  //       .to(
+  //         schoolCircle,
+  //         {
+  //           x: "0%",
+  //           autoAlpha: 1,
+  //           duration: 1.0,
+  //           ease: "power3.out",
+  //         },
+  //         0.85,
+  //       )
+  //       .to(
+  //         schoolText,
+  //         {
+  //           autoAlpha: 1,
+  //           y: 0,
+  //           duration: 0.7,
+  //         },
+  //         1.3,
+  //       );
 
-//     ScrollTrigger.refresh();
-//   };
+  //     ScrollTrigger.refresh();
+  //   };
 
-//   if (document.readyState === "complete") {
-//     initSchoolInfoAnimation();
-//   } else {
-//     window.addEventListener("load", initSchoolInfoAnimation, { once: true });
-//   }
-// }
-// }
+  //   if (document.readyState === "complete") {
+  //     initSchoolInfoAnimation();
+  //   } else {
+  //     window.addEventListener("load", initSchoolInfoAnimation, { once: true });
+  //   }
+  // }
+}
 
 const track = document.querySelector("#bubbleTrack");
 const circles = gsap.utils.toArray(".circle");
