@@ -1374,6 +1374,49 @@ heroTL
 
   if (!aboutSection || !heroSection || !heroWrapper) return;
 
+  heroWrapper.style.height = "auto";
+  heroSection.style.clipPath = "";
+  heroSection.style.willChange = "";
+  gsap.set(aboutSection, { clearProps: "transform,opacity,visibility" });
+
+  const aboutImg = aboutSection.querySelector(".about-img");
+  const aboutParagraph = aboutSection.querySelector(".about-paragraph");
+  const revealItems = [];
+
+  if (aboutImg) {
+    gsap.set(aboutImg, { autoAlpha: 0, x: -110 });
+    revealItems.push(aboutImg);
+  }
+
+  if (aboutParagraph) {
+    gsap.set(aboutParagraph, { autoAlpha: 0, x: 110 });
+    revealItems.push(aboutParagraph);
+  }
+
+  if (revealItems.length) {
+    ScrollTrigger.create({
+      trigger: aboutSection,
+      start: "top 72%",
+      once: true,
+      onEnter: function () {
+        gsap.to(revealItems, {
+          autoAlpha: 1,
+          x: 0,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power3.out",
+          overwrite: true,
+        });
+      },
+    });
+  }
+
+  window.addEventListener("load", function () {
+    ScrollTrigger.refresh();
+  });
+
+  return;
+
   // ── Strategy ────────────────────────────────────────────────────
   // Wrapper height = 100vh (hero) + about ki poori height
   // Hero: position sticky, top:0, height:100vh  → apni jagah fixed
@@ -1613,83 +1656,154 @@ gsap.from(".award .leaf", {
 })();
 
 // ============================================================
-// HORIZONTAL SECTION — Unified Pinned Timeline
-// Phase 1: text slides in from left        (1 unit)
-// Phase 2: lavender circle grows           (1 unit)
-// Phase 3: panels enter + scroll through  (5 units)
-// Everything fully reverses on scroll up
+// HORIZONTAL SECTION
+// Phase 1 (scrub 600px) : title slides in + yellow circle fills
+// Phase 2 (wheel-snap)  : panels slide R→L / L→R one per tick
+//   • html overflow:hidden freezes the page (no spacer tricks)
+//   • After last panel → overflow restored, page scrolls freely
 // ============================================================
-const horizontal = document.querySelector(".horizontal-wrapper");
-if (horizontal) {
-  const panelScrollWidth = () => horizontal.scrollWidth - window.innerWidth;
+(function initHorizontalSection() {
+  var hSec = document.querySelector(".horizontal-section");
+  var horizontal = document.querySelector(".horizontal-wrapper");
+  if (!hSec || !horizontal) return;
 
-  // Calculate scale needed to fill entire section from bottom-right origin
-  const getFillScale = () => {
-    const section = document.querySelector(".horizontal-section");
-    const circle = document.querySelector(".lavender-circle");
-    if (!section || !circle) return 4;
-    // From bottom-right corner, circle needs to reach top-left
-    // diagonal distance = sqrt(sW² + sH²), circle radius ≈ cW/2
-    const sW = section.offsetWidth;
-    const sH = section.offsetHeight;
-    const cW = circle.offsetWidth;
-    const cH = circle.offsetHeight;
-    const scaleX = sW / (cW * 0.5);
-    const scaleY = sH / cH;
-    return Math.max(scaleX, scaleY) * 1.1;
+  var panels = Array.from(hSec.querySelectorAll(".panel"));
+  if (!panels.length) return;
+
+  var n = panels.length;
+
+  var getFillScale = function () {
+    var circle = hSec.querySelector(".lavender-circle");
+    if (!circle) return 4;
+    var sW = hSec.offsetWidth,
+      sH = hSec.offsetHeight;
+    var cW = circle.offsetWidth,
+      cH = circle.offsetHeight;
+    return Math.max(sW / (cW * 0.5), sH / cH) * 1.1;
   };
 
-  gsap.set(".horizontal-section .yellow h2", { x: -160, opacity: 0 });
-
-  // Circle starts small at bottom-right corner (visible before pin)
+  // ── Initial states ──────────────────────────────────────────
+  gsap.set(".horizontal-section .yellow h2", { x: -160, autoAlpha: 0 });
   gsap.set(".lavender-circle", {
     scale: 0.22,
     transformOrigin: "bottom right",
   });
+  gsap.set(horizontal, { overflow: "hidden" });
 
-  gsap.set(horizontal, { x: () => window.innerWidth });
-
-  const hTL = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".horizontal-section",
-      start: "top top",
-      end: () => "+=" + (window.innerWidth + panelScrollWidth() + 400),
-      scrub: 1.8,
-      pin: true,
-      anticipatePin: 1,
-    },
+  // All panels stacked: panel[0] on top, rest off-screen to the right
+  panels.forEach(function (p, i) {
+    gsap.set(p, {
+      autoAlpha: i === 0 ? 0 : 0,
+      xPercent: i === 0 ? 100 : 100,
+      zIndex: n - i,
+      position: "absolute",
+      top: 0,
+      left: "var(--horizontal-container-gutter)",
+      width: "calc(100% - var(--horizontal-container-gutter))",
+      height: "100%",
+    });
   });
 
-  hTL
-    // Phase 1 (0→0.5): title + circle grow to original size together
-    .to(".horizontal-section .yellow h2", {
+  // ── Master scrub timeline ───────────────────────────────────
+  // Structure (all durations in timeline "units"):
+  //   0 → 0.5  : title slides in + circle grows from bottom-right
+  //   0.5 → 1.3: circle expands until it fills the section
+  //   1.3 → 2.3: Panel 0 slides in from right
+  //   2.3 → 3.3: Panel 0 → Panel 1 (0 exits left, 1 enters right)
+  //   3.3 → 4.3: Panel 1 → Panel 2 (1 exits left, 2 enters right)
+  //   ... etc
+  // Total duration units = circle phase + n panel steps
+
+  var masterTL = gsap.timeline({ paused: true });
+  var panelStart = 1.3;
+
+  // Phase 1 segment
+  masterTL.to(
+    ".horizontal-section .yellow h2",
+    {
       x: 0,
-      opacity: 1,
+      autoAlpha: 1,
       ease: "power3.out",
       duration: 0.5,
-    })
-    .to(
-      ".lavender-circle",
-      {
-        scale: 1,
-        ease: "power2.out",
-        duration: 0.5,
-      },
-      "<",
-    )
-    // Phase 1b (0.5→1.5): circle grows to fill entire section
-    .to(".lavender-circle", {
-      scale: () => getFillScale(),
+    },
+    0,
+  );
+  masterTL.to(
+    ".lavender-circle",
+    {
+      scale: 1,
+      ease: "power2.out",
+      duration: 0.5,
+    },
+    0,
+  );
+  masterTL.to(
+    ".lavender-circle",
+    {
+      scale: getFillScale,
       ease: "power2.inOut",
-      duration: 1,
-    })
-    // Phase 2 (1.5→5.5): panels scroll — circle stays filled
-    .to(horizontal, {
-      x: () => -panelScrollWidth(),
-      ease: "none",
-      duration: 4,
-    });
-}
+      duration: 0.8,
+    },
+    0.5,
+  );
+
+  // Panel 0 enters (slides in from right)
+  masterTL.set(panels[0], { autoAlpha: 1 }, panelStart);
+  masterTL.fromTo(
+    panels[0],
+    { xPercent: 100 },
+    { xPercent: 0, ease: "power2.inOut", duration: 1 },
+    panelStart,
+  );
+
+  // Panel transitions: each subsequent panel enters from right,
+  // previous exits to left, simultaneously
+  for (var i = 1; i < n; i++) {
+    var startTime = panelStart + i; // e.g. panel[1] transition starts after panel 0
+    var outPanel = panels[i - 1];
+    var inPanel = panels[i];
+
+    // Bring inPanel to front and make visible
+    masterTL.set(inPanel, { autoAlpha: 1, zIndex: n + 2 }, startTime);
+    masterTL.set(outPanel, { zIndex: n + 1 }, startTime);
+
+    // Out panel slides left, in panel slides in from right — simultaneously
+    masterTL.to(
+      outPanel,
+      { xPercent: -100, ease: "power2.inOut", duration: 1 },
+      startTime,
+    );
+    masterTL.fromTo(
+      inPanel,
+      { xPercent: 100 },
+      { xPercent: 0, ease: "power2.inOut", duration: 1 },
+      startTime,
+    );
+  }
+
+  // ── ScrollTrigger — one big pin for everything ─────────────
+  // Total scroll distance: PHASE1_PX + (n panels * PX_PER_PANEL)
+  var PHASE1_PX = 600;
+  var PX_PER_PANEL = 600; // scroll pixels per panel transition
+  var totalPx = PHASE1_PX + n * PX_PER_PANEL;
+
+  ScrollTrigger.create({
+    trigger: hSec,
+    start: "top top",
+    end: "+=" + totalPx,
+    pin: true,
+    pinSpacing: true,
+    anticipatePin: 1,
+    scrub: 1.2,
+    animation: masterTL,
+    id: "hSecMaster",
+    invalidateOnRefresh: true,
+  });
+
+  window.addEventListener("resize", function () {
+    ScrollTrigger.refresh();
+  });
+})();
 
 // ============================================================
 // PANEL VIDEO LIGHTBOX — Global handler (all pages)

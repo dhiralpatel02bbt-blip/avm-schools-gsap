@@ -11,7 +11,7 @@
 .hero-sticky-wrapper {
   position: relative;
   /* height JS se set hogi: 100vh + about.offsetHeight */
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* hero section css Start */
@@ -20,8 +20,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: sticky;
-  top: 0;
+  position: relative;
+  top: auto;
   overflow: hidden;
   margin-top: 0;
   padding-top: clamp(82px, 7.5vw, 144px);
@@ -501,13 +501,13 @@
      position:absolute → wrapper ki height count nahi hogi (correct for overlay)
      Wrapper overflow:hidden → about + hero dono clip ho jaate hain wrapper ke baad
      Baaki page sections wrapper ke normal flow ke baad aate hain — koi extra space nahi */
-  position: absolute;
-  top: 0;
+  position: relative;
+  top: auto;
   left: 0;
   width: 100%;
   padding: 118px 0 40px;
-  z-index: 10;
-  will-change: transform;
+  z-index: 1;
+  overflow: hidden;
 }
 
 .bbt-dp-about .row::before {
@@ -984,11 +984,16 @@
 
 /* Beyond subjects section css start */
 .horizontal-section {
+  --horizontal-container-gutter: 7vw;
+  --horizontal-panel-top: clamp(8.5rem, 10vw, 10.5rem);
+  --horizontal-panel-bottom: clamp(5.75rem, 7vw, 7rem);
   height: 100vh;
   position: relative;
   margin-top: 150px;
   margin-bottom: 0px;
-  overflow-x: clip;
+  overflow: hidden;
+  padding-bottom: 70px;
+  box-sizing: border-box;
 }
 
 .lavender-circle {
@@ -1006,16 +1011,28 @@
 
 .horizontal-section .horizontal-wrapper {
   display: flex;
-  gap: clamp(60px, 6vw, 120px);
-  width: max-content;
-  padding: 101px 0px 0 0px;
+  gap: 0;
+  position: absolute;
+  top: var(--horizontal-panel-top);
+  right: 0;
+  bottom: var(--horizontal-panel-bottom);
+  left: 0;
+  width: auto;
+  height: auto;
+  padding: 0;
 }
 
 .horizontal-section .panel {
-  width: 83vw;
+  position: absolute;
+  top: 0;
+  left: var(--horizontal-container-gutter);
+  width: calc(100% - var(--horizontal-container-gutter));
+  height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  padding-bottom: 0;
+  box-sizing: border-box;
 }
 
 .horizontal-section .panel .d-flex {
@@ -1075,7 +1092,8 @@
 }
 
 .horizontal-section .panel .content {
-  width: 30%;
+  width: 32%;
+  flex-shrink: 0;
 }
 
 .horizontal-section .yellow h2 {
@@ -1116,8 +1134,7 @@
   position: absolute;
   left: 20px;
   right: 20px;
-  /* bottom: 24px; */
-  bottom: 60px;
+  bottom: 32px;
   z-index: 3;
   margin-top: 0;
 }
@@ -1152,7 +1169,7 @@
 
 @media (max-width: 1440px) {
   .horizontal-section .horizontal-wrapper {
-    padding: 50px 20px 0;
+    padding: 0;
     gap: 70px;
   }
 
@@ -1171,7 +1188,7 @@
 
 @media (max-width: 1366px) {
   .horizontal-section .horizontal-wrapper {
-    padding: 60px 20px 0;
+    padding: 0;
     gap: 56px;
   }
 
@@ -1259,6 +1276,12 @@
 }
 
 @media (max-width: 767.9px) {
+  .horizontal-section {
+    --horizontal-container-gutter: 10vw;
+    --horizontal-panel-top: 118px;
+    --horizontal-panel-bottom: 82px;
+  }
+
   .horizontal-section .yellow {
     width: 66%;
   }
@@ -1278,7 +1301,7 @@
   }
 
   .horizontal-section .horizontal-wrapper {
-    padding: 52px 20px 0;
+    padding: 0;
   }
 
   .horizontal-section .horizontal-wrapper {
