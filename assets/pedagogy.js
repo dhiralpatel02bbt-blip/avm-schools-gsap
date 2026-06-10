@@ -222,7 +222,7 @@
             ease: "power3.out",
             force3D: true,
           },
-          0
+          0,
         );
       }
       if (heroGlowCircle) {
@@ -234,28 +234,28 @@
             duration: 0.65,
             ease: "back.out(1.6)",
           },
-          0.6
+          0.6,
         );
       }
       if (panelTitle) {
         tabLoadTL.to(
           panelTitle,
           { opacity: 1, x: 0, duration: 0.85, ease: "power3.out" },
-          0.85
+          0.85,
         );
       }
       if (panelBody) {
         tabLoadTL.to(
           panelBody,
           { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-          1.45
+          1.45,
         );
       }
       if (panelKicker) {
         tabLoadTL.to(
           panelKicker,
           { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
-          1.55
+          1.55,
         );
       }
 
@@ -277,7 +277,7 @@
             duration: 0.32,
             force3D: true,
           },
-          0
+          0,
         );
       }
 
@@ -288,21 +288,21 @@
           panelKicker,
           { opacity: 1, x: 0 },
           { opacity: 0, x: -30, duration: 0.16 },
-          0.02
+          0.02,
         );
       if (panelTitle)
         tabScrollTL.fromTo(
           panelTitle,
           { opacity: 1, x: 0 },
           { opacity: 0, x: -40, duration: 0.18 },
-          0.05
+          0.05,
         );
       if (panelBody)
         tabScrollTL.fromTo(
           panelBody,
           { opacity: 1, x: 0 },
           { opacity: 0, x: -30, duration: 0.16 },
-          0.08
+          0.08,
         );
 
       tabScrollTL
@@ -310,14 +310,14 @@
         .to(
           diagramTab,
           { opacity: 1, duration: 0.08, ease: "power2.out" },
-          0.38
+          0.38,
         );
 
       if (tabTitle) {
         tabScrollTL.to(
           tabTitle,
           { autoAlpha: 1, y: 0, duration: 0.12, ease: "power3.out" },
-          0.42
+          0.42,
         );
       }
 
@@ -337,7 +337,7 @@
               duration: cardSlice * 0.28,
               ease: "power2.in",
             },
-            start
+            start,
           );
         }
 
@@ -350,7 +350,7 @@
             duration: cardSlice * 0.55,
             ease: "back.out(1.45)",
           },
-          start + cardSlice * 0.12
+          start + cardSlice * 0.12,
         );
       });
 
@@ -380,20 +380,19 @@
     }
 
     // Diagram: hidden
-    // -YP start
     gsap.set(diagramSec, {
       opacity: 0,
       visibility: "hidden",
       pointerEvents: "none",
     });
 
-    // Nodes dim (initially fully hidden)
+    // Nodes dim
     nodes.forEach(function (n) {
       if (n) {
         gsap.set(n, {
           width: 22,
           height: 22,
-          opacity: 0,
+          opacity: 0.35,
           transformOrigin: "50% 50%",
           force3D: false,
         });
@@ -402,7 +401,6 @@
     labels.forEach(function (l) {
       if (l) gsap.set(l, { opacity: 0, y: 0 });
     });
-    // -YP end
     labelTitles.forEach(function (title) {
       if (title) gsap.set(title, { opacity: 0 });
     });
@@ -435,7 +433,7 @@
           ease: "power3.out",
           force3D: true,
         },
-        0
+        0,
       );
     }
 
@@ -449,7 +447,7 @@
           duration: 0.65,
           ease: "back.out(1.6)",
         },
-        0.6
+        0.6,
       );
     }
 
@@ -463,7 +461,7 @@
           duration: 0.85,
           ease: "power3.out",
         },
-        0.85
+        0.85,
       );
     }
 
@@ -477,7 +475,7 @@
           duration: 0.8,
           ease: "power3.out",
         },
-        1.45
+        1.45,
       );
     }
 
@@ -491,7 +489,7 @@
           duration: 0.45,
           ease: "power2.out",
         },
-        1.55
+        1.55,
       );
     }
 
@@ -503,9 +501,10 @@
     // 0.50→0.56  Diagram fades in over blue bg
     // 0.56→1.00  Nodes highlight one by one
 
-    // -YP start
     var scrollTL = gsap.timeline({ paused: true });
 
+    // Circle floods viewport — starts from its loaded resting position -(circleW*0.5)
+    // so there is no jump when scroll begins.
     if (halfCircle) {
       scrollTL.fromTo(
         halfCircle,
@@ -519,122 +518,115 @@
           scale: 14,
           transformOrigin: "center center",
           ease: "power2.inOut",
-          duration: 0.05,
+          duration: 0.35,
           force3D: true,
         },
-        0
+        0,
       );
     }
 
+    // Keep the hero image crisp while the blue panel expands.
     if (heroGlowCircle)
-      scrollTL.to(heroGlowCircle, { opacity: 0, duration: 0.03 }, 0.01);
+      scrollTL.to(heroGlowCircle, { opacity: 0, duration: 0.18 }, 0.01);
     if (panelKicker)
       scrollTL.fromTo(
         panelKicker,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -30, duration: 0.03 },
-        0.01
+        { opacity: 0, x: -30, duration: 0.16 },
+        0.02,
       );
     if (panelTitle)
       scrollTL.fromTo(
         panelTitle,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -40, duration: 0.03 },
-        0.02
+        { opacity: 0, x: -40, duration: 0.18 },
+        0.05,
       );
     if (panelBody)
       scrollTL.fromTo(
         panelBody,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -30, duration: 0.03 },
-        0.02
+        { opacity: 0, x: -30, duration: 0.16 },
+        0.08,
       );
 
-    // Diagram reveal
+    // Diagram reveal — smooth: center fades in first, then orbit ring, then labels
     scrollTL.set(
       diagramSec,
       { visibility: "visible", pointerEvents: "auto" },
-      0.05
+      0.46,
     );
+    // Whole section fades in
     scrollTL.to(
       diagramSec,
-      { opacity: 1, duration: 0.05, ease: "power2.out" },
-      0.05
+      { opacity: 1, duration: 0.1, ease: "power2.out" },
+      0.46,
     );
-    // -YP start
-    // 1. Center and Orbit grow FIRST (slowly on scroll)
+    // Center circle pops in first
     if (diagramCenter) {
       scrollTL.to(
         diagramCenter,
-        { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.05
+        { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(1.6)" },
+        0.48,
       );
     }
+    // Orbit ring expands in
     if (diagramOrbit) {
       scrollTL.to(
         diagramOrbit,
-        { opacity: 0.95, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.1
+        { opacity: 0.95, scale: 1, duration: 0.22, ease: "power2.out" },
+        0.52,
       );
     }
-
-    // 2. THEN Nodes and Labels appear as dim elements once center/orbit are fully grown
-    // -YP start
-    nodes.forEach(function (n) {
-      if (n)
-        scrollTL.to(n, { opacity: 1, duration: 0.05, ease: "power2.out" }, 0.4);
-    });
-    // -YP end
+    // Label titles fade in together with orbit
     labels.forEach(function (l) {
       if (l)
-        scrollTL.to(l, { opacity: 1, duration: 0.05, ease: "power2.out" }, 0.4);
+        scrollTL.to(l, { opacity: 1, duration: 0.2, ease: "power2.out" }, 0.54);
     });
     labelTitles.forEach(function (t) {
       if (t)
         scrollTL.to(
           t,
-          { opacity: 0.35, duration: 0.05, ease: "power2.out" },
-          0.4
+          { opacity: 0.35, duration: 0.2, ease: "power2.out" },
+          0.54,
         );
     });
 
+    // Nodes highlight one by one
     var SMALL = 22,
-      BIG = 44,
+      BIG = 74,
       TOTAL = nodes.length;
-    var slice = 0.55 / TOTAL; // 0.45 to 1.00 is 0.55
-    // -YP end
+    var slice = 0.48 / TOTAL;
 
     for (var i = 0; i < TOTAL; i++) {
-      var s = 0.45 + i * slice;
+      var s = 0.52 + i * slice;
       var mid = s + slice * 0.15;
       var end = s + slice * 0.85;
 
       if (i > 0 && nodes[i - 1]) {
-        // -YP start
         scrollTL.to(
           nodes[i - 1],
           {
             width: SMALL,
             height: SMALL,
-            opacity: 1,
+            opacity: 0.32,
             boxShadow: "none",
             duration: slice * 0.28,
             ease: "power2.in",
           },
-          s
+          s,
         );
-        // -YP end
         if (labelTitles[i - 1])
           scrollTL.to(
             labelTitles[i - 1],
             { opacity: 0.35, duration: slice * 0.2 },
-            s
+            s,
           );
         if (labelBodies[i - 1])
           scrollTL.to(
             labelBodies[i - 1],
             { opacity: 0, y: 12, duration: slice * 0.22 },
-            s
+            s,
           );
       }
       if (nodes[i]) {
@@ -648,32 +640,35 @@
             duration: slice * 0.38,
             ease: "back.out(1.7)",
           },
-          mid
+          mid,
         );
       }
       if (labelTitles[i]) {
         scrollTL.to(
           labelTitles[i],
           { opacity: 1, duration: slice * 0.28, ease: "power3.out" },
-          mid
+          mid,
         );
       }
       if (labelBodies[i]) {
         scrollTL.to(
           labelBodies[i],
           { opacity: 1, y: 0, duration: slice * 0.38, ease: "power3.out" },
-          mid
+          mid,
         );
       }
       if (nodes[i]) {
         scrollTL.to(
           nodes[i],
-          { boxShadow: "none", duration: slice * 0.3, ease: "power2.in" },
-          end - slice * 0.2
+          {
+            boxShadow: "none",
+            duration: slice * 0.3,
+            ease: "power2.in",
+          },
+          end - slice * 0.2,
         );
       }
     }
-    // -YP end
 
     // ── Inject bottom fade div (shown only after last node animates) ──
     var fadeDiv = document.createElement("div");
@@ -716,7 +711,6 @@
     ScrollTrigger.refresh();
   });
 })();
-
 // --------- tabbing section sticky tabs (JS-driven, CSS sticky unreliable with GSAP pinning)
 (function initStickyTabs() {
   if (!document.querySelector("body.pedagogy-page")) return;
@@ -785,7 +779,6 @@ tabs.forEach((tab) => {
     document.getElementById(target).classList.add("active");
   });
 });
-
 // AYM diagram section
 (function initAymDiagram() {
   const section = document.querySelector(".aym-diagram-sec");
@@ -884,7 +877,7 @@ tabs.forEach((tab) => {
         scale: 1,
         duration: 0.9,
         ease: "power2.out",
-      }
+      },
     );
 
     arms.forEach(({ line, satellite, lineState }) => {
@@ -903,14 +896,15 @@ tabs.forEach((tab) => {
             duration: 0.35,
             ease: "power2.out",
           },
-          ">-0.12"
+          ">-0.12",
         );
     });
 
     trigger = ScrollTrigger.create({
       trigger: section,
-      start: "top top",
-      end: () => `+=${window.innerHeight * (arms.length + 1)}`,
+      start: "center top",
+      // end: () => `+=${window.innerHeight * (arms.length + 1)}`,
+      end: "bottom top",
       pin: true,
       scrub: 0.7,
       animation: timeline,
@@ -934,7 +928,6 @@ tabs.forEach((tab) => {
     queueBuild(180);
   });
 })();
-
 // developer diagram section
 (function initTeacherDevDiagram() {
   const section = document.querySelector(".teacher-dev");
@@ -971,7 +964,7 @@ tabs.forEach((tab) => {
     const wrapperRect = wrapper.getBoundingClientRect();
     const scale = Math.min(
       svgRect.width / viewBox.width,
-      svgRect.height / viewBox.height
+      svgRect.height / viewBox.height,
     );
     const renderedWidth = viewBox.width * scale;
     const renderedHeight = viewBox.height * scale;
@@ -1079,60 +1072,81 @@ tabs.forEach((tab) => {
   window.addEventListener("load", () => queueTeacherDevBuild(500));
   window.addEventListener("resize", () => queueTeacherDevBuild(180));
 })();
-
-// ── Feature Block Scroll Animation ──────────────────────────
+// ============================================================
+// EXTRA SECTION — Smooth scrub-driven slide (no wheel handler)
+// ============================================================
 (function () {
-  var observer = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("fb-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
+  var section = document.querySelector(".extra-section");
+  var swiperEl = document.querySelector(".extra-swiper");
+  if (!section || !swiperEl || typeof Swiper === "undefined") return;
+  if (window.matchMedia("(max-width: 991.98px)").matches) return;
 
-  function observeBlocks() {
-    document
-      .querySelectorAll("section.tabbing-sec .feature-block")
-      .forEach(function (block) {
-        observer.observe(block);
-      });
+  var swiper = new Swiper(".extra-swiper", {
+    slidesPerView: "auto",
+    spaceBetween: 30,
+    loop: false,
+    speed: 600,
+    allowTouchMove: false,
+    grabCursor: false,
+    resistanceRatio: 0,
+    breakpoints: {
+      0: { spaceBetween: 20 },
+      768: { spaceBetween: 24 },
+      1200: { spaceBetween: 30 },
+    },
+  });
+
+  function getSlideCount() {
+    return swiper.slides ? swiper.slides.length : 1;
   }
 
-  document.addEventListener("DOMContentLoaded", observeBlocks);
+  function buildPin() {
+    var slideCount = getSlideCount();
+    var pinLength = Math.max(1, slideCount - 1) * window.innerHeight;
 
-  // Tab switch hone pe naye blocks bhi observe ho
-  document.addEventListener("click", function (e) {
-    if (e.target.closest("section.tabbing-sec .tab")) {
-      setTimeout(observeBlocks, 80);
-    }
-  });
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "+=" + pinLength,
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      scrub: 1,
+      invalidateOnRefresh: true,
+      onEnter: function () {
+        swiper.slideTo(0, 0);
+      },
+      onEnterBack: function () {
+        swiper.slideTo(slideCount - 1, 0);
+      },
+      onUpdate: function (self) {
+        var target = Math.round(self.progress * (slideCount - 1));
+        if (swiper.activeIndex !== target) swiper.slideTo(target, 600);
+      },
+    });
+  }
 
-  // AYM + AVM section observer
-  var sectionObserver = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-          sectionObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
+  function init() {
+    buildPin();
+    ScrollTrigger.refresh();
+  }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    document
-      .querySelectorAll(".aym-section, .avm-section")
-      .forEach(function (sec) {
-        sectionObserver.observe(sec);
-      });
+  if (document.readyState === "complete") {
+    window.setTimeout(init, 120);
+  } else {
+    window.addEventListener(
+      "load",
+      function () {
+        window.setTimeout(init, 120);
+      },
+      { once: true },
+    );
+  }
+
+  swiper.on("breakpoint resize", function () {
+    ScrollTrigger.refresh();
   });
 })();
-
 // ============================================================
 // PEDAGOGY — Wipe Mask Reveal  (AYM + AVM image columns)
 //
@@ -1233,7 +1247,7 @@ tabs.forEach((tab) => {
       function () {
         setTimeout(init, 300);
       },
-      { once: true }
+      { once: true },
     );
   }
 })();
