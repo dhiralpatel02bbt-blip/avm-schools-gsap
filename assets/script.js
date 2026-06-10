@@ -25,7 +25,7 @@
     function () {
       requestAnimationFrame(scrollTop);
     },
-    { once: true },
+    { once: true }
   );
 
   window.addEventListener(
@@ -36,7 +36,7 @@
         ScrollTrigger.refresh();
       }
     },
-    { once: true },
+    { once: true }
   );
 })();
 
@@ -174,7 +174,7 @@ gsap.registerPlugin(ScrollTrigger);
         ticking = true;
       }
     },
-    { passive: true },
+    { passive: true }
   );
 
   // Resize pe headerH update karo
@@ -232,7 +232,7 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0,
+    0
   )
 
   // Yellow circle — neeche se upar (final: y:0)
@@ -243,7 +243,7 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0,
+    0
   )
 
   // Students — right se left (final: x:0)
@@ -254,7 +254,7 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0,
+    0
   )
 
   // Orange bar
@@ -266,7 +266,7 @@ heroTL
       duration: 0.9,
       ease: "power2.out",
     },
-    0.2,
+    0.2
   )
 
   // Teeno lines ek saath — slow aur smooth
@@ -278,7 +278,7 @@ heroTL
       duration: 1.2,
       ease: "power3.out",
     },
-    0,
+    0
   );
 
 // ============================================================
@@ -480,7 +480,7 @@ if (videoWrapper && video && playBtn) {
         end: "top 30%",
         scrub: 1,
       },
-    },
+    }
   );
 
   // Phase 2: overlay + content + play btn reveal
@@ -499,19 +499,19 @@ if (videoWrapper && video && playBtn) {
     .fromTo(
       ".video-section .overlay",
       { opacity: 0 },
-      { opacity: 1, ease: "none", duration: 1 },
+      { opacity: 1, ease: "none", duration: 1 }
     )
     .fromTo(
       ".video-section .content",
       { opacity: 0, yPercent: -40, y: 60 },
       { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 0.8 },
-      0.2,
+      0.2
     )
     .fromTo(
       "#playBtn",
       { opacity: 0, scale: 0 },
       { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.6 },
-      0.2,
+      0.2
     );
 }
 
@@ -580,7 +580,7 @@ gsap.from(".award .leaf", {
         tl.from(
           formActions,
           { y: 30, opacity: 0, duration: 0.6, ease: "back.out(1.7)" },
-          0.55,
+          0.55
         );
       }
     },
@@ -667,7 +667,7 @@ gsap.from(".award .leaf", {
       ease: "power3.out",
       duration: 2.9,
     },
-    0,
+    0
   );
   masterTL.to(
     ".lavender-circle",
@@ -676,7 +676,7 @@ gsap.from(".award .leaf", {
       ease: "power3.out",
       duration: 3.2,
     },
-    0,
+    0
   );
   // masterTL.to(
   //   ".lavender-circle",
@@ -698,7 +698,7 @@ gsap.from(".award .leaf", {
       ease: "power3.inOut",
       duration: panelEnterDuration,
     },
-    panelStart,
+    panelStart
   );
   masterTL.to({}, { duration: panelHold }, panelStart + panelEnterDuration);
 
@@ -725,7 +725,7 @@ gsap.from(".award .leaf", {
         ease: "power3.inOut",
         duration: panelTransitionDuration,
       },
-      startTime,
+      startTime
     );
     masterTL.fromTo(
       inPanel,
@@ -735,7 +735,7 @@ gsap.from(".award .leaf", {
         ease: "power3.inOut",
         duration: panelTransitionDuration,
       },
-      startTime,
+      startTime
     );
   }
 
@@ -780,8 +780,8 @@ gsap.from(".award .leaf", {
       duration: immediate
         ? 0
         : previousStep < 0 && step === 0
-          ? firstStepDuration
-          : panelStepDuration,
+        ? firstStepDuration
+        : panelStepDuration,
       ease: "power3.inOut",
       overwrite: true,
       onComplete: function () {
@@ -921,7 +921,7 @@ gsap.from(".award .leaf", {
         function (ev) {
           if (ev.key === "Escape") close();
         },
-        { once: true },
+        { once: true }
       );
     });
   }
@@ -1053,7 +1053,7 @@ if (track) {
       x: -totalWidth,
       ease: "none",
     },
-    0,
+    0
   );
 
   // 👉 EACH CIRCLE ANIMATION
@@ -1068,7 +1068,7 @@ if (track) {
         opacity: 0.6,
         duration: 0.5,
       },
-      i * 0.8,
+      i * 0.8
     );
 
     // Phase 2: text fade in (light)
@@ -1078,7 +1078,7 @@ if (track) {
         opacity: 0.5,
         duration: 0.3,
       },
-      i * 0.8 + 0.2,
+      i * 0.8 + 0.2
     );
 
     tl.to(
@@ -1087,7 +1087,7 @@ if (track) {
         opacity: 0.5,
         duration: 0.3,
       },
-      i * 0.8 + 0.25,
+      i * 0.8 + 0.25
     );
 
     // Phase 3: center → grow + full text
@@ -1098,7 +1098,7 @@ if (track) {
         opacity: 1,
         duration: 0.6,
       },
-      i * 0.8 + 0.4,
+      i * 0.8 + 0.4
     );
 
     tl.to(
@@ -1107,7 +1107,7 @@ if (track) {
         opacity: 1,
         duration: 0.3,
       },
-      i * 0.8 + 0.5,
+      i * 0.8 + 0.5
     );
 
     tl.to(
@@ -1116,7 +1116,7 @@ if (track) {
         opacity: 1,
         duration: 0.3,
       },
-      i * 0.8 + 0.55,
+      i * 0.8 + 0.55
     );
   });
 }
@@ -1136,7 +1136,7 @@ if (tl) {
   const connectorsSvg = cluster?.querySelector("svg.connectors");
   const bubbleCircles = gsap.utils.toArray(".bbt-FA-circle-sec .circle");
   const connectorSegments = gsap.utils.toArray(
-    ".bbt-FA-circle-sec .connector-segment",
+    ".bbt-FA-circle-sec .connector-segment"
   );
 
   if (
@@ -1158,16 +1158,12 @@ if (tl) {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetLeft + circle.offsetWidth,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth)
       ) + 20;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetTop + circle.offsetHeight,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight)
       ) + 20;
 
     gsap.set(cluster, {
@@ -1177,7 +1173,7 @@ if (tl) {
 
     connectorsSvg.setAttribute(
       "viewBox",
-      `0 0 ${clusterWidth} ${clusterHeight}`,
+      `0 0 ${clusterWidth} ${clusterHeight}`
     );
 
     connectorSegments.forEach((segment, index) => {
@@ -1204,7 +1200,9 @@ if (tl) {
 
       segment.setAttribute(
         "d",
-        `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(1)} ${endY.toFixed(1)}`,
+        `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(
+          1
+        )} ${endY.toFixed(1)}`
       );
       segment._bubbleConnector = { startX, startY, endX, endY };
     });
@@ -1219,7 +1217,9 @@ if (tl) {
 
     segment.setAttribute(
       "d",
-      `M ${line.startX.toFixed(1)} ${line.startY.toFixed(1)} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`,
+      `M ${line.startX.toFixed(1)} ${line.startY.toFixed(
+        1
+      )} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`
     );
   }
 
@@ -1298,7 +1298,7 @@ if (tl) {
     const segmentDuration = 1;
     const scrollDistance = Math.max(
       bubbleCircles.length * viewportHeight * 1.05,
-      viewportHeight * 7,
+      viewportHeight * 7
     );
     bubbleTimeline = gsap.timeline({
       defaults: { ease: "none" },
@@ -1323,6 +1323,29 @@ if (tl) {
       const connector = connectorSegments[index];
       const at = index * segmentDuration;
 
+      // When circle 1 becomes active, shrink circle 0 like other passed circles
+      if (index === 1) {
+        const c0 = bubbleCircles[0];
+        const c0Heading = c0.querySelector("h2");
+        const c0Body = c0.querySelector("p");
+        bubbleTimeline.to(
+          c0,
+          {
+            scale: 0.72,
+            autoAlpha: 0.7,
+            duration: 0.2,
+            ease: "power2.inOut",
+          },
+          at
+        );
+        if (c0Heading) {
+          bubbleTimeline.to(c0Heading, { autoAlpha: 0.45, duration: 0.2 }, at);
+        }
+        if (c0Body) {
+          bubbleTimeline.to(c0Body, { autoAlpha: 0.3, duration: 0.2 }, at);
+        }
+      }
+
       if (index > 0) {
         bubbleTimeline.to(
           bubbleTrack,
@@ -1331,7 +1354,7 @@ if (tl) {
             duration: 0.24,
             ease: "power2.inOut",
           },
-          at,
+          at
         );
       }
 
@@ -1343,7 +1366,7 @@ if (tl) {
           duration: 0.18,
           ease: "back.out(1.45)",
         },
-        at + 0.08,
+        at + 0.08
       );
 
       if (heading) {
@@ -1355,7 +1378,7 @@ if (tl) {
             duration: 0.16,
             ease: "power2.out",
           },
-          at + 0.28,
+          at + 0.28
         );
       }
 
@@ -1368,7 +1391,7 @@ if (tl) {
             duration: 0.16,
             ease: "power2.out",
           },
-          at + 0.46,
+          at + 0.46
         );
       }
 
@@ -1387,7 +1410,7 @@ if (tl) {
               setConnectorDrawProgress(connector, lineDraw.progress);
             },
           },
-          at + 0.68,
+          at + 0.68
         );
       }
     });
@@ -1416,16 +1439,12 @@ if (tl) {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetLeft + circle.offsetWidth,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth)
       ) + 40;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetTop + circle.offsetHeight,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight)
       ) + 20;
 
     gsap.set(cluster, {
@@ -1435,7 +1454,7 @@ if (tl) {
 
     connectorsSvg.setAttribute(
       "viewBox",
-      `0 0 ${clusterWidth} ${clusterHeight}`,
+      `0 0 ${clusterWidth} ${clusterHeight}`
     );
 
     const viewportWidth = window.innerWidth;
@@ -1455,7 +1474,7 @@ if (tl) {
     const travelDistance = Math.max(startX - endX, viewportWidth * 1.8);
     const scrollDistance = Math.max(
       travelDistance * 1.35,
-      viewportWidth * 3.75,
+      viewportWidth * 3.75
     );
     gsap.set(bubbleCircles, {
       scale: 0.12,
@@ -1495,7 +1514,9 @@ if (tl) {
 
       segment.setAttribute(
         "d",
-        `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(1)} ${endY.toFixed(1)}`,
+        `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(
+          1
+        )} ${endY.toFixed(1)}`
       );
 
       gsap.set(segment, {
@@ -1566,7 +1587,7 @@ if (tl) {
       bubbleTrack,
       { x: startX },
       { x: endX, duration: travelDistance },
-      0,
+      0
     );
 
     // c1 (index=0) phaseOneStart = max(0, startX + c1Center - viewportCenter - viewportWidth*0.28)
@@ -1577,12 +1598,12 @@ if (tl) {
     const c1FocusTime = gsap.utils.clamp(
       0,
       travelDistance,
-      startX + c1Center - viewportCenter,
+      startX + c1Center - viewportCenter
     );
     const c1PhaseOne = gsap.utils.clamp(
       0,
       travelDistance,
-      c1FocusTime - viewportWidth * 0.28,
+      c1FocusTime - viewportWidth * 0.28
     );
     const bgFadeEnd = Math.max(c1PhaseOne - viewportWidth * 0.05, 0);
     const bgFadeDuration = Math.max(viewportWidth * 0.2, 100);
@@ -1601,39 +1622,77 @@ if (tl) {
       const focusTime = gsap.utils.clamp(
         0,
         travelDistance,
-        startX + circleCenter - viewportCenter,
+        startX + circleCenter - viewportCenter
       );
 
       const phaseOneStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.28,
+        focusTime - viewportWidth * 0.28
       );
       const phaseTwoStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.16,
+        focusTime - viewportWidth * 0.16
       );
       const titleStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.14,
+        focusTime - viewportWidth * 0.14
       );
       const bodyStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.1,
+        focusTime - viewportWidth * 0.1
       );
       const activeStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.07,
+        focusTime - viewportWidth * 0.07
       );
       const activeEnd = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime + viewportWidth * 0.07,
+        focusTime + viewportWidth * 0.07
       );
+
+      // When circle 1 starts coming into focus, shrink circle 0 (first circle)
+      // to match the same inactive treatment other circles get when passed
+      if (index === 1) {
+        const c0 = bubbleCircles[0];
+        const c0Heading = c0.querySelector("h2");
+        const c0Body = c0.querySelector("p");
+        bubbleTimeline.to(
+          c0,
+          {
+            scale: 0.82,
+            autoAlpha: 0.7,
+            zIndex: 1,
+            duration: Math.max(activeEnd - phaseOneStart, 0.01),
+          },
+          phaseOneStart
+        );
+        if (c0Heading) {
+          bubbleTimeline.to(
+            c0Heading,
+            {
+              autoAlpha: 0.45,
+              duration: Math.max(activeEnd - phaseOneStart, 0.01),
+            },
+            phaseOneStart
+          );
+        }
+        if (c0Body) {
+          bubbleTimeline.to(
+            c0Body,
+            {
+              autoAlpha: 0.3,
+              duration: Math.max(activeEnd - phaseOneStart, 0.01),
+            },
+            phaseOneStart
+          );
+        }
+      }
 
       bubbleTimeline.to(
         circle,
@@ -1642,7 +1701,7 @@ if (tl) {
           autoAlpha: 0.7,
           duration: Math.max(phaseTwoStart - phaseOneStart, 0.01),
         },
-        phaseOneStart,
+        phaseOneStart
       );
 
       if (heading) {
@@ -1653,7 +1712,7 @@ if (tl) {
             y: 0,
             duration: Math.max(bodyStart - titleStart, 0.01),
           },
-          titleStart,
+          titleStart
         );
       }
 
@@ -1665,7 +1724,7 @@ if (tl) {
             y: 0,
             duration: Math.max(activeStart - bodyStart, 0.01),
           },
-          bodyStart,
+          bodyStart
         );
       }
 
@@ -1677,7 +1736,7 @@ if (tl) {
           zIndex: 5,
           duration: Math.max(activeEnd - activeStart, 0.01),
         },
-        activeStart,
+        activeStart
       );
 
       if (heading) {
@@ -1687,7 +1746,7 @@ if (tl) {
             autoAlpha: 1,
             duration: Math.max(activeEnd - activeStart, 0.01),
           },
-          activeStart,
+          activeStart
         );
       }
 
@@ -1698,7 +1757,7 @@ if (tl) {
             autoAlpha: 1,
             duration: Math.max(activeEnd - activeStart, 0.01),
           },
-          activeStart + viewportWidth * 0.01,
+          activeStart + viewportWidth * 0.01
         );
       }
 
@@ -1709,7 +1768,7 @@ if (tl) {
             autoAlpha: 0.92,
             duration: Math.max(activeStart - phaseOneStart, 0.01),
           },
-          phaseOneStart,
+          phaseOneStart
         );
       }
     });
@@ -1757,7 +1816,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       threshold: 0.2,
-    },
+    }
   );
 
   animatedSections.forEach((section) => {
@@ -1867,7 +1926,7 @@ document.addEventListener("DOMContentLoaded", function () {
             obs.unobserve(entry.target);
           });
         },
-        { threshold: 0.15 },
+        { threshold: 0.15 }
       );
       observer.observe(newsSection);
     }
@@ -1937,7 +1996,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.15 },
+    { threshold: 0.15 }
   );
 
   function observeBlocks() {
@@ -1967,7 +2026,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.2 },
+    { threshold: 0.2 }
   );
 
   document.addEventListener("DOMContentLoaded", function () {
