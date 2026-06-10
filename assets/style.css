@@ -989,7 +989,7 @@
   --horizontal-panel-bottom: clamp(5.75rem, 7vw, 7rem);
   height: 100vh;
   position: relative;
-  margin-top: 150px;
+  margin-top: 0;
   margin-bottom: 0px;
   overflow: hidden;
   padding-bottom: 70px;
@@ -1667,11 +1667,12 @@ section.bbt-FA-img-sec {
 
 /* recognition-sec CSS start */
 .recognition-sec {
-  background: linear-gradient(to bottom, #fff 0%, #f7df00 14%);
+  background: #f7df00;
   padding: 110px 0px 135.9px;
   text-align: center;
   position: relative;
   z-index: 5;
+  margin-top: -1px;
 }
 
 .recognition-sec .section-title {
@@ -1942,6 +1943,8 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
   align-items: baseline;
   justify-content: space-between;
   margin-bottom: 180px;
+  position: relative;
+  z-index: 1;
 }
 
 .news-header h2 {
@@ -2009,6 +2012,8 @@ a.see-all.secondary-btn {
   transform: translateY(20px);
   transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
+  position: relative;
+  z-index: 1;
 }
 
 .news-section .card.card-visible {
@@ -2224,14 +2229,14 @@ a.see-all.secondary-btn {
   min-height: 100vh;
   z-index: 1;
   isolation: isolate;
-  background: #f7df00;
+  background: #fff;
 }
 
 .bbt-FA-circle-sec .sticky-viewport {
   position: relative;
   height: 100vh;
   overflow: hidden;
-  background: #f7df00;
+  background: #fff;
   z-index: 1;
 
 }
