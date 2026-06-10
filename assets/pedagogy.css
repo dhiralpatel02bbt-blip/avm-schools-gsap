@@ -50,10 +50,12 @@ body.pedagogy-page header .black-logo {
   /* content: ""; */
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg,
-      rgba(8, 31, 82, 0.22) 0%,
-      rgba(8, 31, 82, 0.05) 38%,
-      rgba(8, 31, 82, 0) 65%);
+  background: linear-gradient(
+    90deg,
+    rgba(8, 31, 82, 0.22) 0%,
+    rgba(8, 31, 82, 0.05) 38%,
+    rgba(8, 31, 82, 0) 65%
+  );
   z-index: 1;
 }
 
@@ -1021,7 +1023,7 @@ body.pedagogy-page header .black-logo {
   gap: 36.44px;
 }
 
-.tabbing-sec .feature-block>*:nth-child(1) {
+.tabbing-sec .feature-block > *:nth-child(1) {
   opacity: 0;
   transform: translateX(-80px);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1029,7 +1031,7 @@ body.pedagogy-page header .black-logo {
   will-change: opacity, transform;
 }
 
-.tabbing-sec .feature-block>*:nth-child(2) {
+.tabbing-sec .feature-block > *:nth-child(2) {
   opacity: 0;
   transform: translateX(80px);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
@@ -1037,8 +1039,8 @@ body.pedagogy-page header .black-logo {
   will-change: opacity, transform;
 }
 
-.tabbing-sec .feature-block.fb-visible>*:nth-child(1),
-.tabbing-sec .feature-block.fb-visible>*:nth-child(2) {
+.tabbing-sec .feature-block.fb-visible > *:nth-child(1),
+.tabbing-sec .feature-block.fb-visible > *:nth-child(2) {
   opacity: 1;
   transform: translateX(0);
 }
@@ -1163,7 +1165,6 @@ body.pedagogy-page header .black-logo {
   height: 25px;
   background-color: #f7df00;
 }
-
 #secondary .feature-block:nth-child(1) .img-block:after {
   content: "";
   position: absolute;
@@ -1358,7 +1359,6 @@ body.pedagogy-page header .black-logo {
 }
 
 @media (max-width: 991px) {
-
   #primary h2.title-txt,
   #secondary h2.title-txt {
     width: 65%;
@@ -1565,7 +1565,7 @@ body.pedagogy-page header .black-logo {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding-left: calc(7.5vw + 20px);
+  padding-left: calc(7.1vw + 0px);
   padding-right: 0;
   box-sizing: border-box;
 }
@@ -2469,22 +2469,33 @@ body.pedagogy-page header .black-logo {
   }
 
   .sat.left {
-    top: calc(50% - (var(--aym-mobile-circle-size) / 2) + var(--aym-mobile-row-height));
+    top: calc(
+      50% - (var(--aym-mobile-circle-size) / 2) + var(--aym-mobile-row-height)
+    );
     order: 2;
   }
 
   .sat.right {
-    top: calc(50% - (var(--aym-mobile-circle-size) / 2) + (var(--aym-mobile-row-height) * 2));
+    top: calc(
+      50% - (var(--aym-mobile-circle-size) / 2) +
+        (var(--aym-mobile-row-height) * 2)
+    );
     order: 3;
   }
 
   .sat.bottom-right {
-    top: calc(50% - (var(--aym-mobile-circle-size) / 2) + (var(--aym-mobile-row-height) * 3));
+    top: calc(
+      50% - (var(--aym-mobile-circle-size) / 2) +
+        (var(--aym-mobile-row-height) * 3)
+    );
     order: 4;
   }
 
   .sat.bottom-left {
-    top: calc(50% - (var(--aym-mobile-circle-size) / 2) + (var(--aym-mobile-row-height) * 4));
+    top: calc(
+      50% - (var(--aym-mobile-circle-size) / 2) +
+        (var(--aym-mobile-row-height) * 4)
+    );
     order: 5;
   }
 }
@@ -2498,7 +2509,6 @@ body.pedagogy-page header .black-logo {
 }
 
 @media (max-width: 576px) {
-
   .sat,
   .sat.top,
   .sat.right,
@@ -3075,11 +3085,13 @@ body.pedagogy-page header .black-logo {
 
 .pedagogy-page .diagram-bottom-fade {
   height: 340px !important;
-  background: linear-gradient(to bottom,
-      transparent 0%,
-      rgba(10, 61, 156, 0.55) 38%,
-      rgba(255, 255, 255, 0.9) 76%,
-      #ffffff 100%) !important;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(10, 61, 156, 0.55) 38%,
+    rgba(255, 255, 255, 0.9) 76%,
+    #ffffff 100%
+  ) !important;
 }
 
 .pedagogy-page .tabbing-sec {
@@ -3116,9 +3128,9 @@ body.pedagogy-page header .black-logo {
     padding-top: 227px;
   }
 }
-
 /* -YP end */
 
-.contact-sec .container-xxl {
-  border-bottom: 1px solid #fff;
+/* ── Extra Section: Scroll-jacked slide per scroll ── */
+.extra-section-pin-spacer-custom {
+  pointer-events: none;
 }
