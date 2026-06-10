@@ -1565,7 +1565,7 @@ body.pedagogy-page header .black-logo {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding-left: calc(7.5vw + 20px);
+  padding-left: calc(7.1vw + 0px);
   padding-right: 0;
   box-sizing: border-box;
 }
