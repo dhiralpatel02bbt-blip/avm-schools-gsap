@@ -535,45 +535,6 @@ gsap.from(".award .leaf", {
 // Sab kuch viewport mein aane ke baad hi chalta hai
 (function initContactSection() {
   var contactSec = document.querySelector(".contact-sec");
-  var firstFooter = document.querySelector(".bbt-FA-main-footer");
-  if (!contactSec && !firstFooter) return;
-
-  // Contact + both responsive footers move as one continuous blue reveal.
-  var shellAnchor = contactSec || firstFooter;
-  var revealShell = shellAnchor.closest(".contact-footer-reveal-shell");
-  if (!revealShell) {
-    var footers = [];
-    var sibling = contactSec ? contactSec.nextElementSibling : firstFooter;
-
-    while (sibling && sibling.matches(".bbt-FA-main-footer")) {
-      footers.push(sibling);
-      sibling = sibling.nextElementSibling;
-    }
-
-    revealShell = document.createElement("div");
-    revealShell.className = "contact-footer-reveal-shell";
-    shellAnchor.parentNode.insertBefore(revealShell, shellAnchor);
-    if (contactSec) revealShell.appendChild(contactSec);
-    footers.forEach(function (footer) {
-      revealShell.appendChild(footer);
-    });
-  }
-
-  // Step 1: Overlap animation — section neeche se upar slide karta hai (scrub)
-  // CSS mein translateY(60px) set hai, GSAP usse 0 pe laata hai
-  gsap.to(revealShell, {
-    y: 0,
-    ease: "none",
-    scrollTrigger: {
-      trigger: revealShell,
-      start: "top bottom", // jab section viewport mein enter kare
-      end: "top 55%", // jab section ka top 55% pe pahunche
-      scrub: 1.2,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  // Step 2: Content animations — section kaafi viewport mein aa jaane ke baad
   if (!contactSec) return;
 
   var content = contactSec.querySelector(".content");
@@ -1943,4 +1904,64 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", updateStickyBtn, { passive: true });
   window.addEventListener("resize", updateStickyBtn);
   updateStickyBtn();
+})();
+
+// ============================================================
+// BBT-FA-IMG-SEC — Purple circle (right se) + Title (left se) animation
+// ============================================================
+(function initImgSecAnimation() {
+  const imgSec = document.querySelector(".bbt-FA-img-sec");
+  if (!imgSec) return;
+
+  const purpleCircle = imgSec.querySelector(".purple-circle");
+  const imgText = imgSec.querySelector(".img-text");
+  const mainTitle = imgSec.querySelector(".main-title");
+
+  // Initial states — sab hidden
+  if (purpleCircle) {
+    gsap.set(purpleCircle, { x: 220, opacity: 0 });
+  }
+  if (imgText) {
+    gsap.set(imgText, { x: -100, opacity: 0 });
+  }
+  if (mainTitle) {
+    gsap.set(mainTitle, { x: -80, opacity: 0 });
+  }
+
+  ScrollTrigger.create({
+    trigger: imgSec,
+    start: "top 75%",
+    once: true,
+    onEnter: function () {
+      // Purple circle — right se slide in + fade in
+      if (purpleCircle) {
+        gsap.to(purpleCircle, {
+          x: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: "power3.out",
+        });
+      }
+      // img-text heading — left se slide in + fade in
+      if (imgText) {
+        gsap.to(imgText, {
+          x: 0,
+          opacity: 1,
+          duration: 1.0,
+          delay: 0.15,
+          ease: "power3.out",
+        });
+      }
+      // main-title paragraph — left se thoda baad mein
+      if (mainTitle) {
+        gsap.to(mainTitle, {
+          x: 0,
+          opacity: 1,
+          duration: 1.0,
+          delay: 0.3,
+          ease: "power3.out",
+        });
+      }
+    },
+  });
 })();
