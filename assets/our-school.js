@@ -116,7 +116,15 @@
       var c = slide.querySelector(".campus-slide-circle");
       var t = slide.querySelector(".campus-slide-text");
 
-      if (c) gsap.set(c, { x: -110, y: 110, autoAlpha: 0 });
+      if (c) {
+        gsap.set(c, {
+          x: -110,
+          y: 110,
+          scale: 0.55,
+          transformOrigin: "50% 50%",
+          autoAlpha: 0,
+        });
+      }
       if (t) gsap.set(t, { y: 32, autoAlpha: 0 });
     });
 
@@ -127,7 +135,13 @@
 
     if (immediate) {
       gsap.killTweensOf([c, t]);
-      gsap.set(c, { x: 0, y: 0, autoAlpha: 1 });
+      gsap.set(c, {
+        x: 0,
+        y: 0,
+        scale: 1,
+        transformOrigin: "50% 50%",
+        autoAlpha: 1,
+      });
       gsap.set(t, { y: 0, autoAlpha: 1 });
       return;
     }
@@ -139,6 +153,8 @@
     gsap.to(c, {
       x: 0,
       y: 0,
+      scale: 1,
+      transformOrigin: "50% 50%",
       autoAlpha: 1,
       duration: 0.9,
       ease: "power3.out",
@@ -258,7 +274,7 @@
         gsap.set(currentSlide, { zIndex: 2 });
         gsap.set(currentVisual, { clipPath: "inset(100% 0% 0% 0%)" });
         gsap.set(targetSlide, { zIndex: 3 });
-        setActiveSlide(safeIndex, true);
+        setActiveSlide(safeIndex, false, 0.08);
         holdCampusAtProgress(getSlideProgress(safeIndex));
       },
     });
@@ -269,6 +285,7 @@
         {
           x: -110,
           y: 110,
+          scale: 0.55,
           autoAlpha: 0,
           duration: 0.55,
           ease: "power3.in",
@@ -312,9 +329,41 @@
 
     var safeIndex = Math.max(0, Math.min(index, campusSlides.length - 1));
     if (safeIndex === lastMaskedIndex && !immediate) return null;
+    var previousIndex = lastMaskedIndex;
     index = safeIndex;
     lastMaskedIndex = index;
     if (!immediate) maskAnimating = true;
+
+    if (!immediate && previousIndex >= 0 && previousIndex !== index) {
+      var previousSlide = campusSlides[previousIndex];
+      var previousCircle =
+        previousSlide && previousSlide.querySelector(".campus-slide-circle");
+      var previousText =
+        previousSlide && previousSlide.querySelector(".campus-slide-text");
+
+      if (previousCircle) {
+        gsap.to(previousCircle, {
+          x: -110,
+          y: 110,
+          scale: 0.55,
+          transformOrigin: "50% 50%",
+          autoAlpha: 0,
+          duration: 0.55,
+          ease: "power3.in",
+          overwrite: true,
+        });
+      }
+
+      if (previousText) {
+        gsap.to(previousText, {
+          y: 32,
+          autoAlpha: 0,
+          duration: 0.38,
+          ease: "power2.in",
+          overwrite: true,
+        });
+      }
+    }
 
     campusSlides.forEach(function (slide, i) {
       var visual = campusSlideVisuals[i];

@@ -110,9 +110,9 @@
 .campus-slide-circle {
   position: absolute;
   left: -168px;
-  bottom: -400px;
-  width: 630px;
-  height: 590px;
+  bottom: -390px;
+  width: 530px;
+  height: 510px;
   background: #f7df00;
   border-radius: 50%;
   z-index: 0;
@@ -127,8 +127,8 @@
   transform: translateY(30px);
   will-change: transform, opacity;
   width: 60%;
-  top: 110px;
-  left: -70px;
+  top: 170px;
+  left: -104px;
   margin: auto;
 }
 
@@ -136,7 +136,7 @@
   margin: 0;
   color: #101010;
   font-family: Poppins;
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 600;
   line-height: 139%;
 }
