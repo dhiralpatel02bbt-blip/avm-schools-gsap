@@ -1357,9 +1357,9 @@ body.reveal-animations-ready .contact-sec .image-container {
   }
 }
 
-@media (max-width: 1366px) {
+@media (max-width: 1366.9px) {
   .bbt-FA-main-footer .footer-middle {
-    gap: 30px;
+    gap: 90px;
   }
 
   .bbt-FA-main-footer .icon {
