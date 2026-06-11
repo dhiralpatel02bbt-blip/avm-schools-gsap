@@ -531,8 +531,8 @@ gsap.from(".award .leaf", {
   },
 });
 
-// ⭐ Contact Section — slide up overlap + content animations
-// Sab kuch viewport mein aane ke baad hi chalta hai
+// ⭐ Contact Section — content animations only
+// (contact-footer-reveal-shell div injection removed — side scroll fix)
 (function initContactSection() {
   var contactSec = document.querySelector(".contact-sec");
   if (!contactSec) return;
@@ -545,22 +545,22 @@ gsap.from(".award .leaf", {
 
   ScrollTrigger.create({
     trigger: contactSec,
-    start: "top 70%", // jab section thoda andar aa jaaye
+    start: "top 70%",
     once: true,
     onEnter: function () {
       var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       if (content) {
-        tl.to(content, { opacity: 1, x: 0, duration: 0.85 }, 0);
+        tl.from(content, { opacity: 0, y: 30, duration: 0.85 }, 0);
       }
       if (imageContainer) {
-        tl.to(imageContainer, { opacity: 1, x: 0, duration: 0.85 }, 0.15);
+        tl.from(imageContainer, { opacity: 0, y: 30, duration: 0.85 }, 0.15);
       }
       if (h3) {
-        tl.from(h3, { x: -80, opacity: 0, duration: 0.7 }, 0.1);
+        tl.from(h3, { y: 20, opacity: 0, duration: 0.7 }, 0.1);
       }
       if (h2) {
-        tl.from(h2, { x: -80, opacity: 0, duration: 0.7 }, 0.3);
+        tl.from(h2, { y: 20, opacity: 0, duration: 0.7 }, 0.3);
       }
       if (formActions) {
         tl.from(
@@ -1167,34 +1167,12 @@ if (tl) {
       autoAlpha: 0,
       y: 16,
     });
-    gsap.set(bubbleCircles[0], { scale: 0.82, autoAlpha: 0, y: 80, zIndex: 5 });
+    // First bubble: scrub timeline ke through animate hoga (small→big, phir big hi rahega)
+    // c1RevealTrigger (once:true) hata diya — woh small→big→small bug create karta tha
+    gsap.set(bubbleCircles[0], { scale: 0.72, autoAlpha: 0, y: 80, zIndex: 5 });
 
     const firstHeading = bubbleCircles[0].querySelector("h2");
     const firstBody = bubbleCircles[0].querySelector("p");
-    c1RevealTrigger = ScrollTrigger.create({
-      trigger: section,
-      start: "top 92%",
-      once: true,
-      onEnter: () => {
-        gsap.to(bubbleCircles[0], {
-          scale: 1,
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.75,
-          ease: "power3.out",
-          overwrite: true,
-        });
-        gsap.to([firstHeading, firstBody].filter(Boolean), {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.55,
-          stagger: 0.08,
-          delay: 0.16,
-          ease: "power2.out",
-          overwrite: true,
-        });
-      },
-    });
 
     connectorSegments.forEach((segment) => {
       setConnectorDrawProgress(segment, 0);
@@ -1224,6 +1202,27 @@ if (tl) {
     });
 
     gsap.set([section, stickyViewport], { backgroundColor: "#ffffff" });
+
+    // ── Circle 0 (first bubble) — scrub timeline mein: small→big, phir big hi rahega ──
+    bubbleTimeline.to(
+      bubbleCircles[0],
+      { scale: 1, autoAlpha: 1, y: 0, duration: 0.18, ease: "back.out(1.45)" },
+      0,
+    );
+    if (firstHeading) {
+      bubbleTimeline.to(
+        firstHeading,
+        { autoAlpha: 1, y: 0, duration: 0.16, ease: "power2.out" },
+        0.18,
+      );
+    }
+    if (firstBody) {
+      bubbleTimeline.to(
+        firstBody,
+        { autoAlpha: 1, y: 0, duration: 0.16, ease: "power2.out" },
+        0.34,
+      );
+    }
 
     bubbleCircles.forEach((circle, index) => {
       if (index === 0) return;
