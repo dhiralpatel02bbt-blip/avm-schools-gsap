@@ -535,8 +535,50 @@ gsap.from(".award .leaf", {
 // (contact-footer-reveal-shell div injection removed — side scroll fix)
 (function initContactSection() {
   var contactSec = document.querySelector(".contact-sec");
+  var firstFooter = document.querySelector(".bbt-FA-main-footer");
+  if (!contactSec && !firstFooter) return;
+
+  // Contact + both responsive footers move as one continuous blue reveal.
+  var shellAnchor = contactSec || firstFooter;
+  var revealShell = shellAnchor.closest(".contact-footer-reveal-shell");
+  if (!revealShell) {
+    var footers = [];
+    var sibling = contactSec ? contactSec.nextElementSibling : firstFooter;
+
+    while (sibling && sibling.matches(".bbt-FA-main-footer")) {
+      footers.push(sibling);
+      sibling = sibling.nextElementSibling;
+    }
+
+    revealShell = document.createElement("div");
+    revealShell.className = "contact-footer-reveal-shell";
+    shellAnchor.parentNode.insertBefore(revealShell, shellAnchor);
+    if (contactSec) revealShell.appendChild(contactSec);
+    footers.forEach(function (footer) {
+      revealShell.appendChild(footer);
+    });
+  }
+
+<<<<<<< Updated upstream
+=======
+  // Step 1: Overlap animation — section neeche se upar slide karta hai (scrub)
+  // CSS mein translateY(60px) set hai, GSAP usse 0 pe laata hai
+  gsap.to(revealShell, {
+    y: 0,
+    ease: "none",
+    scrollTrigger: {
+      trigger: revealShell,
+      start: "top bottom", // jab section viewport mein enter kare
+      end: "top 55%", // jab section ka top 55% pe pahunche
+      scrub: 1.2,
+      invalidateOnRefresh: true,
+    },
+  });
+
+  // Step 2: Content animations — section kaafi viewport mein aa jaane ke baad
   if (!contactSec) return;
 
+>>>>>>> Stashed changes
   var content = contactSec.querySelector(".content");
   var imageContainer = contactSec.querySelector(".image-container");
   var h3 = contactSec.querySelector(".inner-content h3");
@@ -767,8 +809,13 @@ gsap.from(".award .leaf", {
       duration: immediate
         ? 0
         : previousStep < 0 && step === 0
+<<<<<<< Updated upstream
         ? firstStepDuration
         : panelStepDuration,
+=======
+          ? firstStepDuration
+          : panelStepDuration,
+>>>>>>> Stashed changes
       ease: "power2.out",
       overwrite: true,
       onComplete: function () {
@@ -1478,7 +1525,11 @@ if (tl) {
       const focusTime = gsap.utils.clamp(
         0,
         travelDistance,
+<<<<<<< Updated upstream
         index === 0 ? 300 : rawFocusTime
+=======
+        index === 0 ? 300 : rawFocusTime,
+>>>>>>> Stashed changes
       );
 
       const phaseOneStart = gsap.utils.clamp(
@@ -1797,7 +1848,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // GSAP ScrollTrigger path — most reliable
     if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+<<<<<<< Updated upstream
       // -YP start
+=======
+>>>>>>> Stashed changes
       ScrollTrigger.create({
         trigger: newsGrid || newsSection,
         start: "bottom 25%", // wait until the news cards reach the viewport position shown in the reference
