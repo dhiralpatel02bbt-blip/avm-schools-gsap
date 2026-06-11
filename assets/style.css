@@ -1395,19 +1395,22 @@ section.bbt-FA-img-sec {
   --school-circle-bottom: clamp(-120px, -35vw, -120px);
   margin: 80px 0 0px;
   overflow: visible;
+  height: 100vh;
 }
 
 .bbt-FA-img-sec .img-box {
   position: relative;
   overflow: visible;
+  height: 100%;
 }
 
 .bbt-FA-img-sec .img-mask {
   overflow: hidden;
+  height: 100%;
 }
 
 .bbt-FA-img-sec .img-box img {
-  max-height: clamp(40.125rem, 41.156vw + 30.865rem, 75.313rem);
+  height: 100%;
   max-height: 100vh;
   display: block;
   object-fit: cover;
@@ -1662,7 +1665,8 @@ section.bbt-FA-img-sec {
 
 /* recognition-sec CSS start */
 .recognition-sec {
-  background: #f7df00;
+  /* background: #f7df00; */
+  background: #ffffff;
   padding: 110px 0px 135.9px;
   text-align: center;
   position: relative;
@@ -2235,7 +2239,6 @@ a.see-all.secondary-btn {
   overflow: hidden;
   background: #fff;
   z-index: 2;
-
 }
 
 .bbt-FA-circle-sec .slides-track {
