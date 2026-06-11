@@ -633,6 +633,22 @@ body {
 }
 
 /* contact sec CSS start */
+.contact-footer-reveal-shell {
+    position: relative;
+    z-index: 10;
+    margin-top: -120px;
+    overflow: hidden;
+    background: #0a3d9c;
+    transform: translateY(120px);
+    will-change: transform;
+}
+
+.contact-footer-reveal-shell .contact-sec {
+    margin-top: 0;
+    transform: none;
+    z-index: auto;
+}
+
 .contact-sec {
     background: #0a3d9c;
     padding: 98px 0 91.46px;
