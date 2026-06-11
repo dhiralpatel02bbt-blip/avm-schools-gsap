@@ -31,16 +31,17 @@
   var campusSliderShell = campusSection.querySelector(".campus-slider-shell");
   var campusScroller = campusSection.querySelector(".campus-sequence-swiper");
   var campusTrack = campusSection.querySelector(
-    ".campus-sequence-swiper .swiper-wrapper",
+    ".campus-sequence-swiper .swiper-wrapper"
   );
   var campusSlides = gsap.utils.toArray(
-    ".campus-section .campus-sequence-slide",
+    ".campus-section .campus-sequence-slide"
   );
   var campusSlideVisuals = campusSlides.map(function (slide) {
     return slide.querySelector(".campus-slide-visual");
   });
   var campusText = campusSection.querySelector(".body-txt");
   var campusHalfCircle = campusSection.querySelector(".half-circle");
+  var siteHeader = document.querySelector("header.header");
 
   var isDesktop = window.innerWidth >= 992;
 
@@ -50,9 +51,53 @@
   var activeSlideIndex = -1;
   var introActive = false;
   var hasReachedSlider = false;
-  var CAMPUS_MASK_DURATION = 1.35;
-  var CAMPUS_CIRCLE_DELAY_AFTER_MASK = 0.08;
-  var CAMPUS_TEXT_DELAY_AFTER_CIRCLE = 0.68;
+  var campusTrigger = null;
+  var introExitAnimating = false;
+  var slideIntroAnimating = false;
+  var lockedCampusProgress = null;
+  var CAMPUS_EXIT_END = 0.45;
+  var CAMPUS_MASK_DURATION = 1.6;
+  var CAMPUS_CIRCLE_DELAY_AFTER_MASK = 0.12;
+  var CAMPUS_TEXT_DELAY_AFTER_CIRCLE = 0.9;
+
+  function prepareHeaderForCampusReentry() {
+    if (!siteHeader) return;
+
+    gsap.killTweensOf(siteHeader);
+    siteHeader.style.setProperty("position", "fixed");
+    siteHeader.style.setProperty("top", "0");
+    siteHeader.style.setProperty("z-index", "1000");
+    gsap.set(siteHeader, {
+      y: -siteHeader.offsetHeight - 16,
+      autoAlpha: 0,
+    });
+  }
+
+  function releaseCampusHeader() {
+    if (!siteHeader) return;
+
+    gsap.killTweensOf(siteHeader);
+    gsap.set(siteHeader, { clearProps: "transform,opacity,visibility" });
+    siteHeader.style.removeProperty("position");
+    siteHeader.style.removeProperty("top");
+    siteHeader.style.removeProperty("z-index");
+  }
+
+  function getSlideProgress(index) {
+    var maxIndex = Math.max(campusSlides.length - 1, 1);
+    var slideStart = index <= 0 ? 0 : (index - 0.5) / maxIndex;
+    return CAMPUS_EXIT_END + slideStart * (1 - CAMPUS_EXIT_END);
+  }
+
+  function holdCampusAtProgress(progress) {
+    if (!campusTrigger || progress === null) return;
+    var clampedProgress = Math.max(0, Math.min(progress, 1));
+    var targetScroll =
+      campusTrigger.start +
+      (campusTrigger.end - campusTrigger.start) * clampedProgress;
+
+    window.scrollTo({ top: targetScroll, behavior: "auto" });
+  }
 
   function animateSlide(index, immediate, delay) {
     if (!campusSlides.length) return;
@@ -80,14 +125,24 @@
     var t = active && active.querySelector(".campus-slide-text");
     if (!c || !t) return;
 
+    if (immediate) {
+      gsap.killTweensOf([c, t]);
+      gsap.set(c, { x: 0, y: 0, autoAlpha: 1 });
+      gsap.set(t, { y: 0, autoAlpha: 1 });
+      return;
+    }
+
     var d = immediate ? 0 : delay || 0;
+    slideIntroAnimating = true;
+    lockedCampusProgress = getSlideProgress(index);
+
     gsap.to(c, {
       x: 0,
       y: 0,
       autoAlpha: 1,
       duration: 0.9,
       ease: "power3.out",
-      delay: d + 0.3,
+      delay: d + 0.12,
       overwrite: true,
     });
     gsap.to(t, {
@@ -95,8 +150,14 @@
       autoAlpha: 1,
       duration: 0.75,
       ease: "power3.out",
-      delay: d + 0.9,
+      delay: d + CAMPUS_TEXT_DELAY_AFTER_CIRCLE,
       overwrite: true,
+      onComplete: function () {
+        if (!immediate) {
+          slideIntroAnimating = false;
+          lockedCampusProgress = null;
+        }
+      },
     });
   }
 
@@ -125,23 +186,135 @@
   }
 
   function updateHorizontalTrack(progress) {
-    if (!campusSlides.length) return;
+    if (!campusSlides.length) return null;
     // Scroll progress se slide index nikalo (0 to length-1)
-    var nextIndex = Math.round(progress * (campusSlides.length - 1));
-    revealSlideWithMask(nextIndex, false);
-    setActiveSlide(
-      nextIndex,
-      false,
-      CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK,
-    );
+    var targetIndex = Math.round(progress * (campusSlides.length - 1));
+    var nextIndex = targetIndex;
+
+    if (lastMaskedIndex >= 0 && Math.abs(targetIndex - lastMaskedIndex) > 1) {
+      nextIndex = lastMaskedIndex + (targetIndex > lastMaskedIndex ? 1 : -1);
+    }
+
+    var isReverse = nextIndex < lastMaskedIndex;
+    var revealedIndex = isReverse
+      ? reverseSlideWithMask(nextIndex)
+      : revealSlideWithMask(nextIndex, false);
+    if (revealedIndex === null) return null;
+
+    if (!isReverse) {
+      setActiveSlide(
+        revealedIndex,
+        false,
+        CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK
+      );
+    }
+
+    return {
+      index: revealedIndex,
+      targetIndex: targetIndex,
+      progress: isReverse
+        ? getSlideProgress(lastMaskedIndex)
+        : getSlideProgress(revealedIndex),
+    };
   }
   var maskAnimating = false;
   var lastMaskedIndex = -1;
 
+  function reverseSlideWithMask(index) {
+    if (!campusSlides.length) return null;
+    if (maskAnimating || slideIntroAnimating) return null;
+
+    var currentIndex = lastMaskedIndex;
+    var safeIndex = Math.max(0, Math.min(index, campusSlides.length - 1));
+    if (safeIndex >= currentIndex) return null;
+
+    var currentSlide = campusSlides[currentIndex];
+    var currentVisual = campusSlideVisuals[currentIndex];
+    var targetSlide = campusSlides[safeIndex];
+    var targetVisual = campusSlideVisuals[safeIndex];
+    var c = currentSlide && currentSlide.querySelector(".campus-slide-circle");
+    var t = currentSlide && currentSlide.querySelector(".campus-slide-text");
+    if (!currentSlide || !currentVisual || !targetSlide || !targetVisual) {
+      return null;
+    }
+
+    maskAnimating = true;
+    slideIntroAnimating = true;
+    lockedCampusProgress = getSlideProgress(currentIndex);
+
+    gsap.killTweensOf([c, t, currentVisual]);
+    gsap.set(targetSlide, { zIndex: 2 });
+    gsap.set(targetVisual, { clipPath: "inset(0% 0% 0% 0%)" });
+    gsap.set(currentSlide, { zIndex: 3 });
+    gsap.set(currentVisual, { clipPath: "inset(0% 0% 0% 0%)" });
+
+    var reverseTL = gsap.timeline({
+      onComplete: function () {
+        lastMaskedIndex = safeIndex;
+        maskAnimating = false;
+        slideIntroAnimating = false;
+        lockedCampusProgress = null;
+
+        gsap.set(currentSlide, { zIndex: 2 });
+        gsap.set(currentVisual, { clipPath: "inset(100% 0% 0% 0%)" });
+        gsap.set(targetSlide, { zIndex: 3 });
+        setActiveSlide(safeIndex, true);
+        holdCampusAtProgress(getSlideProgress(safeIndex));
+      },
+    });
+
+    if (c) {
+      reverseTL.to(
+        c,
+        {
+          x: -110,
+          y: 110,
+          autoAlpha: 0,
+          duration: 0.55,
+          ease: "power3.in",
+          overwrite: true,
+        },
+        0
+      );
+    }
+    if (t) {
+      reverseTL.to(
+        t,
+        {
+          y: 32,
+          autoAlpha: 0,
+          duration: 0.38,
+          ease: "power2.in",
+          overwrite: true,
+        },
+        0
+      );
+    }
+
+    reverseTL.to(
+      currentVisual,
+      {
+        clipPath: "inset(100% 0% 0% 0%)",
+        duration: CAMPUS_MASK_DURATION,
+        ease: "power3.inOut",
+        overwrite: true,
+      },
+      0.58
+    );
+
+    return safeIndex;
+  }
+
   function revealSlideWithMask(index, immediate) {
     if (!campusSlides.length) return;
-    if (index === lastMaskedIndex && !immediate) return;
+    if (index === lastMaskedIndex && !immediate) return null;
+    if (maskAnimating && !immediate) return null;
+
+    var safeIndex = Math.max(0, Math.min(index, campusSlides.length - 1));
+    if (safeIndex === lastMaskedIndex && !immediate) return null;
+    index = safeIndex;
     lastMaskedIndex = index;
+    if (!immediate) maskAnimating = true;
 
     campusSlides.forEach(function (slide, i) {
       var visual = campusSlideVisuals[i];
@@ -158,10 +331,13 @@
             { clipPath: "inset(100% 0% 0% 0%)" },
             {
               clipPath: "inset(0% 0% 0% 0%)",
-              duration: 1.35,
+              duration: CAMPUS_MASK_DURATION,
               ease: "power3.inOut",
               overwrite: true,
-            },
+              onComplete: function () {
+                maskAnimating = false;
+              },
+            }
           );
         }
       } else if (i < index) {
@@ -174,21 +350,26 @@
         gsap.set(visual, { clipPath: "inset(100% 0% 0% 0%)" });
       }
     });
+
+    if (immediate) maskAnimating = false;
+    return index;
   }
 
-  function showSlider() {
+  function showSlider(animateFirstSlide) {
     if (sliderShown) return;
     sliderShown = true;
     campusSliderShell.style.pointerEvents = "auto";
     gsap.set(campusSliderShell, { autoAlpha: 1 });
     lastMaskedIndex = -1;
     revealSlideWithMask(0, true);
-    setActiveSlide(0, true);
+    setActiveSlide(0, animateFirstSlide === false ? false : true, 0.08);
   }
 
   function hideSlider() {
     if (!sliderShown) return;
     sliderShown = false;
+    slideIntroAnimating = false;
+    lockedCampusProgress = null;
     campusSliderShell.style.pointerEvents = "none";
     gsap.to(campusSliderShell, {
       autoAlpha: 0,
@@ -248,6 +429,7 @@
     introActive = true;
 
     gsap.killTweensOf([campusHalfCircle, campusText]);
+    if (isReentry) prepareHeaderForCampusReentry();
     gsap.set(campusHalfCircle, { xPercent: -40, autoAlpha: 0 });
     gsap.set(campusText, { x: -96, autoAlpha: 0, filter: "blur(14px)" });
 
@@ -258,16 +440,29 @@
       },
     });
 
+    if (isReentry && siteHeader) {
+      loadTL.to(
+        siteHeader,
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 1.1,
+          ease: "power3.out",
+        },
+        0
+      );
+    }
+
     if (campusHalfCircle) {
       loadTL.to(
         campusHalfCircle,
         {
           xPercent: 0,
           autoAlpha: 1,
-          duration: 1.3,
+          duration: 2.2,
           ease: "power3.out",
         },
-        0,
+        0
       );
     }
     loadTL.fromTo(
@@ -277,10 +472,10 @@
         x: 0,
         autoAlpha: 1,
         filter: "blur(0px)",
-        duration: 1.0,
+        duration: 1.6,
         ease: "power3.out",
       },
-      0.6,
+      0.8
     );
   }
 
@@ -294,7 +489,7 @@
       function () {
         playLoadAnim(false);
       },
-      { once: true },
+      { once: true }
     );
   }
 
@@ -324,8 +519,8 @@
   if (campusHalfCircle) {
     exitTL.to(
       campusHalfCircle,
-      { xPercent: -80, autoAlpha: 0, ease: "none", duration: 1 },
-      0,
+      { xPercent: -80, autoAlpha: 0, ease: "none", duration: 1.8 },
+      0
     );
   }
   if (campusText) {
@@ -338,8 +533,73 @@
         ease: "none",
         duration: 1,
       },
-      0,
+      0
     );
+  }
+
+  function startIntroExit() {
+    if (introExitAnimating || maskAnimating || slideIntroAnimating) return;
+
+    introExitAnimating = true;
+    lockedCampusProgress = CAMPUS_EXIT_END;
+    gsap.killTweensOf([campusHalfCircle, campusText]);
+
+    gsap.to(exitTL, {
+      progress: 1,
+      duration: 1.05,
+      ease: "power3.inOut",
+      overwrite: true,
+      onComplete: function () {
+        introExitAnimating = false;
+        hasReachedSlider = true;
+        holdCampusAtProgress(CAMPUS_EXIT_END);
+        showSlider(false);
+      },
+    });
+  }
+
+  function stepCampus(direction) {
+    if (!campusTrigger || direction === 0) return false;
+
+    var progress = campusTrigger.progress || 0;
+    var finalIndex = campusSlides.length - 1;
+    var isBusy = introExitAnimating || maskAnimating || slideIntroAnimating;
+
+    if (isBusy) {
+      holdCampusAtProgress(lockedCampusProgress);
+      return true;
+    }
+
+    if (direction > 0) {
+      if (!sliderShown || progress < CAMPUS_EXIT_END) {
+        startIntroExit();
+        return true;
+      }
+
+      if (lastMaskedIndex < finalIndex) {
+        var nextIndex = Math.min(lastMaskedIndex + 1, finalIndex);
+        revealSlideWithMask(nextIndex, false);
+        setActiveSlide(
+          nextIndex,
+          false,
+          CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK
+        );
+        holdCampusAtProgress(getSlideProgress(nextIndex));
+        return true;
+      }
+
+      return false;
+    }
+
+    if (direction < 0) {
+      if (sliderShown && lastMaskedIndex > 0) {
+        reverseSlideWithMask(lastMaskedIndex - 1);
+        holdCampusAtProgress(getSlideProgress(lastMaskedIndex));
+        return true;
+      }
+    }
+
+    return false;
   }
 
   // ─────────────────────────────────────────────────────────
@@ -352,20 +612,25 @@
   // Header — campus pin zone mein hamesha visible rakho
   // Directional header code insideCampusPin() check se automatically ruk jata hai,
   // lekin yahan explicitly show karo taaki koi bhi hide state clear ho jaye
-  var siteHeader = document.querySelector("header.header");
   if (siteHeader) {
     siteHeader.style.setProperty("z-index", "1000", "important");
-    siteHeader.style.setProperty("opacity", "1", "important");
-    siteHeader.style.setProperty("transform", "translateY(0)", "important");
-    // opacity aur transform GSAP pe chhod do — inline override mat karo
-    // taaki directional header code baad mein sahi se kaam kare
   }
 
-  // campusViewport pin karo — 200vh scroll space
+  // Re-entry temporarily fixes the header so it can return with the blue circle.
+  // Restore its normal absolute positioning after leaving the campus pin.
   ScrollTrigger.create({
     trigger: campusViewport,
     start: "top top",
-    end: "+=200%",
+    end: "+=420%",
+    onLeaveBack: releaseCampusHeader,
+    onLeave: releaseCampusHeader,
+  });
+
+  // campusViewport pin karo — 200vh scroll space
+  campusTrigger = ScrollTrigger.create({
+    trigger: campusViewport,
+    start: "top top",
+    end: "+=420%",
     pin: true,
     pinSpacing: true,
     anticipatePin: 1,
@@ -379,20 +644,21 @@
       // ── Phase 2: scroll-driven exit (0 → 0.50) ──────────────
       // introActive ke dauran skip karo — playLoadAnim apne elements khud control karta hai
       if (!introActive) {
-        var exitP = Math.min(p / 0.5, 1);
+        var exitP = Math.min(p / CAMPUS_EXIT_END, 1);
         exitTL.progress(exitP);
       }
 
       // ── Phase 3: slider (0.50 → 1.00) ───────────────────────
-      if (p >= 0.03) {
+      if (p >= CAMPUS_EXIT_END) {
         hasReachedSlider = true;
-        showSlider();
+        showSlider(false);
 
         // 🔴 BLUE PART HIDE KARO (IMPORTANT)
         gsap.to(campusHalfCircle, {
           autoAlpha: 0,
           xPercent: -100,
-          duration: 0.4,
+          duration: 1.4,
+          ease: "power2.out",
           overwrite: true,
         });
 
@@ -403,11 +669,21 @@
           overwrite: true,
         });
 
-        var sliderP = (p - 0.5) / 0.5;
-        updateHorizontalTrack(Math.min(sliderP, 1));
+        var sliderP = (p - CAMPUS_EXIT_END) / (1 - CAMPUS_EXIT_END);
+        var slideUpdate = updateHorizontalTrack(Math.min(sliderP, 1));
+
+        if (slideUpdate && slideUpdate.targetIndex !== slideUpdate.index) {
+          holdCampusAtProgress(slideUpdate.progress);
+        } else if (
+          (maskAnimating || slideIntroAnimating) &&
+          lockedCampusProgress !== null &&
+          Math.abs(p - lockedCampusProgress) > 0.001
+        ) {
+          holdCampusAtProgress(lockedCampusProgress);
+        }
       } else {
         hideSlider();
-        if (hasReachedSlider && p < 0.03 && !introActive) {
+        if (hasReachedSlider && p < CAMPUS_EXIT_END && !introActive) {
           hasReachedSlider = false;
           exitTL.progress(0);
           playLoadAnim(true);
@@ -415,9 +691,46 @@
       }
     },
     onLeave: function () {
+      if (introExitAnimating || maskAnimating || slideIntroAnimating) {
+        holdCampusAtProgress(lockedCampusProgress);
+        return;
+      }
       showSlider();
     },
   });
+
+  window.addEventListener(
+    "wheel",
+    function (e) {
+      if (!campusTrigger) return;
+
+      var rect = campusViewport.getBoundingClientRect();
+      var isCampusReady =
+        campusTrigger.isActive || (rect.top <= 2 && rect.bottom > 2);
+      if (!isCampusReady) return;
+
+      var direction = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0;
+      if (stepCampus(direction)) {
+        e.preventDefault();
+      }
+    },
+    { passive: false, capture: true }
+  );
+
+  window.addEventListener(
+    "touchmove",
+    function (e) {
+      if (
+        campusTrigger &&
+        campusTrigger.isActive &&
+        (introExitAnimating || maskAnimating || slideIntroAnimating)
+      ) {
+        e.preventDefault();
+        holdCampusAtProgress(lockedCampusProgress);
+      }
+    },
+    { passive: false }
+  );
   window.addEventListener("resize", function () {
     horizontalTween = null;
     ScrollTrigger.refresh();
@@ -475,7 +788,7 @@
     var sectionRightGap = headingContainer
       ? Math.max(
           viewportWidth - headingContainer.getBoundingClientRect().right,
-          48,
+          48
         )
       : Math.min(Math.max(viewportWidth * 0.06, 48), 110);
     var currentSlide = 0;
@@ -483,12 +796,21 @@
     var wheelCooldownUntil = 0;
     var touchStartY = 0;
 
+    // Slide 0's natural rendered left position becomes the anchor.
+    // Every subsequent slide translates back to that same X so it
+    // lands in exactly the same visual position as slide 0.
+    var slide0Left = slides[0]
+      ? slides[0].getBoundingClientRect().left
+      : sectionLeftEdge;
+
     function getSlideOffset(index) {
       var slide = slides[index];
       if (!slide) return 0;
 
-      // Sabhi slides left-aligned — left edge se sectionLeftEdge pe aayenge
-      return sectionLeftEdge - slide.offsetLeft;
+      // Move each slide so its left edge sits at the same screen X
+      // as slide 0's natural left edge (i.e. no over-shoot to the left).
+      var slideLeft = slide.getBoundingClientRect().left;
+      return slide0Left - slideLeft;
     }
 
     var slideOffsets = slides.map(function (_, index) {
@@ -536,7 +858,11 @@
       trigger: devSec,
       start: "top top",
       end: function () {
-        return "+=" + Math.max(viewportWidth * 0.9, window.innerHeight * 1.2);
+        // Pin lasts for (slides.length - 1) full scroll steps + 30% buffer.
+        // This ensures the section stays locked until the last slide lands.
+        var step = window.innerHeight;
+        var buffer = window.innerHeight * 0.3;
+        return "+=" + ((slides.length - 1) * step + buffer);
       },
       pin: true,
       anticipatePin: 1,
@@ -703,7 +1029,7 @@
           invalidateOnRefresh: true,
         });
       },
-      { once: true },
+      { once: true }
     );
   }
 })();
