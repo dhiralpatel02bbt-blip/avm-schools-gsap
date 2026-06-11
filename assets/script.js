@@ -1840,13 +1840,10 @@ document.addEventListener("DOMContentLoaded", function () {
       typeof ScrollTrigger !== "undefined" &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      // Create a yellow overlay div that sits on top of newsSection
-      // This fades in as you scroll through the middle of news section
-      // giving the illusion of white → yellow transition
-      // newsSection itself is NOT colored — only the overlay animates
+      // Create a white overlay div that sits on top of newsSection
       var yellowOverlay = document.createElement("div");
       yellowOverlay.style.cssText =
-        "position:absolute;inset:0;background:#f7df00;" +
+        "position:absolute;inset:0;background:#ffffff;" +
         "opacity:0;pointer-events:none;z-index:-1;";
 
       // newsSection needs position:relative so overlay sits inside it
@@ -1933,57 +1930,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// ─── Recognition Section Scroll Effect ───────────────────────
-document.addEventListener("DOMContentLoaded", function () {
-  const recognitionSection = document.querySelector(".recognition-sec");
-
-  if (recognitionSection) {
-    if (
-      typeof gsap !== "undefined" &&
-      typeof ScrollTrigger !== "undefined" &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      // Create a yellow overlay div that gradually reveals full yellow color
-      var yellowOverlay = document.createElement("div");
-      yellowOverlay.style.cssText =
-        "position:absolute;inset:0;background:#f7df00;" +
-        "opacity:0;pointer-events:none;z-index:-1;";
-
-      // recognitionSection needs position:relative so overlay sits inside it
-      var existingPosition =
-        window.getComputedStyle(recognitionSection).position;
-      if (existingPosition === "static") {
-        recognitionSection.style.position = "relative";
-      }
-      recognitionSection.appendChild(yellowOverlay);
-
-      // Animate overlay opacity as section comes into view
-      gsap.to(yellowOverlay, {
-        opacity: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".news-section",
-          start: "center top", // starts when center of news-section is in view
-          end: "bottom bottom", // fully yellow when both sections are visible
-          scrub: 1.2,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      // Scroll up animation for recognition-sec
-      gsap.to(recognitionSection, {
-        y: 0,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".news-section",
-          start: "bottom 90%",
-          end: "bottom 40%",
-          scrub: 1.2,
-        },
-      });
-    }
-  }
-});
+// ─── Recognition Section Scroll Effect (removed — background fixed as yellow) ───
 
 // ── Feature Block Scroll Animation ──────────────────────────
 (function () {
