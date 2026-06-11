@@ -25,7 +25,7 @@
     function () {
       requestAnimationFrame(scrollTop);
     },
-    { once: true }
+    { once: true },
   );
 
   window.addEventListener(
@@ -36,7 +36,7 @@
         ScrollTrigger.refresh();
       }
     },
-    { once: true }
+    { once: true },
   );
 })();
 
@@ -174,7 +174,7 @@ gsap.registerPlugin(ScrollTrigger);
         ticking = true;
       }
     },
-    { passive: true }
+    { passive: true },
   );
 
   // Resize pe headerH update karo
@@ -232,7 +232,7 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0
+    0,
   )
 
   // Yellow circle — neeche se upar (final: y:0)
@@ -243,7 +243,7 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0
+    0,
   )
 
   // Students — right se left (final: x:0)
@@ -254,7 +254,7 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0
+    0,
   )
 
   // Orange bar
@@ -266,7 +266,7 @@ heroTL
       duration: 0.9,
       ease: "power2.out",
     },
-    0.2
+    0.2,
   )
 
   // Teeno lines ek saath — slow aur smooth
@@ -278,7 +278,7 @@ heroTL
       duration: 1.2,
       ease: "power3.out",
     },
-    0
+    0,
   );
 
 // ============================================================
@@ -480,7 +480,7 @@ if (videoWrapper && video && playBtn) {
         end: "top 30%",
         scrub: 1,
       },
-    }
+    },
   );
 
   // Phase 2: overlay + content + play btn reveal
@@ -499,19 +499,19 @@ if (videoWrapper && video && playBtn) {
     .fromTo(
       ".video-section .overlay",
       { opacity: 0 },
-      { opacity: 1, ease: "none", duration: 1 }
+      { opacity: 1, ease: "none", duration: 1 },
     )
     .fromTo(
       ".video-section .content",
       { opacity: 0, yPercent: -40, y: 60 },
       { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 0.8 },
-      0.2
+      0.2,
     )
     .fromTo(
       "#playBtn",
       { opacity: 0, scale: 0 },
       { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.6 },
-      0.2
+      0.2,
     );
 }
 
@@ -535,22 +535,47 @@ gsap.from(".award .leaf", {
 // Sab kuch viewport mein aane ke baad hi chalta hai
 (function initContactSection() {
   var contactSec = document.querySelector(".contact-sec");
-  if (!contactSec) return;
+  var firstFooter = document.querySelector(".bbt-FA-main-footer");
+  if (!contactSec && !firstFooter) return;
+
+  // Contact + both responsive footers move as one continuous blue reveal.
+  var shellAnchor = contactSec || firstFooter;
+  var revealShell = shellAnchor.closest(".contact-footer-reveal-shell");
+  if (!revealShell) {
+    var footers = [];
+    var sibling = contactSec ? contactSec.nextElementSibling : firstFooter;
+
+    while (sibling && sibling.matches(".bbt-FA-main-footer")) {
+      footers.push(sibling);
+      sibling = sibling.nextElementSibling;
+    }
+
+    revealShell = document.createElement("div");
+    revealShell.className = "contact-footer-reveal-shell";
+    shellAnchor.parentNode.insertBefore(revealShell, shellAnchor);
+    if (contactSec) revealShell.appendChild(contactSec);
+    footers.forEach(function (footer) {
+      revealShell.appendChild(footer);
+    });
+  }
 
   // Step 1: Overlap animation — section neeche se upar slide karta hai (scrub)
   // CSS mein translateY(60px) set hai, GSAP usse 0 pe laata hai
-  gsap.to(contactSec, {
+  gsap.to(revealShell, {
     y: 0,
     ease: "none",
     scrollTrigger: {
-      trigger: contactSec,
+      trigger: revealShell,
       start: "top bottom", // jab section viewport mein enter kare
       end: "top 55%", // jab section ka top 55% pe pahunche
       scrub: 1.2,
+      invalidateOnRefresh: true,
     },
   });
 
   // Step 2: Content animations — section kaafi viewport mein aa jaane ke baad
+  if (!contactSec) return;
+
   var content = contactSec.querySelector(".content");
   var imageContainer = contactSec.querySelector(".image-container");
   var h3 = contactSec.querySelector(".inner-content h3");
@@ -580,7 +605,7 @@ gsap.from(".award .leaf", {
         tl.from(
           formActions,
           { y: 30, opacity: 0, duration: 0.6, ease: "back.out(1.7)" },
-          0.55
+          0.55,
         );
       }
     },
@@ -625,6 +650,7 @@ gsap.from(".award .leaf", {
     transformOrigin: "bottom right",
   });
   gsap.set(horizontal, { overflow: "hidden" });
+  gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
 
   // All panels stacked: panel[0] on top, rest off-screen to the right
   panels.forEach(function (p, i) {
@@ -655,8 +681,8 @@ gsap.from(".award .leaf", {
   var panelEnterDuration = 2.8;
   var panelHold = 0.7;
   var panelTransitionDuration = 2.45;
-  var firstStepDuration = 4.4;
-  var panelStepDuration = 2.65;
+  var firstStepDuration = 1.2;
+  var panelStepDuration = 0.75;
 
   // Phase 1 segment
   masterTL.to(
@@ -667,7 +693,7 @@ gsap.from(".award .leaf", {
       ease: "power3.out",
       duration: 2.9,
     },
-    0
+    0,
   );
   masterTL.to(
     ".lavender-circle",
@@ -676,7 +702,7 @@ gsap.from(".award .leaf", {
       ease: "power3.out",
       duration: 3.2,
     },
-    0
+    0,
   );
   // masterTL.to(
   //   ".lavender-circle",
@@ -695,10 +721,10 @@ gsap.from(".award .leaf", {
     panels[0],
     {
       xPercent: 0,
-      ease: "power3.inOut",
+      ease: "power2.out",
       duration: panelEnterDuration,
     },
-    panelStart
+    panelStart,
   );
   masterTL.to({}, { duration: panelHold }, panelStart + panelEnterDuration);
 
@@ -722,20 +748,20 @@ gsap.from(".award .leaf", {
       outPanel,
       {
         xPercent: -100,
-        ease: "power3.inOut",
+        ease: "power2.out",
         duration: panelTransitionDuration,
       },
-      startTime
+      startTime,
     );
     masterTL.fromTo(
       inPanel,
       { xPercent: 100 },
       {
         xPercent: 0,
-        ease: "power3.inOut",
+        ease: "power2.out",
         duration: panelTransitionDuration,
       },
-      startTime
+      startTime,
     );
   }
 
@@ -780,14 +806,25 @@ gsap.from(".award .leaf", {
       duration: immediate
         ? 0
         : previousStep < 0 && step === 0
-        ? firstStepDuration
-        : panelStepDuration,
-      ease: "power3.inOut",
+          ? firstStepDuration
+          : panelStepDuration,
+      ease: "power2.out",
       overwrite: true,
       onComplete: function () {
         isStepAnimating = false;
       },
     });
+
+    // Pedagogy button — panel 0 ke saath hi aaye, independently
+    if (step === 0 && !immediate) {
+      gsap.to(".pedagogy-btn", {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        overwrite: true,
+      });
+    }
   }
 
   function releaseHorizontal(direction) {
@@ -809,7 +846,7 @@ gsap.from(".award .leaf", {
 
     var now = Date.now();
     if (isStepAnimating || now < wheelCooldownUntil) return;
-    wheelCooldownUntil = now + 2450;
+    wheelCooldownUntil = now + 900;
 
     var direction = event.deltaY > 0 ? 1 : -1;
     var nextStep = currentStep + direction;
@@ -846,6 +883,7 @@ gsap.from(".award .leaf", {
       isStepAnimating = false;
       setLastSlideBackground(-1);
       masterTL.pause(0);
+      gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
     },
   });
 
@@ -921,7 +959,7 @@ gsap.from(".award .leaf", {
         function (ev) {
           if (ev.key === "Escape") close();
         },
-        { once: true }
+        { once: true },
       );
     });
   }
@@ -931,99 +969,6 @@ gsap.from(".award .leaf", {
 })();
 
 gsap.registerPlugin(ScrollTrigger);
-
-const schoolInfoSection = document.querySelector(".bbt-FA-img-sec");
-
-if (schoolInfoSection) {
-  const schoolMask = schoolInfoSection.querySelector(".img-mask");
-  const schoolImg = schoolInfoSection.querySelector(".img-mask img");
-  const schoolCircle = schoolInfoSection.querySelector(".purple-circle");
-  const schoolText = schoolInfoSection.querySelector(".main-title");
-  const schoolHeading = schoolInfoSection.querySelector(".img-text");
-
-  // if (
-  //   schoolMask &&
-  //   schoolCircle &&
-  //   !document.querySelector(".index-page .bbt-FA-circle-sec")
-  // ) {
-  //   const initSchoolInfoAnimation = () => {
-  //     // ── Initial states ──────────────────────────────────────
-  //     gsap.set(schoolMask, { clipPath: "inset(100% 0% 0% 0%)" });
-  //     gsap.set(schoolImg, { scale: 1.08, transformOrigin: "center bottom" });
-  //     gsap.set(schoolCircle, { x: "120%", autoAlpha: 0 });
-  //     gsap.set(schoolHeading, { autoAlpha: 0, y: 24 });
-  //     gsap.set(schoolText, { autoAlpha: 0, y: 24 });
-
-  //     const tl = gsap.timeline({
-  //       scrollTrigger: {
-  //         trigger: schoolInfoSection,
-  //         start: "top 75%",
-  //         once: true,
-  //       },
-  //       defaults: { ease: "power3.out" },
-  //     });
-
-  //     // Phase 1 — image mask reveal (bottom to top) + subtle parallax
-  //     tl.to(
-  //       schoolMask,
-  //       {
-  //         clipPath: "inset(0% 0% 0% 0%)",
-  //         duration: 1.1,
-  //         ease: "power2.inOut",
-  //       },
-  //       0,
-  //     )
-  //       .to(
-  //         schoolImg,
-  //         {
-  //           scale: 1,
-  //           duration: 1.3,
-  //           ease: "power2.out",
-  //         },
-  //         0,
-  //       )
-  //       // heading fades in as image reveals
-  //       .to(
-  //         schoolHeading,
-  //         {
-  //           autoAlpha: 1,
-  //           y: 0,
-  //           duration: 0.7,
-  //         },
-  //         0.5,
-  //       )
-
-  //       // Phase 2 — circle slides in from right, then content fades in
-  //       .to(
-  //         schoolCircle,
-  //         {
-  //           x: "0%",
-  //           autoAlpha: 1,
-  //           duration: 1.0,
-  //           ease: "power3.out",
-  //         },
-  //         0.85,
-  //       )
-  //       .to(
-  //         schoolText,
-  //         {
-  //           autoAlpha: 1,
-  //           y: 0,
-  //           duration: 0.7,
-  //         },
-  //         1.3,
-  //       );
-
-  //     ScrollTrigger.refresh();
-  //   };
-
-  //   if (document.readyState === "complete") {
-  //     initSchoolInfoAnimation();
-  //   } else {
-  //     window.addEventListener("load", initSchoolInfoAnimation, { once: true });
-  //   }
-  // }
-}
 
 const track = document.querySelector("#bubbleTrack");
 const circles = gsap.utils.toArray(".circle");
@@ -1053,7 +998,7 @@ if (track) {
       x: -totalWidth,
       ease: "none",
     },
-    0
+    0,
   );
 
   // 👉 EACH CIRCLE ANIMATION
@@ -1068,7 +1013,7 @@ if (track) {
         opacity: 0.6,
         duration: 0.5,
       },
-      i * 0.8
+      i * 0.8,
     );
 
     // Phase 2: text fade in (light)
@@ -1078,7 +1023,7 @@ if (track) {
         opacity: 0.5,
         duration: 0.3,
       },
-      i * 0.8 + 0.2
+      i * 0.8 + 0.2,
     );
 
     tl.to(
@@ -1087,7 +1032,7 @@ if (track) {
         opacity: 0.5,
         duration: 0.3,
       },
-      i * 0.8 + 0.25
+      i * 0.8 + 0.25,
     );
 
     // Phase 3: center → grow + full text
@@ -1098,7 +1043,7 @@ if (track) {
         opacity: 1,
         duration: 0.6,
       },
-      i * 0.8 + 0.4
+      i * 0.8 + 0.4,
     );
 
     tl.to(
@@ -1107,7 +1052,7 @@ if (track) {
         opacity: 1,
         duration: 0.3,
       },
-      i * 0.8 + 0.5
+      i * 0.8 + 0.5,
     );
 
     tl.to(
@@ -1116,7 +1061,7 @@ if (track) {
         opacity: 1,
         duration: 0.3,
       },
-      i * 0.8 + 0.55
+      i * 0.8 + 0.55,
     );
   });
 }
@@ -1136,7 +1081,7 @@ if (tl) {
   const connectorsSvg = cluster?.querySelector("svg.connectors");
   const bubbleCircles = gsap.utils.toArray(".bbt-FA-circle-sec .circle");
   const connectorSegments = gsap.utils.toArray(
-    ".bbt-FA-circle-sec .connector-segment"
+    ".bbt-FA-circle-sec .connector-segment",
   );
 
   if (
@@ -1150,6 +1095,10 @@ if (tl) {
     return;
   }
 
+  // Curtain: jab GSAP stickyViewport ko position:fixed kare,
+  // tab bhi woh img-sec (z-index:1) ke upar rahe
+  stickyViewport.style.zIndex = "2";
+
   let bubbleTimeline;
   let c1RevealTrigger;
   let resizeTimer;
@@ -1158,12 +1107,16 @@ if (tl) {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth)
+        ...bubbleCircles.map(
+          (circle) => circle.offsetLeft + circle.offsetWidth,
+        ),
       ) + 20;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight)
+        ...bubbleCircles.map(
+          (circle) => circle.offsetTop + circle.offsetHeight,
+        ),
       ) + 20;
 
     gsap.set(cluster, {
@@ -1173,7 +1126,7 @@ if (tl) {
 
     connectorsSvg.setAttribute(
       "viewBox",
-      `0 0 ${clusterWidth} ${clusterHeight}`
+      `0 0 ${clusterWidth} ${clusterHeight}`,
     );
 
     connectorSegments.forEach((segment, index) => {
@@ -1201,8 +1154,8 @@ if (tl) {
       segment.setAttribute(
         "d",
         `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(
-          1
-        )} ${endY.toFixed(1)}`
+          1,
+        )} ${endY.toFixed(1)}`,
       );
       segment._bubbleConnector = { startX, startY, endX, endY };
     });
@@ -1218,8 +1171,8 @@ if (tl) {
     segment.setAttribute(
       "d",
       `M ${line.startX.toFixed(1)} ${line.startY.toFixed(
-        1
-      )} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`
+        1,
+      )} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`,
     );
   }
 
@@ -1298,7 +1251,7 @@ if (tl) {
     const segmentDuration = 1;
     const scrollDistance = Math.max(
       bubbleCircles.length * viewportHeight * 1.05,
-      viewportHeight * 7
+      viewportHeight * 7,
     );
     bubbleTimeline = gsap.timeline({
       defaults: { ease: "none" },
@@ -1336,7 +1289,7 @@ if (tl) {
             duration: 0.2,
             ease: "power2.inOut",
           },
-          at
+          at,
         );
         if (c0Heading) {
           bubbleTimeline.to(c0Heading, { autoAlpha: 0.45, duration: 0.2 }, at);
@@ -1354,7 +1307,7 @@ if (tl) {
             duration: 0.24,
             ease: "power2.inOut",
           },
-          at
+          at,
         );
       }
 
@@ -1366,7 +1319,7 @@ if (tl) {
           duration: 0.18,
           ease: "back.out(1.45)",
         },
-        at + 0.08
+        at + 0.08,
       );
 
       if (heading) {
@@ -1378,7 +1331,7 @@ if (tl) {
             duration: 0.16,
             ease: "power2.out",
           },
-          at + 0.28
+          at + 0.28,
         );
       }
 
@@ -1391,7 +1344,7 @@ if (tl) {
             duration: 0.16,
             ease: "power2.out",
           },
-          at + 0.46
+          at + 0.46,
         );
       }
 
@@ -1410,7 +1363,7 @@ if (tl) {
               setConnectorDrawProgress(connector, lineDraw.progress);
             },
           },
-          at + 0.68
+          at + 0.68,
         );
       }
     });
@@ -1439,12 +1392,16 @@ if (tl) {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth)
+        ...bubbleCircles.map(
+          (circle) => circle.offsetLeft + circle.offsetWidth,
+        ),
       ) + 40;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight)
+        ...bubbleCircles.map(
+          (circle) => circle.offsetTop + circle.offsetHeight,
+        ),
       ) + 20;
 
     gsap.set(cluster, {
@@ -1454,7 +1411,7 @@ if (tl) {
 
     connectorsSvg.setAttribute(
       "viewBox",
-      `0 0 ${clusterWidth} ${clusterHeight}`
+      `0 0 ${clusterWidth} ${clusterHeight}`,
     );
 
     const viewportWidth = window.innerWidth;
@@ -1474,19 +1431,14 @@ if (tl) {
     const travelDistance = Math.max(startX - endX, viewportWidth * 1.8);
     const scrollDistance = Math.max(
       travelDistance * 1.35,
-      viewportWidth * 3.75
+      viewportWidth * 3.75,
     );
     gsap.set(bubbleCircles, {
       scale: 0.12,
       autoAlpha: 0,
+      x: 80, // right se enter karenge
       zIndex: 1,
       transformOrigin: "50% 50%",
-    });
-    gsap.set(bubbleCircles[0], {
-      scale: 0.86,
-      autoAlpha: 0,
-      y: 90,
-      zIndex: 5,
     });
 
     connectorSegments.forEach((segment, index) => {
@@ -1515,8 +1467,8 @@ if (tl) {
       segment.setAttribute(
         "d",
         `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(
-          1
-        )} ${endY.toFixed(1)}`
+          1,
+        )} ${endY.toFixed(1)}`,
       );
 
       gsap.set(segment, {
@@ -1543,33 +1495,6 @@ if (tl) {
       }
     });
 
-    const firstHeading = bubbleCircles[0].querySelector("h2");
-    const firstBody = bubbleCircles[0].querySelector("p");
-    c1RevealTrigger = ScrollTrigger.create({
-      trigger: section,
-      start: "top 88%",
-      once: true,
-      onEnter: () => {
-        gsap.to(bubbleCircles[0], {
-          scale: 1.22,
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.85,
-          ease: "power3.out",
-          overwrite: true,
-        });
-        gsap.to([firstHeading, firstBody].filter(Boolean), {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          delay: 0.18,
-          ease: "power2.out",
-          overwrite: true,
-        });
-      },
-    });
-
     bubbleTimeline = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
@@ -1587,7 +1512,7 @@ if (tl) {
       bubbleTrack,
       { x: startX },
       { x: endX, duration: travelDistance },
-      0
+      0,
     );
 
     // c1 (index=0) phaseOneStart = max(0, startX + c1Center - viewportCenter - viewportWidth*0.28)
@@ -1598,12 +1523,12 @@ if (tl) {
     const c1FocusTime = gsap.utils.clamp(
       0,
       travelDistance,
-      startX + c1Center - viewportCenter
+      startX + c1Center - viewportCenter,
     );
     const c1PhaseOne = gsap.utils.clamp(
       0,
       travelDistance,
-      c1FocusTime - viewportWidth * 0.28
+      c1FocusTime - viewportWidth * 0.28,
     );
     const bgFadeEnd = Math.max(c1PhaseOne - viewportWidth * 0.05, 0);
     const bgFadeDuration = Math.max(viewportWidth * 0.2, 100);
@@ -1612,48 +1537,50 @@ if (tl) {
     gsap.set([section, stickyViewport], { backgroundColor: "#ffffff" });
 
     bubbleCircles.forEach((circle, index) => {
-      if (index === 0) return;
-
       const heading = circle.querySelector("h2");
       const body = circle.querySelector("p");
       const circleCenter =
         clusterOffset + circle.offsetLeft + circle.offsetWidth / 2;
       const connector = index > 0 ? connectorSegments[index - 1] : null;
+
+      const rawFocusTime = startX + circleCenter - viewportCenter;
+      // c1 ka rawFocusTime ~0 hota hai (already centered).
+      // 300px fix kiya — c2 ka rawFocusTime ~513px hai, toh c1 usse pehle aayega.
       const focusTime = gsap.utils.clamp(
         0,
         travelDistance,
-        startX + circleCenter - viewportCenter
+        index === 0 ? 300 : rawFocusTime,
       );
 
       const phaseOneStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.28
+        focusTime - viewportWidth * 0.28,
       );
       const phaseTwoStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.16
+        focusTime - viewportWidth * 0.16,
       );
       const titleStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.14
+        focusTime - viewportWidth * 0.14,
       );
       const bodyStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.1
+        focusTime - viewportWidth * 0.1,
       );
       const activeStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.07
+        focusTime - viewportWidth * 0.07,
       );
       const activeEnd = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime + viewportWidth * 0.07
+        focusTime + viewportWidth * 0.07,
       );
 
       // When circle 1 starts coming into focus, shrink circle 0 (first circle)
@@ -1670,7 +1597,7 @@ if (tl) {
             zIndex: 1,
             duration: Math.max(activeEnd - phaseOneStart, 0.01),
           },
-          phaseOneStart
+          phaseOneStart,
         );
         if (c0Heading) {
           bubbleTimeline.to(
@@ -1679,7 +1606,7 @@ if (tl) {
               autoAlpha: 0.45,
               duration: Math.max(activeEnd - phaseOneStart, 0.01),
             },
-            phaseOneStart
+            phaseOneStart,
           );
         }
         if (c0Body) {
@@ -1689,7 +1616,7 @@ if (tl) {
               autoAlpha: 0.3,
               duration: Math.max(activeEnd - phaseOneStart, 0.01),
             },
-            phaseOneStart
+            phaseOneStart,
           );
         }
       }
@@ -1699,9 +1626,10 @@ if (tl) {
         {
           scale: 0.94,
           autoAlpha: 0.7,
+          x: 0, // right se center tak slide in
           duration: Math.max(phaseTwoStart - phaseOneStart, 0.01),
         },
-        phaseOneStart
+        phaseOneStart,
       );
 
       if (heading) {
@@ -1712,7 +1640,7 @@ if (tl) {
             y: 0,
             duration: Math.max(bodyStart - titleStart, 0.01),
           },
-          titleStart
+          titleStart,
         );
       }
 
@@ -1724,7 +1652,7 @@ if (tl) {
             y: 0,
             duration: Math.max(activeStart - bodyStart, 0.01),
           },
-          bodyStart
+          bodyStart,
         );
       }
 
@@ -1736,7 +1664,7 @@ if (tl) {
           zIndex: 5,
           duration: Math.max(activeEnd - activeStart, 0.01),
         },
-        activeStart
+        activeStart,
       );
 
       if (heading) {
@@ -1746,7 +1674,7 @@ if (tl) {
             autoAlpha: 1,
             duration: Math.max(activeEnd - activeStart, 0.01),
           },
-          activeStart
+          activeStart,
         );
       }
 
@@ -1757,7 +1685,7 @@ if (tl) {
             autoAlpha: 1,
             duration: Math.max(activeEnd - activeStart, 0.01),
           },
-          activeStart + viewportWidth * 0.01
+          activeStart + viewportWidth * 0.01,
         );
       }
 
@@ -1768,7 +1696,7 @@ if (tl) {
             autoAlpha: 0.92,
             duration: Math.max(activeStart - phaseOneStart, 0.01),
           },
-          phaseOneStart
+          phaseOneStart,
         );
       }
     });
@@ -1779,6 +1707,97 @@ if (tl) {
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(buildBubbleTimeline, 150);
+  });
+})();
+
+// ============================================================
+// CURTAIN EFFECT
+//
+// Jab bbt-FA-circle-sec scroll hoke upar jaaye:
+//   → bbt-FA-img-sec fixed rahegi viewport mein (curtain opens)
+//
+// Jab bbt-FA-circle-sec poori tarah chali jaaye:
+//   → bbt-FA-img-sec ko normal flow mein wapas laao
+//
+// Glitch fix: horizontal-section z-index:0 CSS mein set hai
+// taaki woh fixed img-sec (z-index:1) ke neeche rahe.
+// ============================================================
+(function initCurtainEffect() {
+  const circleSec = document.querySelector(".bbt-FA-circle-sec");
+  const imgSec = document.querySelector(".bbt-FA-img-sec");
+  if (!circleSec || !imgSec) return;
+
+  let imgSecLeft = 0;
+  let imgSecWidth = 0;
+  let imgSecHeight = 0;
+  let isPinned = false;
+
+  // Placeholder taaki layout shift na ho jab imgSec fixed ho
+  const placeholder = document.createElement("div");
+  placeholder.style.cssText =
+    "display:none; pointer-events:none; visibility:hidden;";
+  imgSec.parentNode.insertBefore(placeholder, imgSec);
+
+  function measure() {
+    // Temporarily unpin to get natural dimensions
+    const wasFixed = isPinned;
+    if (wasFixed) {
+      imgSec.style.position = "";
+      placeholder.style.display = "none";
+    }
+    const rect = imgSec.getBoundingClientRect();
+    imgSecLeft = rect.left + window.scrollX;
+    imgSecWidth = imgSec.offsetWidth;
+    imgSecHeight = imgSec.offsetHeight;
+    placeholder.style.height = imgSecHeight + "px";
+    if (wasFixed) {
+      imgSec.style.position = "fixed";
+      placeholder.style.display = "block";
+    }
+  }
+
+  function pin() {
+    if (isPinned) return;
+    isPinned = true;
+    measure();
+    placeholder.style.display = "block";
+    gsap.set(imgSec, {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      zIndex: 1,
+    });
+  }
+
+  function unpin() {
+    if (!isPinned) return;
+    isPinned = false;
+    placeholder.style.display = "none";
+    gsap.set(imgSec, { clearProps: "position,top,left,width,zIndex" });
+  }
+
+  // circle-sec khud z-index 2 pe hai (CSS mein set) — image ke upar rehta hai
+  // Jab circle section viewport mein enter kare → pin imgSec
+  // Jab circle section POORI tarah viewport se upar jaye → unpin
+  ScrollTrigger.create({
+    trigger: circleSec,
+    start: "top top", // horizontal section complete hone ke baad hi pin kare
+    end: "bottom top", // jab circle section poori tarah upar jaye
+    onEnter: pin,
+    onEnterBack: pin,
+    onLeave: unpin, // circle section gaya — image ko normal karo
+    onLeaveBack: unpin,
+    invalidateOnRefresh: true,
+  });
+
+  window.addEventListener("load", () => {
+    measure();
+    ScrollTrigger.refresh();
+  });
+  window.addEventListener("resize", () => {
+    measure();
+    ScrollTrigger.refresh();
   });
 })();
 
@@ -1816,7 +1835,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       threshold: 0.2,
-    }
+    },
   );
 
   animatedSections.forEach((section) => {
@@ -1896,17 +1915,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // GSAP ScrollTrigger path — most reliable
     if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-      gsap.to(newsSection, {
-        y: 0,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".bbt-FA-img-sec",
-          start: "bottom 90%",
-          end: "bottom 40%",
-          scrub: 1.2,
-        },
-      });
-
       ScrollTrigger.create({
         trigger: newsSection,
         start: "top 80%", // fires when section top crosses 80% of viewport
@@ -1923,7 +1931,7 @@ document.addEventListener("DOMContentLoaded", function () {
             obs.unobserve(entry.target);
           });
         },
-        { threshold: 0.15 }
+        { threshold: 0.15 },
       );
       observer.observe(newsSection);
     }
@@ -1943,7 +1951,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.15 },
   );
 
   function observeBlocks() {
@@ -1973,7 +1981,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.2 }
+    { threshold: 0.2 },
   );
 
   document.addEventListener("DOMContentLoaded", function () {
