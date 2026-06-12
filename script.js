@@ -456,16 +456,53 @@ if (videoWrapper && video && playBtn) {
 
   // ── PHASE 1: Square → Rectangle ─────────────────────────────────
   // Video expand: wrapper padding 0 tak animate → container-xxl se full viewport
-  gsap.to(".video-wrapper", {
-    padding: "0px",
-    ease: "none",
+  const isSmallScreen = window.matchMedia("(max-width: 767.9px)").matches;
+  const startMask = isSmallScreen
+    ? {
+        "--video-mask-x": "34%",
+        "--video-mask-y": "36%",
+        "--video-mask-radius": "14px",
+      }
+    : {
+        "--video-mask-x": "41%",
+        "--video-mask-y": "34%",
+        "--video-mask-radius": "18px",
+      };
+
+  gsap.set(".video-container", startMask);
+
+  const videoMaskTL = gsap.timeline({
     scrollTrigger: {
       trigger: ".video-section",
-      start: "top 80%",
-      end: "top 30%",
-      scrub: 1,
+      start: "top bottom",
+      end: "top 20%",
+      scrub: true,
+      invalidateOnRefresh: true,
     },
   });
+
+  videoMaskTL
+    .to(
+      ".video-wrapper",
+      {
+        paddingTop: "0px",
+        paddingBottom: "0px",
+        ease: "none",
+        duration: 1,
+      },
+      0
+    )
+    .to(
+      ".video-container",
+      {
+        "--video-mask-x": "0%",
+        "--video-mask-y": "0%",
+        "--video-mask-radius": "0px",
+        ease: "none",
+        duration: 1,
+      },
+      0
+    );
 
   // Parallax
   gsap.fromTo(
@@ -476,9 +513,9 @@ if (videoWrapper && video && playBtn) {
       ease: "none",
       scrollTrigger: {
         trigger: ".video-section",
-        start: "top 80%",
-        end: "top 30%",
-        scrub: 1,
+        start: "top bottom",
+        end: "top 20%",
+        scrub: true,
       },
     }
   );
@@ -531,8 +568,8 @@ gsap.from(".award .leaf", {
   },
 });
 
-// ⭐ Contact Section — content animations only
-// (contact-footer-reveal-shell div injection removed — side scroll fix)
+// ⭐ Contact Section — slide up overlap + content animations
+// Sab kuch viewport mein aane ke baad hi chalta hai
 (function initContactSection() {
   var contactSec = document.querySelector(".contact-sec");
   if (!contactSec) return;
@@ -545,22 +582,22 @@ gsap.from(".award .leaf", {
 
   ScrollTrigger.create({
     trigger: contactSec,
-    start: "top 70%",
+    start: "top 70%", // jab section thoda andar aa jaaye
     once: true,
     onEnter: function () {
       var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       if (content) {
-        tl.from(content, { opacity: 0, y: 30, duration: 0.85 }, 0);
+        tl.to(content, { opacity: 1, x: 0, duration: 0.85 }, 0);
       }
       if (imageContainer) {
-        tl.from(imageContainer, { opacity: 0, y: 30, duration: 0.85 }, 0.15);
+        tl.to(imageContainer, { opacity: 1, x: 0, duration: 0.85 }, 0.15);
       }
       if (h3) {
-        tl.from(h3, { y: 20, opacity: 0, duration: 0.7 }, 0.1);
+        tl.from(h3, { x: -80, opacity: 0, duration: 0.7 }, 0.1);
       }
       if (h2) {
-        tl.from(h2, { y: 20, opacity: 0, duration: 0.7 }, 0.3);
+        tl.from(h2, { x: -80, opacity: 0, duration: 0.7 }, 0.3);
       }
       if (formActions) {
         tl.from(
@@ -590,9 +627,39 @@ gsap.from(".award .leaf", {
 
   var n = panels.length;
   var hTrigger;
+  // -YP start
   var currentStep = -1;
-  var isStepAnimating = false;
-  var wheelCooldownUntil = 0;
+  var isWheelTransitioning = false;
+  var wheelUnlockTimer = null;
+  var wheelSlideDuration = 1150;
+  var wheelUnlockDelay = 1250;
+  var featuredNewsEase = function (progress) {
+    var x1 = 0.25;
+    var y1 = 0.1;
+    var x2 = 0.25;
+    var y2 = 1;
+    var t = progress;
+
+    for (var i = 0; i < 5; i++) {
+      var invT = 1 - t;
+      var x =
+        3 * invT * invT * t * x1 +
+        3 * invT * t * t * x2 +
+        t * t * t;
+      var dx =
+        3 * invT * invT * x1 +
+        6 * invT * t * (x2 - x1) +
+        3 * t * t * (1 - x2);
+
+      if (!dx) break;
+      t -= (x - progress) / dx;
+      t = Math.max(0, Math.min(1, t));
+    }
+
+    var invT = 1 - t;
+    return 3 * invT * invT * t * y1 + 3 * invT * t * t * y2 + t * t * t;
+  };
+  // -YP end
 
   var getFillScale = function () {
     var circle = hSec.querySelector(".lavender-circle");
@@ -641,9 +708,11 @@ gsap.from(".award .leaf", {
   var panelStart = 2.8;
   var panelEnterDuration = 2.8;
   var panelHold = 0.7;
-  var panelTransitionDuration = 2.45;
-  var firstStepDuration = 1.2;
-  var panelStepDuration = 0.75;
+  var panelTransitionDuration = 1.2; // duration of each panel slide inside masterTL
+  // -YP start
+  var firstStepDuration = wheelSlideDuration / 1000; // match featured-news-sec wheel timing
+  var panelStepDuration = wheelSlideDuration / 1000; // match featured-news-sec wheel timing
+  // -YP end
 
   // Phase 1 segment
   masterTL.to(
@@ -651,7 +720,7 @@ gsap.from(".award .leaf", {
     {
       x: 0,
       autoAlpha: 1,
-      ease: "power3.out",
+      ease: "sine.inOut",
       duration: 2.9,
     },
     0
@@ -660,37 +729,28 @@ gsap.from(".award .leaf", {
     ".lavender-circle",
     {
       scale: 2,
-      ease: "power3.out",
+      ease: "sine.inOut",
       duration: 3.2,
     },
     0
   );
-  // masterTL.to(
-  //   ".lavender-circle",
-  //   {
-  //     scale: getFillScale,
-  //     ease: "power2.inOut",
-  //     duration: 0.8,
-  //   },
-  //   0.5,
-  // );
 
-  // Panel 0 also enters from the right, but gets its own scroll segment so it
-  // arrives smoothly instead of snapping into place.
+  // Panel 0 enters from right
   masterTL.set(panels[0], { autoAlpha: 1, xPercent: 100 }, panelStart);
   masterTL.to(
     panels[0],
     {
       xPercent: 0,
-      ease: "power2.out",
+      // -YP start
+      ease: "none",
+      // -YP end
       duration: panelEnterDuration,
     },
     panelStart
   );
   masterTL.to({}, { duration: panelHold }, panelStart + panelEnterDuration);
 
-  // Panel transitions: each subsequent panel enters from right,
-  // previous exits to left, simultaneously
+  // Panel transitions
   for (var i = 1; i < n; i++) {
     var startTime =
       panelStart +
@@ -700,16 +760,16 @@ gsap.from(".award .leaf", {
     var outPanel = panels[i - 1];
     var inPanel = panels[i];
 
-    // Bring inPanel to front and make visible
     masterTL.set(inPanel, { autoAlpha: 1, zIndex: n + 2 }, startTime);
     masterTL.set(outPanel, { zIndex: n + 1 }, startTime);
 
-    // Out panel slides left, in panel slides in from right — simultaneously
     masterTL.to(
       outPanel,
       {
         xPercent: -100,
-        ease: "power2.out",
+        // -YP start
+        ease: "none",
+        // -YP end
         duration: panelTransitionDuration,
       },
       startTime
@@ -719,7 +779,9 @@ gsap.from(".award .leaf", {
       { xPercent: 100 },
       {
         xPercent: 0,
-        ease: "power2.out",
+        // -YP start
+        ease: "none",
+        // -YP end
         duration: panelTransitionDuration,
       },
       startTime
@@ -732,15 +794,27 @@ gsap.from(".award .leaf", {
   var PX_PER_PANEL = 1050; // scroll pixels per panel movement
   var totalPx = PHASE1_PX + n * PX_PER_PANEL;
   var lastSlideBgActive = false;
+  // stepTimes[i] = the timeline position where panel i has FULLY arrived.
+  // step 0: panel 0 finishes its long enter animation
+  // step i>0: panel i finishes its transition (start + full duration)
   var stepTimes = panels.map(function (_, index) {
+    if (index === 0) {
+      // -YP start
+      // Park panel 0 at the same boundary where the first slide-to-slide
+      // transition starts, so forward and reverse motion stay smooth.
+      return panelStart + panelEnterDuration + panelHold;
+      // -YP end
+    }
+    // Panel i transition starts at panelStart+panelEnterDuration+panelHold+(i-1)*panelTransitionDuration
+    // and takes panelTransitionDuration to complete
     return (
       panelStart +
       panelEnterDuration +
       panelHold +
-      index * panelTransitionDuration
+      (index - 1) * panelTransitionDuration +
+      panelTransitionDuration
     );
   });
-  stepTimes[0] = panelStart + panelEnterDuration + panelHold;
   var maxStep = stepTimes.length - 1;
 
   function setLastSlideBackground(step) {
@@ -755,26 +829,54 @@ gsap.from(".award .leaf", {
     // });
   }
 
+  // -YP start
+  function getWheelDelta(event) {
+    var delta =
+      Math.abs(event.deltaY) >= Math.abs(event.deltaX)
+        ? event.deltaY
+        : event.deltaX;
+
+    if (event.deltaMode === 1) return delta * 16;
+    if (event.deltaMode === 2) return delta * window.innerHeight;
+    return delta;
+  }
+
+  function unlockWheelTransition() {
+    window.clearTimeout(wheelUnlockTimer);
+    isWheelTransitioning = false;
+  }
+
   function goToStep(step, immediate) {
     step = gsap.utils.clamp(0, maxStep, step);
     var previousStep = currentStep;
     currentStep = step;
-    isStepAnimating = !immediate;
     setLastSlideBackground(step);
+
+    var dur = immediate
+      ? 0
+      : previousStep < 0 && step === 0
+      ? firstStepDuration
+      : panelStepDuration;
+
+    if (!immediate) isWheelTransitioning = true;
 
     gsap.to(masterTL, {
       time: stepTimes[step],
-      duration: immediate
-        ? 0
-        : previousStep < 0 && step === 0
-        ? firstStepDuration
-        : panelStepDuration,
-      ease: "power2.out",
+      duration: dur,
+      ease: featuredNewsEase,
       overwrite: true,
       onComplete: function () {
-        isStepAnimating = false;
+        unlockWheelTransition();
       },
     });
+
+    window.clearTimeout(wheelUnlockTimer);
+    if (!immediate) {
+      wheelUnlockTimer = window.setTimeout(function () {
+        masterTL.time(stepTimes[step]);
+        unlockWheelTransition();
+      }, wheelUnlockDelay);
+    }
 
     // Pedagogy button — panel 0 ke saath hi aaye, independently
     if (step === 0 && !immediate) {
@@ -787,29 +889,28 @@ gsap.from(".award .leaf", {
       });
     }
   }
+  // -YP end
 
   function releaseHorizontal(direction) {
     if (!hTrigger) return;
-    isStepAnimating = true;
     var target =
       direction > 0 ? hTrigger.end + 2 : Math.max(hTrigger.start - 2, 0);
     window.scrollTo({ top: target, behavior: "auto" });
-    window.setTimeout(function () {
-      isStepAnimating = false;
-    }, 120);
   }
 
+  // -YP start
   function onHorizontalWheel(event) {
     if (!hTrigger || !hTrigger.isActive) return;
-    if (Math.abs(event.deltaY) < 12) return;
 
-    event.preventDefault();
+    if (isWheelTransitioning) {
+      event.preventDefault();
+      return;
+    }
 
-    var now = Date.now();
-    if (isStepAnimating || now < wheelCooldownUntil) return;
-    wheelCooldownUntil = now + 900;
+    var delta = getWheelDelta(event);
+    if (Math.abs(delta) < 8) return;
 
-    var direction = event.deltaY > 0 ? 1 : -1;
+    var direction = delta > 0 ? 1 : -1;
     var nextStep = currentStep + direction;
 
     if (nextStep < 0 || nextStep > maxStep) {
@@ -817,8 +918,10 @@ gsap.from(".award .leaf", {
       return;
     }
 
+    event.preventDefault();
     goToStep(nextStep, false);
   }
+  // -YP end
 
   hTrigger = ScrollTrigger.create({
     trigger: hSec,
@@ -830,21 +933,28 @@ gsap.from(".award .leaf", {
     id: "hSecMaster",
     invalidateOnRefresh: true,
     onEnter: function () {
+      // -YP start
       currentStep = -1;
-      isStepAnimating = false;
+      unlockWheelTransition();
       setLastSlideBackground(-1);
       masterTL.pause(0);
       goToStep(0, false);
+      // -YP end
     },
     onEnterBack: function () {
+      // -YP start
+      unlockWheelTransition();
       goToStep(maxStep, true);
+      // -YP end
     },
     onLeaveBack: function () {
+      // -YP start
       currentStep = -1;
-      isStepAnimating = false;
+      unlockWheelTransition();
       setLastSlideBackground(-1);
       masterTL.pause(0);
       gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
+      // -YP end
     },
   });
 
@@ -1061,7 +1171,6 @@ if (tl) {
   stickyViewport.style.zIndex = "2";
 
   let bubbleTimeline;
-  let c1RevealTrigger;
   let resizeTimer;
 
   function drawBubbleConnectors() {
@@ -1141,10 +1250,6 @@ if (tl) {
     }
 
     gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
-    if (c1RevealTrigger) {
-      c1RevealTrigger.kill();
-      c1RevealTrigger = null;
-    }
     drawBubbleConnectors();
 
     const viewportHeight = window.innerHeight;
@@ -1167,12 +1272,12 @@ if (tl) {
       autoAlpha: 0,
       y: 16,
     });
-    // First bubble: scrub timeline ke through animate hoga (small→big, phir big hi rahega)
-    // c1RevealTrigger (once:true) hata diya — woh small→big→small bug create karta tha
-    gsap.set(bubbleCircles[0], { scale: 0.72, autoAlpha: 0, y: 80, zIndex: 5 });
-
-    const firstHeading = bubbleCircles[0].querySelector("h2");
-    const firstBody = bubbleCircles[0].querySelector("p");
+    gsap.set(bubbleCircles[0], {
+      scale: 0.48,
+      autoAlpha: 0,
+      y: 80,
+      zIndex: 5,
+    });
 
     connectorSegments.forEach((segment) => {
       setConnectorDrawProgress(segment, 0);
@@ -1203,26 +1308,32 @@ if (tl) {
 
     gsap.set([section, stickyViewport], { backgroundColor: "#ffffff" });
 
-    // ── Circle 0 (first bubble) — scrub timeline mein: small→big, phir big hi rahega ──
-    bubbleTimeline.to(
-      bubbleCircles[0],
-      { scale: 1, autoAlpha: 1, y: 0, duration: 0.18, ease: "back.out(1.45)" },
-      0,
-    );
-    if (firstHeading) {
-      bubbleTimeline.to(
-        firstHeading,
-        { autoAlpha: 1, y: 0, duration: 0.16, ease: "power2.out" },
-        0.18,
+    const firstHeading = bubbleCircles[0].querySelector("h2");
+    const firstBody = bubbleCircles[0].querySelector("p");
+
+    bubbleTimeline
+      .to(
+        bubbleCircles[0],
+        {
+          scale: 1,
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.55,
+          ease: "power2.out",
+        },
+        0
+      )
+      .to(
+        [firstHeading, firstBody].filter(Boolean),
+        {
+          autoAlpha: 1,
+          y: 0,
+          stagger: 0.08,
+          duration: 0.28,
+          ease: "power2.out",
+        },
+        0.28
       );
-    }
-    if (firstBody) {
-      bubbleTimeline.to(
-        firstBody,
-        { autoAlpha: 1, y: 0, duration: 0.16, ease: "power2.out" },
-        0.34,
-      );
-    }
 
     bubbleCircles.forEach((circle, index) => {
       if (index === 0) return;
@@ -1309,11 +1420,6 @@ if (tl) {
       bubbleTimeline.scrollTrigger?.kill();
       bubbleTimeline.kill();
     }
-    if (c1RevealTrigger) {
-      c1RevealTrigger.kill();
-      c1RevealTrigger = null;
-    }
-
     gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
     gsap.set(bubbleTrack, { clearProps: "transform" });
 
@@ -1362,6 +1468,10 @@ if (tl) {
       travelDistance * 1.35,
       viewportWidth * 3.75
     );
+    const firstBubbleIntro = Math.min(
+      travelDistance * 0.16,
+      viewportWidth * 0.42
+    );
     gsap.set(bubbleCircles, {
       scale: 0.12,
       autoAlpha: 0,
@@ -1369,6 +1479,7 @@ if (tl) {
       zIndex: 1,
       transformOrigin: "50% 50%",
     });
+    gsap.set(bubbleCircles[0], { scale: 0.34, x: 0 });
 
     connectorSegments.forEach((segment, index) => {
       const fromCircle = bubbleCircles[index];
@@ -1441,27 +1552,8 @@ if (tl) {
       bubbleTrack,
       { x: startX },
       { x: endX, duration: travelDistance },
-      0
+      firstBubbleIntro
     );
-
-    // c1 (index=0) phaseOneStart = max(0, startX + c1Center - viewportCenter - viewportWidth*0.28)
-    // bg fade should complete just before c1 becomes visible
-    // We use a small fixed window at the very start of scroll (before track moves much)
-    const c1 = bubbleCircles[0];
-    const c1Center = clusterOffset + c1.offsetLeft + c1.offsetWidth / 2;
-    const c1FocusTime = gsap.utils.clamp(
-      0,
-      travelDistance,
-      startX + c1Center - viewportCenter
-    );
-    const c1PhaseOne = gsap.utils.clamp(
-      0,
-      travelDistance,
-      c1FocusTime - viewportWidth * 0.28
-    );
-    const bgFadeEnd = Math.max(c1PhaseOne - viewportWidth * 0.05, 0);
-    const bgFadeDuration = Math.max(viewportWidth * 0.2, 100);
-    const bgFadeStart = Math.max(bgFadeEnd - bgFadeDuration, 0);
 
     gsap.set([section, stickyViewport], { backgroundColor: "#ffffff" });
 
@@ -1475,42 +1567,54 @@ if (tl) {
       const rawFocusTime = startX + circleCenter - viewportCenter;
       // c1 ka rawFocusTime ~0 hota hai (already centered).
       // 300px fix kiya — c2 ka rawFocusTime ~513px hai, toh c1 usse pehle aayega.
-      const focusTime = gsap.utils.clamp(
-        0,
-        travelDistance,
-        index === 0 ? 300 : rawFocusTime
-      );
+      const focusTime = gsap.utils.clamp(0, travelDistance, rawFocusTime);
 
-      const phaseOneStart = gsap.utils.clamp(
+      let phaseOneStart = gsap.utils.clamp(
         0,
         travelDistance,
         focusTime - viewportWidth * 0.28
       );
-      const phaseTwoStart = gsap.utils.clamp(
+      let phaseTwoStart = gsap.utils.clamp(
         0,
         travelDistance,
         focusTime - viewportWidth * 0.16
       );
-      const titleStart = gsap.utils.clamp(
+      let titleStart = gsap.utils.clamp(
         0,
         travelDistance,
         focusTime - viewportWidth * 0.14
       );
-      const bodyStart = gsap.utils.clamp(
+      let bodyStart = gsap.utils.clamp(
         0,
         travelDistance,
         focusTime - viewportWidth * 0.1
       );
-      const activeStart = gsap.utils.clamp(
+      let activeStart = gsap.utils.clamp(
         0,
         travelDistance,
         focusTime - viewportWidth * 0.07
       );
-      const activeEnd = gsap.utils.clamp(
+      let activeEnd = gsap.utils.clamp(
         0,
         travelDistance,
         focusTime + viewportWidth * 0.07
       );
+
+      if (index === 0) {
+        phaseOneStart = 0;
+        phaseTwoStart = firstBubbleIntro * 0.42;
+        titleStart = firstBubbleIntro * 0.28;
+        bodyStart = firstBubbleIntro * 0.46;
+        activeStart = firstBubbleIntro * 0.62;
+        activeEnd = firstBubbleIntro * 0.9;
+      } else {
+        phaseOneStart += firstBubbleIntro;
+        phaseTwoStart += firstBubbleIntro;
+        titleStart += firstBubbleIntro;
+        bodyStart += firstBubbleIntro;
+        activeStart += firstBubbleIntro;
+        activeEnd += firstBubbleIntro;
+      }
 
       bubbleTimeline.to(
         circle,
@@ -1791,7 +1895,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ? Array.from(newsGrid.querySelectorAll(".card"))
         : [];
       cards.forEach((card, i) => {
-        setTimeout(() => card.classList.add("card-visible"), i * 280);
+        setTimeout(() => card.classList.add("card-visible"), i * 140);
       });
     };
 
@@ -1799,8 +1903,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
       // -YP start
       ScrollTrigger.create({
-        trigger: newsGrid || newsSection,
-        start: "bottom 25%", // wait until the news cards reach the viewport position shown in the reference
+        trigger: newsSection,
+        start: "top 96%",
         once: true,
         onEnter: revealNews,
       });
@@ -1815,7 +1919,7 @@ document.addEventListener("DOMContentLoaded", function () {
             obs.unobserve(entry.target);
           });
         },
-        { threshold: 0.15 }
+        { rootMargin: "0px 0px -4% 0px", threshold: 0 }
       );
       observer.observe(newsSection);
     }
@@ -1929,7 +2033,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ScrollTrigger.create({
     trigger: imgSec,
-    start: "top 75%",
+    start: "top top",
     once: true,
     onEnter: function () {
       // Purple circle — right se slide in + fade in

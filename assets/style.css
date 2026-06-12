@@ -1379,9 +1379,9 @@
     height: clamp(390px, 138vw, 2100px);
   }
 
-  .pedagogy-btn {
-    color: #0a3d9c;
-    font-size: 15px;
+.pedagogy-btn {
+  color: #0a3d9c;
+  font-size: 15px;
   }
 }
 

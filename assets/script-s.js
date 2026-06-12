@@ -701,7 +701,7 @@ gsap.from(".award .leaf", {
 
   var masterTL = gsap.timeline({ paused: true });
   // -YP start
-  var circleFillDuration = 65.0;
+  var circleFillDuration = 35.0;
   var panelStart = circleFillDuration + 0.25;
   // -YP end
   var panelEnterDuration = 2.8;
@@ -952,7 +952,19 @@ gsap.from(".award .leaf", {
       currentStep = -1;
       unlockWheelTransition();
       setLastSlideBackground(-1);
-      masterTL.pause(0);
+      gsap.killTweensOf(masterTL);
+      gsap.to(".lavender-circle", {
+        scale: 0.22,
+        duration:
+          (circleFillDuration /
+            (panelStart + panelEnterDuration + panelHold)) *
+          firstStepDuration,
+        ease: "sine.inOut",
+        overwrite: true,
+        onComplete: function () {
+          masterTL.pause(0);
+        },
+      });
       gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
       // -YP end
     },
