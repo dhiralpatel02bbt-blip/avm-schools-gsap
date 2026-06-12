@@ -1264,7 +1264,7 @@ body.reveal-animations-ready .contact-sec .image-container {
     align-items: center;
     justify-content: flex-end;
     /* gap: 56px; */
-    gap: 125px;
+    gap: 152px;
     margin-top: 0;
     width: 52%;
 }
@@ -1307,11 +1307,13 @@ body.reveal-animations-ready .contact-sec .image-container {
 .bbt-FA-main-footer.mob-footer {
     display: none;
 }
-@media(max-width: 1766px){
-    .bbt-FA-main-footer .footer-middle{
+
+@media(max-width: 1766px) {
+    .bbt-FA-main-footer .footer-middle {
         gap: 120px;
     }
 }
+
 @media (max-width: 1400px) {
     .bbt-FA-main-footer .container.footer-container {
         padding: 100px 40px;
@@ -1761,6 +1763,11 @@ body.reveal-animations-ready .contact-sec .image-container {
     .footer-container::before {
         max-width: 505px !important;
     }
+}
+
+.contact-sec {
+    border-bottom: 1px solid #fff;
+    margin-bottom: 50px;
 }
 
 /* Footer section css End */

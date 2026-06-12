@@ -34,7 +34,7 @@
 }
 
 .bbt-dp-hero .main-hero-items,
-.bbt-dp-hero .main-hero-items > .d-flex {
+.bbt-dp-hero .main-hero-items>.d-flex {
   --bs-gutter-x: 0;
   height: 100%;
   margin-left: 0;
@@ -73,7 +73,7 @@
   align-items: center;
 }
 
-.bbt-dp-hero .main-hero-items > .d-flex > div:last-child {
+.bbt-dp-hero .main-hero-items>.d-flex>div:last-child {
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -178,12 +178,12 @@
   /* --hero-blue-size: clamp(980px, 111vw, 1600px); */
 }
 
-.bbt-dp-hero .main-hero-items > .d-flex {
+.bbt-dp-hero .main-hero-items>.d-flex {
   flex-direction: row;
   flex-wrap: nowrap;
 }
 
-.bbt-dp-hero .main-hero-items > .d-flex > div {
+.bbt-dp-hero .main-hero-items>.d-flex>div {
   width: 50%;
   flex: 0 0 50%;
 }
@@ -449,13 +449,13 @@
     height: 274px;
   }
 
-  .bbt-dp-hero .main-hero-items > .d-flex {
+  .bbt-dp-hero .main-hero-items>.d-flex {
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: flex-end;
   }
 
-  .bbt-dp-hero .main-hero-items > .d-flex > div {
+  .bbt-dp-hero .main-hero-items>.d-flex>div {
     margin-top: 40px;
     width: 100%;
     flex: 0;
@@ -505,7 +505,8 @@
   top: auto;
   left: 0;
   width: 100%;
-  padding: 118px 0 40px;
+  /* padding: 118px 0 40px; */
+  padding: 118px 0 100px;
   z-index: 1;
   overflow: hidden;
 }
@@ -686,6 +687,7 @@
 }
 
 @media (max-width: 1200px) {
+
   .bbt-dp-about .row::before,
   .about-img .purple-divider {
     height: 20px;
@@ -843,7 +845,7 @@
   background: #fff;
   cursor: none;
   z-index: 100;
-  padding: 2vh max((100vw - 1400px) / 2, 12px);
+  padding: 2vh 0;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -851,12 +853,21 @@
   will-change: padding;
 }
 
+.video-section .container-xxl {
+  width: 100%;
+  height: 100%;
+}
+
 .video-container {
+  --video-mask-x: 41%;
+  --video-mask-y: 34%;
+  --video-mask-radius: 18px;
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  will-change: transform;
+  clip-path: inset(var(--video-mask-y) var(--video-mask-x) var(--video-mask-y) var(--video-mask-x) round var(--video-mask-radius));
+  will-change: clip-path, border-radius, transform;
 }
 
 .bg-video {
@@ -960,9 +971,10 @@
   }
 
   .video-container {
-    clip-path: inset(40% 44% 40% 44%);
-    width: 100%;
-    height: 606px;
+    --video-mask-x: 34%;
+    --video-mask-y: 36%;
+    --video-mask-radius: 14px;
+    height: 100%;
   }
 }
 
@@ -1389,12 +1401,17 @@
 
 /* school-info section CSS end  */
 section.bbt-FA-img-sec {
-  --school-circle-size: clamp(420px, 48vw, 862px);
+  /* --school-circle-size: clamp(420px, 48vw, 862px);
   --school-circle-right: clamp(-141px, -22vw, -18px);
-  --school-circle-bottom: clamp(-120px, -35vw, -120px);
-  margin: 80px 0 0px;
+  --school-circle-bottom: 0px; */
+  --school-circle-size: clamp(420px, 48vw, 742px);
+  --school-circle-right: clamp(-60px, -22vw, -18px);
+  --school-circle-bottom: -130px;
+  margin: 0;
   overflow: visible;
   height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 .bbt-FA-img-sec .img-box {
@@ -1448,7 +1465,7 @@ section.bbt-FA-img-sec {
 .bbt-FA-img-sec .main-title {
   position: absolute;
   right: -23%;
-  top: 49%;
+  top: 58%;
   z-index: 2;
   width: 53%;
   text-align: left;
@@ -1548,6 +1565,7 @@ section.bbt-FA-img-sec {
 }
 
 @media (max-width: 1023.9px) {
+
   /* section.bbt-FA-img-sec {
     --school-circle-bottom: 28px;
     --school-circle-size: clamp(360px, 54vw, 570px);
@@ -1566,7 +1584,7 @@ section.bbt-FA-img-sec {
   section.bbt-FA-img-sec {
     --school-circle-size: clamp(320px, 46vw, 440px);
     --school-circle-right: -12px;
-    --school-circle-bottom: -136px;
+    --school-circle-bottom: 0px;
     margin: 30px 0 0px;
   }
 
@@ -1663,15 +1681,16 @@ section.bbt-FA-img-sec {
 
 /* recognition-sec CSS start */
 .recognition-sec {
-  /* background: #f7df00; */
-  background: #ffffff;
+  background: #f7df00;
+  /* background: #ffffff; */
   padding: 110px 0px 135.9px;
   text-align: center;
   position: relative;
-  z-index: 5;
-  margin-top: -1px;
+  z-index: 6;
+  margin-top: 0;
   transform: translateY(0);
-  will-change: auto;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .recognition-sec .section-title {
@@ -1927,7 +1946,7 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
 .news-section {
   padding: 120px 0px 174px;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   background: #ffffff;
   margin-top: -80px;
   /* border-radius: 40px 40px 0 0; */
@@ -1935,6 +1954,7 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
   transform: translateY(80px);
   /* starts below — GSAP will animate to 0 */
   will-change: transform;
+  isolation: isolate;
 }
 
 .news-header {
@@ -1991,6 +2011,7 @@ a.see-all.secondary-btn {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .recognition-sec .section-title,
   .recognition-sec .awards-grid,
   .recognition-sec .award,
@@ -2452,6 +2473,7 @@ a.see-all.secondary-btn {
 }
 
 @media (max-width: 991.9px) {
+
   .bbt-FA-circle-sec .circle.c1,
   .bbt-FA-circle-sec .circle.c4,
   .bbt-FA-circle-sec .circle.c7 {

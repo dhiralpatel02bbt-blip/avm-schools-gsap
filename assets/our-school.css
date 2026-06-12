@@ -1,10 +1,12 @@
 @media (max-width: 991.9px) {
+
   .our-school-page .offcanvas-menu label span,
   .offcanvas-menu label span::before,
   .offcanvas-menu label span::after {
     background: #fff;
   }
 }
+
 /* Fix: keep header always visible on our-school page */
 /* .our-school-page header.header {
   position: fixed !important;
@@ -177,6 +179,7 @@
   position: relative;
   overflow: hidden;
   z-index: 2;
+  margin-top: -30vh;
   height: 100vh;
   min-height: 100vh;
   display: flex;
@@ -227,9 +230,9 @@ body.our-school-page {
   gap: 46px;
   opacity: 0;
   visibility: hidden;
-  filter: blur(18px);
+  /* filter: blur(18px); */
   transform: translate3d(-42px, 0, 0);
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .campus-section .panel-title {
@@ -446,11 +449,9 @@ body.our-school-page {
     display: flex;
     align-items: flex-end;
     padding: 42px 16px 16px;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.78) 100%
-    );
+    background: linear-gradient(180deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.78) 100%);
   }
 
   .campus-slide-text {
@@ -469,6 +470,10 @@ body.our-school-page {
     font-size: 17px;
     font-weight: 700;
     line-height: 140%;
+  }
+
+  .our-school-page .development-sec {
+    margin-top: 0;
   }
 }
 
@@ -525,6 +530,7 @@ body.our-school-page {
 }
 
 @media (max-width: 576.9px) {
+
   /* .campus-slide-visual img {
     max-width: 576px;
   } */
@@ -979,6 +985,7 @@ section.development-sec {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .our-school-page .campus-heading,
   .our-school-page .campus-grid {
     visibility: visible;
@@ -993,6 +1000,15 @@ section.development-sec {
   padding: 130px 0;
   margin-top: 96px;
   position: relative;
+}
+
+@media (min-width: 992px) {
+  .our-school-page .location-section {
+    min-height: 100vh;
+    box-sizing: border-box;
+    margin-top: -100vh;
+    will-change: transform;
+  }
 }
 
 .location-section .d-flex {

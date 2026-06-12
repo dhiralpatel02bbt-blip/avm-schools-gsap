@@ -31,10 +31,10 @@
   var campusSliderShell = campusSection.querySelector(".campus-slider-shell");
   var campusScroller = campusSection.querySelector(".campus-sequence-swiper");
   var campusTrack = campusSection.querySelector(
-    ".campus-sequence-swiper .swiper-wrapper"
+    ".campus-sequence-swiper .swiper-wrapper",
   );
   var campusSlides = gsap.utils.toArray(
-    ".campus-section .campus-sequence-slide"
+    ".campus-section .campus-sequence-slide",
   );
   var campusSlideVisuals = campusSlides.map(function (slide) {
     return slide.querySelector(".campus-slide-visual");
@@ -56,6 +56,7 @@
   var slideIntroAnimating = false;
   var lockedCampusProgress = null;
   var CAMPUS_EXIT_END = 0.45;
+  var CAMPUS_PIN_DISTANCE = "320%";
   var CAMPUS_MASK_DURATION = 1.6;
   var CAMPUS_CIRCLE_DELAY_AFTER_MASK = 0.12;
   var CAMPUS_TEXT_DELAY_AFTER_CIRCLE = 0.9;
@@ -221,7 +222,7 @@
       setActiveSlide(
         revealedIndex,
         false,
-        CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK
+        CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK,
       );
     }
 
@@ -291,7 +292,7 @@
           ease: "power3.in",
           overwrite: true,
         },
-        0
+        0,
       );
     }
     if (t) {
@@ -304,7 +305,7 @@
           ease: "power2.in",
           overwrite: true,
         },
-        0
+        0,
       );
     }
 
@@ -316,7 +317,7 @@
         ease: "power3.inOut",
         overwrite: true,
       },
-      0.58
+      0.58,
     );
 
     return safeIndex;
@@ -386,7 +387,7 @@
               onComplete: function () {
                 maskAnimating = false;
               },
-            }
+            },
           );
         }
       } else if (i < index) {
@@ -498,7 +499,7 @@
           duration: 1.1,
           ease: "power3.out",
         },
-        0
+        0,
       );
     }
 
@@ -511,7 +512,7 @@
           duration: 2.2,
           ease: "power3.out",
         },
-        0
+        0,
       );
     }
     loadTL.fromTo(
@@ -524,7 +525,7 @@
         duration: 1.6,
         ease: "power3.out",
       },
-      0.8
+      0.8,
     );
   }
 
@@ -538,7 +539,7 @@
       function () {
         playLoadAnim(false);
       },
-      { once: true }
+      { once: true },
     );
   }
 
@@ -551,7 +552,7 @@
   //              automatically adds a spacer so content below
   //              it flows correctly (no blank white screen).
   //
-  // pinSpacing: true → GSAP inserts the spacer div.
+  // pinSpacing: true → GSAP keeps enough scroll room for the campus slides.
   //
   // Total pinned scroll = 200vh (2 × viewport height).
   //
@@ -569,7 +570,7 @@
     exitTL.to(
       campusHalfCircle,
       { xPercent: -80, autoAlpha: 0, ease: "none", duration: 1.8 },
-      0
+      0,
     );
   }
   if (campusText) {
@@ -582,7 +583,7 @@
         ease: "none",
         duration: 1,
       },
-      0
+      0,
     );
   }
 
@@ -631,7 +632,7 @@
         setActiveSlide(
           nextIndex,
           false,
-          CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK
+          CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK,
         );
         holdCampusAtProgress(getSlideProgress(nextIndex));
         return true;
@@ -670,7 +671,7 @@
   ScrollTrigger.create({
     trigger: campusViewport,
     start: "top top",
-    end: "+=420%",
+    end: "+=" + CAMPUS_PIN_DISTANCE,
     onLeaveBack: releaseCampusHeader,
     onLeave: releaseCampusHeader,
   });
@@ -679,7 +680,7 @@
   campusTrigger = ScrollTrigger.create({
     trigger: campusViewport,
     start: "top top",
-    end: "+=420%",
+    end: "+=" + CAMPUS_PIN_DISTANCE,
     pin: true,
     pinSpacing: true,
     anticipatePin: 1,
@@ -719,17 +720,7 @@
         });
 
         var sliderP = (p - CAMPUS_EXIT_END) / (1 - CAMPUS_EXIT_END);
-        var slideUpdate = updateHorizontalTrack(Math.min(sliderP, 1));
-
-        if (slideUpdate && slideUpdate.targetIndex !== slideUpdate.index) {
-          holdCampusAtProgress(slideUpdate.progress);
-        } else if (
-          (maskAnimating || slideIntroAnimating) &&
-          lockedCampusProgress !== null &&
-          Math.abs(p - lockedCampusProgress) > 0.001
-        ) {
-          holdCampusAtProgress(lockedCampusProgress);
-        }
+        updateHorizontalTrack(Math.min(sliderP, 1));
       } else {
         hideSlider();
         if (hasReachedSlider && p < CAMPUS_EXIT_END && !introActive) {
@@ -763,7 +754,7 @@
         e.preventDefault();
       }
     },
-    { passive: false, capture: true }
+    { passive: false, capture: true },
   );
 
   window.addEventListener(
@@ -778,8 +769,9 @@
         holdCampusAtProgress(lockedCampusProgress);
       }
     },
-    { passive: false }
+    { passive: false },
   );
+
   window.addEventListener("resize", function () {
     horizontalTween = null;
     ScrollTrigger.refresh();
@@ -837,7 +829,7 @@
     var sectionRightGap = headingContainer
       ? Math.max(
           viewportWidth - headingContainer.getBoundingClientRect().right,
-          48
+          48,
         )
       : Math.min(Math.max(viewportWidth * 0.06, 48), 110);
     var currentSlide = 0;
@@ -884,8 +876,8 @@
       isAnimating = true;
       devTween = gsap.to(devTrack, {
         x: slideOffsets[index],
-        duration: 0.6,
-        ease: "power3.inOut",
+        duration: 1.05,
+        ease: "power2.inOut",
         overwrite: true,
         onComplete: function () {
           isAnimating = false;
@@ -936,7 +928,7 @@
 
       if (isAnimating) return;
 
-      wheelCooldownUntil = now + 650;
+      wheelCooldownUntil = now + 1100;
 
       if (nextSlide < 0 || nextSlide >= slides.length) {
         releaseScroll(direction);
@@ -1034,6 +1026,24 @@
 
   var hasRevealed = false;
 
+  if (window.innerWidth >= 992) {
+    gsap.fromTo(
+      section,
+      { y: "6vh" },
+      {
+        y: "0vh",
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom",
+          end: "top top",
+          scrub: 0.7,
+          invalidateOnRefresh: true,
+        },
+      },
+    );
+  }
+
   gsap.set(leftColumn, { autoAlpha: 0, x: -28 });
   gsap.set(rightColumn, { autoAlpha: 0, x: 28 });
 
@@ -1078,7 +1088,7 @@
           invalidateOnRefresh: true,
         });
       },
-      { once: true }
+      { once: true },
     );
   }
 })();

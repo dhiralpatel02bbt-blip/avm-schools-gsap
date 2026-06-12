@@ -1,7 +1,9 @@
 .careers-page header .main-menu ul li a {
   color: #fff;
 }
+
 @media (max-width: 991.9px) {
+
   .careers-page .offcanvas-menu label span,
   .offcanvas-menu label span::before,
   .offcanvas-menu label span::after {
@@ -85,10 +87,12 @@
   .hero-circle {
     left: -1150px;
   }
+
   .hero-right {
     width: 60%;
   }
 }
+
 @media (max-width: 1200.9px) {
   .hero-circle {
     left: -1230px;
@@ -96,11 +100,13 @@
     height: 1780px;
   }
 }
+
 @media (max-width: 1023.9px) {
   .hero-circle {
     left: -1330px;
   }
 }
+
 @media (max-width: 767.9px) {
   .hero {
     display: flex;
@@ -124,6 +130,7 @@
   .hero-right img {
     object-position: center center;
   }
+
   .hero-left {
     order: 2;
     width: 981px;
@@ -137,6 +144,7 @@
     bottom: auto;
     left: -110px;
   }
+
   .hero-circle {
     display: none;
   }
@@ -155,13 +163,16 @@
   .hero-content h2 {
     margin: 0;
     font-size: 28px;
-    line-height: 120%; /* 33.6px */
+    line-height: 120%;
+    /* 33.6px */
   }
 }
+
 @media (max-width: 576.9px) {
   .hero-right {
     min-height: 632px;
   }
+
   .hero-left {
     width: 721px;
     height: 721px;
@@ -170,6 +181,7 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
   .hero-right img {
     object-position: center center;
     display: none;
@@ -224,7 +236,8 @@ body.popup-open {
   font-size: 2.2em;
   font-style: normal;
   font-weight: 700;
-  line-height: 125%; /* 55px */
+  line-height: 125%;
+  /* 55px */
 }
 
 .custom-dropdown {
@@ -255,9 +268,11 @@ body.popup-open {
   background: url("../images/down-arrow.png") no-repeat right 20px center;
   background-size: 18px;
 }
+
 .model-popup select:focus-visible {
   border: 2px solid #0043c0;
 }
+
 .model-popup select option {
   color: #0a3d9c;
   font-family: Poppins;
@@ -266,6 +281,7 @@ body.popup-open {
   font-weight: 600;
   line-height: normal;
 }
+
 .model-popup .input-field {
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #f9f9f9;
@@ -299,7 +315,8 @@ body.popup-open {
 
 .model-popup .career-wrapper {
   position: relative;
-  padding: 38px 87px 79px 94px;
+  /* padding: 38px 87px 79px 94px; */
+  padding: 50px;
   max-width: 1296px;
   width: 100%;
   background: #fff;
@@ -315,8 +332,8 @@ body.popup-open {
 
 .model-popup-close {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 10px;
+  right: 5px;
   width: 42px;
   height: 42px;
   border: 0;
@@ -464,52 +481,66 @@ body.popup-open {
   .model-popup .career-wrapper {
     padding: 29px 0px 40px 0;
   }
+
   .model-popup .career-img img.main-img {
     display: none;
   }
+
   .career-wrapper .popup {
     flex-direction: column;
     gap: 40px;
     align-items: center;
   }
+
   .model-popup .career-img {
     margin-top: 41px;
     width: 38%;
   }
+
   .model-popup h2.Openings-text {
     text-align: center;
   }
+
   .model-popup .input-field {
     margin-bottom: 10px;
   }
+
   .model-popup .upload-sec {
     padding: 26px 0px 44px;
   }
 }
+
 @media (max-width: 767.9px) {
   .model-popup {
     padding: 0;
   }
+
   .model-popup .career-wrapper {
     max-width: 402px;
   }
+
   .model-popup .career-wrapper {
     padding: 29px 30px 40px 30px;
   }
+
   .model-popup .career-form {
     width: 100%;
   }
+
   .model-popup .career-img {
     width: 100%;
   }
+
   .model-popup select {
     font-size: 13px;
     font-weight: 500;
     padding: 13px 14px 13px 14px;
   }
+
   .custom-dropdown {
     margin-bottom: 10px;
   }
+
   .model-popup button.submit-btn {
     border-radius: 122px;
     background: #f7df00;
@@ -527,6 +558,7 @@ body.popup-open {
     transition: all 0.5s ease;
   }
 }
+
 /*  popup css end */
 
 /* Careers openings section css start */
@@ -662,11 +694,14 @@ section.bbt-fa-careers-openings-sec {
     padding-bottom: 58px;
     background: #fff;
   }
+
   .bbt-fa-careers-openings-sec h2 {
     padding-bottom: 54px;
     font-size: 26px;
-    line-height: 115%; /* 29.9px */
+    line-height: 115%;
+    /* 29.9px */
   }
+
   .bbt-fa-careers-openings-sec .grid {
     grid-auto-flow: row;
     grid-template-columns: unset;
@@ -674,28 +709,35 @@ section.bbt-fa-careers-openings-sec {
     width: 83%;
     margin: 0 auto;
   }
+
   .bbt-fa-careers-openings-sec .card .details {
     font-size: 13px;
     margin-top: 30px;
   }
+
   .bbt-fa-careers-openings-sec .card {
     padding: 34px 30px 31px 20px;
   }
+
   .bbt-fa-careers-openings-sec .card .apply-now {
     margin-top: 25px;
   }
+
   .bbt-fa-careers-openings-sec .card h3 br {
     display: none;
   }
 }
+
 @media (max-width: 576.9px) {
   .bbt-fa-careers-openings-sec .grid {
     width: 90vw;
     margin-left: calc(50% - 45vw);
   }
+
   .bbt-fa-careers-openings-sec .card {
     max-width: unset;
   }
+
   .bbt-fa-careers-openings-sec .card h3 br {
     display: block;
   }
@@ -731,6 +773,20 @@ section.bbt-fa-careers-about-sec {
 .bbt-fa-careers-about-sec .avm-text {
   width: 50%;
   will-change: transform, opacity;
+}
+
+@media (min-width: 768px) {
+  .bbt-fa-careers-about-sec .avm-image-wrap {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-120px);
+  }
+
+  .bbt-fa-careers-about-sec .avm-text {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(120px);
+  }
 }
 
 .bbt-fa-careers-about-sec img {
@@ -776,11 +832,13 @@ section.bbt-fa-careers-about-sec {
     margin-top: 0;
   }
 }
+
 @media (max-width: 1200.9px) {
   .bbt-fa-careers-about-sec p.text-p {
     width: 95%;
   }
 }
+
 @media (max-width: 767.9px) {
   section.bbt-fa-careers-about-sec {
     position: relative;
@@ -800,11 +858,13 @@ section.bbt-fa-careers-about-sec {
   .bbt-fa-careers-about-sec .avm-image-wrap {
     margin-top: 144px;
   }
+
   .bbt-fa-careers-about-sec .avm-image-wrap,
   .bbt-fa-careers-about-sec .avm-text {
     width: 100%;
     transform: none;
   }
+
   .bbt-fa-careers-about-sec .avm-text {
     margin-bottom: 152px;
   }
@@ -822,9 +882,11 @@ section.bbt-fa-careers-about-sec {
     text-align: center;
     font-size: 17px;
     font-weight: 400;
-    line-height: 153%; /* 26.01px */
+    line-height: 153%;
+    /* 26.01px */
   }
 }
+
 @media (max-width: 576.9px) {
   .bbt-fa-careers-about-sec p.text-p {
     width: 110%;
@@ -833,6 +895,7 @@ section.bbt-fa-careers-about-sec {
   .bbt-fa-careers-about-sec .avm-image-wrap {
     margin-top: 238px;
   }
+
   .bbt-fa-careers-about-sec img {
     max-width: 322px;
     width: 100%;
@@ -840,4 +903,5 @@ section.bbt-fa-careers-about-sec {
     height: 100%;
   }
 }
+
 /* Careers about section css end */

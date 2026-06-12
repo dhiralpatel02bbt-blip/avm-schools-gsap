@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -111,12 +111,40 @@
     <!-- featured news section start -->
     <section class="featured-news-sec">
       <div class="container-xxl">
-        <div class="rows">
-          <!-- <button class="featured-campus-filter" type="button">
-                  Bandra (W)
-                  <span aria-hidden="true"></span>
-              </button> -->
+        <div class="rows featured-news-header">
           <h2 class="title">Featured news</h2>
+          <div class="featured-location-dropdown">
+            <button
+              class="featured-campus-filter"
+              type="button"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-label="Filter by campus location"
+            >
+              <span class="featured-campus-filter-label">Bandra (W)</span>
+              <span
+                class="featured-campus-filter-icon"
+                aria-hidden="true"
+              ></span>
+            </button>
+            <ul class="featured-location-menu" role="listbox" hidden>
+              <li role="option" data-value="bandra-w" aria-selected="true">
+                Bandra (W)
+              </li>
+              <li role="option" data-value="andheri-w" aria-selected="false">
+                Andheri (W)
+              </li>
+              <li role="option" data-value="juhu-w" aria-selected="false">
+                Juhu (W)
+              </li>
+              <li role="option" data-value="kandivali-w" aria-selected="false">
+                Kandivali (W)
+              </li>
+              <li role="option" data-value="borivali-w" aria-selected="false">
+                Borivali (W)
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -173,25 +201,52 @@
       <div class="container-xxl">
         <div class="news-top-bar">
           <div class="left">
-            <div class="left-1">
-              <select aria-label="Filter news by category">
-                <option value="" selected>Category</option>
-                <option value="sports">Sports</option>
-                <option value="student-enhancement">Student Enhancement</option>
-                <option value="inter-class">Inter-Class</option>
-              </select>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="11"
-                viewBox="0 0 16 11"
-                fill="none"
+            <div class="left-1 news-category-dropdown">
+              <button
+                class="news-category-trigger"
+                type="button"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-label="Filter news by category"
               >
-                <path
-                  d="M6.98486 9.74365L0.344238 3.10303C-0.114746 2.64404 -0.114746 1.90186 0.344238 1.44775L1.44775 0.344238C1.90674 -0.114746 2.64893 -0.114746 3.10303 0.344238L7.81006 5.05127L12.5171 0.344238C12.9761 -0.114746 13.7183 -0.114746 14.1724 0.344238L15.2759 1.44775C15.7349 1.90674 15.7349 2.64893 15.2759 3.10303L8.63525 9.74365C8.18604 10.2026 7.44385 10.2026 6.98486 9.74365Z"
-                  fill="#0A3D9C"
-                />
-              </svg>
+                <span class="news-category-label">Category</span>
+                <span class="news-category-chevron" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="11"
+                    viewBox="0 0 16 11"
+                    fill="none"
+                  >
+                    <path
+                      d="M6.98486 9.74365L0.344238 3.10303C-0.114746 2.64404 -0.114746 1.90186 0.344238 1.44775L1.44775 0.344238C1.90674 -0.114746 2.64893 -0.114746 3.10303 0.344238L7.81006 5.05127L12.5171 0.344238C12.9761 -0.114746 13.7183 -0.114746 14.1724 0.344238L15.2759 1.44775C15.7349 1.90674 15.7349 2.64893 15.2759 3.10303L8.63525 9.74365C8.18604 10.2026 7.44385 10.2026 6.98486 9.74365Z"
+                      fill="#0A3D9C"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <ul class="news-category-menu" role="listbox" hidden>
+                <li role="option" data-value="" aria-selected="true">
+                  Category
+                </li>
+                <li role="option" data-value="sports" aria-selected="false">
+                  Sports
+                </li>
+                <li
+                  role="option"
+                  data-value="student-enhancement"
+                  aria-selected="false"
+                >
+                  Student Enhancement
+                </li>
+                <li
+                  role="option"
+                  data-value="inter-class"
+                  aria-selected="false"
+                >
+                  Inter-Class
+                </li>
+              </ul>
             </div>
             <!-- <div class="left-2">
               <span>Campus </span>
@@ -255,7 +310,9 @@
 
           <!-- Card 3 -->
           <a class="card" href="#">
-            <h3>Memories to treasure in the Playtrails and Primary section</h3>
+            <h3>
+              Memories to treasure in the <br />Playtrails and Primary section
+            </h3>
             <div class="card-image">
               <img src="images/news-3.png" alt="news3" />
             </div>
@@ -295,7 +352,10 @@
 
           <!-- Card 6 -->
           <a class="card" href="#">
-            <h3>Field Trip to Byculla Zoo</h3>
+            <h3>
+              Into the wild at Byculla Zoo, <br />
+              a journey of excitement.
+            </h3>
             <div class="card-image">
               <img src="images/news-6.png" alt="news6" />
             </div>
@@ -495,49 +555,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-      (function initFeaturedNewsSlider() {
-        function init() {
-          var sliderEl = document.querySelector(
-            ".news-and-events-page .news-slider"
-          );
-          if (!sliderEl || sliderEl.swiper || typeof Swiper === "undefined")
-            return;
-
-          new Swiper(sliderEl, {
-            slidesPerView: "auto",
-            centeredSlides: false,
-            loop: false,
-            rewind: true,
-            speed: 650,
-            spaceBetween: 58,
-            grabCursor: true,
-            navigation: {
-              nextEl: ".news-slider-next",
-            },
-            breakpoints: {
-              0: {
-                spaceBetween: 22,
-              },
-              768: {
-                spaceBetween: 36,
-              },
-              1200: {
-                spaceBetween: 58,
-              },
-            },
-          });
-        }
-
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", init);
-        } else {
-          init();
-        }
-        window.addEventListener("load", init);
-      })();
-    </script>
-
     <script src="assets/script.js"></script>
     <script src="assets/news-and-events.js"></script>
   </body>
