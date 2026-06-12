@@ -179,7 +179,7 @@
   position: relative;
   overflow: hidden;
   z-index: 2;
-  margin-top: -30vh;
+  margin-top: 0;
   height: 100vh;
   min-height: 100vh;
   display: flex;
@@ -567,12 +567,12 @@ section.development-sec {
 .development-sec h2.title-txt {
   color: #0a3d9c;
   font-family: Satoshi;
-  font-size: 2.7em;
+  font-size: 2.6em;
   font-weight: 700;
   line-height: 112%;
   width: 39%;
   padding-bottom: 65px;
-  padding-top: 30px;
+  padding-top: 50px;
 }
 
 .main-img-slider {
@@ -631,7 +631,7 @@ section.development-sec {
 
 .dev-slide .img-relative {
   position: relative;
-  height: clamp(320px, 62vh, 720px);
+  height: clamp(320px, 60vh, 720px);
   overflow: hidden;
 }
 

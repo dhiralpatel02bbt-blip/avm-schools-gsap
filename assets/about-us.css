@@ -33,15 +33,30 @@ body.about-us-page header .black-logo {
 
 /*  Careers about section css start */
 .bbt-yp-hero {
-  background: url(../images/background-image.png);
-  background-position: 130%;
-  background-repeat: no-repeat;
   background-color: #000;
   position: relative;
+  isolation: isolate;
   overflow: hidden;
   box-sizing: border-box;
   height: 100svh;
   --hero-blue-size: clamp(950px, max(92vw, 116vh), 2031.238px);
+}
+
+.bbt-yp-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url(../images/background-image.png);
+  background-position: 130%;
+  background-repeat: no-repeat;
+  opacity: 1;
+  transform: none;
+  pointer-events: none;
+}
+
+body.about-us-page.about-hero-loading .bbt-yp-hero::before {
+  animation: aboutHeroBgIn 1.65s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
 }
 
 .desktop-student-img {
@@ -53,8 +68,13 @@ body.about-us-page header .black-logo {
 }
 
 .bbt-yp-hero .main-hero-items,
-.bbt-yp-hero .main-hero-items > .d-flex {
+.bbt-yp-hero .main-hero-items>.d-flex {
   height: 100%;
+}
+
+.bbt-yp-hero .main-hero-items {
+  position: relative;
+  z-index: 1;
 }
 
 .bbt-yp-hero .main-title {
@@ -111,10 +131,6 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .main-title .panel-body {
   animation: aboutHeroTextIn 0.95s cubic-bezier(0.16, 1, 0.3, 1) 1.74s both;
 }
 
-body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
-  animation: aboutHeroYellowIn 1.25s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
-}
-
 @keyframes aboutHeroCircleIn {
   from {
     transform: translateX(-58%);
@@ -143,15 +159,19 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
   }
 }
 
-@keyframes aboutHeroYellowIn {
+@keyframes aboutHeroBgIn {
   from {
     opacity: 0;
-    transform: translateY(42%) scale(0.88);
+    transform: translate3d(74px, 0, 0) scale(1.035);
+  }
+
+  62% {
+    opacity: 0.92;
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(0.96);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -165,19 +185,24 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
   height: auto;
   max-width: 780px;
 }
+
 .bbt-yp-hero .yellow-circle {
   position: absolute;
   bottom: -57%;
   right: -5%;
-  width: 980px;
-  height: 980px;
+  --about-yellow-size: 941px;
+  width: var(--about-yellow-size);
+  height: var(--about-yellow-size);
   border-radius: 50%;
   background-color: #f7df00;
   transform-origin: bottom center;
-  transform: translateY(0) scale(0.96);
-  will-change: transform;
+  transform: none;
+  animation: none !important;
+  transition: none !important;
+  will-change: auto;
   z-index: 0;
 }
+
 .about-student-img {
   bottom: -57px;
   right: 42px;
@@ -238,8 +263,7 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
   .bbt-yp-hero .yellow-circle {
     bottom: -62%;
     right: -12%;
-    width: 880px;
-    height: 880px;
+    --about-yellow-size: 845px;
   }
 
   .about-student-img {
@@ -268,8 +292,7 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
   .bbt-yp-hero .yellow-circle {
     bottom: -66%;
     right: -13%;
-    width: 825px;
-    height: 825px;
+    --about-yellow-size: 792px;
   }
 
   .about-student-img {
@@ -285,8 +308,7 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
   .bbt-yp-hero .yellow-circle {
     bottom: -64%;
     right: -15%;
-    width: 790px;
-    height: 790px;
+    --about-yellow-size: 758px;
   }
 
   .about-student-img img {
@@ -342,8 +364,7 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .yellow-circle {
 
   .bbt-yp-hero .yellow-circle {
     right: -21%;
-    width: 600px;
-    height: 600px;
+    --about-yellow-size: 576px;
     bottom: -41%;
   }
 }
@@ -795,6 +816,10 @@ section.awareness-about-sec {
   /* height: 880px; */
   height: 96%;
   background-color: #f7df00;
+}
+
+.core-value-sec .text-wrapper.is-core-values-animated::before {
+  opacity: 0;
 }
 
 .core-value-sec .timeline-dot {
@@ -1275,7 +1300,9 @@ section.awareness-about-sec {
 /* Governance section css start  */
 .governance-sec {
   background-color: #ffffff;
-  padding: 0 160px 159px 0;
+  /* -YP start */
+  padding: 159px 160px 162px 0;
+  /* -YP end */
   margin-top: -1px;
   overflow: hidden;
 }
@@ -1311,49 +1338,65 @@ section.awareness-about-sec {
 
 @media (max-width: 1728.9px) {
   .governance-sec {
-    padding: 0 150px 149px 0;
+    /* -YP start */
+    padding: 149px 150px 152px 0;
+    /* -YP end */
   }
 }
 
 @media (max-width: 1650.9px) {
   .governance-sec {
-    padding: 0 140px 139px 0;
+    /* -YP start */
+    padding: 139px 140px 142px 0;
+    /* -YP end */
   }
 }
 
 @media (max-width: 1440.9px) {
   .governance-sec {
-    padding: 0 130px 129px 0;
+    /* -YP start */
+    padding: 129px 130px 132px 0;
+    /* -YP end */
   }
 }
 
 @media (max-width: 1366.9px) {
   .governance-sec {
-    padding: 0 120px 119px 0;
+    /* -YP start */
+    padding: 119px 120px 122px 0;
+    /* -YP end */
   }
 }
 
 @media (max-width: 1280.9px) {
   .governance-sec {
-    padding: 0 110px 109px 0;
+    /* -YP start */
+    padding: 109px 110px 112px 0;
+    /* -YP end */
   }
 }
 
 @media (max-width: 1200px) {
   .governance-sec {
-    padding: 0 84px 110px 0;
+    /* -YP start */
+    padding: 90px 84px 92px 0;
+    /* -YP end */
   }
 }
 
 @media (max-width: 1023px) {
   .governance-sec {
-    padding: 0 70px 110px 0;
+    /* -YP start */
+    padding: 80px 70px 80px 0;
+    /* -YP end */
   }
 }
 
 @media (max-width: 991px) {
   .governance-sec {
-    padding: 0 53px 110px 0;
+    /* -YP start */
+    padding: 80px 53px 80px 0;
+    /* -YP end */
   }
 
   .governance-sec .image-wrapper::before,

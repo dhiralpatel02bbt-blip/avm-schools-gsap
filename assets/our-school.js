@@ -450,7 +450,7 @@
     return;
   }
 
-  gsap.set(campusText, { autoAlpha: 0, x: -96, filter: "blur(14px)" });
+  gsap.set(campusText, { autoAlpha: 0, x: -96, filter: "none" });
   gsap.set(campusHalfCircle, { xPercent: -22 });
   gsap.set(campusSliderShell, { autoAlpha: 0 });
   campusSliderShell.style.pointerEvents = "none";
@@ -481,7 +481,7 @@
     gsap.killTweensOf([campusHalfCircle, campusText]);
     if (isReentry) prepareHeaderForCampusReentry();
     gsap.set(campusHalfCircle, { xPercent: -40, autoAlpha: 0 });
-    gsap.set(campusText, { x: -96, autoAlpha: 0, filter: "blur(14px)" });
+    gsap.set(campusText, { x: -96, autoAlpha: 0, filter: "none" });
 
     loadTL = gsap.timeline({
       delay: isReentry ? 0 : 0.2,
@@ -517,11 +517,11 @@
     }
     loadTL.fromTo(
       campusText,
-      { x: -96, autoAlpha: 0, filter: "blur(14px)" },
+      { x: -96, autoAlpha: 0, filter: "none" },
       {
         x: 0,
         autoAlpha: 1,
-        filter: "blur(0px)",
+        filter: "none",
         duration: 1.6,
         ease: "power3.out",
       },
@@ -579,7 +579,7 @@
       {
         x: -180,
         autoAlpha: 0,
-        filter: "blur(10px)",
+        filter: "none",
         ease: "none",
         duration: 1,
       },

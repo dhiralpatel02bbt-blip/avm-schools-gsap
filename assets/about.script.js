@@ -71,7 +71,7 @@
       var contactTop = contactSection.getBoundingClientRect().top;
       aboutBody.classList.toggle(
         "about-hide-mob-sticky",
-        contactTop <= window.innerHeight
+        contactTop <= window.innerHeight,
       );
     }
 
@@ -206,11 +206,11 @@
       }
       if (fallbackYellow) {
         fallbackYellow.style.opacity = "1";
-        fallbackYellow.style.transform = "translateY(0) scale(0.96)";
+        fallbackYellow.style.transform = "none";
       }
       if (fallbackStudent) {
         fallbackStudent.style.opacity = "1";
-        fallbackStudent.style.transform = "translateX(0)";
+        fallbackStudent.style.transform = "none";
       }
 
       if (
@@ -441,7 +441,7 @@
           duration: 0.35,
           ease: "none",
         },
-        0.06
+        0.06,
       );
     }
 
@@ -487,15 +487,21 @@
       force3D: true,
     });
     gsap.set(title, { x: 0, opacity: 1 });
-    if (yellowCircle) gsap.set(yellowCircle, { y: 0, scale: 0.96, opacity: 1 });
-    if (studentImage) gsap.set(studentImage, { x: 0, opacity: 1 });
+    if (yellowCircle) {
+      gsap.set(yellowCircle, { opacity: 1, clearProps: "transform" });
+    }
+    if (studentImage) {
+      gsap.set(studentImage, { opacity: 1, clearProps: "transform" });
+    }
 
     window.setTimeout(function () {
       unlockInitialHeroScroll();
       if (titleHeading) gsap.set(titleHeading, { x: 0, autoAlpha: 1 });
       if (titleBody) gsap.set(titleBody, { x: 0, autoAlpha: 1 });
       gsap.set(circle, { x: 0, scale: 1 });
-      if (yellowCircle) gsap.set(yellowCircle, { y: 0, scale: 0.96, opacity: 1 });
+      if (yellowCircle) {
+        gsap.set(yellowCircle, { opacity: 1, clearProps: "transform" });
+      }
       createHeroScrollAnimation(measurements);
       ScrollTrigger.refresh();
     }, 2750);
@@ -514,16 +520,8 @@
     });
 
     awarenessTL
-      .to(
-        awarenessImage,
-        { y: 0, autoAlpha: 1, duration: 0.85 },
-        0
-      )
-      .to(
-        awarenessText,
-        { y: 0, autoAlpha: 1, duration: 0.85 },
-        0.12
-      )
+      .to(awarenessImage, { y: 0, autoAlpha: 1, duration: 0.85 }, 0)
+      .to(awarenessText, { y: 0, autoAlpha: 1, duration: 0.85 }, 0.12)
       .to({}, { duration: 0.34 })
       .to(
         [awarenessImage, awarenessText],
@@ -534,7 +532,7 @@
           duration: 1.05,
           ease: "power2.out",
         },
-        ">"
+        ">",
       )
       .to([awarenessImage, awarenessText], {
         y: -120,
@@ -612,7 +610,7 @@
           duration: 0.65,
           ease: "power3.out",
         },
-        "<"
+        "<",
       )
       .to(
         visionTitle,
@@ -621,7 +619,7 @@
           duration: 0.38,
           ease: "power2.out",
         },
-        "-=0.34"
+        "-=0.34",
       )
       .to(
         visionPara,
@@ -631,7 +629,7 @@
           duration: 0.48,
           ease: "power2.out",
         },
-        "-=0.12"
+        "-=0.12",
       )
       .to({}, { duration: 0.45 });
 
@@ -689,6 +687,7 @@
       var oldLine = textWrapper.querySelector(".avm-cv-anim-line");
       if (oldLine) oldLine.remove();
 
+      textWrapper.classList.remove("is-core-values-animated");
       if (whiteCircle) whiteCircle.removeAttribute("style");
       if (circleHeading) circleHeading.removeAttribute("style");
       if (circleSubtitle) circleSubtitle.removeAttribute("style");
@@ -711,6 +710,7 @@
     // We replicate it as a real element so GSAP can animate its height.
     var oldAnimLine = textWrapper.querySelector(".avm-cv-anim-line");
     if (oldAnimLine) oldAnimLine.remove();
+    textWrapper.classList.add("is-core-values-animated");
 
     // Inject an animated line overlay (sits on top of the CSS pseudo ::before)
     var animLine = document.createElement("span");
@@ -752,7 +752,7 @@
         });
       if (item.text) {
         // hide just the h3 and p inside, not the container (which has position)
-        gsap.set(item.text.querySelectorAll("h3, p"), { autoAlpha: 0, x: 40 });
+        gsap.set(item.text.querySelectorAll("h3, p"), { autoAlpha: 0 });
       }
     });
 
@@ -797,36 +797,46 @@
     gsap.set(animLine, {
       top: firstDotCenter,
       height: lineFullHeight,
-      scaleY: 0,
+      scaleY: 1,
+      autoAlpha: 0,
       transformOrigin: "top center",
     });
 
-    // Phase 0 (0–0.12): white circle grows in
+    // Phase 0: white circle grows in smoothly with scroll
+    var circleGrowDuration = 0.28;
+    var lineRevealStart = circleGrowDuration + 0.02;
+    var coreItemsStart = lineRevealStart + 0.1;
+
     masterTL.to(
       whiteCircle,
-      { scale: 1, autoAlpha: 1, duration: 0.12, ease: "back.out(1.4)" },
-      0
+      { scale: 1, autoAlpha: 1, duration: circleGrowDuration, ease: "none" },
+      0,
     );
     if (circleHeading) {
       masterTL.to(
         circleHeading,
         { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" },
-        0.08
+        0.18,
       );
     }
     if (circleSubtitle) {
       masterTL.to(
         circleSubtitle,
         { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" },
-        0.11
+        0.22,
       );
     }
 
-    // Phase 1 (0.14–0.22): dot 1 pops + text 1 slides in
+    masterTL.to(
+      animLine,
+      { autoAlpha: 1, duration: 0.08, ease: "power1.out" },
+      lineRevealStart,
+    );
+
+    // Phase 1: dots grow and value text fades in after the line appears
     items.forEach(function (item, index) {
-      var itemStart = 0.08 + index * 0.18;
+      var itemStart = coreItemsStart + index * 0.18;
       var itemY = itemPositions[index].y;
-      var lineProgress = itemPositions[index].lineProgress;
 
       masterTL.to(
         textWrapper,
@@ -835,24 +845,14 @@
           duration: index === 0 ? 0.01 : 0.1,
           ease: "power1.inOut",
         },
-        itemStart - 0.03
-      );
-
-      masterTL.to(
-        animLine,
-        {
-          scaleY: Math.max(0, Math.min(1, lineProgress)),
-          duration: index === 0 ? 0.01 : 0.12,
-          ease: "power1.inOut",
-        },
-        itemStart
+        itemStart - 0.03,
       );
 
       if (item.dot) {
         masterTL.to(
           item.dot,
-          { scale: 1, autoAlpha: 1, duration: 0.06, ease: "back.out(2)" },
-          itemStart + 0.03
+          { scale: 1, autoAlpha: 1, duration: 0.1, ease: "power2.out" },
+          itemStart,
         );
       }
 
@@ -860,23 +860,16 @@
         item.text.querySelectorAll("h3, p"),
         {
           autoAlpha: 1,
-          x: 0,
-          duration: 0.08,
-          ease: "power3.out",
+          duration: 0.1,
+          ease: "power1.out",
           stagger: 0.02,
         },
-        itemStart + 0.06
+        itemStart + 0.08,
       );
     });
 
     // ── ScrollTrigger: pin the section, scrub the timeline ──────────────────
     // Extra scroll space = 3× viewport heights so each phase gets room
-    masterTL.to(animLine, {
-      scaleY: 1,
-      duration: 0.1,
-      ease: "power1.inOut",
-    });
-
     // Let the final line settle before ScrollTrigger releases the pinned section.
     masterTL.to({}, { duration: 0.18 });
 
@@ -911,7 +904,7 @@
     if (!textWrapper || !animLine) return;
 
     var items = Array.prototype.slice.call(
-      textWrapper.querySelectorAll(".core-para")
+      textWrapper.querySelectorAll(".core-para"),
     );
     if (!items.length) return;
 
@@ -923,8 +916,8 @@
     var textNodes = items.reduce(function (nodes, item) {
       return nodes.concat(
         Array.prototype.slice.call(
-          item.querySelectorAll(".value-para h3, .value-para p")
-        )
+          item.querySelectorAll(".value-para h3, .value-para p"),
+        ),
       );
     }, []);
 
@@ -957,7 +950,7 @@
         : 44;
       mobileSection.style.setProperty(
         "--core-mob-mask-height",
-        headingBottom + headingGap + "px"
+        headingBottom + headingGap + "px",
       );
       var anchorIndex = index > 0 ? index - 1 : index;
       var anchorRect = items[anchorIndex].getBoundingClientRect();
@@ -1008,7 +1001,7 @@
           duration: index === 0 ? 0.01 : 0.1,
           ease: "power1.inOut",
         },
-        itemStart
+        itemStart,
       );
 
       mobileTL.to(
@@ -1018,14 +1011,14 @@
           duration: index === 0 ? 0.01 : 0.12,
           ease: "power1.inOut",
         },
-        itemStart + 0.01
+        itemStart + 0.01,
       );
 
       if (dot) {
         mobileTL.to(
           dot,
           { scale: 1, autoAlpha: 1, duration: 0.06, ease: "back.out(2)" },
-          itemStart + 0.03
+          itemStart + 0.03,
         );
       }
 
@@ -1038,12 +1031,12 @@
           ease: "power3.out",
           stagger: 0.02,
         },
-        itemStart + 0.05
+        itemStart + 0.05,
       );
 
       if (index > 0) {
         var previousText = items[index - 1].querySelectorAll(
-          ".value-para h3, .value-para p"
+          ".value-para h3, .value-para p",
         );
         mobileTL.to(
           previousText,
@@ -1052,13 +1045,13 @@
             duration: 0.08,
             ease: "power1.out",
           },
-          itemStart
+          itemStart,
         );
       }
 
       if (index > 1) {
         var olderText = items[index - 2].querySelectorAll(
-          ".value-para h3, .value-para p"
+          ".value-para h3, .value-para p",
         );
         mobileTL.to(
           olderText,
@@ -1067,7 +1060,7 @@
             duration: 0.08,
             ease: "power1.out",
           },
-          itemStart
+          itemStart,
         );
       }
     });
@@ -1124,7 +1117,7 @@
       .to(
         commitmentSection,
         { backgroundColor: "#ffffff", duration: 0.5, ease: "none" },
-        0
+        0,
       )
       // Text slides in
       .to(commitmentText, { x: 0, autoAlpha: 1, duration: 1.05 }, 0.15)
@@ -1136,18 +1129,23 @@
           duration: 1.1,
           ease: "power2.inOut",
         },
-        0.25
+        0.25,
       )
       .set([commitmentText, commitmentImage], { clearProps: "willChange" });
 
+    // -YP start
     commitmentTrigger = ScrollTrigger.create({
       trigger: commitmentSection,
-      start: "top 15%", // ← was "top 72%", now waits until section is near top
-      end: "top -20%", // ← was "top 42%"
+      start: "top top",
+      end: "+=" + window.innerHeight,
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
       animation: commitmentTL,
       scrub: 0.7,
       invalidateOnRefresh: true,
     });
+    // -YP end
   }
 
   function initGovernance() {
@@ -1182,20 +1180,25 @@
           duration: 1.1,
           ease: "power2.inOut",
         },
-        0
+        0,
       )
       // Text slides in from right
       .to(governanceText, { x: 0, autoAlpha: 1, duration: 1.35 }, 0.16)
       .set([governanceImage, governanceText], { clearProps: "willChange" });
 
+    // -YP start
     governanceTrigger = ScrollTrigger.create({
       trigger: governanceSection,
-      start: "top 15%",
-      end: "top -20%",
+      start: "top top",
+      end: "+=" + window.innerHeight,
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
       animation: governanceTL,
       scrub: 1.15,
       invalidateOnRefresh: true,
     });
+    // -YP end
   }
 
   function init() {
