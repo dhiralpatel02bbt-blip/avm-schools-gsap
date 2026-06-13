@@ -223,7 +223,7 @@ body.our-school-page {
 .campus-section .body-txt {
   position: relative;
   z-index: 4;
-  margin: 45% 0 auto 100px;
+  margin: 52% 0 auto 100px;
   max-width: 450px;
   display: flex;
   flex-direction: column;
@@ -1028,10 +1028,10 @@ section.development-sec {
 }
 
 .campus-grid {
-  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 140px 152px;
+  margin-top: 100px;
 }
 
 .campus-card {

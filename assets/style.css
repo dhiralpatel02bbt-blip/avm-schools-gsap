@@ -832,6 +832,7 @@
   height: 85vh;
   position: relative;
   overflow-x: clip;
+  margin-bottom: 100px;
 }
 
 .video-wrapper {
@@ -2248,14 +2249,14 @@ a.see-all.secondary-btn {
   min-height: 100vh;
   z-index: 2;
   isolation: isolate;
-  background: #fff;
+  background: #f7df00;
 }
 
 .bbt-FA-circle-sec .sticky-viewport {
   position: relative;
   height: 100vh;
   overflow: hidden;
-  background: #fff;
+  background: #f7df00;
   z-index: 2;
 }
 

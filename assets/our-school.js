@@ -16,7 +16,7 @@
 //
 // PHASE 3  (user scrolls more — second half of campus-stage)
 //   – Campus image slider becomes visible and starts running
-//   – Each slide: yellow half-circle enters from bottom-left,
+//   – Each slide: yellow half-circle is present with the slide,
 //     then text fades in after a short delay
 // ============================================================
 
@@ -58,8 +58,8 @@
   var CAMPUS_EXIT_END = 0.45;
   var CAMPUS_PIN_DISTANCE = "320%";
   var CAMPUS_MASK_DURATION = 1.6;
-  var CAMPUS_CIRCLE_DELAY_AFTER_MASK = 0.12;
-  var CAMPUS_TEXT_DELAY_AFTER_CIRCLE = 0.9;
+  var CAMPUS_CIRCLE_DELAY_AFTER_MASK = 0;
+  var CAMPUS_TEXT_DELAY_AFTER_CIRCLE = 0.32;
 
   function prepareHeaderForCampusReentry() {
     if (!siteHeader) return;
@@ -151,15 +151,12 @@
     slideIntroAnimating = true;
     lockedCampusProgress = getSlideProgress(index);
 
-    gsap.to(c, {
+    gsap.set(c, {
       x: 0,
       y: 0,
       scale: 1,
       transformOrigin: "50% 50%",
       autoAlpha: 1,
-      duration: 0.9,
-      ease: "power3.out",
-      delay: d + 0.12,
       overwrite: true,
     });
     gsap.to(t, {
@@ -222,7 +219,7 @@
       setActiveSlide(
         revealedIndex,
         false,
-        CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK,
+        CAMPUS_CIRCLE_DELAY_AFTER_MASK,
       );
     }
 
@@ -251,6 +248,10 @@
     var targetVisual = campusSlideVisuals[safeIndex];
     var c = currentSlide && currentSlide.querySelector(".campus-slide-circle");
     var t = currentSlide && currentSlide.querySelector(".campus-slide-text");
+    var targetCircle =
+      targetSlide && targetSlide.querySelector(".campus-slide-circle");
+    var targetText =
+      targetSlide && targetSlide.querySelector(".campus-slide-text");
     if (!currentSlide || !currentVisual || !targetSlide || !targetVisual) {
       return null;
     }
@@ -259,11 +260,29 @@
     slideIntroAnimating = true;
     lockedCampusProgress = getSlideProgress(currentIndex);
 
-    gsap.killTweensOf([c, t, currentVisual]);
+    gsap.killTweensOf([c, t, currentVisual, targetCircle, targetText]);
     gsap.set(targetSlide, { zIndex: 2 });
     gsap.set(targetVisual, { clipPath: "inset(0% 0% 0% 0%)" });
     gsap.set(currentSlide, { zIndex: 3 });
     gsap.set(currentVisual, { clipPath: "inset(0% 0% 0% 0%)" });
+    if (targetCircle) {
+      gsap.set(targetCircle, {
+        x: 0,
+        y: 0,
+        scale: 1,
+        transformOrigin: "50% 50%",
+        autoAlpha: 1,
+      });
+    }
+    if (targetText) gsap.set(targetText, { y: 32, autoAlpha: 0 });
+    if (c) {
+      gsap.set(c, {
+        x: -110,
+        y: 110,
+        scale: 0.55,
+        autoAlpha: 0,
+      });
+    }
 
     var reverseTL = gsap.timeline({
       onComplete: function () {
@@ -275,26 +294,11 @@
         gsap.set(currentSlide, { zIndex: 2 });
         gsap.set(currentVisual, { clipPath: "inset(100% 0% 0% 0%)" });
         gsap.set(targetSlide, { zIndex: 3 });
-        setActiveSlide(safeIndex, false, 0.08);
+        setActiveSlide(safeIndex, false, 0);
         holdCampusAtProgress(getSlideProgress(safeIndex));
       },
     });
 
-    if (c) {
-      reverseTL.to(
-        c,
-        {
-          x: -110,
-          y: 110,
-          scale: 0.55,
-          autoAlpha: 0,
-          duration: 0.55,
-          ease: "power3.in",
-          overwrite: true,
-        },
-        0,
-      );
-    }
     if (t) {
       reverseTL.to(
         t,
@@ -525,7 +529,7 @@
         duration: 1.6,
         ease: "power3.out",
       },
-      0.8,
+      0.55,
     );
   }
 
@@ -632,7 +636,7 @@
         setActiveSlide(
           nextIndex,
           false,
-          CAMPUS_MASK_DURATION + CAMPUS_CIRCLE_DELAY_AFTER_MASK,
+          CAMPUS_CIRCLE_DELAY_AFTER_MASK,
         );
         holdCampusAtProgress(getSlideProgress(nextIndex));
         return true;

@@ -790,9 +790,14 @@ gsap.from(".award .leaf", {
 
   // ── ScrollTrigger — one big pin for everything ─────────────
   // Total scroll distance: PHASE1_PX + (n panels * PX_PER_PANEL)
-  var PHASE1_PX = 1250;
+  function getPhase1Px() {
+    return window.innerHeight * 2;
+  }
+
   var PX_PER_PANEL = 1050; // scroll pixels per panel movement
-  var totalPx = PHASE1_PX + n * PX_PER_PANEL;
+  function getTotalPx() {
+    return getPhase1Px() + n * PX_PER_PANEL;
+  }
   var lastSlideBgActive = false;
   // stepTimes[i] = the timeline position where panel i has FULLY arrived.
   // step 0: panel 0 finishes its long enter animation
@@ -902,6 +907,9 @@ gsap.from(".award .leaf", {
   function onHorizontalWheel(event) {
     if (!hTrigger || !hTrigger.isActive) return;
 
+    var introDistance = window.pageYOffset - hTrigger.start;
+    if (introDistance < getPhase1Px() - 2) return;
+
     if (isWheelTransitioning) {
       event.preventDefault();
       return;
@@ -926,19 +934,39 @@ gsap.from(".award .leaf", {
   hTrigger = ScrollTrigger.create({
     trigger: hSec,
     start: "top top",
-    end: "+=" + totalPx,
+    end: function () {
+      return "+=" + getTotalPx();
+    },
     pin: true,
     pinSpacing: true,
     anticipatePin: 1,
     id: "hSecMaster",
     invalidateOnRefresh: true,
+    onUpdate: function (self) {
+      var introProgress = gsap.utils.clamp(
+        0,
+        1,
+        (window.pageYOffset - self.start) / getPhase1Px(),
+      );
+
+      if (introProgress < 1) {
+        currentStep = -1;
+        unlockWheelTransition();
+        setLastSlideBackground(-1);
+        gsap.killTweensOf(masterTL);
+        masterTL.time(circleFillDuration * introProgress);
+        gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
+      } else if (currentStep < 0 && masterTL.time() < circleFillDuration) {
+        gsap.killTweensOf(masterTL);
+        masterTL.time(circleFillDuration);
+      }
+    },
     onEnter: function () {
       // -YP start
       currentStep = -1;
       unlockWheelTransition();
       setLastSlideBackground(-1);
       masterTL.pause(0);
-      goToStep(0, false);
       // -YP end
     },
     onEnterBack: function () {
@@ -1253,7 +1281,13 @@ if (tl) {
       bubbleTimeline = null;
     }
 
-    gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
+    gsap.killTweensOf([
+      section,
+      stickyViewport,
+      bubbleTrack,
+      ...bubbleCircles,
+      ...connectorSegments,
+    ]);
     drawBubbleConnectors();
 
     const viewportHeight = window.innerHeight;
@@ -1293,6 +1327,7 @@ if (tl) {
     });
 
     const segmentDuration = 1;
+    const backgroundRevealDuration = segmentDuration * 0.34;
     const scrollDistance = Math.max(
       bubbleCircles.length * viewportHeight * 1.05,
       viewportHeight * 7,
@@ -1310,7 +1345,15 @@ if (tl) {
       },
     });
 
-    gsap.set([section, stickyViewport], { backgroundColor: "#ffffff" });
+    gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
+    bubbleTimeline.to(
+      [section, stickyViewport],
+      {
+        backgroundColor: "#ffffff",
+        duration: backgroundRevealDuration,
+      },
+      0,
+    );
 
     const firstHeading = bubbleCircles[0].querySelector("h2");
     const firstBody = bubbleCircles[0].querySelector("p");
@@ -1325,7 +1368,7 @@ if (tl) {
           duration: 0.55,
           ease: "power2.out",
         },
-        0,
+        backgroundRevealDuration,
       )
       .to(
         [firstHeading, firstBody].filter(Boolean),
@@ -1336,7 +1379,7 @@ if (tl) {
           duration: 0.28,
           ease: "power2.out",
         },
-        0.28,
+        backgroundRevealDuration + 0.28,
       );
 
     bubbleCircles.forEach((circle, index) => {
@@ -1424,7 +1467,13 @@ if (tl) {
       bubbleTimeline.scrollTrigger?.kill();
       bubbleTimeline.kill();
     }
-    gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
+    gsap.killTweensOf([
+      section,
+      stickyViewport,
+      bubbleTrack,
+      ...bubbleCircles,
+      ...connectorSegments,
+    ]);
     gsap.set(bubbleTrack, { clearProps: "transform" });
 
     if (window.matchMedia("(max-width: 767.98px)").matches) {
@@ -1480,6 +1529,7 @@ if (tl) {
       travelDistance * 0.16,
       viewportWidth * 0.42,
     );
+    const backgroundRevealDuration = firstBubbleIntro * 0.34;
     gsap.set(bubbleCircles, {
       scale: 0.12,
       autoAlpha: 0,
@@ -1563,7 +1613,15 @@ if (tl) {
       firstBubbleIntro,
     );
 
-    gsap.set([section, stickyViewport], { backgroundColor: "#ffffff" });
+    gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
+    bubbleTimeline.to(
+      [section, stickyViewport],
+      {
+        backgroundColor: "#ffffff",
+        duration: backgroundRevealDuration,
+      },
+      0,
+    );
 
     bubbleCircles.forEach((circle, index) => {
       const heading = circle.querySelector("h2");
@@ -1609,12 +1667,12 @@ if (tl) {
       );
 
       if (index === 0) {
-        phaseOneStart = 0;
-        phaseTwoStart = firstBubbleIntro * 0.42;
-        titleStart = firstBubbleIntro * 0.28;
-        bodyStart = firstBubbleIntro * 0.46;
-        activeStart = firstBubbleIntro * 0.62;
-        activeEnd = firstBubbleIntro * 0.9;
+        phaseOneStart = backgroundRevealDuration;
+        phaseTwoStart = backgroundRevealDuration + firstBubbleIntro * 0.42;
+        titleStart = backgroundRevealDuration + firstBubbleIntro * 0.28;
+        bodyStart = backgroundRevealDuration + firstBubbleIntro * 0.46;
+        activeStart = backgroundRevealDuration + firstBubbleIntro * 0.62;
+        activeEnd = backgroundRevealDuration + firstBubbleIntro * 0.9;
       } else {
         phaseOneStart += firstBubbleIntro;
         phaseTwoStart += firstBubbleIntro;
@@ -1769,6 +1827,7 @@ if (tl) {
       top: 0,
       left: 0,
       width: "100%",
+      height: "100vh",
       zIndex: 1,
     });
   }
@@ -1777,7 +1836,7 @@ if (tl) {
     if (!isPinned) return;
     isPinned = false;
     placeholder.style.display = "none";
-    gsap.set(imgSec, { clearProps: "position,top,left,width,zIndex" });
+    gsap.set(imgSec, { clearProps: "position,top,left,width,height,zIndex" });
   }
 
   // circle-sec khud z-index 2 pe hai (CSS mein set) — image ke upar rehta hai
@@ -2039,11 +2098,11 @@ document.addEventListener("DOMContentLoaded", function () {
     gsap.set(mainTitle, { x: -80, opacity: 0 });
   }
 
-  ScrollTrigger.create({
-    trigger: imgSec,
-    start: "top top",
-    once: true,
-    onEnter: function () {
+  let hasPlayed = false;
+
+  function playImgSecAnimation() {
+    if (hasPlayed) return;
+    hasPlayed = true;
       // Purple circle — right se slide in + fade in
       if (purpleCircle) {
         gsap.to(purpleCircle, {
@@ -2073,6 +2132,13 @@ document.addEventListener("DOMContentLoaded", function () {
           ease: "power3.out",
         });
       }
-    },
+  }
+
+  const circleSec = document.querySelector(".bbt-FA-circle-sec");
+  ScrollTrigger.create({
+    trigger: circleSec || imgSec,
+    start: circleSec ? "bottom top" : "top top",
+    once: true,
+    onEnter: playImgSecAnimation,
   });
 })();

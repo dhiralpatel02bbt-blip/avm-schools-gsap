@@ -1238,11 +1238,11 @@ body.reveal-animations-ready .contact-sec .image-container {
 }
 
 .bbt-FA-main-footer .ft-col-logo {
-  width: 45%;
+  width: 42%;
 }
 
 .ft-col-menu {
-  width: 15%;
+  width: 16%;
 }
 
 .bbt-FA-main-footer .text {
@@ -1259,7 +1259,7 @@ body.reveal-animations-ready .contact-sec .image-container {
   margin-bottom: 0;
 }
 
-.bbt-FA-main-footer .footer-middle a {
+.bbt-FA-main-footer a {
   color: #f7df00;
   font-family: Poppins;
   font-size: 1em;
@@ -1268,24 +1268,21 @@ body.reveal-animations-ready .contact-sec .image-container {
   line-height: normal;
 }
 
-.bbt-FA-main-footer .footer-middle {
+.bbt-FA-main-footer {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   /* gap: 56px; */
-  gap: 131px;
+  /* gap: 131px; */
   margin-top: 0;
-  width: 52%;
-}
-
-.bbt-FA-main-footer .footer-middle .ft-meta-email {
-  margin-right: 50px;
+  /* width: 52%; */
 }
 
 .bbt-FA-main-footer .ft-social {
   display: flex;
   align-items: center;
   gap: 16px;
+  width: 16%;
 }
 
 .bbt-FA-main-footer .icon:hover {
@@ -1294,13 +1291,11 @@ body.reveal-animations-ready .contact-sec .image-container {
 }
 
 .bbt-FA-main-footer .footer-text {
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 32px;
   margin-top: 34px;
   padding: 28px 0 85px;
+  column-gap: 48px;
 }
 
 .bbt-FA-main-footer .footer-text p {
@@ -1310,7 +1305,7 @@ body.reveal-animations-ready .contact-sec .image-container {
   font-style: normal;
   font-weight: 400;
   line-height: 225%;
-  width: 46%;
+  width: 42%;
 }
 
 .bbt-FA-main-footer .icon:hover svg {
@@ -1321,13 +1316,23 @@ body.reveal-animations-ready .contact-sec .image-container {
   display: none;
 }
 
-@media(max-width: 1766px) {
+.ft-meta-phone {
+  width: 16%;
+}
+
+.ft-meta-email {
+  width: 16%;
+}
+
+@media (max-width: 1920.9px) {}
+
+@media (max-width: 1766px) {
   .bbt-FA-main-footer .footer-middle {
     gap: 104px;
   }
 }
 
-@media(max-width: 1440px) {
+@media (max-width: 1440px) {
   .bbt-FA-main-footer .footer-middle {
     gap: 68px;
   }

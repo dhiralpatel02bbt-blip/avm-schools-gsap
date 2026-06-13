@@ -732,16 +732,21 @@
 
   function update() {
     barHeight = stickyBar.offsetHeight;
+    if (stickyBar.style.position !== "fixed") {
+      barOffsetInSection =
+        stickyBar.getBoundingClientRect().top -
+        tabbingSec.getBoundingClientRect().top;
+    }
 
-    // Use offsetTop (document-relative) + scrollY instead of getBoundingClientRect
-    // because getBoundingClientRect on tabbingSec is affected by the placeholder
-    // when the bar is fixed — causing it to never report secTop > 0 on scroll-up.
-    var secTop = tabbingSec.offsetTop - window.scrollY;
-    var secBottom = secTop + tabbingSec.offsetHeight;
+    var sectionTop = tabbingSec.offsetTop;
+    var sectionBottom = sectionTop + tabbingSec.offsetHeight;
+    var barTop = sectionTop + barOffsetInSection;
 
-    // Stick when: section top has scrolled out of view AND section bottom still visible
-    // Unstick when: scrolled back UP (secTop > 0) OR scrolled past the bottom
-    var shouldBeSticky = secTop <= 0 && secBottom > barHeight;
+    // Stick only after the tab bar reaches the top in its natural flow.
+    // This prevents pinning while the tabbing section is still entering.
+    var shouldBeSticky =
+      window.scrollY >= barTop - 8 &&
+      window.scrollY < sectionBottom - barHeight;
 
     if (shouldBeSticky) {
       if (stickyBar.style.position !== "fixed") {
@@ -789,7 +794,20 @@ tabs.forEach((tab) => {
 
     // Show corresponding content
     const target = tab.getAttribute("data-tab");
-    document.getElementById(target).classList.add("active");
+    const targetContent = document.getElementById(target);
+    targetContent.classList.add("active");
+
+    requestAnimationFrame(() => {
+      const stickyBar = document.querySelector(".tabs-sticky-bar");
+      const stickyOffset = stickyBar ? stickyBar.offsetHeight : 0;
+      const contentTop =
+        targetContent.getBoundingClientRect().top + window.scrollY;
+
+      window.scrollTo({
+        top: Math.max(0, contentTop - stickyOffset),
+        behavior: "auto",
+      });
+    });
   });
 });
 
