@@ -62,6 +62,7 @@
   }
 
   function buildScrollAnimations() {
+    hero.classList.add("animation-done");
     gsap
       .timeline({
         scrollTrigger: {

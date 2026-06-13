@@ -186,7 +186,7 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .main-title .panel-body {
   max-width: 780px;
 }
 
-.bbt-yp-hero .yellow-circle {
+.bbt-yp-hero .yellow-circle-1 {
   position: absolute;
   bottom: -57%;
   right: -5%;
@@ -195,11 +195,6 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .main-title .panel-body {
   height: var(--about-yellow-size);
   border-radius: 50%;
   background-color: #f7df00;
-  transform-origin: bottom center;
-  transform: none;
-  animation: none !important;
-  transition: none !important;
-  will-change: auto;
   z-index: 0;
 }
 

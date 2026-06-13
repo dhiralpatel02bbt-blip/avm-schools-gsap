@@ -1413,6 +1413,7 @@ section.bbt-FA-img-sec {
   height: 100vh;
   position: sticky;
   top: 0;
+  z-index: 3;
 }
 
 .bbt-FA-img-sec .img-box {
@@ -1945,9 +1946,9 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
 
 /* blog section css start */
 .news-section {
-  padding: 120px 0px 174px;
+  padding: 200px 0px 174px;
   position: relative;
-  z-index: 3;
+  z-index: 1;
   background: #ffffff;
   margin-top: -80px;
   /* border-radius: 40px 40px 0 0; */

@@ -612,7 +612,7 @@ gsap.from(".award .leaf", {
 
 // ============================================================
 // HORIZONTAL SECTION
-// Phase 1 (scrub 1250px) : title slides in + yellow circle fills
+// Phase 1 (scrub)       : yellow circle fills, then title slides in
 // Phase 2 (wheel-snap)  : panels slide R→L / L→R one per tick
 //   • html overflow:hidden freezes the page (no spacer tricks)
 //   • After last panel → overflow restored, page scrolls freely
@@ -691,18 +691,18 @@ gsap.from(".award .leaf", {
 
   // ── Master scrub timeline ───────────────────────────────────
   // Structure (all durations in timeline "units"):
-  //   0 → 0.5  : title slides in + circle grows from bottom-right
-  //   0.5 → 1.3: circle expands until it fills the section
-  //   1.3 → 2.3: Panel 0 slides in from right
-  //   2.3 → 3.3: Panel 0 → Panel 1 (0 exits left, 1 enters right)
-  //   3.3 → 4.3: Panel 1 → Panel 2 (1 exits left, 2 enters right)
+  //   circle phase : yellow circle grows from bottom-right
+  //   title phase  : heading slides in after the circle finishes
+  //   panels       : Panel 0 slides in, then panel-to-panel transitions
   //   ... etc
   // Total duration units = circle phase + n panel steps
 
   var masterTL = gsap.timeline({ paused: true });
   // -YP start
-  var circleFillDuration = 65.0;
-  var panelStart = circleFillDuration + 0.25;
+  var circleFillDuration = 58.0;
+  var titleRevealDuration = 11.5;
+  var introTimelineDuration = circleFillDuration + titleRevealDuration;
+  var panelStart = introTimelineDuration + 0.35;
   // -YP end
   var panelEnterDuration = 2.8;
   var panelHold = 0.7;
@@ -712,27 +712,27 @@ gsap.from(".award .leaf", {
   var panelStepDuration = wheelSlideDuration / 1000; // match featured-news-sec wheel timing
   // -YP end
 
-  // Phase 1 segment
-  masterTL.to(
-    ".horizontal-section .yellow h2",
-    {
-      x: 0,
-      autoAlpha: 1,
-      ease: "sine.inOut",
-      duration: 2.9,
-    },
-    0,
-  );
+  // Phase 1 segment: circle first, title only after the fill completes.
   masterTL.to(
     ".lavender-circle",
     {
       scale: 2,
-      ease: "sine.inOut",
+      ease: "power2.inOut",
       // -YP start
       duration: circleFillDuration,
       // -YP end
     },
     0,
+  );
+  masterTL.to(
+    ".horizontal-section .yellow h2",
+    {
+      x: 0,
+      autoAlpha: 1,
+      ease: "power3.out",
+      duration: titleRevealDuration,
+    },
+    circleFillDuration,
   );
 
   // Panel 0 enters from right
@@ -953,12 +953,16 @@ gsap.from(".award .leaf", {
         currentStep = -1;
         unlockWheelTransition();
         setLastSlideBackground(-1);
-        gsap.killTweensOf(masterTL);
-        masterTL.time(circleFillDuration * introProgress);
+        gsap.to(masterTL, {
+          time: introTimelineDuration * introProgress,
+          duration: 0.22,
+          ease: "power3.out",
+          overwrite: true,
+        });
         gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
-      } else if (currentStep < 0 && masterTL.time() < circleFillDuration) {
+      } else if (currentStep < 0 && masterTL.time() < introTimelineDuration) {
         gsap.killTweensOf(masterTL);
-        masterTL.time(circleFillDuration);
+        masterTL.time(introTimelineDuration);
       }
     },
     onEnter: function () {
@@ -1792,6 +1796,9 @@ if (tl) {
   let imgSecWidth = 0;
   let imgSecHeight = 0;
   let isPinned = false;
+  let unpinTimer = null;
+  let isScrollHeld = false;
+  let heldScrollY = 0;
 
   // Placeholder taaki layout shift na ho jab imgSec fixed ho
   const placeholder = document.createElement("div");
@@ -1818,6 +1825,8 @@ if (tl) {
   }
 
   function pin() {
+    cancelDelayedUnpin();
+    releaseHeldScroll();
     if (isPinned) return;
     isPinned = true;
     measure();
@@ -1833,10 +1842,58 @@ if (tl) {
   }
 
   function unpin() {
+    cancelDelayedUnpin();
+    releaseHeldScroll();
     if (!isPinned) return;
     isPinned = false;
     placeholder.style.display = "none";
     gsap.set(imgSec, { clearProps: "position,top,left,width,height,zIndex" });
+  }
+
+  function cancelDelayedUnpin() {
+    if (!unpinTimer) return;
+    window.clearTimeout(unpinTimer);
+    unpinTimer = null;
+  }
+
+  function preventHeldScroll(event) {
+    if (!isScrollHeld) return;
+    event.preventDefault();
+  }
+
+  function keepHeldScroll() {
+    if (!isScrollHeld) return;
+    if (Math.abs(window.scrollY - heldScrollY) > 1) {
+      window.scrollTo(0, heldScrollY);
+    }
+  }
+
+  function holdScroll() {
+    if (isScrollHeld) return;
+    isScrollHeld = true;
+    heldScrollY = window.scrollY;
+    window.addEventListener("wheel", preventHeldScroll, { passive: false });
+    window.addEventListener("touchmove", preventHeldScroll, { passive: false });
+    window.addEventListener("scroll", keepHeldScroll, { passive: true });
+  }
+
+  function releaseHeldScroll() {
+    if (!isScrollHeld) return;
+    isScrollHeld = false;
+    window.removeEventListener("wheel", preventHeldScroll);
+    window.removeEventListener("touchmove", preventHeldScroll);
+    window.removeEventListener("scroll", keepHeldScroll);
+  }
+
+  function delayedUnpin() {
+    cancelDelayedUnpin();
+    if (!isPinned) return;
+    holdScroll();
+    unpinTimer = window.setTimeout(function () {
+      unpinTimer = null;
+      releaseHeldScroll();
+      unpin();
+    }, 2000);
   }
 
   // circle-sec khud z-index 2 pe hai (CSS mein set) — image ke upar rehta hai
@@ -1848,7 +1905,7 @@ if (tl) {
     end: "bottom top", // jab circle section poori tarah upar jaye
     onEnter: pin,
     onEnterBack: pin,
-    onLeave: unpin, // circle section gaya — image ko normal karo
+    onLeave: delayedUnpin, // circle section gaya — 2s hold, then normal karo
     onLeaveBack: unpin,
     invalidateOnRefresh: true,
   });
@@ -2103,35 +2160,35 @@ document.addEventListener("DOMContentLoaded", function () {
   function playImgSecAnimation() {
     if (hasPlayed) return;
     hasPlayed = true;
-      // Purple circle — right se slide in + fade in
-      if (purpleCircle) {
-        gsap.to(purpleCircle, {
-          x: 0,
-          opacity: 1,
-          duration: 1.1,
-          ease: "power3.out",
-        });
-      }
-      // img-text heading — left se slide in + fade in
-      if (imgText) {
-        gsap.to(imgText, {
-          x: 0,
-          opacity: 1,
-          duration: 1.0,
-          delay: 0.15,
-          ease: "power3.out",
-        });
-      }
-      // main-title paragraph — left se thoda baad mein
-      if (mainTitle) {
-        gsap.to(mainTitle, {
-          x: 0,
-          opacity: 1,
-          duration: 1.0,
-          delay: 0.3,
-          ease: "power3.out",
-        });
-      }
+    // Purple circle — right se slide in + fade in
+    if (purpleCircle) {
+      gsap.to(purpleCircle, {
+        x: 0,
+        opacity: 1,
+        duration: 1.1,
+        ease: "power3.out",
+      });
+    }
+    // img-text heading — left se slide in + fade in
+    if (imgText) {
+      gsap.to(imgText, {
+        x: 0,
+        opacity: 1,
+        duration: 1.0,
+        delay: 0.15,
+        ease: "power3.out",
+      });
+    }
+    // main-title paragraph — left se thoda baad mein
+    if (mainTitle) {
+      gsap.to(mainTitle, {
+        x: 0,
+        opacity: 1,
+        duration: 1.0,
+        delay: 0.3,
+        ease: "power3.out",
+      });
+    }
   }
 
   const circleSec = document.querySelector(".bbt-FA-circle-sec");

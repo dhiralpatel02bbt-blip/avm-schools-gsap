@@ -372,6 +372,12 @@
     }
 }
 
+.admission-hero.animation-done::before {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .admission-hero::before {
         animation: none;
