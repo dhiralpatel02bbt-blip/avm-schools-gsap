@@ -236,7 +236,7 @@ body.our-school-page {
 }
 
 .campus-section .panel-title {
-  position: relative;
+  /* position: relative; */
   z-index: 1;
   color: #fff;
   font-family: Satoshi;
@@ -245,7 +245,7 @@ body.our-school-page {
   line-height: 112%;
 }
 
-.campus-section .panel-title::before {
+/* .campus-section .panel-title::before {
   content: "";
   position: absolute;
   top: -55px;
@@ -256,7 +256,7 @@ body.our-school-page {
   pointer-events: none;
   z-index: -1;
   border-radius: 50%;
-}
+} */
 
 .campus-section .panel-body {
   color: #fff;
