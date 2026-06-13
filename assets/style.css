@@ -506,7 +506,7 @@
   left: 0;
   width: 100%;
   /* padding: 118px 0 40px; */
-  padding: 118px 0 100px;
+  padding: 118px 0 150px;
   z-index: 1;
   overflow: hidden;
 }
@@ -829,7 +829,7 @@
 
 /* video section CSS start  */
 .video-section {
-  height: 100vh;
+  height: 85vh;
   position: relative;
   overflow-x: clip;
 }
@@ -837,7 +837,7 @@
 .video-wrapper {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 85vh;
   width: 100%;
   left: 0;
   transform: none;
@@ -1147,7 +1147,7 @@
   position: absolute;
   left: 20px;
   right: 20px;
-  bottom: 32px;
+  bottom: 50px;
   z-index: 3;
   margin-top: 0;
 }

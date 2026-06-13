@@ -222,7 +222,7 @@
             ease: "power3.out",
             force3D: true,
           },
-          0
+          0,
         );
       }
       if (heroGlowCircle) {
@@ -234,28 +234,28 @@
             duration: 0.65,
             ease: "back.out(1.6)",
           },
-          0.6
+          0.6,
         );
       }
       if (panelTitle) {
         tabLoadTL.to(
           panelTitle,
           { opacity: 1, x: 0, duration: 0.85, ease: "power3.out" },
-          0.85
+          0.85,
         );
       }
       if (panelBody) {
         tabLoadTL.to(
           panelBody,
           { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-          1.45
+          1.45,
         );
       }
       if (panelKicker) {
         tabLoadTL.to(
           panelKicker,
           { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
-          1.55
+          1.55,
         );
       }
 
@@ -277,7 +277,7 @@
             duration: 0.32,
             force3D: true,
           },
-          0
+          0,
         );
       }
 
@@ -288,21 +288,21 @@
           panelKicker,
           { opacity: 1, x: 0 },
           { opacity: 0, x: -30, duration: 0.16 },
-          0.02
+          0.02,
         );
       if (panelTitle)
         tabScrollTL.fromTo(
           panelTitle,
           { opacity: 1, x: 0 },
           { opacity: 0, x: -40, duration: 0.18 },
-          0.05
+          0.05,
         );
       if (panelBody)
         tabScrollTL.fromTo(
           panelBody,
           { opacity: 1, x: 0 },
           { opacity: 0, x: -30, duration: 0.16 },
-          0.08
+          0.08,
         );
 
       tabScrollTL
@@ -310,14 +310,14 @@
         .to(
           diagramTab,
           { opacity: 1, duration: 0.08, ease: "power2.out" },
-          0.38
+          0.38,
         );
 
       if (tabTitle) {
         tabScrollTL.to(
           tabTitle,
           { autoAlpha: 1, y: 0, duration: 0.12, ease: "power3.out" },
-          0.42
+          0.42,
         );
       }
 
@@ -337,7 +337,7 @@
               duration: cardSlice * 0.28,
               ease: "power2.in",
             },
-            start
+            start,
           );
         }
 
@@ -350,7 +350,7 @@
             duration: cardSlice * 0.55,
             ease: "back.out(1.45)",
           },
-          start + cardSlice * 0.12
+          start + cardSlice * 0.12,
         );
       });
 
@@ -435,7 +435,7 @@
           ease: "power3.out",
           force3D: true,
         },
-        0
+        0,
       );
     }
 
@@ -449,7 +449,7 @@
           duration: 0.65,
           ease: "back.out(1.6)",
         },
-        0.6
+        0.6,
       );
     }
 
@@ -463,7 +463,7 @@
           duration: 0.85,
           ease: "power3.out",
         },
-        0.85
+        0.85,
       );
     }
 
@@ -477,7 +477,7 @@
           duration: 0.8,
           ease: "power3.out",
         },
-        1.45
+        1.45,
       );
     }
 
@@ -491,7 +491,7 @@
           duration: 0.45,
           ease: "power2.out",
         },
-        1.55
+        1.55,
       );
     }
 
@@ -522,7 +522,7 @@
           duration: 0.05,
           force3D: true,
         },
-        0
+        0,
       );
     }
 
@@ -533,33 +533,33 @@
         panelKicker,
         { opacity: 1, x: 0 },
         { opacity: 0, x: -30, duration: 0.03 },
-        0.01
+        0.01,
       );
     if (panelTitle)
       scrollTL.fromTo(
         panelTitle,
         { opacity: 1, x: 0 },
         { opacity: 0, x: -40, duration: 0.03 },
-        0.02
+        0.02,
       );
     if (panelBody)
       scrollTL.fromTo(
         panelBody,
         { opacity: 1, x: 0 },
         { opacity: 0, x: -30, duration: 0.03 },
-        0.02
+        0.02,
       );
 
     // Diagram reveal
     scrollTL.set(
       diagramSec,
       { visibility: "visible", pointerEvents: "auto" },
-      0.05
+      0.05,
     );
     scrollTL.to(
       diagramSec,
       { opacity: 1, duration: 0.05, ease: "power2.out" },
-      0.05
+      0.05,
     );
     // -YP start
     // 1. Center and Orbit grow FIRST (slowly on scroll)
@@ -567,14 +567,14 @@
       scrollTL.to(
         diagramCenter,
         { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.05
+        0.05,
       );
     }
     if (diagramOrbit) {
       scrollTL.to(
         diagramOrbit,
         { opacity: 0.95, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.1
+        0.1,
       );
     }
 
@@ -594,7 +594,7 @@
         scrollTL.to(
           t,
           { opacity: 0.35, duration: 0.05, ease: "power2.out" },
-          0.4
+          0.4,
         );
     });
 
@@ -621,20 +621,20 @@
             duration: slice * 0.28,
             ease: "power2.in",
           },
-          s
+          s,
         );
         // -YP end
         if (labelTitles[i - 1])
           scrollTL.to(
             labelTitles[i - 1],
             { opacity: 0.35, duration: slice * 0.2 },
-            s
+            s,
           );
         if (labelBodies[i - 1])
           scrollTL.to(
             labelBodies[i - 1],
             { opacity: 0, y: 12, duration: slice * 0.22 },
-            s
+            s,
           );
       }
       if (nodes[i]) {
@@ -648,28 +648,28 @@
             duration: slice * 0.38,
             ease: "back.out(1.7)",
           },
-          mid
+          mid,
         );
       }
       if (labelTitles[i]) {
         scrollTL.to(
           labelTitles[i],
           { opacity: 1, duration: slice * 0.28, ease: "power3.out" },
-          mid
+          mid,
         );
       }
       if (labelBodies[i]) {
         scrollTL.to(
           labelBodies[i],
           { opacity: 1, y: 0, duration: slice * 0.38, ease: "power3.out" },
-          mid
+          mid,
         );
       }
       if (nodes[i]) {
         scrollTL.to(
           nodes[i],
           { boxShadow: "none", duration: slice * 0.3, ease: "power2.in" },
-          end - slice * 0.2
+          end - slice * 0.2,
         );
       }
     }
@@ -891,7 +891,7 @@ tabs.forEach((tab) => {
         scale: 1,
         duration: 0.9,
         ease: "power2.out",
-      }
+      },
     );
 
     arms.forEach(({ line, satellite, lineState }) => {
@@ -910,7 +910,7 @@ tabs.forEach((tab) => {
             duration: 0.35,
             ease: "power2.out",
           },
-          ">-0.12"
+          ">-0.12",
         );
     });
 
@@ -978,7 +978,7 @@ tabs.forEach((tab) => {
     const wrapperRect = wrapper.getBoundingClientRect();
     const scale = Math.min(
       svgRect.width / viewBox.width,
-      svgRect.height / viewBox.height
+      svgRect.height / viewBox.height,
     );
     const renderedWidth = viewBox.width * scale;
     const renderedHeight = viewBox.height * scale;
@@ -1098,7 +1098,7 @@ tabs.forEach((tab) => {
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.15 },
   );
 
   function observeBlocks() {
@@ -1128,7 +1128,7 @@ tabs.forEach((tab) => {
         }
       });
     },
-    { threshold: 0.2 }
+    { threshold: 0.2 },
   );
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -1240,7 +1240,7 @@ tabs.forEach((tab) => {
       function () {
         setTimeout(init, 300);
       },
-      { once: true }
+      { once: true },
     );
   }
 })();
@@ -1440,12 +1440,14 @@ tabs.forEach((tab) => {
           }
         });
       },
-      { threshold: 0.99 } // only lock when section is almost fully in view
+      { threshold: 0.99 }, // only lock when section is almost fully in view
     );
     section._observer.observe(section);
 
     window.removeEventListener("scroll", checkExtraSectionEntry);
-    window.addEventListener("scroll", checkExtraSectionEntry, { passive: true });
+    window.addEventListener("scroll", checkExtraSectionEntry, {
+      passive: true,
+    });
   }
 
   function checkExtraSectionEntry() {
@@ -1457,8 +1459,7 @@ tabs.forEach((tab) => {
     var scrollY = window.scrollY;
     var direction = scrollY < lastScrollY ? "up" : "down";
     var rect = section.getBoundingClientRect();
-    var fillsViewport =
-      rect.top <= 2 && rect.bottom >= window.innerHeight - 2;
+    var fillsViewport = rect.top <= 2 && rect.bottom >= window.innerHeight - 2;
 
     if (fillsViewport) {
       lockSection(direction);

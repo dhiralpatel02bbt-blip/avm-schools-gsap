@@ -8,10 +8,6 @@
 
 /* hero section css Start */
 .admission-hero {
-    background: url(../images/admissions-hero.jpg);
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: contain;
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
@@ -20,9 +16,23 @@
     background-color: #cec9c5;
 }
 
+.admission-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: url(../images/admissions-hero.jpg) right center / contain no-repeat;
+    opacity: 0;
+    transform: translateX(48px);
+    animation: admissionHeroImageEaseIn 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+    will-change: opacity, transform;
+}
+
 .admission-hero .main-hero-items,
 .admission-hero .main-hero-items>.d-flex {
     height: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 .admission-hero .main-title {
@@ -271,13 +281,16 @@
 @media(max-width: 991px) {
     .admission-hero {
         height: 100svh;
-        background-position: center top;
-        background-size: cover;
         background-color: transparent;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         overflow: hidden;
+    }
+
+    .admission-hero::before {
+        background-position: center top;
+        background-size: cover;
     }
 
     .admission-hero .main-hero-items,
@@ -339,14 +352,31 @@
 
 @media(max-width: 576px) {
     .admission-hero {
-        background: url(../images/lab-student.png);
-        background-repeat: no-repeat;
         margin-top: -23px;
+    }
+
+    .admission-hero::before {
+        background-image: url(../images/lab-student.png);
     }
 
     .admission-hero .blue-half-circle {
         --mobile-circle: max(150vw, 420px);
         top: 67%;
+    }
+}
+
+@keyframes admissionHeroImageEaseIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admission-hero::before {
+        animation: none;
+        opacity: 1;
+        transform: none;
     }
 }
 
