@@ -26,15 +26,6 @@
   font-style: normal;
 }
 
-.contact-sec {
-  border-bottom: 1px solid #ffffff;
-  margin-bottom: 50px;
-}
-
-/* .bbt-FA-main-footer .footer-container .divi {
-  margin-bottom: 116px;
-} */
-
 * {
   margin: 0;
   padding: 0;
@@ -309,7 +300,7 @@ header .main-btn {
 }
 
 header .main-btn::before {
-  content: "";
+  /* content: "";
   position: absolute;
   top: -50%;
   left: -50%;
@@ -317,18 +308,18 @@ header .main-btn::before {
   height: 200%;
   background: linear-gradient(0deg, transparent, transparent 30%, #ffd40045);
   transform: rotate(-45deg);
-  transition: all 0.5s ease;
+  transition: all 0.5s ease; */
 }
 
 header .main-btn:hover {
-  background-color: transparent;
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #ffd40054;
+  /* background-color: transparent; */
+  /* transform: scale(1.05); */
+  /* box-shadow: 0 0 20px #ffd40054; */
 }
 
 header .main-btn:hover::before {
-  opacity: 1;
-  transform: rotate(-45deg) translateY(100%);
+  /* opacity: 1;
+  transform: rotate(-45deg) translateY(100%); */
 }
 
 .offcanvas-menu {
@@ -660,13 +651,15 @@ body {
 
 .contact-sec {
   background: #0a3d9c;
-  padding: 98px 0 91.46px;
+  padding: 98px 0 80px;
   overflow: hidden;
   position: relative;
   z-index: 10;
   margin-top: -60px;
   transform: translateY(60px);
   will-change: transform;
+  border-bottom: 1px solid #ffffff;
+  margin-bottom: 50px;
 }
 
 .contact-sec .row {
@@ -1103,6 +1096,10 @@ body.reveal-animations-ready .contact-sec .image-container {
   position: relative;
 }
 
+.about-us-page .bbt-FA-main-footer {
+  margin-top: 100px;
+}
+
 .bbt-FA-main-footer .container.footer-container {
   padding: 130px 0px;
 }
@@ -1293,7 +1290,8 @@ body.reveal-animations-ready .contact-sec .image-container {
   display: flex;
   align-items: center;
   margin-top: 34px;
-  padding: 28px 0 85px;
+  /* padding: 28px 0 85px; */
+  padding: 28px 0 28px;
   column-gap: 48px;
 }
 
@@ -1792,9 +1790,21 @@ body.reveal-animations-ready .contact-sec .image-container {
   }
 }
 
-.contact-sec {
-  border-bottom: 1px solid #fff;
-  margin-bottom: 50px;
+/* Footer section css End */
+
+/* Sticky/Fixed Footer css Start */
+.index-page .overlap-footer {
+  position: relative;
+  z-index: 20;
+  background: #0a3d9c;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
-/* Footer section css End */
+.index-page .overlap-footer .contact-sec {
+  /* margin-top: 0; */
+  margin-top: -60px;
+  transform: none;
+}
+
+/* Sticky/Fixed Footer css End */

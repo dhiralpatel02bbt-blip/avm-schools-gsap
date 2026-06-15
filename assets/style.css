@@ -1695,6 +1695,20 @@ section.bbt-FA-img-sec {
   backface-visibility: hidden;
 }
 
+/* .index-page .overlap-footer {
+  position: relative;
+  z-index: 20;
+  background: #0a3d9c;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.index-page .overlap-footer .contact-sec {
+  /* margin-top: 0; */
+/* margin-top: -60px;
+transform: none;
+} */
+
 .recognition-sec .section-title {
   color: #0a3d9c;
   font-size: 2.7em;

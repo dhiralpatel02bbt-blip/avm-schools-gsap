@@ -759,7 +759,7 @@
         <!-- footer start -->
         <footer class="bbt-FA-main-footer desk-footer">
           <div class="container-xxl footer-container">
-            <div class="divi"></div>
+            <!-- <div class="divi"></div> -->
             <div class="footer-top">
               <div class="ft-col-logo">
                 <div class="footer-logo">
@@ -988,6 +988,66 @@
           }
         });
       });
+
+      (function initRecognitionCurtainCover() {
+        var recognitionSection = document.querySelector(
+          ".index-page .recognition-sec",
+        );
+        var overlapFooter = document.querySelector(
+          ".index-page .overlap-footer",
+        );
+        var curtainTrigger = null;
+
+        if (
+          !recognitionSection ||
+          !overlapFooter ||
+          typeof gsap === "undefined" ||
+          typeof ScrollTrigger === "undefined"
+        ) {
+          return;
+        }
+
+        gsap.set(recognitionSection, { zIndex: 6 });
+        gsap.set(overlapFooter, {
+          position: "relative",
+          zIndex: 20,
+          force3D: true,
+        });
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          return;
+        }
+
+        function createCurtainTrigger() {
+          if (curtainTrigger) {
+            curtainTrigger.kill();
+          }
+
+          curtainTrigger = ScrollTrigger.create({
+            trigger: recognitionSection,
+            start: "top top",
+            end: function () {
+              return (
+                "+=" +
+                Math.max(window.innerHeight, recognitionSection.offsetHeight)
+              );
+            },
+            pin: recognitionSection,
+            pinSpacing: false,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            refreshPriority: -10,
+          });
+
+          ScrollTrigger.refresh();
+        }
+
+        if (document.readyState === "complete") {
+          createCurtainTrigger();
+        } else {
+          window.addEventListener("load", createCurtainTrigger, { once: true });
+        }
+      })();
     </script>
 
     <script src="assets/script.js"></script>

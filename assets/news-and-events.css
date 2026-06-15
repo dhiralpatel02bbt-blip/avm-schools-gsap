@@ -689,6 +689,16 @@
     }
 }
 
+@media(max-width: 1366px) {
+    .bbt-fa-news-sec .news-grid {
+        gap: 95px 75px;
+    }
+
+    .news-top-bar {
+        margin-bottom: 70px;
+    }
+}
+
 @media (max-width: 1200px) {
     .bbt-fa-news-sec .news-top-bar .search-icon svg {
         width: 16px;
