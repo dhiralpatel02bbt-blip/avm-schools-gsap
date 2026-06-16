@@ -8,7 +8,6 @@ body.about-us-page header .main-menu ul li a {
 
 body.about-us-page.about-hero-loading {
   height: 100svh;
-  overflow: hidden;
 }
 
 body.about-us-page.about-hero-loading .bbt-yp-hero {
@@ -55,9 +54,6 @@ body.about-us-page header .black-logo {
   pointer-events: none;
 }
 
-body.about-us-page.about-hero-loading .bbt-yp-hero::before {
-  animation: aboutHeroBgIn 1.65s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
-}
 
 .desktop-student-img {
   display: block;
@@ -159,21 +155,6 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .main-title .panel-body {
   }
 }
 
-@keyframes aboutHeroBgIn {
-  from {
-    opacity: 0;
-    transform: translate3d(74px, 0, 0) scale(1.035);
-  }
-
-  62% {
-    opacity: 0.92;
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
 
 .bbt-yp-hero .blue-circle-ele {
   display: flex;
@@ -188,7 +169,7 @@ body.about-us-page.about-hero-loading .bbt-yp-hero .main-title .panel-body {
 
 .bbt-yp-hero .yellow-circle-1 {
   position: absolute;
-  bottom: -57%;
+  bottom: -70%;
   right: -5%;
   --about-yellow-size: 941px;
   width: var(--about-yellow-size);
@@ -611,7 +592,7 @@ section.awareness-about-sec {
   color: #fff;
   text-align: center;
   font-family: "Satoshi";
-  font-size: 2.7em;
+  font-size: 2.3em;
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
@@ -728,7 +709,7 @@ section.awareness-about-sec {
 .core-value-sec .main-heading .white-circle h2 {
   color: #0a3d9c;
   font-family: Satoshi;
-  font-size: 2.4em;
+  font-size: 2.3em;
   font-style: normal;
   font-weight: 700;
   line-height: 125%;
@@ -1434,3 +1415,24 @@ section.awareness-about-sec {
 }
 
 /* Governance section css end  */
+
+/* Footer Reveal CSS */
+.about-us-page .main-content-wrapper {
+    position: relative;
+    z-index: 1;
+    background-color: #0a3d9c; /* Important to hide the fixed footer behind it */
+}
+
+.about-us-page .footer-reveal-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+}
+
+.about-us-page .footer-reveal-wrapper .contact-sec {
+    margin-top: 0;
+    transform: none;
+    z-index: auto;
+}

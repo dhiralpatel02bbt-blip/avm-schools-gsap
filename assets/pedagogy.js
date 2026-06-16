@@ -28,24 +28,24 @@
   var isStaticHeroDiagram = window.matchMedia("(max-width: 991.98px)").matches;
 
   var nodes = [
-    ".node1",
     ".node2",
     ".node3",
     ".node4",
     ".node5",
     ".node7",
     ".node6",
+    ".node1",
   ].map(function (s) {
     return diagramSec.querySelector(s);
   });
   var labels = [
-    ".label.top",
     ".label.right-top",
     ".label.right-mid",
     ".label.bottom",
     ".label.left-bottom",
     ".label.left-lower",
     ".label.left-mid",
+    ".label.top",
   ].map(function (s) {
     return diagramSec.querySelector(s);
   });
@@ -68,6 +68,8 @@
       gsap.set(halfCircle, {
         x: 0,
         scale: 1,
+        opacity: 1,
+        visibility: "visible",
         clearProps: "transform",
       });
     }
@@ -159,7 +161,7 @@
     // Circle: fully off-screen left
     if (halfCircle) {
       gsap.set(halfCircle, {
-        x: -circleW,
+        x: -(circleW * 0.5) - 300,
         scale: 1,
         transformOrigin: "center center",
         force3D: true,
@@ -168,11 +170,11 @@
 
     // Text elements: invisible + shifted left
     if (panelKicker)
-      gsap.set(panelKicker, { opacity: 0, x: -70, visibility: "visible" });
+      gsap.set(panelKicker, { opacity: 0, x: -60, visibility: "visible" });
     if (panelTitle)
-      gsap.set(panelTitle, { opacity: 0, x: -90, visibility: "visible" });
+      gsap.set(panelTitle, { opacity: 0, x: -60, visibility: "visible" });
     if (panelBody)
-      gsap.set(panelBody, { opacity: 0, x: -90, visibility: "visible" });
+      gsap.set(panelBody, { opacity: 0, x: -60, visibility: "visible" });
     if (heroGlowCircle)
       gsap.set(heroGlowCircle, {
         opacity: 0,
@@ -234,28 +236,28 @@
             duration: 0.65,
             ease: "back.out(1.6)",
           },
-          0.6,
+          0.3,
         );
       }
       if (panelTitle) {
         tabLoadTL.to(
           panelTitle,
           { opacity: 1, x: 0, duration: 0.85, ease: "power3.out" },
-          0.85,
+          0.5,
         );
       }
       if (panelBody) {
         tabLoadTL.to(
           panelBody,
           { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-          1.45,
+          0.7,
         );
       }
       if (panelKicker) {
         tabLoadTL.to(
           panelKicker,
           { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
-          1.55,
+          0.9,
         );
       }
 
@@ -449,7 +451,7 @@
           duration: 0.65,
           ease: "back.out(1.6)",
         },
-        0.6,
+        0.3,
       );
     }
 
@@ -463,7 +465,7 @@
           duration: 0.85,
           ease: "power3.out",
         },
-        0.85,
+        0.5,
       );
     }
 
@@ -477,7 +479,7 @@
           duration: 0.8,
           ease: "power3.out",
         },
-        1.45,
+        0.7,
       );
     }
 
@@ -491,7 +493,7 @@
           duration: 0.45,
           ease: "power2.out",
         },
-        1.55,
+        0.9,
       );
     }
 
@@ -1264,239 +1266,78 @@ tabs.forEach((tab) => {
 })();
 
 (function initExtraScrollSlider() {
-  if (!document.querySelector("body.pedagogy-page")) return;
-  if (typeof gsap === "undefined") return;
+  function build() {
+    if (!document.querySelector("body.pedagogy-page")) return;
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
 
-  var section = document.querySelector(".extra-section");
-  if (!section) return;
+    var extraSec = document.querySelector(".extra-section");
+    var extraTrack = document.querySelector(".extra-track");
+    if (!extraSec || !extraTrack) return;
 
-  var slides = Array.from(section.querySelectorAll(".swiper-slide"));
-  if (!slides.length) return;
+    var slides = Array.from(extraTrack.querySelectorAll(".extra-slide"));
+    if (!slides.length) return;
 
-  var total = slides.length;
-  var wrapper = section.querySelector(".swiper-wrapper");
+    var mm = gsap.matchMedia();
+
+    mm.add("(min-width: 992px)", function () {
+      function getScrollAmount() {
+        var lastSlide = slides[slides.length - 1];
+        var firstSlide = slides[0];
+        return -(lastSlide.offsetLeft - firstSlide.offsetLeft);
+      }
+
+      gsap.to(extraTrack, {
+        x: getScrollAmount,
+        ease: "none",
+        scrollTrigger: {
+          trigger: extraSec,
+          start: "top top",
+          end: () => "+=" + (Math.abs(getScrollAmount()) * 0.35),
+          pin: true,
+          scrub: true,
+          snap: {
+            snapTo: 1 / (slides.length - 1),
+            duration: { min: 0.2, max: 0.6 },
+            delay: 0,
+            ease: "power2.inOut"
+          },
+          invalidateOnRefresh: true,
+        }
+      });
+
+      return function () {
+        gsap.set(extraTrack, { clearProps: "x" });
+      };
+    });
+  }
+
+  if (document.readyState === "complete") {
+    setTimeout(build, 300);
+  } else {
+    window.addEventListener("load", function () {
+      setTimeout(build, 300);
+    });
+  }
+})();
+
+// Footer Reveal Effect Setup
+(function initFooterReveal() {
+  var wrapper = document.querySelector(".pedagogy-page .main-content-wrapper");
   if (!wrapper) return;
 
-  function isMobile() {
-    return window.matchMedia("(max-width: 991.98px)").matches;
-  }
+  var revealWrapper = document.querySelector(".pedagogy-page .footer-reveal-wrapper");
 
-  var current = 0;
-  var isAnimating = false;
-  var isLocked = false;
-  var entryScrollY = 0;
-  var suppressLock = false;
-  var lastScrollY = window.scrollY;
-  var wheelHandler = null;
-
-  function getSlideWidth() {
-    // Measure the actual rendered slide width
-    return slides[0].getBoundingClientRect().width;
-  }
-
-  function goTo(index, onComplete) {
-    isAnimating = true;
-    current = index;
-    var slideW = getSlideWidth();
-    gsap.to(wrapper, {
-      x: -(index * slideW),
-      duration: 0.7,
-      ease: "power2.inOut",
-      onComplete: function () {
-        isAnimating = false;
-        if (onComplete) onComplete();
-      },
-    });
-  }
-
-  function snapTo(index) {
-    current = index;
-    gsap.set(wrapper, { x: -(index * getSlideWidth()) });
-  }
-
-  function lockSection(direction) {
-    if (isLocked || suppressLock) return;
-    isLocked = true;
-    entryScrollY = window.scrollY;
-
-    if (direction === "up") {
-      snapTo(total - 1);
-    } else {
-      snapTo(0);
-    }
-
-    section.style.position = "fixed";
-    section.style.top = "0";
-    section.style.left = "0";
-    section.style.width = "100%";
-    section.style.zIndex = "300";
-
-    // Spacer: holds the section's place in doc flow
-    if (!section._spacer) {
-      var sp = document.createElement("div");
-      sp.style.width = "100%";
-      sp.style.height = section.offsetHeight + "px";
-      sp.style.display = "block";
-      section.parentNode.insertBefore(sp, section);
-      section._spacer = sp;
-    }
-
-    // Freeze scroll at entry point
-    window.scrollTo(0, entryScrollY);
-  }
-
-  function releaseSuppressLockWhenAway() {
-    if (!suppressLock) return;
-
-    var rect = section.getBoundingClientRect();
-    if (rect.bottom <= 2 || rect.top >= window.innerHeight - 2) {
-      suppressLock = false;
-      window.removeEventListener("scroll", releaseSuppressLockWhenAway);
+  function updateFooterMargin() {
+    if (revealWrapper) {
+      wrapper.style.marginBottom = revealWrapper.offsetHeight + "px";
     }
   }
 
-  function getPreviousSectionTarget() {
-    var tabbingSec = document.querySelector(".tabbing-sec");
-    if (!tabbingSec) {
-      return Math.max(0, entryScrollY - window.innerHeight);
-    }
-
-    var tabbingBottom =
-      tabbingSec.getBoundingClientRect().bottom + window.scrollY;
-    return Math.max(0, tabbingBottom - window.innerHeight + 1);
-  }
-
-  function unlockSection(scrollDown) {
-    if (!isLocked) return;
-    isLocked = false;
-    suppressLock = true;
-
-    var sectionHeight = section.offsetHeight;
-    var targetY = scrollDown
-      ? entryScrollY + sectionHeight + 1
-      : getPreviousSectionTarget();
-
-    section.style.position = "";
-    section.style.top = "";
-    section.style.left = "";
-    section.style.width = "";
-    section.style.zIndex = "";
-
-    if (section._spacer) {
-      section._spacer.parentNode.removeChild(section._spacer);
-      section._spacer = null;
-    }
-
-    window.addEventListener("scroll", releaseSuppressLockWhenAway, {
-      passive: true,
-    });
-    window.scrollTo({
-      top: targetY,
-      behavior: scrollDown ? "auto" : "smooth",
-    });
-    setTimeout(releaseSuppressLockWhenAway, scrollDown ? 80 : 700);
-  }
-
-  function onWheel(e) {
-    if (!isLocked) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if (isAnimating) return;
-
-    var down = e.deltaY > 0;
-
-    if (down) {
-      if (current < total - 1) {
-        goTo(current + 1);
-      } else {
-        // Last slide done — unlock downward
-        unlockSection(true);
-      }
-    } else {
-      if (current > 0) {
-        goTo(current - 1);
-      } else {
-        // Back at first slide — unlock upward
-        unlockSection(false);
-      }
-    }
-  }
-
-  function build() {
-    if (isMobile()) return;
-
-    // Destroy Swiper if auto-initialised
-    var swiperEl = section.querySelector(".extra-swiper");
-    if (swiperEl && swiperEl.swiper) {
-      swiperEl.swiper.destroy(true, true);
-    }
-
-    // Hard reset
-    current = 0;
-    isAnimating = false;
-    isLocked = false;
-    suppressLock = false;
-    lastScrollY = window.scrollY;
-    gsap.set(wrapper, { x: 0, clearProps: "transition" });
-    wrapper.style.transition = "none";
-
-    // Remove old wheel listener if rebuild
-    if (wheelHandler) {
-      window.removeEventListener("wheel", wheelHandler, { passive: false });
-    }
-    wheelHandler = onWheel;
-    window.addEventListener("wheel", wheelHandler, { passive: false });
-
-    // Watch for section entering viewport
-    if (section._observer) section._observer.disconnect();
-    section._observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && !isLocked) {
-            var direction = window.scrollY < lastScrollY ? "up" : "down";
-            lockSection(direction);
-          }
-        });
-      },
-      { threshold: 0.99 }, // only lock when section is almost fully in view
-    );
-    section._observer.observe(section);
-
-    window.removeEventListener("scroll", checkExtraSectionEntry);
-    window.addEventListener("scroll", checkExtraSectionEntry, {
-      passive: true,
-    });
-  }
-
-  function checkExtraSectionEntry() {
-    if (isMobile() || isLocked || suppressLock) {
-      lastScrollY = window.scrollY;
-      return;
-    }
-
-    var scrollY = window.scrollY;
-    var direction = scrollY < lastScrollY ? "up" : "down";
-    var rect = section.getBoundingClientRect();
-    var fillsViewport = rect.top <= 2 && rect.bottom >= window.innerHeight - 2;
-
-    if (fillsViewport) {
-      lockSection(direction);
-    }
-
-    lastScrollY = scrollY;
-  }
-
-  window.addEventListener("load", function () {
-    setTimeout(build, 300);
-  });
-
-  window.addEventListener("resize", function () {
-    if (isMobile()) {
-      if (isLocked) unlockSection(false);
-      return;
-    }
-    // Re-snap to current slide at new width
-    if (!isLocked) return;
-    gsap.set(wrapper, { x: -(current * getSlideWidth()) });
-  });
+  window.addEventListener("resize", updateFooterMargin);
+  window.addEventListener("load", updateFooterMargin);
+  
+  // Initial check
+  updateFooterMargin();
+  // Double check after fonts and images might have loaded
+  setTimeout(updateFooterMargin, 500);
 })();

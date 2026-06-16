@@ -844,7 +844,7 @@
   transform: none;
   overflow: hidden;
   background: #fff;
-  cursor: none;
+  cursor: pointer;
   z-index: 100;
   padding: 2vh 0;
   box-sizing: border-box;
@@ -996,6 +996,7 @@
 
 /* Beyond subjects section css start */
 .horizontal-section {
+  --video-horizontal-gap: 100px;
   --horizontal-container-gutter: 7vw;
   --horizontal-panel-top: clamp(8.5rem, 10vw, 10.5rem);
   --horizontal-panel-bottom: clamp(5.75rem, 7vw, 7rem);
@@ -1019,7 +1020,7 @@
   background: #f7df00;
   border-radius: 1500px 1500px 0 0;
   z-index: 0;
-  transform-origin: bottom right;
+  transform-origin: 85% 85%;
   pointer-events: none;
 }
 
@@ -1111,7 +1112,7 @@
 }
 
 .horizontal-section .yellow h2 {
-  font-size: 2.7em;
+  font-size: 2.3em;
   color: #0a3d9c;
   font-family: "Satoshi";
   font-weight: 700;
@@ -1407,13 +1408,13 @@ section.bbt-FA-img-sec {
   --school-circle-bottom: 0px; */
   --school-circle-size: clamp(420px, 48vw, 742px);
   --school-circle-right: clamp(-60px, -22vw, -18px);
-  --school-circle-bottom: -130px;
+  --school-circle-bottom: -210px;
   margin: 0;
   overflow: visible;
   height: 100vh;
   position: sticky;
   top: 0;
-  z-index: 3;
+  z-index: 1;
 }
 
 .bbt-FA-img-sec .img-box {
@@ -1444,7 +1445,7 @@ section.bbt-FA-img-sec {
 
 .bbt-FA-img-sec .img-box h2 {
   font-family: "Satoshi";
-  font-size: 2.7em;
+  font-size: 2.3em;
   font-weight: 700;
   color: #0a3d9c;
   letter-spacing: -0.5px;
@@ -1695,23 +1696,9 @@ section.bbt-FA-img-sec {
   backface-visibility: hidden;
 }
 
-/* .index-page .overlap-footer {
-  position: relative;
-  z-index: 20;
-  background: #0a3d9c;
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-.index-page .overlap-footer .contact-sec {
-  /* margin-top: 0; */
-/* margin-top: -60px;
-transform: none;
-} */
-
 .recognition-sec .section-title {
   color: #0a3d9c;
-  font-size: 2.7em;
+  font-size: 2.3em;
   font-weight: 700;
   font-family: "Satoshi";
   line-height: 112%;
@@ -1962,7 +1949,7 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
 .news-section {
   padding: 200px 0px 174px;
   position: relative;
-  z-index: 1;
+  z-index: 0;
   background: #ffffff;
   margin-top: -80px;
   /* border-radius: 40px 40px 0 0; */
@@ -1985,7 +1972,7 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
 .news-header h2 {
   color: #0a3d9c;
   font-family: Satoshi;
-  font-size: 2.7em;
+  font-size: 2.3em;
   font-style: normal;
   font-weight: 700;
   line-height: 108%;
@@ -2701,4 +2688,28 @@ a.see-all.secondary-btn {
     left: calc(50% - 80px);
     top: 2100px;
   }
+}
+
+/* ============================================================
+   FOOTER REVEAL — HOME PAGE
+   ============================================================ */
+.index-page .main-content-wrapper {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+  /* hides the fixed footer behind scroll content */
+}
+
+.index-page .footer-reveal-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.index-page .footer-reveal-wrapper .contact-sec {
+  margin-top: 0;
+  transform: none;
+  z-index: auto;
 }

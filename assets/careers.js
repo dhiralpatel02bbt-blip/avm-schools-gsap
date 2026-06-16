@@ -95,6 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const aboutText = document.querySelector(
     ".careers-page .bbt-fa-careers-about-sec .avm-text",
   );
+  const openingsSec = document.querySelector(
+    ".careers-page .bbt-fa-careers-openings-sec",
+  );
 
   if (!hero || !heroCircle || !heroContent || typeof gsap === "undefined") {
     return;
@@ -105,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
       gsap.set([heroCircle, heroContent, aboutWrapper, aboutImage, aboutText], {
         clearProps: "all",
       });
+      if (openingsSec) gsap.set(openingsSec, { clearProps: "all" });
       return;
     }
 
@@ -124,13 +128,47 @@ document.addEventListener("DOMContentLoaded", function () {
     function initScrollAnimations() {
       if (typeof ScrollTrigger === "undefined") return;
 
+      if (openingsSec) {
+        gsap.set(openingsSec, {
+          marginTop: "110vh",
+          position: "relative",
+          zIndex: 5,
+          backgroundColor: "#fff",
+        });
+      }
+
+      const deskFooter = document.querySelector(".bbt-FA-main-footer.desk-footer");
+      if (deskFooter && openingsSec) {
+        // Ensure hero covers the fixed footer
+        gsap.set(hero, { zIndex: 4, position: "relative" });
+
+        function setFooterReveal() {
+          if (window.innerWidth >= 768) {
+            gsap.set(deskFooter, {
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              zIndex: 1,
+            });
+            gsap.set(openingsSec, { marginBottom: deskFooter.offsetHeight });
+          } else {
+            gsap.set(deskFooter, { clearProps: "all" });
+            gsap.set(openingsSec, { marginBottom: 0 });
+          }
+        }
+        setFooterReveal();
+        window.addEventListener("resize", setFooterReveal);
+      }
+
       gsap
         .timeline({
           scrollTrigger: {
             trigger: hero,
             start: "top top",
-            end: "+=110%",
+            end: "+=210%",
             pin: true,
+            pinSpacing: false,
             scrub: 1.1,
             anticipatePin: 1,
             invalidateOnRefresh: true,
@@ -169,7 +207,8 @@ document.addEventListener("DOMContentLoaded", function () {
             ease: "power3.out",
           },
           0.8,
-        );
+        )
+        .set({}, {}, 2.33);
     }
 
     gsap

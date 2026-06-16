@@ -25,7 +25,7 @@
     function () {
       requestAnimationFrame(scrollTop);
     },
-    { once: true },
+    { once: true }
   );
 
   window.addEventListener(
@@ -36,7 +36,7 @@
         ScrollTrigger.refresh();
       }
     },
-    { once: true },
+    { once: true }
   );
 })();
 
@@ -174,7 +174,7 @@ gsap.registerPlugin(ScrollTrigger);
         ticking = true;
       }
     },
-    { passive: true },
+    { passive: true }
   );
 
   // Resize pe headerH update karo
@@ -209,12 +209,6 @@ gsap.set(".main-title .line3", {
   opacity: 0,
 });
 
-// Orange bar — hidden
-gsap.set(".orange-bg-element", { x: -300, opacity: 0 });
-
-// Students — right side mein
-gsap.set(".hero-student-img", { x: 200 });
-
 // ============================================================
 // PAGE LOAD ANIMATION — Scroll ki jagah ab page load pe play hoga
 // ============================================================
@@ -232,7 +226,7 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0,
+    0
   )
 
   // Yellow circle — neeche se upar (final: y:0)
@@ -243,30 +237,7 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0,
-  )
-
-  // Students — right se left (final: x:0)
-  .to(
-    ".hero-student-img",
-    {
-      x: 0,
-      duration: 1.2,
-      ease: "power2.out",
-    },
-    0,
-  )
-
-  // Orange bar
-  .to(
-    ".orange-bg-element",
-    {
-      x: 0,
-      opacity: 1,
-      duration: 0.9,
-      ease: "power2.out",
-    },
-    0.2,
+    0
   )
 
   // Teeno lines ek saath — slow aur smooth
@@ -278,7 +249,7 @@ heroTL
       duration: 1.2,
       ease: "power3.out",
     },
-    0,
+    0
   );
 
 // ============================================================
@@ -490,7 +461,7 @@ if (videoWrapper && video && playBtn) {
         ease: "none",
         duration: 1,
       },
-      0,
+      0
     )
     .to(
       ".video-container",
@@ -501,7 +472,7 @@ if (videoWrapper && video && playBtn) {
         ease: "none",
         duration: 1,
       },
-      0,
+      0
     );
 
   // Parallax
@@ -517,7 +488,7 @@ if (videoWrapper && video && playBtn) {
         end: "top 20%",
         scrub: true,
       },
-    },
+    }
   );
 
   // Phase 2: overlay + content + play btn reveal
@@ -536,19 +507,19 @@ if (videoWrapper && video && playBtn) {
     .fromTo(
       ".video-section .overlay",
       { opacity: 0 },
-      { opacity: 1, ease: "none", duration: 1 },
+      { opacity: 1, ease: "none", duration: 1 }
     )
     .fromTo(
       ".video-section .content",
       { opacity: 0, yPercent: -40, y: 60 },
       { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 0.8 },
-      0.2,
+      0.2
     )
     .fromTo(
       "#playBtn",
       { opacity: 0, scale: 0 },
       { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.6 },
-      0.2,
+      0.2
     );
 }
 
@@ -603,7 +574,7 @@ gsap.from(".award .leaf", {
         tl.from(
           formActions,
           { y: 30, opacity: 0, duration: 0.6, ease: "back.out(1.7)" },
-          0.55,
+          0.55
         );
       }
     },
@@ -667,9 +638,14 @@ gsap.from(".award .leaf", {
   };
 
   // ── Initial states ──────────────────────────────────────────
-  gsap.set(".horizontal-section .yellow h2", { x: -160, autoAlpha: 0 });
+  gsap.set(".horizontal-section .yellow h2", {
+    x: -56,
+    y: 18,
+    autoAlpha: 0,
+  });
   gsap.set(".lavender-circle", {
     scale: 0.22,
+    backgroundColor: "#f7df00",
     transformOrigin: "bottom right",
   });
   gsap.set(horizontal, { overflow: "hidden" });
@@ -678,8 +654,8 @@ gsap.from(".award .leaf", {
   // All panels stacked: panel[0] on top, rest off-screen to the right
   panels.forEach(function (p, i) {
     gsap.set(p, {
-      autoAlpha: i === 0 ? 0 : 0,
-      xPercent: 100,
+      autoAlpha: 0,
+      xPercent: i === 0 ? 0 : 100,
       zIndex: n - i,
       position: "absolute",
       top: 0,
@@ -699,7 +675,7 @@ gsap.from(".award .leaf", {
 
   var masterTL = gsap.timeline({ paused: true });
   // -YP start
-  var circleFillDuration = 58.0;
+  var circleFillDuration = 84.0;
   var titleRevealDuration = 11.5;
   var introTimelineDuration = circleFillDuration + titleRevealDuration;
   var panelStart = introTimelineDuration + 0.35;
@@ -717,36 +693,35 @@ gsap.from(".award .leaf", {
     ".lavender-circle",
     {
       scale: 2,
-      ease: "power2.inOut",
+      ease: "sine.inOut",
       // -YP start
       duration: circleFillDuration,
       // -YP end
     },
-    0,
+    0
   );
   masterTL.to(
     ".horizontal-section .yellow h2",
     {
       x: 0,
+      y: 0,
       autoAlpha: 1,
-      ease: "power3.out",
-      duration: titleRevealDuration,
+      ease: "sine.out",
+      duration: titleRevealDuration * 1.9,
     },
-    circleFillDuration,
+    circleFillDuration - 4
   );
 
-  // Panel 0 enters from right
-  masterTL.set(panels[0], { autoAlpha: 1, xPercent: 100 }, panelStart);
+  // Panel 0 stays in its left position and fades in when its step starts.
+  masterTL.set(panels[0], { autoAlpha: 0, xPercent: 0 }, panelStart);
   masterTL.to(
     panels[0],
     {
-      xPercent: 0,
-      // -YP start
-      ease: "none",
-      // -YP end
+      autoAlpha: 1,
+      ease: "power2.out",
       duration: panelEnterDuration,
     },
-    panelStart,
+    panelStart
   );
   masterTL.to({}, { duration: panelHold }, panelStart + panelEnterDuration);
 
@@ -772,7 +747,7 @@ gsap.from(".award .leaf", {
         // -YP end
         duration: panelTransitionDuration,
       },
-      startTime,
+      startTime
     );
     masterTL.fromTo(
       inPanel,
@@ -784,19 +759,18 @@ gsap.from(".award .leaf", {
         // -YP end
         duration: panelTransitionDuration,
       },
-      startTime,
+      startTime
     );
+
+    // Keep the horizontal section yellow through the last panel. The next
+    // section owns the yellow-to-white fade after the first post-panel scroll.
   }
 
   // ── ScrollTrigger — one big pin for everything ─────────────
   // Total scroll distance: PHASE1_PX + (n panels * PX_PER_PANEL)
-  function getPhase1Px() {
-    return window.innerHeight * 2;
-  }
-
   var PX_PER_PANEL = 1050; // scroll pixels per panel movement
   function getTotalPx() {
-    return getPhase1Px() + n * PX_PER_PANEL;
+    return n * PX_PER_PANEL;
   }
   var lastSlideBgActive = false;
   // stepTimes[i] = the timeline position where panel i has FULLY arrived.
@@ -860,8 +834,8 @@ gsap.from(".award .leaf", {
     var dur = immediate
       ? 0
       : previousStep < 0 && step === 0
-        ? firstStepDuration
-        : panelStepDuration;
+      ? firstStepDuration
+      : panelStepDuration;
 
     if (!immediate) isWheelTransitioning = true;
 
@@ -899,7 +873,9 @@ gsap.from(".award .leaf", {
   function releaseHorizontal(direction) {
     if (!hTrigger) return;
     var target =
-      direction > 0 ? hTrigger.end + 2 : Math.max(hTrigger.start - 2, 0);
+      direction > 0
+        ? hTrigger.end + hSec.offsetHeight + 2
+        : Math.max(hTrigger.start - 2, 0);
     window.scrollTo({ top: target, behavior: "auto" });
   }
 
@@ -907,8 +883,10 @@ gsap.from(".award .leaf", {
   function onHorizontalWheel(event) {
     if (!hTrigger || !hTrigger.isActive) return;
 
-    var introDistance = window.pageYOffset - hTrigger.start;
-    if (introDistance < getPhase1Px() - 2) return;
+    if (masterTL.time() < introTimelineDuration - 0.05) {
+      gsap.killTweensOf(masterTL);
+      masterTL.time(introTimelineDuration);
+    }
 
     if (isWheelTransitioning) {
       event.preventDefault();
@@ -931,6 +909,33 @@ gsap.from(".award .leaf", {
   }
   // -YP end
 
+  ScrollTrigger.create({
+    trigger: hSec,
+    start: "top 80%",
+    end: "top top",
+    scrub: 2.8,
+    invalidateOnRefresh: true,
+    onUpdate: function (self) {
+      if (hTrigger && hTrigger.isActive) return;
+
+      currentStep = -1;
+      unlockWheelTransition();
+      setLastSlideBackground(-1);
+      masterTL.time(introTimelineDuration * self.progress);
+      gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
+    },
+    onLeave: function () {
+      masterTL.time(introTimelineDuration);
+    },
+    onLeaveBack: function () {
+      currentStep = -1;
+      unlockWheelTransition();
+      setLastSlideBackground(-1);
+      masterTL.pause(0);
+      gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
+    },
+  });
+
   hTrigger = ScrollTrigger.create({
     trigger: hSec,
     start: "top top",
@@ -943,24 +948,7 @@ gsap.from(".award .leaf", {
     id: "hSecMaster",
     invalidateOnRefresh: true,
     onUpdate: function (self) {
-      var introProgress = gsap.utils.clamp(
-        0,
-        1,
-        (window.pageYOffset - self.start) / getPhase1Px(),
-      );
-
-      if (introProgress < 1) {
-        currentStep = -1;
-        unlockWheelTransition();
-        setLastSlideBackground(-1);
-        gsap.to(masterTL, {
-          time: introTimelineDuration * introProgress,
-          duration: 0.22,
-          ease: "power3.out",
-          overwrite: true,
-        });
-        gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
-      } else if (currentStep < 0 && masterTL.time() < introTimelineDuration) {
+      if (currentStep < 0 && masterTL.time() < introTimelineDuration) {
         gsap.killTweensOf(masterTL);
         masterTL.time(introTimelineDuration);
       }
@@ -970,7 +958,7 @@ gsap.from(".award .leaf", {
       currentStep = -1;
       unlockWheelTransition();
       setLastSlideBackground(-1);
-      masterTL.pause(0);
+      masterTL.time(introTimelineDuration);
       // -YP end
     },
     onEnterBack: function () {
@@ -1062,7 +1050,7 @@ gsap.from(".award .leaf", {
         function (ev) {
           if (ev.key === "Escape") close();
         },
-        { once: true },
+        { once: true }
       );
     });
   }
@@ -1101,7 +1089,7 @@ if (track) {
       x: -totalWidth,
       ease: "none",
     },
-    0,
+    0
   );
 
   // 👉 EACH CIRCLE ANIMATION
@@ -1116,7 +1104,7 @@ if (track) {
         opacity: 0.6,
         duration: 0.5,
       },
-      i * 0.8,
+      i * 0.8
     );
 
     // Phase 2: text fade in (light)
@@ -1126,7 +1114,7 @@ if (track) {
         opacity: 0.5,
         duration: 0.3,
       },
-      i * 0.8 + 0.2,
+      i * 0.8 + 0.2
     );
 
     tl.to(
@@ -1135,7 +1123,7 @@ if (track) {
         opacity: 0.5,
         duration: 0.3,
       },
-      i * 0.8 + 0.25,
+      i * 0.8 + 0.25
     );
 
     // Phase 3: center → grow + full text
@@ -1146,7 +1134,7 @@ if (track) {
         opacity: 1,
         duration: 0.6,
       },
-      i * 0.8 + 0.4,
+      i * 0.8 + 0.4
     );
 
     tl.to(
@@ -1155,7 +1143,7 @@ if (track) {
         opacity: 1,
         duration: 0.3,
       },
-      i * 0.8 + 0.5,
+      i * 0.8 + 0.5
     );
 
     tl.to(
@@ -1164,7 +1152,7 @@ if (track) {
         opacity: 1,
         duration: 0.3,
       },
-      i * 0.8 + 0.55,
+      i * 0.8 + 0.55
     );
   });
 }
@@ -1184,7 +1172,7 @@ if (tl) {
   const connectorsSvg = cluster?.querySelector("svg.connectors");
   const bubbleCircles = gsap.utils.toArray(".bbt-FA-circle-sec .circle");
   const connectorSegments = gsap.utils.toArray(
-    ".bbt-FA-circle-sec .connector-segment",
+    ".bbt-FA-circle-sec .connector-segment"
   );
 
   if (
@@ -1209,16 +1197,12 @@ if (tl) {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetLeft + circle.offsetWidth,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth)
       ) + 20;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetTop + circle.offsetHeight,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight)
       ) + 20;
 
     gsap.set(cluster, {
@@ -1228,7 +1212,7 @@ if (tl) {
 
     connectorsSvg.setAttribute(
       "viewBox",
-      `0 0 ${clusterWidth} ${clusterHeight}`,
+      `0 0 ${clusterWidth} ${clusterHeight}`
     );
 
     connectorSegments.forEach((segment, index) => {
@@ -1256,8 +1240,8 @@ if (tl) {
       segment.setAttribute(
         "d",
         `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(
-          1,
-        )} ${endY.toFixed(1)}`,
+          1
+        )} ${endY.toFixed(1)}`
       );
       segment._bubbleConnector = { startX, startY, endX, endY };
     });
@@ -1273,8 +1257,8 @@ if (tl) {
     segment.setAttribute(
       "d",
       `M ${line.startX.toFixed(1)} ${line.startY.toFixed(
-        1,
-      )} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`,
+        1
+      )} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`
     );
   }
 
@@ -1331,10 +1315,10 @@ if (tl) {
     });
 
     const segmentDuration = 1;
-    const backgroundRevealDuration = segmentDuration * 0.34;
+    const backgroundRevealDuration = segmentDuration * 0.08;
     const scrollDistance = Math.max(
       bubbleCircles.length * viewportHeight * 1.05,
-      viewportHeight * 7,
+      viewportHeight * 7
     );
     bubbleTimeline = gsap.timeline({
       defaults: { ease: "none" },
@@ -1355,8 +1339,9 @@ if (tl) {
       {
         backgroundColor: "#ffffff",
         duration: backgroundRevealDuration,
+        ease: "sine.inOut",
       },
-      0,
+      0
     );
 
     const firstHeading = bubbleCircles[0].querySelector("h2");
@@ -1372,7 +1357,7 @@ if (tl) {
           duration: 0.55,
           ease: "power2.out",
         },
-        backgroundRevealDuration,
+        backgroundRevealDuration
       )
       .to(
         [firstHeading, firstBody].filter(Boolean),
@@ -1383,7 +1368,7 @@ if (tl) {
           duration: 0.28,
           ease: "power2.out",
         },
-        backgroundRevealDuration + 0.28,
+        backgroundRevealDuration + 0.28
       );
 
     bubbleCircles.forEach((circle, index) => {
@@ -1402,7 +1387,7 @@ if (tl) {
             duration: 0.24,
             ease: "power2.inOut",
           },
-          at,
+          at
         );
       }
 
@@ -1414,7 +1399,7 @@ if (tl) {
           duration: 0.18,
           ease: "back.out(1.45)",
         },
-        at + 0.08,
+        at + 0.08
       );
 
       if (heading) {
@@ -1426,7 +1411,7 @@ if (tl) {
             duration: 0.16,
             ease: "power2.out",
           },
-          at + 0.28,
+          at + 0.28
         );
       }
 
@@ -1439,7 +1424,7 @@ if (tl) {
             duration: 0.16,
             ease: "power2.out",
           },
-          at + 0.46,
+          at + 0.46
         );
       }
 
@@ -1458,7 +1443,7 @@ if (tl) {
               setConnectorDrawProgress(connector, lineDraw.progress);
             },
           },
-          at + 0.68,
+          at + 0.68
         );
       }
     });
@@ -1488,16 +1473,12 @@ if (tl) {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetLeft + circle.offsetWidth,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth)
       ) + 40;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetTop + circle.offsetHeight,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight)
       ) + 20;
 
     gsap.set(cluster, {
@@ -1507,7 +1488,7 @@ if (tl) {
 
     connectorsSvg.setAttribute(
       "viewBox",
-      `0 0 ${clusterWidth} ${clusterHeight}`,
+      `0 0 ${clusterWidth} ${clusterHeight}`
     );
 
     const viewportWidth = window.innerWidth;
@@ -1527,13 +1508,13 @@ if (tl) {
     const travelDistance = Math.max(startX - endX, viewportWidth * 1.8);
     const scrollDistance = Math.max(
       travelDistance * 1.35,
-      viewportWidth * 3.75,
+      viewportWidth * 3.75
     );
     const firstBubbleIntro = Math.min(
       travelDistance * 0.16,
-      viewportWidth * 0.42,
+      viewportWidth * 0.42
     );
-    const backgroundRevealDuration = firstBubbleIntro * 0.34;
+    const backgroundRevealDuration = firstBubbleIntro * 0.08;
     gsap.set(bubbleCircles, {
       scale: 0.12,
       autoAlpha: 0,
@@ -1569,8 +1550,8 @@ if (tl) {
       segment.setAttribute(
         "d",
         `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(
-          1,
-        )} ${endY.toFixed(1)}`,
+          1
+        )} ${endY.toFixed(1)}`
       );
 
       gsap.set(segment, {
@@ -1614,7 +1595,7 @@ if (tl) {
       bubbleTrack,
       { x: startX },
       { x: endX, duration: travelDistance },
-      firstBubbleIntro,
+      firstBubbleIntro
     );
 
     gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
@@ -1623,8 +1604,9 @@ if (tl) {
       {
         backgroundColor: "#ffffff",
         duration: backgroundRevealDuration,
+        ease: "sine.inOut",
       },
-      0,
+      0
     );
 
     bubbleCircles.forEach((circle, index) => {
@@ -1642,32 +1624,32 @@ if (tl) {
       let phaseOneStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.28,
+        focusTime - viewportWidth * 0.28
       );
       let phaseTwoStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.16,
+        focusTime - viewportWidth * 0.16
       );
       let titleStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.14,
+        focusTime - viewportWidth * 0.14
       );
       let bodyStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.1,
+        focusTime - viewportWidth * 0.1
       );
       let activeStart = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.07,
+        focusTime - viewportWidth * 0.07
       );
       let activeEnd = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime + viewportWidth * 0.07,
+        focusTime + viewportWidth * 0.07
       );
 
       if (index === 0) {
@@ -1694,7 +1676,7 @@ if (tl) {
           x: 0, // right se center tak slide in
           duration: Math.max(phaseTwoStart - phaseOneStart, 0.01),
         },
-        phaseOneStart,
+        phaseOneStart
       );
 
       if (heading) {
@@ -1705,7 +1687,7 @@ if (tl) {
             y: 0,
             duration: Math.max(bodyStart - titleStart, 0.01),
           },
-          titleStart,
+          titleStart
         );
       }
 
@@ -1717,7 +1699,7 @@ if (tl) {
             y: 0,
             duration: Math.max(activeStart - bodyStart, 0.01),
           },
-          bodyStart,
+          bodyStart
         );
       }
 
@@ -1729,7 +1711,7 @@ if (tl) {
           zIndex: 5,
           duration: Math.max(activeEnd - activeStart, 0.01),
         },
-        activeStart,
+        activeStart
       );
 
       if (heading) {
@@ -1739,7 +1721,7 @@ if (tl) {
             autoAlpha: 1,
             duration: Math.max(activeEnd - activeStart, 0.01),
           },
-          activeStart,
+          activeStart
         );
       }
 
@@ -1750,7 +1732,7 @@ if (tl) {
             autoAlpha: 1,
             duration: Math.max(activeEnd - activeStart, 0.01),
           },
-          activeStart + viewportWidth * 0.01,
+          activeStart + viewportWidth * 0.01
         );
       }
 
@@ -1761,7 +1743,7 @@ if (tl) {
             autoAlpha: 0.92,
             duration: Math.max(activeStart - phaseOneStart, 0.01),
           },
-          phaseOneStart,
+          phaseOneStart
         );
       }
     });
@@ -1895,7 +1877,54 @@ if (tl) {
       unpin();
     }, 2000);
   }
+  // ==========================
+  // Title + Circle Animation
+  // ==========================
+  const title = imgSec.querySelector(".img-text");
+  const circle = imgSec.querySelector(".purple-circle");
 
+  if (title && circle) {
+    gsap.set([title, circle], {
+      opacity: 0,
+      y: 80,
+    });
+
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: imgSec,
+          start: "top 60%",
+          end: "top 20%",
+          scrub: 1,
+        },
+      })
+      .to(circle, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+      })
+      .to(
+        title,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+        },
+        "-=0.5"
+      );
+
+    // Scroll down par fade out upar ki taraf
+    gsap.to([title, circle], {
+      opacity: 0,
+      y: -80,
+      scrollTrigger: {
+        trigger: circleSec,
+        start: "top center",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+  }
   // circle-sec khud z-index 2 pe hai (CSS mein set) — image ke upar rehta hai
   // Jab circle section viewport mein enter kare → pin imgSec
   // Jab circle section POORI tarah viewport se upar jaye → unpin
@@ -1955,7 +1984,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       rootMargin: "0px 0px -75% 0px",
       threshold: 0,
-    },
+    }
   );
 
   animatedSections.forEach((section) => {
@@ -2043,7 +2072,7 @@ document.addEventListener("DOMContentLoaded", function () {
             obs.unobserve(entry.target);
           });
         },
-        { rootMargin: "0px 0px -4% 0px", threshold: 0 },
+        { rootMargin: "0px 0px -4% 0px", threshold: 0 }
       );
       observer.observe(newsSection);
     }
@@ -2063,7 +2092,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.15 },
+    { threshold: 0.15 }
   );
 
   function observeBlocks() {
@@ -2093,7 +2122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.2 },
+    { threshold: 0.2 }
   );
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -2144,9 +2173,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const imgText = imgSec.querySelector(".img-text");
   const mainTitle = imgSec.querySelector(".main-title");
 
-  // Initial states — sab hidden
+  // Initial states
   if (purpleCircle) {
-    gsap.set(purpleCircle, { x: 220, opacity: 0 });
+    gsap.set(purpleCircle, { x: 0, opacity: 1 });
   }
   if (imgText) {
     gsap.set(imgText, { x: -100, opacity: 0 });
@@ -2198,4 +2227,41 @@ document.addEventListener("DOMContentLoaded", function () {
     once: true,
     onEnter: playImgSecAnimation,
   });
+})();
+
+// ============================================================
+// FOOTER REVEAL SECTION
+// ============================================================
+(function initFooterReveal() {
+  var isAboutPage = !!document.querySelector("body.about-us-page");
+  var isIndexPage = !!document.querySelector("body.index-page");
+  if (!isAboutPage && !isIndexPage) return;
+
+  var wrapper = document.querySelector(".main-content-wrapper");
+  var footerWrap = document.querySelector(".footer-reveal-wrapper");
+  if (!wrapper || !footerWrap) return;
+
+  function updateFooterMargin() {
+    var h = footerWrap.offsetHeight;
+    wrapper.style.marginBottom = h + "px";
+  }
+
+  // Initial update
+  updateFooterMargin();
+
+  // Update on resize
+  window.addEventListener("resize", updateFooterMargin);
+  window.addEventListener("load", updateFooterMargin);
+
+  // Set CSS for fixed footer to prevent jerking on scroll
+  gsap.set(footerWrap, {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    zIndex: 0,
+  });
+
+  // Make sure body doesn't overlap if it has background
+  gsap.set(document.body, { backgroundColor: "transparent" });
 })();

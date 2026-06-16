@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,13 +12,11 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
+
     <link rel="stylesheet" href="assets/global.css" />
     <link rel="stylesheet" href="assets/our-school.css" />
   </head>
+
   <body class="our-school-page">
     <header class="header">
       <div class="w-90">
@@ -114,61 +112,50 @@
             <img src="images/school-img.jpg" alt="AVM school campus exterior" />
           </div>
 
-          <div class="campus-slider-shell" aria-hidden="true">
-            <div
-              class="swiper campus-sequence-swiper"
-              aria-label="Campus image sequence"
-            >
-              <div class="swiper-wrapper">
-                <div class="swiper-slide campus-sequence-slide">
-                  <div class="campus-slide-visual">
-                    <img
-                      src="images/school-img.jpg"
-                      alt="AVM school main building"
-                    />
-                  </div>
-                  <div class="campus-slide-caption">
-                    <div class="campus-slide-circle"></div>
-                    <div class="campus-slide-text">
-                      <p>AVM Bandra West</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide campus-sequence-slide">
-                  <div class="campus-slide-visual">
-                    <img
-                      src="images/school2.jpg"
-                      alt="AVM school learning space"
-                    />
-                  </div>
-                  <div class="campus-slide-caption">
-                    <div class="campus-slide-circle"></div>
-                    <div class="campus-slide-text">
-                      <p>AVM Bandra East</p>
-                      <p>Vasudev C. Wadhwa <br />Arya Vidya Mandir</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide campus-sequence-slide">
-                  <div class="campus-slide-visual">
-                    <img
-                      src="images/school3.jpg"
-                      alt="AVM school student activity area"
-                    />
-                  </div>
-                  <div class="campus-slide-caption">
-                    <div class="campus-slide-circle"></div>
-                    <div class="campus-slide-text">
-                      <p>AVM Juhu</p>
-                      <p>
-                        Smt. Ramdevi Sobhraj Bajaj <br />
-                        Arya Vidya Mandir School
-                      </p>
-                    </div>
-                  </div>
+          <div class="campus-stack" aria-hidden="true">
+            <div class="campus-slide slide-1">
+              <div class="campus-slide-visual">
+                <img
+                  src="images/school-img.jpg"
+                  alt="AVM school main building"
+                />
+              </div>
+              <div class="campus-slide-caption">
+                <div class="campus-slide-circle"></div>
+                <div class="campus-slide-text">
+                  <p>AVM Juhu</p>
+                  <p>
+                    Smt. Ramdevi Sobhraj Bajaj <br />
+                    Arya Vidya Mandir School
+                  </p>
                 </div>
               </div>
-              <div class="swiper-pagination campus-sequence-pagination"></div>
+            </div>
+            <div class="campus-slide slide-2">
+              <div class="campus-slide-visual">
+                <img src="images/school2.jpg" alt="AVM school learning space" />
+              </div>
+              <div class="campus-slide-caption">
+                <div class="campus-slide-circle"></div>
+                <div class="campus-slide-text">
+                  <p>AVM Bandra West</p>
+                </div>
+              </div>
+            </div>
+            <div class="campus-slide slide-3">
+              <div class="campus-slide-visual">
+                <img
+                  src="images/school3.jpg"
+                  alt="AVM school student activity area"
+                />
+              </div>
+              <div class="campus-slide-caption">
+                <div class="campus-slide-circle"></div>
+                <div class="campus-slide-text">
+                  <p>AVM Bandra East</p>
+                  <p>Vasudev C. Wadhwa <br />Arya Vidya Mandir</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -488,182 +475,110 @@
     </section>
     <!-- location section End -->
 
-    <!--contact sec start-->
-    <section class="contact-sec">
-      <div class="container-xxl">
-        <div class="row">
-          <!-- LEFT CONTENT -->
-          <div class="content">
-            <div class="inner-content">
-              <h3 class="slide-left">Applications now open.</h3>
+    <div class="footer-reveal-wrapper">
+      <!--contact sec start-->
+      <section class="contact-sec">
+        <div class="container-xxl">
+          <div class="row">
+            <!-- LEFT CONTENT -->
+            <div class="content">
+              <div class="inner-content">
+                <h3 class="slide-left">Applications now open.</h3>
 
-              <h2 class="slide-left">
-                Build your child’s values and future-ready abilities.
-              </h2>
+                <h2 class="slide-left">
+                  Build your child’s values and future-ready abilities.
+                </h2>
+              </div>
+
+              <div class="desk-frm-action form-actions slide-left">
+                <a href="#" type="submit" class="apply-btn">Apply now</a>
+                <a href="#" class="download-link">Download Prospectus</a>
+              </div>
             </div>
 
-            <div class="desk-frm-action form-actions slide-left">
+            <!-- RIGHT IMAGE -->
+            <div class="image-container slide-right">
+              <img src="images/robotic-girl.png" alt="robotic-girl-image" />
+            </div>
+            <div class="mob-frm-action form-actions slide-left">
               <a href="#" type="submit" class="apply-btn">Apply now</a>
               <a href="#" class="download-link">Download Prospectus</a>
             </div>
           </div>
-
-          <!-- RIGHT IMAGE -->
-          <div class="image-container slide-right">
-            <img src="images/robotic-girl.png" alt="robotic-girl-image" />
-          </div>
-          <div class="mob-frm-action form-actions slide-left">
-            <a href="#" type="submit" class="apply-btn">Apply now</a>
-            <a href="#" class="download-link">Download Prospectus</a>
-          </div>
         </div>
-      </div>
-    </section>
-    <!--contact sec end-->
+      </section>
+      <!--contact sec end-->
 
-    <!-- footer start -->
-    <footer class="bbt-FA-main-footer desk-footer">
-      <div class="container-xxl footer-container">
-        <div class="divi"></div>
-        <div class="footer-top">
-          <div class="ft-col-logo">
-            <div class="footer-logo">
-              <a href="index.html">
-                <img
-                  src="images/logo.png"
-                  alt="footer-logo"
-                  class="footer-logo"
-                />
-              </a>
-            </div>
-          </div>
-
-          <div class="ft-col-menu">
-            <ul class="text">
-              <li><a href="index.html" class="title">Home</a></li>
-              <li><a href="about-us.html" class="title">About AVM</a></li>
-              <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
-              <li><a href="our-school.html" class="title">Schools</a></li>
-            </ul>
-          </div>
-
-          <div class="ft-col-menu">
-            <ul class="text">
-              <li><a href="admissions.html" class="title">Admissions</a></li>
-              <li>
-                <a href="news-and-events.html" class="title">News & Events</a>
-              </li>
-
-              <li><a href="careers.html" class="title">Careers</a></li>
-            </ul>
-          </div>
-
-          <div class="ft-col-menu">
-            <ul class="text">
-              <li>
-                <a href="https://avmschools.ac.in/fee-payment/" class="title"
-                  >Fee Payment</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://parent.intellischools.com/session/login/AVMBWS"
-                  class="title"
-                  >Parent Login</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://schadmin.intellischools.com/session/login/AVMBWS"
-                  class="title"
-                  >Teacher Login</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="footer-text">
-          <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
-
-          <div class="ft-meta-phone">
-            <a href="#">T: +91 22 6101 3900</a>
-          </div>
-
-          <div class="ft-meta-email">
-            <a href="#">E: info@avmschools.ac.in</a>
-          </div>
-
-          <div class="ft-social">
-            <div class="icon">
-              <a href="#">
-                <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
-              </a>
-            </div>
-
-            <div class="icon">
-              <a href="#">
-                <img src="images/youtube-icon.svg" alt="youtube-icon" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <footer class="bbt-FA-main-footer mob-footer">
-      <div class="container-xxl footer-container">
-        <div class="divi"></div>
-        <div class="footer-top">
-          <div class="ft-col-menu">
-            <ul class="text">
-              <li><a href="index.html" class="title">Home</a></li>
-              <li><a href="about-us.html" class="title">About AVM</a></li>
-              <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
-              <li><a href="our-school.html" class="title">Schools</a></li>
-              <li><a href="admissions.html" class="title">Admissions</a></li>
-            </ul>
-          </div>
-
-          <div class="ft-col-menu">
-            <ul class="text">
-              <li>
-                <a href="news-and-events.html" class="title">News & Events</a>
-              </li>
-              <li><a href="careers.html" class="title">Careers</a></li>
-              <li>
-                <a href="https://avmschools.ac.in/fee-payment/" class="title"
-                  >Fee Payment</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://parent.intellischools.com/session/login/AVMBWS"
-                  class="title"
-                  >Parent Login</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://schadmin.intellischools.com/session/login/AVMBWS"
-                  class="title"
-                  >Teacher Login</a
-                >
-              </li>
-              <!-- <li><a href="#" class="title">Contact us</a></li> -->
-            </ul>
-          </div>
-        </div>
-
-        <div class="footer-text">
-          <div class="footer-middle">
-            <div class="ft-meta-info">
-              <div class="ft-meta-phone">
-                <a href="#">T: +91 22 6101 3900</a>
+      <!-- footer start -->
+      <footer class="bbt-FA-main-footer desk-footer">
+        <div class="container-xxl footer-container">
+          <div class="footer-top">
+            <div class="ft-col-logo">
+              <div class="footer-logo">
+                <a href="index.html">
+                  <img
+                    src="images/logo.png"
+                    alt="footer-logo"
+                    class="footer-logo"
+                  />
+                </a>
               </div>
+            </div>
 
-              <div class="ft-meta-email">
-                <a href="#">E: info@avmschools.ac.in</a>
-              </div>
+            <div class="ft-col-menu">
+              <ul class="text">
+                <li><a href="index.html" class="title">Home</a></li>
+                <li><a href="about-us.html" class="title">About AVM</a></li>
+                <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
+                <li><a href="our-school.html" class="title">Schools</a></li>
+              </ul>
+            </div>
+
+            <div class="ft-col-menu">
+              <ul class="text">
+                <li><a href="admissions.html" class="title">Admissions</a></li>
+                <li>
+                  <a href="news-and-events.html" class="title">News & Events</a>
+                </li>
+
+                <li><a href="careers.html" class="title">Careers</a></li>
+              </ul>
+            </div>
+
+            <div class="ft-col-menu">
+              <ul class="text">
+                <li>
+                  <a href="https://avmschools.ac.in/fee-payment/" class="title"
+                    >Fee Payment</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://parent.intellischools.com/session/login/AVMBWS"
+                    class="title"
+                    >Parent Login</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://schadmin.intellischools.com/session/login/AVMBWS"
+                    class="title"
+                    >Teacher Login</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-text">
+            <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+
+            <div class="ft-meta-phone">
+              <a href="#">T: +91 22 6101 3900</a>
+            </div>
+
+            <div class="ft-meta-email">
+              <a href="#">E: info@avmschools.ac.in</a>
             </div>
 
             <div class="ft-social">
@@ -672,6 +587,7 @@
                   <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
                 </a>
               </div>
+
               <div class="icon">
                 <a href="#">
                   <img src="images/youtube-icon.svg" alt="youtube-icon" />
@@ -680,29 +596,98 @@
             </div>
           </div>
         </div>
-        <div class="ft-col-logo">
-          <div class="footer-logo">
-            <a href="index.html">
-              <img
-                src="images/mob-footer-logo.png"
-                alt="footer-logo"
-                class="footer-logo"
-              />
-            </a>
-          </div>
-          <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
-        </div>
-      </div>
-    </footer>
+      </footer>
+      <footer class="bbt-FA-main-footer mob-footer">
+        <div class="container-xxl footer-container">
+          <div class="footer-top">
+            <div class="ft-col-menu">
+              <ul class="text">
+                <li><a href="index.html" class="title">Home</a></li>
+                <li><a href="about-us.html" class="title">About AVM</a></li>
+                <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
+                <li><a href="our-school.html" class="title">Schools</a></li>
+                <li><a href="admissions.html" class="title">Admissions</a></li>
+              </ul>
+            </div>
 
-    <!-- footer End -->
+            <div class="ft-col-menu">
+              <ul class="text">
+                <li>
+                  <a href="news-and-events.html" class="title">News & Events</a>
+                </li>
+                <li><a href="careers.html" class="title">Careers</a></li>
+                <li>
+                  <a href="https://avmschools.ac.in/fee-payment/" class="title"
+                    >Fee Payment</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://parent.intellischools.com/session/login/AVMBWS"
+                    class="title"
+                    >Parent Login</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://schadmin.intellischools.com/session/login/AVMBWS"
+                    class="title"
+                    >Teacher Login</a
+                  >
+                </li>
+                <!-- <li><a href="#" class="title">Contact us</a></li> -->
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-text">
+            <div class="footer-middle">
+              <div class="ft-meta-info">
+                <div class="ft-meta-phone">
+                  <a href="#">T: +91 22 6101 3900</a>
+                </div>
+
+                <div class="ft-meta-email">
+                  <a href="#">E: info@avmschools.ac.in</a>
+                </div>
+              </div>
+
+              <div class="ft-social">
+                <div class="icon">
+                  <a href="#">
+                    <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
+                  </a>
+                </div>
+                <div class="icon">
+                  <a href="#">
+                    <img src="images/youtube-icon.svg" alt="youtube-icon" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ft-col-logo">
+            <div class="footer-logo">
+              <a href="index.html">
+                <img
+                  src="images/mob-footer-logo.png"
+                  alt="footer-logo"
+                  class="footer-logo"
+                />
+              </a>
+            </div>
+            <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+          </div>
+        </div>
+      </footer>
+      <!-- footer End -->
+    </div>
 
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script src="assets/script.js"></script>
     <script src="assets/our-school.js"></script>

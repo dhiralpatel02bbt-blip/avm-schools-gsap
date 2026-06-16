@@ -58,9 +58,9 @@
   lockInitialHeroScroll();
 
   function initMobileStickyButton() {
-    var contactSection = document.querySelector(".contact-sec");
+    var wrapper = document.querySelector(".main-content-wrapper");
     var stickyButton = document.querySelector(".mob-sticky-btn");
-    if (!contactSection || !stickyButton) return;
+    if (!wrapper || !stickyButton) return;
 
     function updateMobileStickyButton() {
       if (window.innerWidth > 767) {
@@ -68,10 +68,10 @@
         return;
       }
 
-      var contactTop = contactSection.getBoundingClientRect().top;
+      var wrapperBottom = wrapper.getBoundingClientRect().bottom;
       aboutBody.classList.toggle(
         "about-hide-mob-sticky",
-        contactTop <= window.innerHeight,
+        wrapperBottom <= window.innerHeight,
       );
     }
 
@@ -804,8 +804,6 @@
 
     // Phase 0: white circle grows in smoothly with scroll
     var circleGrowDuration = 0.28;
-    var lineRevealStart = circleGrowDuration + 0.02;
-    var coreItemsStart = lineRevealStart + 0.1;
 
     masterTL.to(
       whiteCircle,
@@ -829,44 +827,36 @@
 
     masterTL.to(
       animLine,
-      { autoAlpha: 1, duration: 0.08, ease: "power1.out" },
-      lineRevealStart,
+      { autoAlpha: 1, duration: 0.15, ease: "power1.out" },
+      0.1
     );
 
-    // Phase 1: dots grow and value text fades in after the line appears
-    items.forEach(function (item, index) {
-      var itemStart = coreItemsStart + index * 0.18;
-      var itemY = itemPositions[index].y;
-
-      masterTL.to(
-        textWrapper,
-        {
-          y: itemY,
-          duration: index === 0 ? 0.01 : 0.1,
-          ease: "power1.inOut",
-        },
-        itemStart - 0.03,
-      );
-
+    // Fade in all dots and text at once
+    items.forEach(function (item) {
       if (item.dot) {
         masterTL.to(
           item.dot,
-          { scale: 1, autoAlpha: 1, duration: 0.1, ease: "power2.out" },
-          itemStart,
+          { scale: 1, autoAlpha: 1, duration: 0.15, ease: "power2.out" },
+          0.1
         );
       }
-
       masterTL.to(
         item.text.querySelectorAll("h3, p"),
-        {
-          autoAlpha: 1,
-          duration: 0.1,
-          ease: "power1.out",
-          stagger: 0.02,
-        },
-        itemStart + 0.08,
+        { autoAlpha: 1, duration: 0.15, ease: "power1.out" },
+        0.1
       );
     });
+
+    // Scroll through the list (translate Y)
+    masterTL.to(
+      textWrapper,
+      {
+        y: itemPositions[itemPositions.length - 1].y,
+        duration: 1.5,
+        ease: "none",
+      },
+      0.3
+    );
 
     // ── ScrollTrigger: pin the section, scrub the timeline ──────────────────
     // Extra scroll space = 3× viewport heights so each phase gets room
@@ -977,99 +967,47 @@
     gsap.set(animLine, {
       top: firstDotCenter,
       height: lineFullHeight,
-      scaleY: 0,
+      scaleY: 1,
+      autoAlpha: 0,
       transformOrigin: "top center",
     });
     gsap.set(dots, {
-      scale: 0,
+      scale: 1,
       autoAlpha: 0,
       transformOrigin: "center center",
     });
-    gsap.set(textNodes, { autoAlpha: 0, x: 28 });
+    gsap.set(textNodes, { autoAlpha: 0, x: 0 });
 
     var mobileTL = gsap.timeline({ paused: true });
 
-    items.forEach(function (item, index) {
-      var itemStart = index * 0.18;
-      var itemText = item.querySelectorAll(".value-para h3, .value-para p");
-      var dot = item.querySelector(".timeline-dot");
+    // Fade in line, dots, and text
+    mobileTL.to(
+      animLine,
+      { autoAlpha: 1, duration: 0.15, ease: "power1.out" },
+      0
+    );
+    mobileTL.to(
+      dots,
+      { autoAlpha: 1, duration: 0.15, ease: "power2.out" },
+      0
+    );
+    mobileTL.to(
+      textNodes,
+      { autoAlpha: 1, duration: 0.15, ease: "power1.out" },
+      0
+    );
 
-      mobileTL.to(
-        textWrapper,
-        {
-          y: itemPositions[index].y,
-          duration: index === 0 ? 0.01 : 0.1,
-          ease: "power1.inOut",
-        },
-        itemStart,
-      );
+    // Scroll through the list (translate Y)
+    mobileTL.to(
+      textWrapper,
+      {
+        y: itemPositions[itemPositions.length - 1].y,
+        duration: 1.5,
+        ease: "none",
+      },
+      0.2
+    );
 
-      mobileTL.to(
-        animLine,
-        {
-          scaleY: Math.max(0, Math.min(1, itemPositions[index].lineProgress)),
-          duration: index === 0 ? 0.01 : 0.12,
-          ease: "power1.inOut",
-        },
-        itemStart + 0.01,
-      );
-
-      if (dot) {
-        mobileTL.to(
-          dot,
-          { scale: 1, autoAlpha: 1, duration: 0.06, ease: "back.out(2)" },
-          itemStart + 0.03,
-        );
-      }
-
-      mobileTL.to(
-        itemText,
-        {
-          autoAlpha: 1,
-          x: 0,
-          duration: 0.08,
-          ease: "power3.out",
-          stagger: 0.02,
-        },
-        itemStart + 0.05,
-      );
-
-      if (index > 0) {
-        var previousText = items[index - 1].querySelectorAll(
-          ".value-para h3, .value-para p",
-        );
-        mobileTL.to(
-          previousText,
-          {
-            autoAlpha: 1,
-            duration: 0.08,
-            ease: "power1.out",
-          },
-          itemStart,
-        );
-      }
-
-      if (index > 1) {
-        var olderText = items[index - 2].querySelectorAll(
-          ".value-para h3, .value-para p",
-        );
-        mobileTL.to(
-          olderText,
-          {
-            autoAlpha: 0,
-            duration: 0.08,
-            ease: "power1.out",
-          },
-          itemStart,
-        );
-      }
-    });
-
-    mobileTL.to(animLine, {
-      scaleY: 1,
-      duration: 0.1,
-      ease: "power1.inOut",
-    });
     mobileTL.to({}, { duration: 0.16 });
 
     coreValuesTrigger = ScrollTrigger.create({
@@ -1234,4 +1172,39 @@
       init();
     }, 180);
   });
+})();
+
+// ============================================================
+// FOOTER REVEAL SECTION
+// ============================================================
+(function initFooterReveal() {
+  if (!document.querySelector("body.about-us-page")) return;
+  
+  var wrapper = document.querySelector(".main-content-wrapper");
+  var footerWrap = document.querySelector(".footer-reveal-wrapper");
+  if (!wrapper || !footerWrap) return;
+
+  function updateFooterMargin() {
+    var h = footerWrap.offsetHeight;
+    wrapper.style.marginBottom = h + "px";
+  }
+
+  // Initial update
+  updateFooterMargin();
+
+  // Update on resize
+  window.addEventListener("resize", updateFooterMargin);
+  window.addEventListener("load", updateFooterMargin);
+
+  // Set CSS for fixed footer to prevent jerking on scroll
+  gsap.set(footerWrap, {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    zIndex: 0
+  });
+
+  // Make sure body doesn't overlap if it has background
+  gsap.set(document.body, { backgroundColor: "transparent" });
 })();

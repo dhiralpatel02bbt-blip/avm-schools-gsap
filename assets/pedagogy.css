@@ -120,7 +120,7 @@ body.pedagogy-page header .black-logo {
 
 .pedagogy-page .campus-section .panel-title {
   font-family: Satoshi;
-  font-size: 2.4em;
+  font-size: 2.3em;
   line-height: 112%;
   font-weight: 700;
 }
@@ -925,7 +925,7 @@ body.pedagogy-page header .black-logo {
   color: #0a3d9c;
   text-align: center;
   font-family: Satoshi;
-  font-size: 2.4em;
+  font-size: 2.3em;
   font-weight: 700;
   line-height: 112%;
   padding-bottom: 128px;
@@ -993,6 +993,8 @@ body.pedagogy-page header .black-logo {
 .tabbing-sec .section-grid {
   display: grid;
   gap: 90px;
+  margin: auto;
+  width: 80%;
 }
 
 .tabbing-sec .feature-block {
@@ -1013,7 +1015,7 @@ body.pedagogy-page header .black-logo {
   display: flex;
   flex-direction: column;
   gap: 115px;
-  width: 66%;
+  width: 90%;
 }
 
 .tabbing-sec .feature {
@@ -1544,7 +1546,7 @@ body.pedagogy-page header .black-logo {
 .text-content h2 {
   color: #fff;
   font-family: Satoshi;
-  font-size: 2.7em;
+  font-size: 2.3em;
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
@@ -1559,36 +1561,30 @@ body.pedagogy-page header .black-logo {
   line-height: 154%;
 }
 
-/* Extra Section — Swiper Slider */
-.extra-slider-clip {
-  overflow: visible;
+/* Extra Section — GSAP Horizontal Scroll */
+.extra-horizontal {
   position: relative;
-  z-index: 1;
+  overflow: hidden;
   width: 100%;
-  padding-left: calc(7.1vw + 0px);
-  padding-right: 0;
-  box-sizing: border-box;
-}
-
-.extra-swiper {
-  width: 100%;
-  overflow: visible;
-  position: relative;
-  z-index: 1;
-}
-
-/* Clip only horizontal overflow (for slide transition), allow vertical */
-.extra-section .swiper-clip {
-  overflow-x: hidden;
-  overflow-y: visible;
-}
-
-.extra-swiper .swiper-wrapper {
+  flex: 0 0 auto;
+  display: flex;
   align-items: flex-start;
+  min-height: 0;
+  padding-bottom: 0;
+  padding-left: calc(7.1vw + 0px);
+  z-index: 1;
 }
 
-.extra-swiper .swiper-slide {
-  width: min(100vw, 1612px);
+.extra-track {
+  display: flex;
+  align-items: flex-start;
+  width: max-content;
+  will-change: transform;
+}
+
+.extra-slide {
+  flex: 0 0 min(100vw, 1612px);
+  position: relative;
   box-sizing: border-box;
 }
 
@@ -1646,7 +1642,7 @@ body.pedagogy-page header .black-logo {
   background: transparent;
 }
 
-.extra-swiper .swiper-slide:nth-child(odd) .card::after {
+.extra-slide:nth-child(odd) .card::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -1656,7 +1652,7 @@ body.pedagogy-page header .black-logo {
   background: #f7df00;
 }
 
-.extra-swiper .swiper-slide:nth-child(odd) .card::before {
+.extra-slide:nth-child(odd) .card::before {
   content: "";
   position: absolute;
   bottom: -25px;
@@ -1666,7 +1662,7 @@ body.pedagogy-page header .black-logo {
   background: #fc8b5f;
 }
 
-.extra-swiper .swiper-slide:nth-child(even) .card::after {
+.extra-slide:nth-child(even) .card::after {
   content: "";
   position: absolute;
   top: 0;
@@ -1676,7 +1672,7 @@ body.pedagogy-page header .black-logo {
   background: #beacff;
 }
 
-.extra-swiper .swiper-slide:nth-child(even) .card::before {
+.extra-slide:nth-child(even) .card::before {
   content: "";
   position: absolute;
   top: -25px;
@@ -1700,7 +1696,7 @@ body.pedagogy-page header .black-logo {
 }
 
 @media (max-width: 1200px) {
-  .extra-slider-clip {
+  .extra-horizontal {
     padding-left: calc(6.5vw + 20px);
   }
 
@@ -1750,26 +1746,24 @@ body.pedagogy-page header .black-logo {
     line-height: 114%;
   }
 
-  .extra-slider-clip {
+  .extra-horizontal {
     padding: 0 70px;
     overflow: visible;
+    display: block;
+    width: auto;
   }
 
-  .extra-swiper,
-  .extra-section .swiper-clip {
-    overflow: visible;
-  }
-
-  .extra-swiper .swiper-wrapper {
+  .extra-track {
     display: flex;
     flex-direction: column;
     gap: 73px;
     transform: none !important;
-    height: auto !important;
+    width: 100%;
   }
 
-  .extra-swiper .swiper-slide {
+  .extra-slide {
     width: 100% !important;
+    flex: none;
     margin: 0 !important;
     transform: none !important;
   }
@@ -1795,8 +1789,12 @@ body.pedagogy-page header .black-logo {
     background: #f7df00;
   }
 
-  .extra-swiper .swiper-slide:nth-child(even) .card-label {
+  .extra-slide:nth-child(even) .card-label {
     background: #beacff;
+  }
+
+  .extra-slide:nth-child(odd) .card-label {
+    background: #fc8b5f;
   }
 
   .extra-section .card-label h3 {
@@ -1807,8 +1805,8 @@ body.pedagogy-page header .black-logo {
     letter-spacing: 0.13px;
   }
 
-  .extra-swiper .swiper-slide .card::before,
-  .extra-swiper .swiper-slide .card::after {
+  .extra-slide .card::before,
+  .extra-slide .card::after {
     display: none;
   }
 }
@@ -3122,4 +3120,26 @@ body.pedagogy-page header .black-logo {
 /* ── Extra Section: Scroll-jacked slide per scroll ── */
 .extra-section-pin-spacer-custom {
   pointer-events: none;
+}
+
+/* Footer reveal CSS */
+.pedagogy-page .main-content-wrapper {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    /* margin-bottom will be set by JS */
+}
+
+.pedagogy-page .footer-reveal-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+}
+
+.pedagogy-page .footer-reveal-wrapper .contact-sec {
+    margin-top: 0;
+    transform: none;
+    z-index: auto;
 }

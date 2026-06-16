@@ -1,11 +1,18 @@
 @media (max-width: 991.9px) {
-
   .our-school-page .offcanvas-menu label span,
   .offcanvas-menu label span::before,
   .offcanvas-menu label span::after {
     background: #fff;
   }
 }
+
+/* -YP start: neutralize contact-sec's built-in overlap hack so
+   footerWrap.offsetHeight measures the real rendered height */
+.our-school-page .footer-reveal-wrapper .contact-sec {
+  margin-top: 0;
+  transform: none;
+}
+/* -YP end */
 
 /* Fix: keep header always visible on our-school page */
 /* .our-school-page header.header {
@@ -33,27 +40,9 @@
   overflow: hidden;
 }
 
-.campus-media,
-.campus-slider-shell,
-.campus-sequence-swiper,
-.campus-sequence-swiper .swiper-slide {
+.campus-media {
   width: 100%;
   height: 100%;
-}
-
-.campus-sequence-swiper {
-  overflow: hidden;
-}
-
-.campus-sequence-swiper .swiper-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: max-content;
-  will-change: transform;
-}
-
-.campus-media {
   position: absolute;
   inset: 0;
 }
@@ -66,30 +55,34 @@
   object-position: center;
 }
 
-.campus-slider-shell {
+.campus-stack {
   position: absolute;
   inset: 0;
   z-index: 2;
+  opacity: 0;
   pointer-events: none;
 }
 
-.campus-sequence-swiper,
-.campus-sequence-swiper .swiper-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.campus-sequence-slide {
-  width: 100%;
-  min-width: 100%;
-  height: 100%;
-  min-height: 100%;
+.campus-slide {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  will-change: clip-path;
+  will-change: transform;
+}
+
+.campus-slide.slide-1 {
+  z-index: 3;
+}
+
+.campus-slide.slide-2 {
+  z-index: 2;
+}
+
+.campus-slide.slide-3 {
+  z-index: 1;
 }
 
 .campus-slide-visual {
@@ -118,16 +111,13 @@
   background: #f7df00;
   border-radius: 50%;
   z-index: 0;
-  will-change: transform, opacity;
 }
 
 .campus-slide-text {
   position: relative;
   z-index: 1;
   padding: 0;
-  opacity: 0;
-  transform: translateY(30px);
-  will-change: transform, opacity;
+  opacity: 1;
   width: 60%;
   top: 170px;
   left: -104px;
@@ -143,30 +133,15 @@
   line-height: 139%;
 }
 
-.campus-sequence-pagination {
-  display: none;
-}
-
-.campus-sequence-pagination .swiper-pagination-bullet {
-  width: 10px;
-  height: 10px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  opacity: 1;
-  transition: background 0.3s ease, transform 0.3s ease;
-  cursor: pointer;
-  margin: 0 !important;
-}
-
-.campus-sequence-pagination .swiper-pagination-bullet-active {
-  background: #fff;
-  transform: scale(1.35);
-}
-
-.our-school-page .location-section,
-.our-school-page .contact-sec {
+.our-school-page .location-section {
   position: relative;
   z-index: 20;
+  margin-top: -2px;
+}
+
+.our-school-page .footer-reveal-wrapper {
+  position: relative;
+  z-index: 10;
 }
 
 .our-school-page .campus-section {
@@ -240,7 +215,7 @@ body.our-school-page {
   z-index: 1;
   color: #fff;
   font-family: Satoshi;
-  font-size: 2.4em;
+  font-size: 2.3em;
   font-weight: 700;
   line-height: 112%;
 }
@@ -327,9 +302,7 @@ body.our-school-page {
 
   .campus-stage,
   .campus-viewport,
-  .campus-slider-shell,
-  .campus-sequence-swiper,
-  .campus-sequence-swiper .swiper-wrapper {
+  .campus-stack {
     position: relative;
     width: 100%;
     height: auto;
@@ -341,8 +314,7 @@ body.our-school-page {
     padding: calc(max(100vh, 540px) + 86px) 0 0;
   }
 
-  .campus-slide-circle,
-  .campus-sequence-pagination {
+  .campus-slide-circle {
     display: none;
   }
 
@@ -398,19 +370,19 @@ body.our-school-page {
     display: none;
   }
 
-  .campus-slider-shell {
+  .campus-stack {
     inset: auto;
     z-index: 1;
     width: 86%;
     margin: 50px auto;
-  }
-
-  .campus-sequence-swiper .swiper-wrapper {
     display: grid;
     gap: 20px;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: relative;
   }
 
-  .campus-sequence-slide {
+  .campus-slide {
     position: relative;
     top: auto;
     left: auto;
@@ -449,9 +421,11 @@ body.our-school-page {
     display: flex;
     align-items: flex-end;
     padding: 42px 16px 16px;
-    background: linear-gradient(180deg,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.78) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.78) 100%
+    );
   }
 
   .campus-slide-text {
@@ -486,7 +460,7 @@ body.our-school-page {
     left: -20%;
   }
 
-  .campus-slider-shell {
+  .campus-stack {
     margin: 38px auto 0 auto;
   }
 
@@ -520,7 +494,7 @@ body.our-school-page {
     letter-spacing: 0.13px;
   }
 
-  .campus-sequence-swiper .swiper-wrapper {
+  .campus-stack {
     gap: 17px;
   }
 
@@ -530,7 +504,6 @@ body.our-school-page {
 }
 
 @media (max-width: 576.9px) {
-
   /* .campus-slide-visual img {
     max-width: 576px;
   } */
@@ -567,7 +540,7 @@ section.development-sec {
 .development-sec h2.title-txt {
   color: #0a3d9c;
   font-family: Satoshi;
-  font-size: 2.6em;
+  font-size: 2.3em;
   font-weight: 700;
   line-height: 112%;
   width: 39%;
@@ -763,7 +736,7 @@ section.development-sec {
 
   .dev-track {
     padding: 0 max(12px, calc((100vw - 1320px) / 2 + 100px));
-    gap: 217px
+    gap: 217px;
   }
 }
 
@@ -794,7 +767,7 @@ section.development-sec {
     overflow: visible;
     padding: 0;
     width: 86%;
-    margin: 40px auto;
+    margin: 40px auto 0;
   }
 
   .dev-track {
@@ -1015,7 +988,6 @@ section.development-sec {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .our-school-page .campus-heading,
   .our-school-page .campus-grid {
     visibility: visible;
@@ -1028,7 +1000,7 @@ section.development-sec {
   gap: 40px;
   align-items: flex-start;
   padding: 130px 0;
-  margin-top: 96px;
+  /* margin-top: 96px; */
   position: relative;
 }
 
@@ -1036,7 +1008,6 @@ section.development-sec {
   .our-school-page .location-section {
     min-height: 100vh;
     box-sizing: border-box;
-    margin-top: -100vh;
     will-change: transform;
   }
 }
@@ -1051,7 +1022,7 @@ section.development-sec {
   flex: 0 0 200px;
   color: #0a3d9c;
   font-family: Satoshi;
-  font-size: 2.7em;
+  font-size: 2.3em;
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
@@ -1156,7 +1127,7 @@ section.development-sec {
   }
 }
 
-@media(max-width: 1366px) {
+@media (max-width: 1366px) {
   .campus-grid {
     width: 80%;
   }
@@ -1208,7 +1179,7 @@ section.development-sec {
 @media (max-width: 767.9px) {
   .location-section {
     padding: 59px 0 89px 0;
-    margin-top: 74px;
+    margin-top: 0px;
   }
 
   .location-section::before {

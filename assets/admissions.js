@@ -305,3 +305,35 @@
     );
   }
 })();
+
+// Footer Reveal Effect Setup
+(function initFooterReveal() {
+  var wrapper = document.querySelector(".main-content-wrapper");
+  if (!wrapper) return;
+
+  var deskFooter = document.querySelector(".bbt-FA-main-footer.desk-footer");
+  var mobFooter = document.querySelector(".bbt-FA-main-footer.mob-footer");
+
+  function updateFooterMargin() {
+    var activeFooter = null;
+    
+    // Determine which footer is currently active based on display property or media query
+    if (deskFooter && window.getComputedStyle(deskFooter).display !== "none") {
+      activeFooter = deskFooter;
+    } else if (mobFooter && window.getComputedStyle(mobFooter).display !== "none") {
+      activeFooter = mobFooter;
+    }
+
+    if (activeFooter) {
+      wrapper.style.marginBottom = activeFooter.offsetHeight + "px";
+    }
+  }
+
+  window.addEventListener("resize", updateFooterMargin);
+  window.addEventListener("load", updateFooterMargin);
+  
+  // Initial check
+  updateFooterMargin();
+  // Double check after fonts and images might have loaded
+  setTimeout(updateFooterMargin, 500);
+})();

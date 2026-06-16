@@ -360,3 +360,88 @@
     });
   }
 })();
+
+// ============================================================
+// Pin Featured News Section
+// ============================================================
+(function pinFeaturedNews() {
+  var featuredSec = document.querySelector(".featured-news-sec");
+  var nextSec = document.querySelector(".bbt-fa-news-sec");
+  if (!featuredSec || !nextSec) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) return;
+
+  // Set zIndex before pinning so the GSAP pin-spacer inherits it.
+  // We use zIndex: 2 so it sits above the footer (1) but below the next section (3).
+  gsap.set(featuredSec, { zIndex: 2, position: "relative" });
+
+  ScrollTrigger.create({
+    trigger: featuredSec,
+    start: "top top",
+    endTrigger: nextSec,
+    end: "top top", // unpin when section 2 fully covers it
+    pin: true,
+    pinSpacing: false
+  });
+})();
+
+// ============================================================
+// Footer Reveal (Global Fixed - Jitter Free)
+// ============================================================
+(function initFooterReveal() {
+  var footers = document.querySelectorAll(".bbt-FA-main-footer");
+  var prevSec = document.querySelector(".bbt-fa-news-sec");
+  
+  if (!footers.length || !prevSec) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) return;
+
+  // Ensure previous section is on top to slide over the footer AND the featured section
+  gsap.set(prevSec, { zIndex: 3, position: "relative" });
+
+  function updateFooterReveal() {
+    var activeFooter = null;
+    footers.forEach(function(f) {
+      if (getComputedStyle(f).display !== "none") {
+        activeFooter = f;
+      } else {
+        gsap.set(f, { clearProps: "all" });
+      }
+    });
+
+    if (activeFooter) {
+      var h = activeFooter.offsetHeight;
+
+      // Apply fixed reveal globally if it fits on screen
+      if (h < window.innerHeight) {
+        gsap.set(activeFooter, {
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 1, // Stay firmly behind featuredSec (2) and prevSec (3)
+          clearProps: "transform"
+        });
+        gsap.set(prevSec, {
+          marginBottom: h + "px"
+        });
+      } else {
+        // Fallback for very small screens/tall footers: standard scroll
+        gsap.set(activeFooter, { clearProps: "all" });
+        gsap.set(prevSec, { clearProps: "marginBottom" });
+      }
+    }
+  }
+
+  updateFooterReveal();
+
+  var resizeTimer;
+  window.addEventListener("resize", function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(updateFooterReveal, 100);
+  });
+})();
