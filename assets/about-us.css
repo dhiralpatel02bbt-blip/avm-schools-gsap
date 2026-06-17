@@ -764,7 +764,7 @@ section.awareness-about-sec {
 .core-value-sec .text-wrapper .core-para h3 {
   color: #fff;
   font-family: Poppins;
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-style: normal;
   font-weight: 600;
   line-height: 154%;
@@ -800,10 +800,10 @@ section.awareness-about-sec {
 
 .core-value-sec .timeline-dot {
   position: absolute;
-  left: calc(var(--core-timeline-x) - 20.5px);
-  top: 10px;
-  width: 41px;
-  height: 41px;
+  left: calc(var(--core-timeline-x) - 15.5px);
+  top: 18px;
+  width: 30px;
+  height: 30px;
   background-color: #f7df00;
   border-radius: 50%;
   z-index: 1;
@@ -1418,21 +1418,22 @@ section.awareness-about-sec {
 
 /* Footer Reveal CSS */
 .about-us-page .main-content-wrapper {
-    position: relative;
-    z-index: 1;
-    background-color: #0a3d9c; /* Important to hide the fixed footer behind it */
+  position: relative;
+  z-index: 1;
+  background-color: #0a3d9c;
+  /* Important to hide the fixed footer behind it */
 }
 
 .about-us-page .footer-reveal-wrapper {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
 }
 
 .about-us-page .footer-reveal-wrapper .contact-sec {
-    margin-top: 0;
-    transform: none;
-    z-index: auto;
+  margin-top: 0;
+  transform: none;
+  z-index: auto;
 }

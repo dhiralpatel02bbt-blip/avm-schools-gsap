@@ -358,14 +358,18 @@
 
       tabScrollTL.to({}, { duration: 0.12 });
 
+      var tabSpacer = document.createElement("div");
+      tabSpacer.style.height = (window.innerHeight * (tabCards.length + 2)) + "px";
+      stage.parentNode.insertBefore(tabSpacer, stage.nextSibling);
+
       ScrollTrigger.create({
         trigger: stage,
         start: "top top",
         end: function () {
-          return "+=" + window.innerHeight * (tabCards.length + 2);
+          return "+=" + window.innerHeight * (tabCards.length + 3);
         },
         pin: true,
-        pinSpacing: true,
+        pinSpacing: false,
         anticipatePin: 1,
         scrub: 1.05,
         animation: tabScrollTL,
@@ -521,7 +525,7 @@
           scale: 14,
           transformOrigin: "center center",
           ease: "power2.inOut",
-          duration: 0.05,
+          duration: 0.5,
           force3D: true,
         },
         0,
@@ -529,39 +533,39 @@
     }
 
     if (heroGlowCircle)
-      scrollTL.to(heroGlowCircle, { opacity: 0, duration: 0.03 }, 0.01);
+      scrollTL.to(heroGlowCircle, { opacity: 0, duration: 0.2 }, 0.05);
     if (panelKicker)
       scrollTL.fromTo(
         panelKicker,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -30, duration: 0.03 },
-        0.01,
+        { opacity: 0, x: -30, duration: 0.2 },
+        0.05,
       );
     if (panelTitle)
       scrollTL.fromTo(
         panelTitle,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -40, duration: 0.03 },
-        0.02,
+        { opacity: 0, x: -40, duration: 0.2 },
+        0.1,
       );
     if (panelBody)
       scrollTL.fromTo(
         panelBody,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -30, duration: 0.03 },
-        0.02,
+        { opacity: 0, x: -30, duration: 0.2 },
+        0.1,
       );
 
     // Diagram reveal
     scrollTL.set(
       diagramSec,
       { visibility: "visible", pointerEvents: "auto" },
-      0.05,
+      0.5,
     );
     scrollTL.to(
       diagramSec,
-      { opacity: 1, duration: 0.05, ease: "power2.out" },
-      0.05,
+      { opacity: 1, duration: 0.1, ease: "power2.out" },
+      0.5,
     );
     // -YP start
     // 1. Center and Orbit grow FIRST (slowly on scroll)
@@ -569,14 +573,14 @@
       scrollTL.to(
         diagramCenter,
         { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.05,
+        0.5,
       );
     }
     if (diagramOrbit) {
       scrollTL.to(
         diagramOrbit,
         { opacity: 0.95, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.1,
+        0.55,
       );
     }
 
@@ -584,30 +588,30 @@
     // -YP start
     nodes.forEach(function (n) {
       if (n)
-        scrollTL.to(n, { opacity: 1, duration: 0.05, ease: "power2.out" }, 0.4);
+        scrollTL.to(n, { opacity: 1, duration: 0.05, ease: "power2.out" }, 0.85);
     });
     // -YP end
     labels.forEach(function (l) {
       if (l)
-        scrollTL.to(l, { opacity: 1, duration: 0.05, ease: "power2.out" }, 0.4);
+        scrollTL.to(l, { opacity: 1, duration: 0.05, ease: "power2.out" }, 0.85);
     });
     labelTitles.forEach(function (t) {
       if (t)
         scrollTL.to(
           t,
           { opacity: 0.35, duration: 0.05, ease: "power2.out" },
-          0.4,
+          0.85,
         );
     });
 
     var SMALL = 22,
       BIG = 44,
       TOTAL = nodes.length;
-    var slice = 0.55 / TOTAL; // 0.45 to 1.00 is 0.55
+    var slice = 0.55 / TOTAL; // 0.90 to 1.45 is 0.55
     // -YP end
 
     for (var i = 0; i < TOTAL; i++) {
-      var s = 0.45 + i * slice;
+      var s = 0.9 + i * slice;
       var mid = s + slice * 0.15;
       var end = s + slice * 0.85;
 
@@ -675,6 +679,8 @@
         );
       }
     }
+    
+    scrollTL.to({}, { duration: 0.333 });
     // -YP end
 
     // ── Inject bottom fade div (shown only after last node animates) ──
@@ -682,13 +688,17 @@
     fadeDiv.className = "diagram-bottom-fade";
     stage.appendChild(fadeDiv);
 
+    var desktopSpacer = document.createElement("div");
+    desktopSpacer.style.height = "500vh";
+    stage.parentNode.insertBefore(desktopSpacer, stage.nextSibling);
+
     // ── Pin stage + scrub ────────────────────────────────
     ScrollTrigger.create({
       trigger: stage,
       start: "top top",
-      end: "+=300%",
+      end: "+=600%",
       pin: true,
-      pinSpacing: true,
+      pinSpacing: false,
       anticipatePin: 1,
       scrub: 0.8,
       animation: scrollTL,
@@ -698,8 +708,8 @@
           loadTL.kill();
           loadTL = null;
         }
-        // Show fade only after last node has animated (progress >= 0.95)
-        if (self.progress >= 0.95) {
+        // Show fade only after last node has animated
+        if (self.progress >= 0.81) {
           fadeDiv.classList.add("visible");
         } else {
           fadeDiv.classList.remove("visible");
@@ -1183,72 +1193,78 @@ tabs.forEach((tab) => {
   if (!document.querySelector("body.pedagogy-page")) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  // ── Step 1: wrap + hide immediately at parse time ─────────────────
-  // Runs synchronously before DOMContentLoaded, IntersectionObserver,
-  // or any other code that might reveal the image.
-  function wrapNow(colSelector, maskClass) {
+  function wrapNow(colSelector, maskClass, direction) {
     var col = document.querySelector(colSelector);
     if (!col) return;
     var img = col.querySelector("img");
     if (!img || col.querySelector("." + maskClass)) return;
 
+    var transformOrigin = direction === "rtl" ? "right center" : "left center";
+
     var mask = document.createElement("div");
     mask.className = maskClass;
-    // Inline style: hidden immediately, no CSS specificity fights
-    mask.style.cssText =
-      "display:block;overflow:hidden;" +
-      "clip-path:inset(100% 0% 0% 0%);" +
-      "will-change:clip-path;";
-    img.style.cssText +=
-      ";transform:scale(1.06);transform-origin:center bottom;will-change:transform;";
+    // Hide synchronously with visibility to prevent flash, GSAP will reveal it
+    mask.style.cssText = "display:block;overflow:hidden;visibility:hidden;will-change:clip-path;";
+    img.style.cssText += ";transform-origin:" + transformOrigin + ";will-change:transform;";
     img.parentNode.insertBefore(mask, img);
     mask.appendChild(img);
+
+    // Disable CSS transition on col immediately so it doesn't fight GSAP
+    col.style.transition = "none";
+    col.style.opacity = "1";
+    col.style.transform = "none";
   }
 
-  wrapNow(".aym-section .aym-img-col", "aym-img-mask");
-  wrapNow(".avm-section .avm-img-col", "avm-img-mask");
+  wrapNow(".aym-section .aym-img-col", "aym-img-mask", "ltr");
+  wrapNow(".avm-section .avm-img-col", "avm-img-mask", "rtl");
 
-  // ── Step 2: register ScrollTrigger after load ─────────────────────
-  function registerWipe(colSelector, maskClass) {
+  function registerWipe(colSelector, maskClass, direction) {
     var col = document.querySelector(colSelector);
-    if (
-      !col ||
-      typeof gsap === "undefined" ||
-      typeof ScrollTrigger === "undefined"
-    )
-      return;
+    if (!col || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
 
     var mask = col.querySelector("." + maskClass);
     if (!mask) return;
     var img = mask.querySelector("img");
 
-    // Hand clip-path from inline style to GSAP
-    gsap.set(mask, { clipPath: "inset(100% 0% 0% 0%)" });
-    mask.style.clipPath = "";
+    var startClip = direction === "rtl" ? "inset(0% 0% 0% 100%)" : "inset(0% 100% 0% 0%)";
+
+    // Foolproof fromTo pattern guarantees start and end states
+    gsap.fromTo(
+      mask,
+      { clipPath: startClip, autoAlpha: 1 }, // autoAlpha removes visibility:hidden
+      {
+        clipPath: "inset(0% 0% 0% 0%)",
+        ease: "power2.inOut",
+        scrollTrigger: {
+          trigger: col,
+          start: "top 80%",
+          end: "top 30%",
+          scrub: 1,
+        },
+      }
+    );
+
     if (img) {
-      gsap.set(img, { scale: 1.06, transformOrigin: "center bottom" });
-      img.style.transform = "";
+      gsap.fromTo(
+        img,
+        { scale: 1.06 },
+        {
+          scale: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: col,
+            start: "top 80%",
+            end: "top 30%",
+            scrub: 1,
+          },
+        }
+      );
     }
-
-    ScrollTrigger.create({
-      trigger: col,
-      start: "top 88%",
-      once: true,
-      onEnter: function () {
-        // Make the column visible (CSS has opacity:0 on it)
-        gsap.set(col, { opacity: 1, x: 0, clearProps: "transform" });
-
-        // Wipe the mask open from bottom
-        var tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
-        tl.to(mask, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.1 }, 0);
-        if (img) tl.to(img, { scale: 1, duration: 1.3, ease: "power2.out" }, 0);
-      },
-    });
   }
 
   function init() {
-    registerWipe(".aym-section .aym-img-col", "aym-img-mask");
-    registerWipe(".avm-section .avm-img-col", "avm-img-mask");
+    registerWipe(".aym-section .aym-img-col", "aym-img-mask", "ltr");
+    registerWipe(".avm-section .avm-img-col", "avm-img-mask", "rtl");
     if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
   }
 
@@ -1274,6 +1290,26 @@ tabs.forEach((tab) => {
     var extraTrack = document.querySelector(".extra-track");
     if (!extraSec || !extraTrack) return;
 
+    var textContent = extraSec.querySelector(".text-content");
+    var extraHorizontal = extraSec.querySelector(".extra-horizontal");
+    if (textContent && extraHorizontal) {
+      gsap.set([textContent, extraHorizontal], { autoAlpha: 0, y: 40 });
+      ScrollTrigger.create({
+        trigger: extraSec,
+        start: "top top",
+        once: true,
+        onEnter: function () {
+          gsap.to([textContent, extraHorizontal], {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.9,
+            stagger: 0.2,
+            ease: "power3.out"
+          });
+        }
+      });
+    }
+
     var slides = Array.from(extraTrack.querySelectorAll(".extra-slide"));
     if (!slides.length) return;
 
@@ -1294,13 +1330,7 @@ tabs.forEach((tab) => {
           start: "top top",
           end: () => "+=" + (Math.abs(getScrollAmount()) * 0.35),
           pin: true,
-          scrub: true,
-          snap: {
-            snapTo: 1 / (slides.length - 1),
-            duration: { min: 0.2, max: 0.6 },
-            delay: 0,
-            ease: "power2.inOut"
-          },
+          scrub: 1,
           invalidateOnRefresh: true,
         }
       });
@@ -1340,4 +1370,25 @@ tabs.forEach((tab) => {
   updateFooterMargin();
   // Double check after fonts and images might have loaded
   setTimeout(updateFooterMargin, 500);
+})();
+
+// Background transition between tabbing-sec and extra-section
+(function initBgTransition() {
+  const tabbingSec = document.querySelector(".tabbing-sec");
+  const extraSec = document.querySelector(".extra-section");
+  
+  if (!tabbingSec || !extraSec) return;
+
+  // We want the transition to happen when the extra section enters from 50% to 100% of the viewport.
+  // "top center" means the top of extra-section hits the center of the viewport (50% in).
+  // "top top" means the top of extra-section hits the top of the viewport (100% in).
+  ScrollTrigger.create({
+    trigger: extraSec,
+    start: "top center", 
+    end: "top top",      
+    scrub: true,
+    animation: gsap.timeline()
+      .to(tabbingSec, { backgroundColor: "#0a3d9c", ease: "none" }, 0)
+      .fromTo(extraSec, { backgroundColor: "#ffffff" }, { backgroundColor: "#0a3d9c", ease: "none" }, 0)
+  });
 })();

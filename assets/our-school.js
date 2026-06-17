@@ -191,7 +191,8 @@
   // Phase 2: Fade out initial elements (Blue Circle & Text)
   // Duration of 10 units for a smoother exit
   masterTL.fromTo(campusHalfCircle, { xPercent: 0, autoAlpha: 1 }, { xPercent: -100, autoAlpha: 0, ease: "none", duration: 10, immediateRender: false }, 0.1);
-  masterTL.fromTo(campusText, { x: 0, autoAlpha: 1 }, { x: -180, autoAlpha: 0, filter: "none", ease: "none", duration: 10, immediateRender: false }, 0.1);
+  masterTL.fromTo(campusText, { x: 0 }, { x: -180, filter: "none", ease: "none", duration: 10, immediateRender: false }, 0.1);
+  masterTL.fromTo(campusText, { autoAlpha: 1 }, { autoAlpha: 0, ease: "none", duration: 4, immediateRender: false }, 0.1);
   masterTL.to(campusStaticMedia, { scale: 1, ease: "none", duration: 10 }, 0);
 
   // Bring in the stacked images cleanly
@@ -340,7 +341,7 @@
     ScrollTrigger.refresh();
     ScrollTrigger.create({
       trigger: section,
-      start: "top 85%",
+      start: "top 15%",
       once: true,
       onEnter: revealLocationSection,
       invalidateOnRefresh: true,
@@ -352,7 +353,7 @@
         ScrollTrigger.refresh();
         ScrollTrigger.create({
           trigger: section,
-          start: "top 85%",
+          start: "top 15%",
           once: true,
           onEnter: revealLocationSection,
           invalidateOnRefresh: true,
@@ -398,7 +399,7 @@ if (
 // ============================================================
 (function initFooterReveal() {
   if (!document.querySelector("body.our-school-page")) return;
-  
+
   var footerWrap = document.querySelector(".footer-reveal-wrapper");
   var locationSec = document.querySelector(".location-section");
   if (!footerWrap || !locationSec) return;

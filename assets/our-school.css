@@ -1,18 +1,11 @@
 @media (max-width: 991.9px) {
+
   .our-school-page .offcanvas-menu label span,
   .offcanvas-menu label span::before,
   .offcanvas-menu label span::after {
     background: #fff;
   }
 }
-
-/* -YP start: neutralize contact-sec's built-in overlap hack so
-   footerWrap.offsetHeight measures the real rendered height */
-.our-school-page .footer-reveal-wrapper .contact-sec {
-  margin-top: 0;
-  transform: none;
-}
-/* -YP end */
 
 /* Fix: keep header always visible on our-school page */
 /* .our-school-page header.header {
@@ -136,7 +129,6 @@
 .our-school-page .location-section {
   position: relative;
   z-index: 20;
-  margin-top: -2px;
 }
 
 .our-school-page .footer-reveal-wrapper {
@@ -421,11 +413,9 @@ body.our-school-page {
     display: flex;
     align-items: flex-end;
     padding: 42px 16px 16px;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.78) 100%
-    );
+    background: linear-gradient(180deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.78) 100%);
   }
 
   .campus-slide-text {
@@ -504,6 +494,7 @@ body.our-school-page {
 }
 
 @media (max-width: 576.9px) {
+
   /* .campus-slide-visual img {
     max-width: 576px;
   } */
@@ -736,7 +727,7 @@ section.development-sec {
 
   .dev-track {
     padding: 0 max(12px, calc((100vw - 1320px) / 2 + 100px));
-    gap: 217px;
+    gap: 217px
   }
 }
 
@@ -988,6 +979,7 @@ section.development-sec {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .our-school-page .campus-heading,
   .our-school-page .campus-grid {
     visibility: visible;
@@ -1127,7 +1119,7 @@ section.development-sec {
   }
 }
 
-@media (max-width: 1366px) {
+@media(max-width: 1366px) {
   .campus-grid {
     width: 80%;
   }

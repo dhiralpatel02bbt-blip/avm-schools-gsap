@@ -25,7 +25,7 @@
     function () {
       requestAnimationFrame(scrollTop);
     },
-    { once: true },
+    { once: true }
   );
 
   window.addEventListener(
@@ -36,7 +36,7 @@
         ScrollTrigger.refresh();
       }
     },
-    { once: true },
+    { once: true }
   );
 })();
 
@@ -49,16 +49,16 @@ gsap.registerPlugin(ScrollTrigger);
 // HEADER (GSAP)
 //
 // Behavior:
-//   â¢ Page load pe hamesha visible
-//   â¢ Scroll DOWN â†’ header slide up (hide)
-//   â¢ Scroll UP   â†’ header slide down (show)
-//   â¢ Top of page â†’ hamesha show
+//   • Page load pe hamesha visible
+//   • Scroll DOWN → header slide up (hide)
+//   • Scroll UP   → header slide down (show)
+//   • Top of page → hamesha show
 //
 // Page-specific overrides:
-//   â¢ our-school-page: campus section ke andar hamesha visible rahega
-//     (campus section apna inline style set karta hai â” us dauraan
+//   • our-school-page: campus section ke andar hamesha visible rahega
+//     (campus section apna inline style set karta hai — us dauraan
 //      directional logic pause rahega)
-//   â¢ homepage (.bbt-dp-hero): hero section ke andar hamesha visible
+//   • homepage (.bbt-dp-hero): hero section ke andar hamesha visible
 // ============================================================
 (function initDirectionalHeader() {
   var hdr = document.querySelector("header.header");
@@ -77,7 +77,7 @@ gsap.registerPlugin(ScrollTrigger);
   // Homepage hero reference
   var homepageHero = document.querySelector(".bbt-dp-hero");
 
-  //  Helper: Campus section ke pin zone mein hain? 
+  // ── Helper: Campus section ke pin zone mein hain? ──────────────────
   // GSAP campusViewport ko pin karta hai 200vh ke liye.
   // Us dauraan header ko chhedna nahi chahiye.
   function insideCampusPin() {
@@ -87,14 +87,14 @@ gsap.registerPlugin(ScrollTrigger);
     return rect.top <= 0 && rect.bottom >= window.innerHeight * 0.5;
   }
 
-  //  Helper: Homepage hero ke andar hain? 
+  // ── Helper: Homepage hero ke andar hain? ───────────────────────────
   function insideHomepageHero() {
     if (!homepageHero) return false;
     var heroBottom = homepageHero.offsetTop + homepageHero.offsetHeight;
     return window.scrollY <= heroBottom - 100;
   }
 
-  //  Show / Hide functions 
+  // ── Show / Hide functions ───────────────────────────────────────────
   function showHeader() {
     if (!isHidden) return;
     isHidden = false;
@@ -119,27 +119,27 @@ gsap.registerPlugin(ScrollTrigger);
     });
   }
 
-  //  Scroll handler 
+  // ── Scroll handler ──────────────────────────────────────────────────
   function onScroll() {
     var currentY = window.scrollY;
     var direction = currentY > lastScrollY ? "down" : "up"; // down ya up
     var delta = Math.abs(currentY - lastScrollY);
 
-    // Top of page â” hamesha show
+    // Top of page — hamesha show
     if (currentY <= 10) {
       showHeader();
       lastScrollY = currentY;
       return;
     }
 
-    // Campus section pin zone â” header ko GSAP campus code control karta hai
+    // Campus section pin zone — header ko GSAP campus code control karta hai
     // Hum yahan kuch nahi karte
     if (insideCampusPin()) {
       lastScrollY = currentY;
       return;
     }
 
-    // Homepage hero zone â” hamesha show
+    // Homepage hero zone — hamesha show
     if (insideHomepageHero()) {
       showHeader();
       lastScrollY = currentY;
@@ -174,7 +174,7 @@ gsap.registerPlugin(ScrollTrigger);
         ticking = true;
       }
     },
-    { passive: true },
+    { passive: true }
   );
 
   // Resize pe headerH update karo
@@ -184,19 +184,19 @@ gsap.registerPlugin(ScrollTrigger);
 })();
 
 // ============================================================
-// INITIAL STATES â” Page load pe yeh positions hongi
+// INITIAL STATES — Page load pe yeh positions hongi
 // ============================================================
 
-// Burgundy BG â” adha left mein
+// Burgundy BG — adha left mein
 gsap.set(".burgundy-bg", { x: -220 });
 
-// Yellow circle â” aur neeche (screen ke bahar se thoda andar)
+// Yellow circle — aur neeche (screen ke bahar se thoda andar)
 gsap.set(".yellow-circle", { y: 380 });
 
-// Text â” spans ko individually hide karo
-// Laal bars (|) ki position se start karo â” yaani text apni jagah se
+// Text — spans ko individually hide karo
+// Laal bars (|) ki position se start karo — yaani text apni jagah se
 // thoda left pe start ho aur wahan se slide in kare
-// display:inline-block force karo â” GSAP x transform inline elements pe kaam nahi karta
+// display:inline-block force karo — GSAP x transform inline elements pe kaam nahi karta
 gsap.set(".main-title .line1", { display: "inline-block", x: -80, opacity: 0 });
 gsap.set(".main-title .line2", {
   display: "inline-block",
@@ -209,8 +209,14 @@ gsap.set(".main-title .line3", {
   opacity: 0,
 });
 
+// Orange bar — hidden
+gsap.set(".orange-bg-element", { x: -300, opacity: 0 });
+
+// Students — right side mein
+gsap.set(".hero-student-img", { x: 200 });
+
 // ============================================================
-// PAGE LOAD ANIMATION â” Scroll ki jagah ab page load pe play hoga
+// PAGE LOAD ANIMATION — Scroll ki jagah ab page load pe play hoga
 // ============================================================
 
 const heroTL = gsap.timeline({
@@ -218,7 +224,7 @@ const heroTL = gsap.timeline({
 });
 
 heroTL
-  // Burgundy BG â” left se right
+  // Burgundy BG — left se right
   .to(
     ".burgundy-bg",
     {
@@ -226,10 +232,10 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0,
+    0
   )
 
-  // Yellow circle â” neeche se upar (final: y:0)
+  // Yellow circle — neeche se upar (final: y:0)
   .to(
     ".yellow-circle",
     {
@@ -237,10 +243,33 @@ heroTL
       duration: 1.2,
       ease: "power2.out",
     },
-    0,
+    0
   )
 
-  // Teeno lines ek saath â” slow aur smooth
+  // Students — right se left (final: x:0)
+  .to(
+    ".hero-student-img",
+    {
+      x: 0,
+      duration: 1.2,
+      ease: "power2.out",
+    },
+    0
+  )
+
+  // Orange bar
+  .to(
+    ".orange-bg-element",
+    {
+      x: 0,
+      opacity: 1,
+      duration: 0.9,
+      ease: "power2.out",
+    },
+    0.2
+  )
+
+  // Teeno lines ek saath — slow aur smooth
   .to(
     [".main-title .line1", ".main-title .line2", ".main-title .line3"],
     {
@@ -249,7 +278,7 @@ heroTL
       duration: 1.2,
       ease: "power3.out",
     },
-    0,
+    0
   );
 
 // ============================================================
@@ -257,17 +286,17 @@ heroTL
 //
 // Structure (HTML mein):
 //   .hero-sticky-wrapper  [height: 200vh]
-//     œ .bbt-dp-hero    [position: sticky; top: 0; height: 100vh]
-//     ” .bbt-dp-about   [position: absolute; top: 0; width: 100%]
+//     ├── .bbt-dp-hero    [position: sticky; top: 0; height: 100vh]
+//     └── .bbt-dp-about   [position: absolute; top: 0; width: 100%]
 //
 // Flow:
-//   â¢ Page load: about translateY(100vh) â†’ screen ke bilkul neeche,
+//   • Page load: about translateY(100vh) → screen ke bilkul neeche,
 //     hero ke peeche (z-index kam)
-//   â¢ Scroll: wrapper ke andar scroll hone se about y: 100vh â†’ 0
-//     (GSAP scrub) â†’ hero ke upar slide karta hai
-//   â¢ About fully visible: content (img + text) animate in
+//   • Scroll: wrapper ke andar scroll hone se about y: 100vh → 0
+//     (GSAP scrub) → hero ke upar slide karta hai
+//   • About fully visible: content (img + text) animate in
 //
-// Koi extra white space nahi â” about absolute hai wrapper mein.
+// Koi extra white space nahi — about absolute hai wrapper mein.
 // ============================================================
 
 (function initHeroAboutPanelOverlay() {
@@ -320,15 +349,15 @@ heroTL
 
   return;
 
-  //  Strategy 
+  // ── Strategy ────────────────────────────────────────────────────
   // Wrapper height = 100vh (hero) + about ki poori height
-  // Hero: position sticky, top:0, height:100vh  â†’ apni jagah fixed
-  // About: position absolute, top:0             â†’ hero ke upar layer
-  // JS: about translateY(100vh â†’ 0) scrub       â†’ slide up effect
-  // Wrapper overflow:hidden                     â†’ about clip nahi hoga
+  // Hero: position sticky, top:0, height:100vh  → apni jagah fixed
+  // About: position absolute, top:0             → hero ke upar layer
+  // JS: about translateY(100vh → 0) scrub       → slide up effect
+  // Wrapper overflow:hidden                     → about clip nahi hoga
   //   kyunki wrapper khud itna lamba hai
-  // Baad mein: video section wrapper ke theek baad â” no gap
-  // 
+  // Baad mein: video section wrapper ke theek baad — no gap
+  // ────────────────────────────────────────────────────────────────
 
   function setWrapperHeight() {
     // Wrapper = hero (100vh) + about poori height
@@ -341,18 +370,18 @@ heroTL
   // aboutSection position:absolute hai, toh offsetHeight sahi aayega
   setWrapperHeight();
 
-  //  Hero: page load pe fully visible 
+  // ── Hero: page load pe fully visible ────────────────────────────
   heroSection.style.clipPath = "inset(0 0 0% 0)";
   heroSection.style.willChange = "clip-path";
 
-  //  About: shuru mein viewport ke neeche 
+  // ── About: shuru mein viewport ke neeche ────────────────────────
   gsap.set(aboutSection, {
     y: window.innerHeight,
     autoAlpha: 1,
     willChange: "transform",
   });
 
-  //  Scrub: first 100vh scroll mein about y:100vhâ†’0 
+  // ── Scrub: first 100vh scroll mein about y:100vh→0 ──────────────
   // end: "+=100vh" matlab sirf 100vh scroll mein animation complete
   // Uske baad wrapper ka remaining scroll space = about ki height
   // jo naturally consume hoti hai jab user about padh raha hota hai
@@ -393,25 +422,25 @@ heroTL
   });
 })();
 
-// â•
-// VIDEO SECTION â” 3-Phase Scroll Animation
+// ══════════════════════════════════════════════════════════════════
+// VIDEO SECTION — 3-Phase Scroll Animation
 //
-// PHASE 1: Small square â†’ wide rectangle   (before viewport, no pin)
+// PHASE 1: Small square → wide rectangle   (before viewport, no pin)
 //   Starts as section enters viewport bottom, ends when it hits top.
 //
 // PHASE 2: Overlay + text + play btn reveal (pinned at top)
-//   Opacity stays fixed after reveal â” no further darkening.
+//   Opacity stays fixed after reveal — no further darkening.
 //
 // PHASE 3: Upward wipe exit                (after pin releases)
 //   Fires as you scroll to the next section. Content fades instantly.
-// â•
+// ══════════════════════════════════════════════════════════════════
 
 const videoWrapper = document.querySelector(".video-wrapper");
 const video = document.getElementById("mainVideo");
 const playBtn = document.getElementById("playBtn");
 
 if (videoWrapper && video && playBtn) {
-  //  Click: play / pause toggle 
+  // ── Click: play / pause toggle ───────────────────────────────────
   videoWrapper.addEventListener("click", () => {
     if (video.paused) {
       video.defaultMuted = false;
@@ -425,55 +454,18 @@ if (videoWrapper && video && playBtn) {
     }
   });
 
-  //  PHASE 1: Square â†’ Rectangle 
-  // Video expand: wrapper padding 0 tak animate â†’ container-xxl se full viewport
-  const isSmallScreen = window.matchMedia("(max-width: 767.9px)").matches;
-  const startMask = isSmallScreen
-    ? {
-      "--video-mask-x": "34%",
-      "--video-mask-y": "36%",
-      "--video-mask-radius": "14px",
-    }
-    : {
-      "--video-mask-x": "41%",
-      "--video-mask-y": "34%",
-      "--video-mask-radius": "18px",
-    };
-
-  gsap.set(".video-container", startMask);
-
-  const videoMaskTL = gsap.timeline({
+  // ── PHASE 1: Square → Rectangle ─────────────────────────────────
+  // Video expand: wrapper padding 0 tak animate → container-xxl se full viewport
+  gsap.to(".video-wrapper", {
+    padding: "0px",
+    ease: "none",
     scrollTrigger: {
       trigger: ".video-section",
-      start: "top bottom",
-      end: "top 20%",
-      scrub: true,
-      invalidateOnRefresh: true,
+      start: "top 80%",
+      end: "top 30%",
+      scrub: 1,
     },
   });
-
-  videoMaskTL
-    .to(
-      ".video-wrapper",
-      {
-        paddingTop: "0px",
-        paddingBottom: "0px",
-        ease: "none",
-        duration: 1,
-      },
-      0,
-    )
-    .to(
-      ".video-container",
-      {
-        "--video-mask-x": "0%",
-        "--video-mask-y": "0%",
-        "--video-mask-radius": "0px",
-        ease: "none",
-        duration: 1,
-      },
-      0,
-    );
 
   // Parallax
   gsap.fromTo(
@@ -484,11 +476,11 @@ if (videoWrapper && video && playBtn) {
       ease: "none",
       scrollTrigger: {
         trigger: ".video-section",
-        start: "top bottom",
-        end: "top 20%",
-        scrub: true,
+        start: "top 80%",
+        end: "top 30%",
+        scrub: 1,
       },
-    },
+    }
   );
 
   // Phase 2: overlay + content + play btn reveal
@@ -497,7 +489,7 @@ if (videoWrapper && video && playBtn) {
   const videoRevealTL = gsap.timeline({
     scrollTrigger: {
       trigger: ".video-section",
-      start: "top 80%", // pehle 60% tha â” ab thoda pehle shuru
+      start: "top 80%", // pehle 60% tha — ab thoda pehle shuru
       end: "top top",
       scrub: 0.8,
     },
@@ -507,19 +499,19 @@ if (videoWrapper && video && playBtn) {
     .fromTo(
       ".video-section .overlay",
       { opacity: 0 },
-      { opacity: 1, ease: "none", duration: 1 },
+      { opacity: 1, ease: "none", duration: 1 }
     )
     .fromTo(
       ".video-section .content",
       { opacity: 0, yPercent: -40, y: 60 },
       { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 0.8 },
-      0.2,
+      0.2
     )
     .fromTo(
       "#playBtn",
       { opacity: 0, scale: 0 },
       { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.6 },
-      0.2,
+      0.2
     );
 }
 
@@ -539,8 +531,8 @@ gsap.from(".award .leaf", {
   },
 });
 
-// â­ Contact Section â” slide up overlap + content animations
-// Sab kuch viewport mein aane ke baad hi chalta hai
+// ⭐ Contact Section — content animations only
+// (contact-footer-reveal-shell div injection removed — side scroll fix)
 (function initContactSection() {
   var contactSec = document.querySelector(".contact-sec");
   if (!contactSec) return;
@@ -553,28 +545,28 @@ gsap.from(".award .leaf", {
 
   ScrollTrigger.create({
     trigger: contactSec,
-    start: "top 70%", // jab section thoda andar aa jaaye
+    start: "top 70%",
     once: true,
     onEnter: function () {
       var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       if (content) {
-        tl.to(content, { opacity: 1, x: 0, duration: 0.85 }, 0);
+        tl.from(content, { opacity: 0, y: 30, duration: 0.85 }, 0);
       }
       if (imageContainer) {
-        tl.to(imageContainer, { opacity: 1, x: 0, duration: 0.85 }, 0.15);
+        tl.from(imageContainer, { opacity: 0, y: 30, duration: 0.85 }, 0.15);
       }
       if (h3) {
-        tl.from(h3, { x: -80, opacity: 0, duration: 0.7 }, 0.1);
+        tl.from(h3, { y: 20, opacity: 0, duration: 0.7 }, 0.1);
       }
       if (h2) {
-        tl.from(h2, { x: -80, opacity: 0, duration: 0.7 }, 0.3);
+        tl.from(h2, { y: 20, opacity: 0, duration: 0.7 }, 0.3);
       }
       if (formActions) {
         tl.from(
           formActions,
           { y: 30, opacity: 0, duration: 0.6, ease: "back.out(1.7)" },
-          0.55,
+          0.55
         );
       }
     },
@@ -583,10 +575,10 @@ gsap.from(".award .leaf", {
 
 // ============================================================
 // HORIZONTAL SECTION
-// Phase 1 (scrub)       : yellow circle fills, then title slides in
-// Phase 2 (wheel-snap)  : panels slide Râ†’L / Lâ†’R one per tick
-//   â¢ html overflow:hidden freezes the page (no spacer tricks)
-//   â¢ After last panel â†’ overflow restored, page scrolls freely
+// Phase 1 (scrub 1250px) : title slides in + yellow circle fills
+// Phase 2 (wheel-snap)  : panels slide R→L / L→R one per tick
+//   • html overflow:hidden freezes the page (no spacer tricks)
+//   • After last panel → overflow restored, page scrolls freely
 // ============================================================
 (function initHorizontalSection() {
   var hSec = document.querySelector(".horizontal-section");
@@ -598,34 +590,9 @@ gsap.from(".award .leaf", {
 
   var n = panels.length;
   var hTrigger;
-  // -YP start
   var currentStep = -1;
-  var isWheelTransitioning = false;
-  var wheelUnlockTimer = null;
-  var wheelSlideDuration = 1150;
-  var wheelUnlockDelay = 1250;
-  var featuredNewsEase = function (progress) {
-    var x1 = 0.25;
-    var y1 = 0.1;
-    var x2 = 0.25;
-    var y2 = 1;
-    var t = progress;
-
-    for (var i = 0; i < 5; i++) {
-      var invT = 1 - t;
-      var x = 3 * invT * invT * t * x1 + 3 * invT * t * t * x2 + t * t * t;
-      var dx =
-        3 * invT * invT * x1 + 6 * invT * t * (x2 - x1) + 3 * t * t * (1 - x2);
-
-      if (!dx) break;
-      t -= (x - progress) / dx;
-      t = Math.max(0, Math.min(1, t));
-    }
-
-    var invT = 1 - t;
-    return 3 * invT * invT * t * y1 + 3 * invT * t * t * y2 + t * t * t;
-  };
-  // -YP end
+  var isStepAnimating = false;
+  var wheelCooldownUntil = 0;
 
   var getFillScale = function () {
     var circle = hSec.querySelector(".lavender-circle");
@@ -637,7 +604,7 @@ gsap.from(".award .leaf", {
     return Math.max(sW / (cW * 0.5), sH / cH) * 1.1;
   };
 
-  //  Initial states 
+  // ── Initial states ──────────────────────────────────────────
   gsap.set(".horizontal-section .yellow h2", { x: -160, autoAlpha: 0 });
   gsap.set(".lavender-circle", {
     scale: 0.22,
@@ -646,9 +613,10 @@ gsap.from(".award .leaf", {
   gsap.set(horizontal, { overflow: "hidden" });
   gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
 
+  // All panels stacked: panel[0] on top, rest off-screen to the right
   panels.forEach(function (p, i) {
     gsap.set(p, {
-      autoAlpha: 0,
+      autoAlpha: i === 0 ? 0 : 0,
       xPercent: 100,
       zIndex: n - i,
       position: "absolute",
@@ -659,70 +627,70 @@ gsap.from(".award .leaf", {
     });
   });
 
-  var phase1Distance = window.innerHeight * 1.5;
-
-  // Reveal sequence: Circle -> Heading -> Panel 0 -> CTA
-  var introTL = gsap.timeline({
-    scrollTrigger: {
-      trigger: hSec,
-      start: "top 20%",
-      end: "+=" + (window.innerHeight * 0.2 + phase1Distance),
-      scrub: 1.5,
-    }
-  });
-
-  // Circle appears from right bottom and fills on scroll
-  introTL.to(".lavender-circle", {
-    scale: getFillScale(),
-    ease: "none",
-  }, 0);
-
-  // Heading slides and fades in from left
-  introTL.to(".horizontal-section .yellow h2", {
-    x: 0,
-    autoAlpha: 1,
-    ease: "power3.out",
-  }, 0.2);
-
-  // Swiper slider (panel 0) slides and fades in a little from left
-  introTL.fromTo(panels[0],
-    { xPercent: -15, autoAlpha: 0 },
-    { xPercent: 0, autoAlpha: 1, ease: "power3.out" },
-    0.4
-  );
-
-  // CTA appears
-  introTL.to(".pedagogy-btn", {
-    autoAlpha: 1,
-    y: 0,
-    ease: "power3.out",
-  }, 0.6);
-
-  //  Master scrub timeline 
+  // ── Master scrub timeline ───────────────────────────────────
   // Structure (all durations in timeline "units"):
-  //   title phase  : heading slides in after the circle finishes
-  //   panels       : Panel 0 slides in, then panel-to-panel transitions
+  //   0 → 0.5  : title slides in + circle grows from bottom-right
+  //   0.5 → 1.3: circle expands until it fills the section
+  //   1.3 → 2.3: Panel 0 slides in from right
+  //   2.3 → 3.3: Panel 0 → Panel 1 (0 exits left, 1 enters right)
+  //   3.3 → 4.3: Panel 1 → Panel 2 (1 exits left, 2 enters right)
   //   ... etc
   // Total duration units = circle phase + n panel steps
 
   var masterTL = gsap.timeline({ paused: true });
-  // -YP start
-  var circleFillDuration = 0;
-  var introTimelineDuration = circleFillDuration;
-  var panelStart = introTimelineDuration;
-  // -YP end
-  var panelEnterDuration = 0;
-  var panelHold = 0;
-  var panelTransitionDuration = 1.2; // duration of each panel slide inside masterTL
-  // -YP start
-  var firstStepDuration = 2.6;
-  var panelStepDuration = wheelSlideDuration / 1000; // match featured-news-sec wheel timing
-  // -YP end
+  var panelStart = 2.8;
+  var panelEnterDuration = 2.8;
+  var panelHold = 0.7;
+  var panelTransitionDuration = 2.45;
+  var firstStepDuration = 1.2;
+  var panelStepDuration = 0.75;
 
-  // Phase 1 segment: circle fill only. Title and Panel 0 are revealed via early ScrollTrigger.
+  // Phase 1 segment
+  masterTL.to(
+    ".horizontal-section .yellow h2",
+    {
+      x: 0,
+      autoAlpha: 1,
+      ease: "power3.out",
+      duration: 2.9,
+    },
+    0
+  );
+  masterTL.to(
+    ".lavender-circle",
+    {
+      scale: 2,
+      ease: "power3.out",
+      duration: 3.2,
+    },
+    0
+  );
+  // masterTL.to(
+  //   ".lavender-circle",
+  //   {
+  //     scale: getFillScale,
+  //     ease: "power2.inOut",
+  //     duration: 0.8,
+  //   },
+  //   0.5,
+  // );
 
+  // Panel 0 also enters from the right, but gets its own scroll segment so it
+  // arrives smoothly instead of snapping into place.
+  masterTL.set(panels[0], { autoAlpha: 1, xPercent: 100 }, panelStart);
+  masterTL.to(
+    panels[0],
+    {
+      xPercent: 0,
+      ease: "power2.out",
+      duration: panelEnterDuration,
+    },
+    panelStart
+  );
+  masterTL.to({}, { duration: panelHold }, panelStart + panelEnterDuration);
 
-  // Panel transitions
+  // Panel transitions: each subsequent panel enters from right,
+  // previous exits to left, simultaneously
   for (var i = 1; i < n; i++) {
     var startTime =
       panelStart +
@@ -732,66 +700,47 @@ gsap.from(".award .leaf", {
     var outPanel = panels[i - 1];
     var inPanel = panels[i];
 
+    // Bring inPanel to front and make visible
     masterTL.set(inPanel, { autoAlpha: 1, zIndex: n + 2 }, startTime);
     masterTL.set(outPanel, { zIndex: n + 1 }, startTime);
 
+    // Out panel slides left, in panel slides in from right — simultaneously
     masterTL.to(
       outPanel,
       {
         xPercent: -100,
-        // -YP start
-        ease: "none",
-        // -YP end
+        ease: "power2.out",
         duration: panelTransitionDuration,
       },
-      startTime,
+      startTime
     );
     masterTL.fromTo(
       inPanel,
       { xPercent: 100 },
       {
         xPercent: 0,
-        // -YP start
-        ease: "none",
-        // -YP end
+        ease: "power2.out",
         duration: panelTransitionDuration,
       },
-      startTime,
+      startTime
     );
   }
 
-  //  ScrollTrigger â” one big pin for everything 
+  // ── ScrollTrigger — one big pin for everything ─────────────
   // Total scroll distance: PHASE1_PX + (n panels * PX_PER_PANEL)
-  function getPhase1Px() {
-    return phase1Distance; // Allow native scroll to handle the scrubbed introTL before hijacking wheel
-  }
-
+  var PHASE1_PX = 1250;
   var PX_PER_PANEL = 1050; // scroll pixels per panel movement
-  function getTotalPx() {
-    return getPhase1Px() + n * PX_PER_PANEL;
-  }
+  var totalPx = PHASE1_PX + n * PX_PER_PANEL;
   var lastSlideBgActive = false;
-  // stepTimes[i] = the timeline position where panel i has FULLY arrived.
-  // step 0: panel 0 finishes its long enter animation
-  // step i>0: panel i finishes its transition (start + full duration)
   var stepTimes = panels.map(function (_, index) {
-    if (index === 0) {
-      // -YP start
-      // Park panel 0 at the same boundary where the first slide-to-slide
-      // transition starts, so forward and reverse motion stay smooth.
-      return panelStart + panelEnterDuration + panelHold;
-      // -YP end
-    }
-    // Panel i transition starts at panelStart+panelEnterDuration+panelHold+(i-1)*panelTransitionDuration
-    // and takes panelTransitionDuration to complete
     return (
       panelStart +
       panelEnterDuration +
       panelHold +
-      (index - 1) * panelTransitionDuration +
-      panelTransitionDuration
+      index * panelTransitionDuration
     );
   });
+  stepTimes[0] = panelStart + panelEnterDuration + panelHold;
   var maxStep = stepTimes.length - 1;
 
   function setLastSlideBackground(step) {
@@ -806,85 +755,61 @@ gsap.from(".award .leaf", {
     // });
   }
 
-  // -YP start
-  function getWheelDelta(event) {
-    var delta =
-      Math.abs(event.deltaY) >= Math.abs(event.deltaX)
-        ? event.deltaY
-        : event.deltaX;
-
-    if (event.deltaMode === 1) return delta * 16;
-    if (event.deltaMode === 2) return delta * window.innerHeight;
-    return delta;
-  }
-
-  function unlockWheelTransition() {
-    window.clearTimeout(wheelUnlockTimer);
-    isWheelTransitioning = false;
-  }
-
   function goToStep(step, immediate) {
     step = gsap.utils.clamp(0, maxStep, step);
     var previousStep = currentStep;
     currentStep = step;
+    isStepAnimating = !immediate;
     setLastSlideBackground(step);
-
-    var dur = immediate
-      ? 0
-      : previousStep < 0 && step === 0
-        ? firstStepDuration
-        : panelStepDuration;
-
-    if (!immediate) isWheelTransitioning = true;
 
     gsap.to(masterTL, {
       time: stepTimes[step],
-      duration: dur,
-      ease: featuredNewsEase,
+      duration: immediate
+        ? 0
+        : previousStep < 0 && step === 0
+        ? firstStepDuration
+        : panelStepDuration,
+      ease: "power2.out",
       overwrite: true,
       onComplete: function () {
-        unlockWheelTransition();
+        isStepAnimating = false;
       },
     });
 
-    window.clearTimeout(wheelUnlockTimer);
-    if (!immediate) {
-      wheelUnlockTimer = window.setTimeout(function () {
-        masterTL.time(stepTimes[step]);
-        unlockWheelTransition();
-      }, wheelUnlockDelay);
-    }
-
-    // Pedagogy button is now handled by the entrance animation
+    // Pedagogy button — panel 0 ke saath hi aaye, independently
     if (step === 0 && !immediate) {
-      // Pedagogy button already visible
+      gsap.to(".pedagogy-btn", {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        overwrite: true,
+      });
     }
   }
-  // -YP end
 
   function releaseHorizontal(direction) {
     if (!hTrigger) return;
+    isStepAnimating = true;
     var target =
       direction > 0 ? hTrigger.end + 2 : Math.max(hTrigger.start - 2, 0);
     window.scrollTo({ top: target, behavior: "auto" });
+    window.setTimeout(function () {
+      isStepAnimating = false;
+    }, 120);
   }
 
-  // -YP start
   function onHorizontalWheel(event) {
     if (!hTrigger || !hTrigger.isActive) return;
+    if (Math.abs(event.deltaY) < 12) return;
 
-    var introDistance = window.pageYOffset - hTrigger.start;
-    if (introDistance < getPhase1Px() - 2) return;
+    event.preventDefault();
 
-    if (isWheelTransitioning) {
-      event.preventDefault();
-      return;
-    }
+    var now = Date.now();
+    if (isStepAnimating || now < wheelCooldownUntil) return;
+    wheelCooldownUntil = now + 900;
 
-    var delta = getWheelDelta(event);
-    if (Math.abs(delta) < 8) return;
-
-    var direction = delta > 0 ? 1 : -1;
+    var direction = event.deltaY > 0 ? 1 : -1;
     var nextStep = currentStep + direction;
 
     if (nextStep < 0 || nextStep > maxStep) {
@@ -892,67 +817,34 @@ gsap.from(".award .leaf", {
       return;
     }
 
-    event.preventDefault();
     goToStep(nextStep, false);
   }
-  // -YP end
 
   hTrigger = ScrollTrigger.create({
     trigger: hSec,
     start: "top top",
-    end: function () {
-      return "+=" + getTotalPx();
-    },
+    end: "+=" + totalPx,
     pin: true,
     pinSpacing: true,
     anticipatePin: 1,
     id: "hSecMaster",
     invalidateOnRefresh: true,
-    onUpdate: function (self) {
-      var phase1 = getPhase1Px();
-      var introProgress = phase1 > 0 ? gsap.utils.clamp(
-        0,
-        1,
-        (window.pageYOffset - self.start) / phase1,
-      ) : 1;
-
-      if (introProgress < 1) {
-        currentStep = -1;
-        unlockWheelTransition();
-        setLastSlideBackground(-1);
-        gsap.to(masterTL, {
-          time: introTimelineDuration * introProgress,
-          duration: 0.22,
-          ease: "power3.out",
-          overwrite: true,
-        });
-      } else if (currentStep < 0) {
-        gsap.killTweensOf(masterTL);
-        masterTL.time(introTimelineDuration);
-        goToStep(0, true);
-      }
-    },
     onEnter: function () {
-      // -YP start
       currentStep = -1;
-      unlockWheelTransition();
+      isStepAnimating = false;
       setLastSlideBackground(-1);
       masterTL.pause(0);
-      // -YP end
+      goToStep(0, false);
     },
     onEnterBack: function () {
-      // -YP start
-      unlockWheelTransition();
       goToStep(maxStep, true);
-      // -YP end
     },
     onLeaveBack: function () {
-      // -YP start
       currentStep = -1;
-      unlockWheelTransition();
+      isStepAnimating = false;
       setLastSlideBackground(-1);
       masterTL.pause(0);
-      // -YP end
+      gsap.set(".pedagogy-btn", { autoAlpha: 0, y: 30 });
     },
   });
 
@@ -964,7 +856,7 @@ gsap.from(".award .leaf", {
 })();
 
 // ============================================================
-// PANEL VIDEO LIGHTBOX â” Global handler (all pages)
+// PANEL VIDEO LIGHTBOX — Global handler (all pages)
 // Play button click pe video lightbox mein open hoga
 // ============================================================
 (function initPanelVideoLightbox() {
@@ -1028,7 +920,7 @@ gsap.from(".award .leaf", {
         function (ev) {
           if (ev.key === "Escape") close();
         },
-        { once: true },
+        { once: true }
       );
     });
   }
@@ -1060,17 +952,17 @@ if (track) {
     },
   });
 
-  // ðŸ‘‰ Horizontal movement
+  // 👉 Horizontal movement
   tl.to(
     track,
     {
       x: -totalWidth,
       ease: "none",
     },
-    0,
+    0
   );
 
-  // ðŸ‘‰ EACH CIRCLE ANIMATION
+  // 👉 EACH CIRCLE ANIMATION
   circles.forEach((circle, i) => {
     const label = `circle-${i}`;
 
@@ -1082,7 +974,7 @@ if (track) {
         opacity: 0.6,
         duration: 0.5,
       },
-      i * 0.8,
+      i * 0.8
     );
 
     // Phase 2: text fade in (light)
@@ -1092,7 +984,7 @@ if (track) {
         opacity: 0.5,
         duration: 0.3,
       },
-      i * 0.8 + 0.2,
+      i * 0.8 + 0.2
     );
 
     tl.to(
@@ -1101,10 +993,10 @@ if (track) {
         opacity: 0.5,
         duration: 0.3,
       },
-      i * 0.8 + 0.25,
+      i * 0.8 + 0.25
     );
 
-    // Phase 3: center â†’ grow + full text
+    // Phase 3: center → grow + full text
     tl.to(
       circle,
       {
@@ -1112,7 +1004,7 @@ if (track) {
         opacity: 1,
         duration: 0.6,
       },
-      i * 0.8 + 0.4,
+      i * 0.8 + 0.4
     );
 
     tl.to(
@@ -1121,7 +1013,7 @@ if (track) {
         opacity: 1,
         duration: 0.3,
       },
-      i * 0.8 + 0.5,
+      i * 0.8 + 0.5
     );
 
     tl.to(
@@ -1130,7 +1022,7 @@ if (track) {
         opacity: 1,
         duration: 0.3,
       },
-      i * 0.8 + 0.55,
+      i * 0.8 + 0.55
     );
   });
 }
@@ -1150,7 +1042,7 @@ if (tl) {
   const connectorsSvg = cluster?.querySelector("svg.connectors");
   const bubbleCircles = gsap.utils.toArray(".bbt-FA-circle-sec .circle");
   const connectorSegments = gsap.utils.toArray(
-    ".bbt-FA-circle-sec .connector-segment",
+    ".bbt-FA-circle-sec .connector-segment"
   );
 
   if (
@@ -1169,22 +1061,19 @@ if (tl) {
   stickyViewport.style.zIndex = "2";
 
   let bubbleTimeline;
+  let c1RevealTrigger;
   let resizeTimer;
 
   function drawBubbleConnectors() {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetLeft + circle.offsetWidth,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth)
       ) + 20;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetTop + circle.offsetHeight,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight)
       ) + 20;
 
     gsap.set(cluster, {
@@ -1194,7 +1083,7 @@ if (tl) {
 
     connectorsSvg.setAttribute(
       "viewBox",
-      `0 0 ${clusterWidth} ${clusterHeight}`,
+      `0 0 ${clusterWidth} ${clusterHeight}`
     );
 
     connectorSegments.forEach((segment, index) => {
@@ -1222,8 +1111,8 @@ if (tl) {
       segment.setAttribute(
         "d",
         `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(
-          1,
-        )} ${endY.toFixed(1)}`,
+          1
+        )} ${endY.toFixed(1)}`
       );
       segment._bubbleConnector = { startX, startY, endX, endY };
     });
@@ -1239,8 +1128,8 @@ if (tl) {
     segment.setAttribute(
       "d",
       `M ${line.startX.toFixed(1)} ${line.startY.toFixed(
-        1,
-      )} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`,
+        1
+      )} L ${currentX.toFixed(1)} ${currentY.toFixed(1)}`
     );
   }
 
@@ -1251,13 +1140,11 @@ if (tl) {
       bubbleTimeline = null;
     }
 
-    gsap.killTweensOf([
-      section,
-      stickyViewport,
-      bubbleTrack,
-      ...bubbleCircles,
-      ...connectorSegments,
-    ]);
+    gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
+    if (c1RevealTrigger) {
+      c1RevealTrigger.kill();
+      c1RevealTrigger = null;
+    }
     drawBubbleConnectors();
 
     const viewportHeight = window.innerHeight;
@@ -1280,12 +1167,12 @@ if (tl) {
       autoAlpha: 0,
       y: 16,
     });
-    gsap.set(bubbleCircles[0], {
-      scale: 0.48,
-      autoAlpha: 0,
-      y: 80,
-      zIndex: 5,
-    });
+    // First bubble: scrub timeline ke through animate hoga (small→big, phir big hi rahega)
+    // c1RevealTrigger (once:true) hata diya — woh small→big→small bug create karta tha
+    gsap.set(bubbleCircles[0], { scale: 0.72, autoAlpha: 0, y: 80, zIndex: 5 });
+
+    const firstHeading = bubbleCircles[0].querySelector("h2");
+    const firstBody = bubbleCircles[0].querySelector("p");
 
     connectorSegments.forEach((segment) => {
       setConnectorDrawProgress(segment, 0);
@@ -1297,10 +1184,9 @@ if (tl) {
     });
 
     const segmentDuration = 1;
-    const backgroundRevealDuration = segmentDuration * 0.34;
     const scrollDistance = Math.max(
       bubbleCircles.length * viewportHeight * 1.05,
-      viewportHeight * 7,
+      viewportHeight * 7
     );
     bubbleTimeline = gsap.timeline({
       defaults: { ease: "none" },
@@ -1315,42 +1201,28 @@ if (tl) {
       },
     });
 
-    gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
+    gsap.set([section, stickyViewport], { backgroundColor: "#ffffff" });
+
+    // ── Circle 0 (first bubble) — scrub timeline mein: small→big, phir big hi rahega ──
     bubbleTimeline.to(
-      [section, stickyViewport],
-      {
-        backgroundColor: "#ffffff",
-        duration: backgroundRevealDuration,
-      },
+      bubbleCircles[0],
+      { scale: 1, autoAlpha: 1, y: 0, duration: 0.18, ease: "back.out(1.45)" },
       0,
     );
-
-    const firstHeading = bubbleCircles[0].querySelector("h2");
-    const firstBody = bubbleCircles[0].querySelector("p");
-
-    bubbleTimeline
-      .to(
-        bubbleCircles[0],
-        {
-          scale: 1,
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.55,
-          ease: "power2.out",
-        },
-        backgroundRevealDuration,
-      )
-      .to(
-        [firstHeading, firstBody].filter(Boolean),
-        {
-          autoAlpha: 1,
-          y: 0,
-          stagger: 0.08,
-          duration: 0.28,
-          ease: "power2.out",
-        },
-        backgroundRevealDuration + 0.28,
+    if (firstHeading) {
+      bubbleTimeline.to(
+        firstHeading,
+        { autoAlpha: 1, y: 0, duration: 0.16, ease: "power2.out" },
+        0.18,
       );
+    }
+    if (firstBody) {
+      bubbleTimeline.to(
+        firstBody,
+        { autoAlpha: 1, y: 0, duration: 0.16, ease: "power2.out" },
+        0.34,
+      );
+    }
 
     bubbleCircles.forEach((circle, index) => {
       if (index === 0) return;
@@ -1368,7 +1240,7 @@ if (tl) {
             duration: 0.24,
             ease: "power2.inOut",
           },
-          at,
+          at
         );
       }
 
@@ -1380,7 +1252,7 @@ if (tl) {
           duration: 0.18,
           ease: "back.out(1.45)",
         },
-        at + 0.08,
+        at + 0.08
       );
 
       if (heading) {
@@ -1392,7 +1264,7 @@ if (tl) {
             duration: 0.16,
             ease: "power2.out",
           },
-          at + 0.28,
+          at + 0.28
         );
       }
 
@@ -1405,7 +1277,7 @@ if (tl) {
             duration: 0.16,
             ease: "power2.out",
           },
-          at + 0.46,
+          at + 0.46
         );
       }
 
@@ -1424,7 +1296,7 @@ if (tl) {
               setConnectorDrawProgress(connector, lineDraw.progress);
             },
           },
-          at + 0.68,
+          at + 0.68
         );
       }
     });
@@ -1437,13 +1309,12 @@ if (tl) {
       bubbleTimeline.scrollTrigger?.kill();
       bubbleTimeline.kill();
     }
-    gsap.killTweensOf([
-      section,
-      stickyViewport,
-      bubbleTrack,
-      ...bubbleCircles,
-      ...connectorSegments,
-    ]);
+    if (c1RevealTrigger) {
+      c1RevealTrigger.kill();
+      c1RevealTrigger = null;
+    }
+
+    gsap.killTweensOf([bubbleTrack, ...bubbleCircles, ...connectorSegments]);
     gsap.set(bubbleTrack, { clearProps: "transform" });
 
     if (window.matchMedia("(max-width: 767.98px)").matches) {
@@ -1454,16 +1325,12 @@ if (tl) {
     const clusterWidth =
       Math.max(
         cluster.offsetWidth,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetLeft + circle.offsetWidth,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetLeft + circle.offsetWidth)
       ) + 40;
     const clusterHeight =
       Math.max(
         cluster.offsetHeight,
-        ...bubbleCircles.map(
-          (circle) => circle.offsetTop + circle.offsetHeight,
-        ),
+        ...bubbleCircles.map((circle) => circle.offsetTop + circle.offsetHeight)
       ) + 20;
 
     gsap.set(cluster, {
@@ -1473,7 +1340,7 @@ if (tl) {
 
     connectorsSvg.setAttribute(
       "viewBox",
-      `0 0 ${clusterWidth} ${clusterHeight}`,
+      `0 0 ${clusterWidth} ${clusterHeight}`
     );
 
     const viewportWidth = window.innerWidth;
@@ -1493,13 +1360,8 @@ if (tl) {
     const travelDistance = Math.max(startX - endX, viewportWidth * 1.8);
     const scrollDistance = Math.max(
       travelDistance * 1.35,
-      viewportWidth * 3.75,
+      viewportWidth * 3.75
     );
-    const firstBubbleIntro = Math.min(
-      travelDistance * 0.16,
-      viewportWidth * 0.42,
-    );
-    const backgroundRevealDuration = firstBubbleIntro * 0.34;
     gsap.set(bubbleCircles, {
       scale: 0.12,
       autoAlpha: 0,
@@ -1507,7 +1369,6 @@ if (tl) {
       zIndex: 1,
       transformOrigin: "50% 50%",
     });
-    gsap.set(bubbleCircles[0], { scale: 0.34, x: 0 });
 
     connectorSegments.forEach((segment, index) => {
       const fromCircle = bubbleCircles[index];
@@ -1535,8 +1396,8 @@ if (tl) {
       segment.setAttribute(
         "d",
         `M ${startX.toFixed(1)} ${startY.toFixed(1)} L ${endX.toFixed(
-          1,
-        )} ${endY.toFixed(1)}`,
+          1
+        )} ${endY.toFixed(1)}`
       );
 
       gsap.set(segment, {
@@ -1580,18 +1441,29 @@ if (tl) {
       bubbleTrack,
       { x: startX },
       { x: endX, duration: travelDistance },
-      firstBubbleIntro,
+      0
     );
 
-    gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
-    bubbleTimeline.to(
-      [section, stickyViewport],
-      {
-        backgroundColor: "#ffffff",
-        duration: backgroundRevealDuration,
-      },
+    // c1 (index=0) phaseOneStart = max(0, startX + c1Center - viewportCenter - viewportWidth*0.28)
+    // bg fade should complete just before c1 becomes visible
+    // We use a small fixed window at the very start of scroll (before track moves much)
+    const c1 = bubbleCircles[0];
+    const c1Center = clusterOffset + c1.offsetLeft + c1.offsetWidth / 2;
+    const c1FocusTime = gsap.utils.clamp(
       0,
+      travelDistance,
+      startX + c1Center - viewportCenter
     );
+    const c1PhaseOne = gsap.utils.clamp(
+      0,
+      travelDistance,
+      c1FocusTime - viewportWidth * 0.28
+    );
+    const bgFadeEnd = Math.max(c1PhaseOne - viewportWidth * 0.05, 0);
+    const bgFadeDuration = Math.max(viewportWidth * 0.2, 100);
+    const bgFadeStart = Math.max(bgFadeEnd - bgFadeDuration, 0);
+
+    gsap.set([section, stickyViewport], { backgroundColor: "#ffffff" });
 
     bubbleCircles.forEach((circle, index) => {
       const heading = circle.querySelector("h2");
@@ -1602,55 +1474,43 @@ if (tl) {
 
       const rawFocusTime = startX + circleCenter - viewportCenter;
       // c1 ka rawFocusTime ~0 hota hai (already centered).
-      // 300px fix kiya â” c2 ka rawFocusTime ~513px hai, toh c1 usse pehle aayega.
-      const focusTime = gsap.utils.clamp(0, travelDistance, rawFocusTime);
-
-      let phaseOneStart = gsap.utils.clamp(
+      // 300px fix kiya — c2 ka rawFocusTime ~513px hai, toh c1 usse pehle aayega.
+      const focusTime = gsap.utils.clamp(
         0,
         travelDistance,
-        focusTime - viewportWidth * 0.28,
-      );
-      let phaseTwoStart = gsap.utils.clamp(
-        0,
-        travelDistance,
-        focusTime - viewportWidth * 0.16,
-      );
-      let titleStart = gsap.utils.clamp(
-        0,
-        travelDistance,
-        focusTime - viewportWidth * 0.14,
-      );
-      let bodyStart = gsap.utils.clamp(
-        0,
-        travelDistance,
-        focusTime - viewportWidth * 0.1,
-      );
-      let activeStart = gsap.utils.clamp(
-        0,
-        travelDistance,
-        focusTime - viewportWidth * 0.07,
-      );
-      let activeEnd = gsap.utils.clamp(
-        0,
-        travelDistance,
-        focusTime + viewportWidth * 0.07,
+        index === 0 ? 300 : rawFocusTime
       );
 
-      if (index === 0) {
-        phaseOneStart = backgroundRevealDuration;
-        phaseTwoStart = backgroundRevealDuration + firstBubbleIntro * 0.42;
-        titleStart = backgroundRevealDuration + firstBubbleIntro * 0.28;
-        bodyStart = backgroundRevealDuration + firstBubbleIntro * 0.46;
-        activeStart = backgroundRevealDuration + firstBubbleIntro * 0.62;
-        activeEnd = backgroundRevealDuration + firstBubbleIntro * 0.9;
-      } else {
-        phaseOneStart += firstBubbleIntro;
-        phaseTwoStart += firstBubbleIntro;
-        titleStart += firstBubbleIntro;
-        bodyStart += firstBubbleIntro;
-        activeStart += firstBubbleIntro;
-        activeEnd += firstBubbleIntro;
-      }
+      const phaseOneStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.28
+      );
+      const phaseTwoStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.16
+      );
+      const titleStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.14
+      );
+      const bodyStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.1
+      );
+      const activeStart = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime - viewportWidth * 0.07
+      );
+      const activeEnd = gsap.utils.clamp(
+        0,
+        travelDistance,
+        focusTime + viewportWidth * 0.07
+      );
 
       bubbleTimeline.to(
         circle,
@@ -1660,7 +1520,7 @@ if (tl) {
           x: 0, // right se center tak slide in
           duration: Math.max(phaseTwoStart - phaseOneStart, 0.01),
         },
-        phaseOneStart,
+        phaseOneStart
       );
 
       if (heading) {
@@ -1671,7 +1531,7 @@ if (tl) {
             y: 0,
             duration: Math.max(bodyStart - titleStart, 0.01),
           },
-          titleStart,
+          titleStart
         );
       }
 
@@ -1683,7 +1543,7 @@ if (tl) {
             y: 0,
             duration: Math.max(activeStart - bodyStart, 0.01),
           },
-          bodyStart,
+          bodyStart
         );
       }
 
@@ -1695,7 +1555,7 @@ if (tl) {
           zIndex: 5,
           duration: Math.max(activeEnd - activeStart, 0.01),
         },
-        activeStart,
+        activeStart
       );
 
       if (heading) {
@@ -1705,7 +1565,7 @@ if (tl) {
             autoAlpha: 1,
             duration: Math.max(activeEnd - activeStart, 0.01),
           },
-          activeStart,
+          activeStart
         );
       }
 
@@ -1716,7 +1576,7 @@ if (tl) {
             autoAlpha: 1,
             duration: Math.max(activeEnd - activeStart, 0.01),
           },
-          activeStart + viewportWidth * 0.01,
+          activeStart + viewportWidth * 0.01
         );
       }
 
@@ -1727,7 +1587,7 @@ if (tl) {
             autoAlpha: 0.92,
             duration: Math.max(activeStart - phaseOneStart, 0.01),
           },
-          phaseOneStart,
+          phaseOneStart
         );
       }
     });
@@ -1745,10 +1605,10 @@ if (tl) {
 // CURTAIN EFFECT
 //
 // Jab bbt-FA-circle-sec scroll hoke upar jaaye:
-//   â†’ bbt-FA-img-sec fixed rahegi viewport mein (curtain opens)
+//   → bbt-FA-img-sec fixed rahegi viewport mein (curtain opens)
 //
 // Jab bbt-FA-circle-sec poori tarah chali jaaye:
-//   â†’ bbt-FA-img-sec ko normal flow mein wapas laao
+//   → bbt-FA-img-sec ko normal flow mein wapas laao
 //
 // Glitch fix: horizontal-section z-index:0 CSS mein set hai
 // taaki woh fixed img-sec (z-index:1) ke neeche rahe.
@@ -1762,67 +1622,6 @@ if (tl) {
   let imgSecWidth = 0;
   let imgSecHeight = 0;
   let isPinned = false;
-
-  const newsSec = document.querySelector(".news-section");
-  if (newsSec) {
-    gsap.set(newsSec, { position: "relative", zIndex: 2 });
-
-    const scrollPauseSpacer = document.createElement("div");
-    scrollPauseSpacer.style.height = "150vh";
-    scrollPauseSpacer.style.width = "100%";
-    scrollPauseSpacer.style.pointerEvents = "none";
-    newsSec.parentNode.insertBefore(scrollPauseSpacer, newsSec);
-  }
-
-  ScrollTrigger.create({
-    trigger: circleSec,
-    start: "top top",
-    endTrigger: newsSec,
-    end: "top top", // Pin stays until news section fully overlaps
-    onEnter: pin,
-    onEnterBack: pin,
-    onLeave: unpin,
-    onLeaveBack: unpin,
-    invalidateOnRefresh: true,
-  });
-
-  const imgText = imgSec.querySelector(".img-text");
-  const purpleCircle = imgSec.querySelector(".purple-circle");
-  const mainTitle = imgSec.querySelector(".main-title");
-
-  if (imgText && purpleCircle && mainTitle) {
-    // Initial states: slide DOWN instead of UP
-    gsap.set([imgText, mainTitle], { autoAlpha: 0, y: -40 });
-    gsap.set(purpleCircle, { autoAlpha: 0, scale: 0.8 });
-
-    // Entrance animation: plays when circleSec finishes overlapping
-    const tl = gsap.timeline({ paused: true });
-    tl.to(imgText, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" })
-      .to(purpleCircle, { autoAlpha: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.6")
-      .to(mainTitle, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.6");
-
-    ScrollTrigger.create({
-      trigger: circleSec,
-      start: "bottom top",
-      animation: tl,
-      toggleActions: "play none none reverse",
-    });
-
-    // Exit animation: scrubs dynamically as newsSec overlaps the pinned image
-    const exitTl = gsap.timeline({ paused: true });
-    exitTl.fromTo([imgText, purpleCircle, mainTitle],
-      { autoAlpha: 1, y: 0 },
-      { autoAlpha: 0, y: -150, stagger: 0.1, immediateRender: false }
-    );
-
-    ScrollTrigger.create({
-      trigger: newsSec,
-      start: "top 85%", // Starts fading out when newsSec enters 15% from bottom
-      end: "top 30%",   // Finishes before newsSec reaches the middle
-      animation: exitTl,
-      scrub: 1,
-    });
-  }
 
   // Placeholder taaki layout shift na ho jab imgSec fixed ho
   const placeholder = document.createElement("div");
@@ -1858,7 +1657,6 @@ if (tl) {
       top: 0,
       left: 0,
       width: "100%",
-      height: "100vh",
       zIndex: 1,
     });
   }
@@ -1867,8 +1665,22 @@ if (tl) {
     if (!isPinned) return;
     isPinned = false;
     placeholder.style.display = "none";
-    gsap.set(imgSec, { clearProps: "position,top,left,width,height,zIndex" });
+    gsap.set(imgSec, { clearProps: "position,top,left,width,zIndex" });
   }
+
+  // circle-sec khud z-index 2 pe hai (CSS mein set) — image ke upar rehta hai
+  // Jab circle section viewport mein enter kare → pin imgSec
+  // Jab circle section POORI tarah viewport se upar jaye → unpin
+  ScrollTrigger.create({
+    trigger: circleSec,
+    start: "top top", // horizontal section complete hone ke baad hi pin kare
+    end: "bottom top", // jab circle section poori tarah upar jaye
+    onEnter: pin,
+    onEnterBack: pin,
+    onLeave: unpin, // circle section gaya — image ko normal karo
+    onLeaveBack: unpin,
+    invalidateOnRefresh: true,
+  });
 
   window.addEventListener("load", () => {
     measure();
@@ -1880,92 +1692,139 @@ if (tl) {
   });
 })();
 
-// ============================================================
-// NEWS SECTION ANIMATION
-// ============================================================
-(function initNewsSectionAnimation() {
-  const newsSec = document.querySelector(".news-section");
-  if (!newsSec) return;
+// ------------------- Our school page dev section
+// ScrollTrigger initDevSection() function mein handle hota hai (line ~372)
 
-  const newsHeader = newsSec.querySelector(".news-header");
-  const newsCards = newsSec.querySelectorAll(".news-grid .card");
-
-  gsap.set([newsHeader, ...newsCards], { autoAlpha: 0, y: 50 });
-
-  ScrollTrigger.create({
-    trigger: newsSec,
-    start: "top 50%",
-    once: true,
-    onEnter: () => {
-      const tl = gsap.timeline();
-      if (newsHeader) {
-        tl.to(newsHeader, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" });
-      }
-      if (newsCards.length > 0) {
-        tl.to(newsCards, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.2 }, "-=0.6");
-      }
-    }
-  });
-})();
-
-// ============================================================
-// RECOGNITION SECTION ANIMATION
-// ============================================================
-(function initRecognitionSectionAnimation() {
-  const recSec = document.querySelector(".recognition-sec");
-  if (!recSec) return;
-
-  const heading = recSec.querySelector(".section-title");
-  const awards = recSec.querySelectorAll(".awards-grid .award");
-
-  gsap.set(heading, { autoAlpha: 0, y: 50 });
-  gsap.set(awards, { autoAlpha: 0, y: 50 });
-
-  ScrollTrigger.create({
-    trigger: recSec,
-    start: "top 30%",
-    once: true,
-    onEnter: () => {
-      const tl = gsap.timeline();
-      if (heading) {
-        tl.to(heading, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" });
-      }
-      if (awards.length > 0) {
-        tl.to(awards, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.2 }, "-=0.4");
-      }
-    }
-  });
-})();
-
-// ============================================================
-// BACKGROUND COLOR TRANSITION
-// ============================================================
-(function initBackgroundColorTransition() {
+// section fade animation on home page
+document.addEventListener("DOMContentLoaded", function () {
   const newsSection = document.querySelector(".news-section");
+  const animatedSections = document.querySelectorAll(".recognition-sec");
   const recognitionSection = document.querySelector(".recognition-sec");
-  if (!newsSection || !recognitionSection) return;
+  document.body.classList.add("reveal-animations-ready");
 
-  const newsGrid = newsSection.querySelector(".news-grid");
+  const isInRevealRange = (section, offset) => {
+    if (!section) return false;
+    const rect = section.getBoundingClientRect();
+    return rect.top < window.innerHeight * offset && rect.bottom > 0;
+  };
 
-  gsap.set(newsSection, { backgroundColor: "#ffffff" });
-  gsap.set(recognitionSection, { backgroundColor: "#ffffff" });
-
-  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    gsap.to([newsSection, recognitionSection], {
-      backgroundColor: "#f7df00",
-      ease: "none",
-      scrollTrigger: {
-        trigger: newsGrid || newsSection,
-        start: "bottom 25%",
-        end: "bottom top",
-        scrub: 0,
-        invalidateOnRefresh: true,
-      },
+  const revealVisibleSections = () => {
+    animatedSections.forEach((section) => {
+      if (isInRevealRange(section, 0.25)) {
+        section.classList.add("animate");
+      }
     });
-  }
-})();
+  };
 
-//  Feature Block Scroll Animation 
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate");
+        }
+      });
+    },
+    {
+      rootMargin: "0px 0px -75% 0px",
+      threshold: 0,
+    }
+  );
+
+  animatedSections.forEach((section) => {
+    observer.observe(section);
+  });
+
+  revealVisibleSections();
+  window.addEventListener("load", revealVisibleSections, { once: true });
+  window.addEventListener("scroll", revealVisibleSections, { passive: true });
+  window.addEventListener("resize", revealVisibleSections);
+
+  if (newsSection) {
+    const newsHeader = newsSection.querySelector(".news-header");
+    const newsGrid = newsSection.querySelector(".news-grid");
+    let newsRevealed = false;
+
+    // -YP start
+    gsap.set(newsSection, { backgroundColor: "#ffffff" });
+    gsap.set(recognitionSection, { backgroundColor: "#ffffff" });
+
+    if (
+      recognitionSection &&
+      typeof gsap !== "undefined" &&
+      typeof ScrollTrigger !== "undefined" &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      gsap.to([newsSection, recognitionSection], {
+        backgroundColor: "#f7df00",
+        ease: "none",
+        scrollTrigger: {
+          trigger: newsGrid || newsSection,
+          start: "bottom 25%", // keep News & Events white until the cards reach the reference position
+          end: "bottom top",
+          scrub: 0,
+          invalidateOnRefresh: true,
+        },
+      });
+    }
+    // -YP end
+
+    newsSection.classList.add("is-waiting");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // Skip animation entirely for users who prefer reduced motion
+      newsSection.classList.remove("is-waiting");
+      newsHeader?.classList.add("animate");
+      newsGrid
+        ?.querySelectorAll(".card")
+        .forEach((c) => c.classList.add("card-visible"));
+      return;
+    }
+
+    const revealNews = () => {
+      if (newsRevealed) return;
+      newsRevealed = true;
+      newsSection.classList.remove("is-waiting");
+      newsHeader?.classList.add("animate");
+
+      // Stagger cards in one by one as section enters viewport
+      const cards = newsGrid
+        ? Array.from(newsGrid.querySelectorAll(".card"))
+        : [];
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add("card-visible"), i * 280);
+      });
+    };
+
+    // GSAP ScrollTrigger path — most reliable
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      // -YP start
+      ScrollTrigger.create({
+        trigger: newsGrid || newsSection,
+        start: "bottom 25%", // wait until the news cards reach the viewport position shown in the reference
+        once: true,
+        onEnter: revealNews,
+      });
+      // -YP end
+    } else {
+      // Fallback: plain IntersectionObserver
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            revealNews();
+            obs.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15 }
+      );
+      observer.observe(newsSection);
+    }
+  }
+});
+
+// ─── Recognition Section Scroll Effect (removed — background fixed as yellow) ───
+
+// ── Feature Block Scroll Animation ──────────────────────────
 (function () {
   var observer = new IntersectionObserver(
     function (entries) {
@@ -1976,7 +1835,7 @@ if (tl) {
         }
       });
     },
-    { threshold: 0.15 },
+    { threshold: 0.15 }
   );
 
   function observeBlocks() {
@@ -2006,7 +1865,7 @@ if (tl) {
         }
       });
     },
-    { threshold: 0.2 },
+    { threshold: 0.2 }
   );
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -2019,7 +1878,7 @@ if (tl) {
 })();
 
 // ============================================================
-// MOB STICKY BTN â” contact-sec ke andar enter hone pe hide karo
+// MOB STICKY BTN — contact-sec ke andar enter hone pe hide karo
 // ============================================================
 (function initMobStickyBtn() {
   var stickyBtn = document.querySelector(".mob-sticky-btn");
@@ -2046,7 +1905,62 @@ if (tl) {
   updateStickyBtn();
 })();
 
-/// ============================================================
-// BBT-FA-IMG-SEC â” Purple circle (right se) + Title (left se) animation
+// ============================================================
+// BBT-FA-IMG-SEC — Purple circle (right se) + Title (left se) animation
+// ============================================================
+(function initImgSecAnimation() {
+  const imgSec = document.querySelector(".bbt-FA-img-sec");
+  if (!imgSec) return;
 
+  const purpleCircle = imgSec.querySelector(".purple-circle");
+  const imgText = imgSec.querySelector(".img-text");
+  const mainTitle = imgSec.querySelector(".main-title");
 
+  // Initial states — sab hidden
+  if (purpleCircle) {
+    gsap.set(purpleCircle, { x: 220, opacity: 0 });
+  }
+  if (imgText) {
+    gsap.set(imgText, { x: -100, opacity: 0 });
+  }
+  if (mainTitle) {
+    gsap.set(mainTitle, { x: -80, opacity: 0 });
+  }
+
+  ScrollTrigger.create({
+    trigger: imgSec,
+    start: "top 75%",
+    once: true,
+    onEnter: function () {
+      // Purple circle — right se slide in + fade in
+      if (purpleCircle) {
+        gsap.to(purpleCircle, {
+          x: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: "power3.out",
+        });
+      }
+      // img-text heading — left se slide in + fade in
+      if (imgText) {
+        gsap.to(imgText, {
+          x: 0,
+          opacity: 1,
+          duration: 1.0,
+          delay: 0.15,
+          ease: "power3.out",
+        });
+      }
+      // main-title paragraph — left se thoda baad mein
+      if (mainTitle) {
+        gsap.to(mainTitle, {
+          x: 0,
+          opacity: 1,
+          duration: 1.0,
+          delay: 0.3,
+          ease: "power3.out",
+        });
+      }
+    },
+  });
+})();

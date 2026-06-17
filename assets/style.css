@@ -586,7 +586,7 @@
   font-size: 1.25em;
   color: #000;
   font-family: "Poppins";
-  font-weight: 500;
+  font-weight: 400;
   line-height: 180%;
 }
 
@@ -829,10 +829,11 @@
 
 /* video section CSS start  */
 .video-section {
-  height: 85vh;
+  height: 100vh;
   position: relative;
   overflow-x: clip;
-  margin-bottom: 100px;
+  padding-bottom: 100px;
+  background: #fff;
 }
 
 .video-wrapper {
@@ -996,7 +997,6 @@
 
 /* Beyond subjects section css start */
 .horizontal-section {
-  --video-horizontal-gap: 100px;
   --horizontal-container-gutter: 7vw;
   --horizontal-panel-top: clamp(8.5rem, 10vw, 10.5rem);
   --horizontal-panel-bottom: clamp(5.75rem, 7vw, 7rem);
@@ -1020,7 +1020,7 @@
   background: #f7df00;
   border-radius: 1500px 1500px 0 0;
   z-index: 0;
-  transform-origin: 85% 85%;
+  transform-origin: bottom right;
   pointer-events: none;
 }
 
@@ -1408,7 +1408,7 @@ section.bbt-FA-img-sec {
   --school-circle-bottom: 0px; */
   --school-circle-size: clamp(420px, 48vw, 742px);
   --school-circle-right: clamp(-60px, -22vw, -18px);
-  --school-circle-bottom: -210px;
+  --school-circle-bottom: -130px;
   margin: 0;
   overflow: visible;
   height: 100vh;
@@ -1482,7 +1482,7 @@ section.bbt-FA-img-sec {
 .bbt-FA-img-sec .main-title p {
   margin: 0;
   color: #fff;
-  font-size: 1em;
+  font-size: 0.85em;
   line-height: 154%;
   width: 100%;
   max-width: 50%;
@@ -1711,9 +1711,11 @@ section.bbt-FA-img-sec {
 
 .recognition-sec .awards-grid {
   display: flex;
+  width: 85%;
+  margin: 0 auto;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 65px 138.22px;
+  gap: 65px 80px;
   opacity: 1;
   transform: translateY(0);
   transition: opacity 1s ease 0.2s,
@@ -1784,7 +1786,7 @@ body.reveal-animations-ready .recognition-sec:not(.animate) .award {
 .recognition-sec .award-title {
   font-family: "poppins";
   font-weight: 600;
-  font-size: 1em;
+  font-size: 0.85em;
   line-height: 130%;
 }
 
@@ -2444,7 +2446,7 @@ a.see-all.secondary-btn {
   margin-top: 8px !important;
   margin-bottom: 0;
   max-width: 84%;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 /* Stats bubble section css End */
@@ -2688,28 +2690,4 @@ a.see-all.secondary-btn {
     left: calc(50% - 80px);
     top: 2100px;
   }
-}
-
-/* ============================================================
-   FOOTER REVEAL — HOME PAGE
-   ============================================================ */
-.index-page .main-content-wrapper {
-  position: relative;
-  z-index: 1;
-  background-color: #fff;
-  /* hides the fixed footer behind scroll content */
-}
-
-.index-page .footer-reveal-wrapper {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 0;
-}
-
-.index-page .footer-reveal-wrapper .contact-sec {
-  margin-top: 0;
-  transform: none;
-  z-index: auto;
 }
