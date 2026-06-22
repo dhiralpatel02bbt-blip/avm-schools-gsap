@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AVM Schools</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="assets/global.css" />
+  <link rel="stylesheet" href="assets/fee-payment-policy.css" />
+
+  <!--favicon-->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+
+<body class="fee-payment-page">
+  <header class="header">
+    <div class="w-90">
+      <div class="row d-flex">
+        <div class="col-4">
+          <div class="logo white-logo">
+            <a href="index.html">
+              <img src="images/logo.png" alt="logo" />
+            </a>
+          </div>
+          <div class="logo black-logo">
+            <a href="index.html">
+              <img src="images/black-logo.png" alt="logo" />
+            </a>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="offcanvas-menu">
+            <input type="checkbox" id="toogle-menu" />
+
+            <label for="toogle-menu" class="toogle-open"><span></span></label>
+
+            <nav>
+              <div class="mobile-menu-header">
+                <div class="logo nav-logo">
+                  <a href="index.html">
+                    <img src="images/black-logo.png" alt="logo" />
+                  </a>
+                </div>
+                <label for="toogle-menu" class="toogle-close">
+                  <span></span>
+                </label>
+              </div>
+              <ul>
+                <li class="menu"><a href="index.html">Home </a></li>
+                <li class="menu"><a href="about-us.html">About AVM</a></li>
+                <li class="menu"><a href="our-school.html">Schools </a></li>
+                <li class="menu"><a href="pedagogy.html">Pedagogy </a></li>
+                <li class="menu">
+                  <a href="admissions.html">Admissions </a>
+                </li>
+                <!-- <li class="menu">
+                  <a href="news-and-events.html">News & Events </a>
+                </li> -->
+                <li class="menu">
+                  <a href="careers.html">Careers</a>
+                </li>
+              </ul>
+              <div class="nav-menu-ft-social">
+                <div class="icon">
+                  <a href="#">
+                    <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
+                  </a>
+                </div>
+                <div class="icon">
+                  <a href="#">
+                    <img src="images/youtube-icon.svg" alt="youtube-icon" />
+                  </a>
+                </div>
+              </div>
+            </nav>
+          </div>
+          <nav class="main-menu">
+            <ul class="d-flex">
+              <li class="menu">
+                <a href="about-us.html">About</a>
+              </li>
+              <li class="menu">
+                <a href="pedagogy.html">Pedagogy</a>
+              </li>
+              <li class="menu">
+                <a href="our-school.html">Schools</a>
+              </li>
+              <!-- <li class="menu">
+                <a href="news-and-events.html">News & Events</a>
+              </li> -->
+              <li class="btn-element">
+                <a href="admissions.html" class="main-btn">Apply Now</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fee Payment Policy section Start -->
+  <section class="policy-page">
+    <div class="container-xxl">
+      <!-- Header -->
+      <div class="policy-header">
+        <h1 class="policy-title">Fee Payment Policy</h1>
+        <div class="year-select-wrapper" id="yearSelectWrapper">
+          <button type="button" class="year-select" id="yearSelectBtn">
+            <span id="yearSelectLabel">2026-2027</span>
+            <span class="policy-filter-icon"></span>
+          </button>
+          <ul class="year-dropdown" id="yearDropdown">
+            <li class="active" data-year="2026-2027">2026-2027</li>
+            <li data-year="2025-2026">2025-2026</li>
+            <li data-year="2024-2025">2024-2025</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <nav class="policy-tabs">
+        <a href="#" class="active tab-txt" data-tab="net-banking">Net Banking Options</a>
+        <a href="#" class="tab-txt" data-tab="refund">Refund &amp; Cancellation Policy</a>
+        <a href="#" class="tab-txt" data-tab="privacy">Privacy Policy</a>
+        <a href="#" class="tab-txt" data-tab="terms">Terms of Use</a>
+      </nav>
+
+      <!-- Net Banking Options -->
+      <div class="tab-panel active" id="tab-net-banking">
+        <p class="blue-text">
+          As of 30 October 2017, the list of Banks approved for Net Banking
+          are as below :
+        </p>
+        <div class="d-flex">
+          <p>
+            Allahabad Bank<br />
+            Bank of India<br />
+            City Union Bank<br />
+            Andhra Bank<br />
+            Bank of Baroda - Corporate Banking<br />
+            Bank of Bahrain and Kuwait<br />
+            Canara Bank<br />
+            Cosmos Bank<br />
+            Catholic Syrian Bank<br />
+            Dena Bank<br />
+            Dhanlakshmi Bank<br />
+            IDBI Bank<br />
+            Indian Overseas Bank<br />
+            Jammu & Kashmir Bank<br />
+            Karnataka Bank Ltd<br />
+            Karur Vysya Bank<br />
+            Laxmi Vilas Bank - Retail Net Banking<br />
+            Oriental Bank of Commerce<br />
+            Punjab National Bank - Retail Banking<br />
+            Punjab National Bank - Corporate Banking <br />Punjab & Sind Bank
+          </p>
+          <p>
+            Standard Chartered Bank<br />
+            South Indian Bank<br />
+            Shyamrao Vittal<br />
+            Syndicate Bank<br />
+            Tamilnad Mercantile Bank Ltd.<br />
+            Union Bank of India<br />
+            United Bank of India<br />
+            Federal Bank Scan & Pay<br />
+            TJSB Bank<br />
+            Kalyan Janata Sahakari Bank<br />
+            Bandhan Bank<br />
+            Digibank by DBS<br />
+            IDFC Bank<br />
+            Shamrao Vithal Co-op Bank - Corporate<br />
+            Bassien Catholic Co Operative Bank<br />
+            PNB Yuva Netbanking<br />
+            Equitas Small Finance Bank<br />
+            Thane Bharat Sahakari Bank Ltd<br />
+            Suryoday Small Finance Bank <br />ESAF Small Finance Bank<br />
+            North East Small Finance Bank Ltd
+          </p>
+          <p>
+            Corporation Bank-netbnk<br />
+            Indian Bank-netbnk<br />
+            Indusind Bank-netbnk<br />
+            Federal Bank-netbnk<br />
+            Vijaya Bank-netbnk<br />
+            Kotak-netbnk<br />
+            Yes-netbnk<br />
+            Bank Of Maharashtra-netbnk<br />
+            Axis-netbnk<br />
+            ICICI-netbnk<br />
+            Deutsche Bank<br />
+            Saraswat Bank<br />
+            RBL<br />
+            Janata Sahakari Bank Ltd Pune<br />
+            Central bank of India<br />
+            HDFC Bank<br />
+            State Bank Of India<br />
+            DCB Bank<br />
+            Jana Small Finance Bank<br />
+            South Indian Bank<br />
+            Bank of Baroda
+          </p>
+        </div>
+
+        <h2 class="another-title">Instructions</h2>
+        <div class="flow">
+          <div class="node"><span>Login to Portal</span></div>
+          <div class="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="8" viewBox="0 0 72 8" fill="none">
+              <path
+                d="M71.3536 4.03324C71.5488 3.83798 71.5488 3.5214 71.3536 3.32613L68.1716 0.144154C67.9763 -0.0511086 67.6597 -0.0511086 67.4645 0.144154C67.2692 0.339416 67.2692 0.655998 67.4645 0.85126L70.2929 3.67969L67.4645 6.50811C67.2692 6.70338 67.2692 7.01996 67.4645 7.21522C67.6597 7.41048 67.9763 7.41048 68.1716 7.21522L71.3536 4.03324ZM0 3.67969L0 4.17969L71 4.17969V3.67969V3.17969L0 3.17969L0 3.67969Z"
+                fill="black" />
+            </svg>
+          </div>
+          <div class="node"><span>Click Pay Now</span></div>
+          <div class="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="8" viewBox="0 0 72 8" fill="none">
+              <path
+                d="M71.3536 4.03324C71.5488 3.83798 71.5488 3.5214 71.3536 3.32613L68.1716 0.144154C67.9763 -0.0511086 67.6597 -0.0511086 67.4645 0.144154C67.2692 0.339416 67.2692 0.655998 67.4645 0.85126L70.2929 3.67969L67.4645 6.50811C67.2692 6.70338 67.2692 7.01996 67.4645 7.21522C67.6597 7.41048 67.9763 7.41048 68.1716 7.21522L71.3536 4.03324ZM0 3.67969L0 4.17969L71 4.17969V3.67969V3.17969L0 3.17969L0 3.67969Z"
+                fill="black" />
+            </svg>
+          </div>
+          <div class="node"><span>Select Month(s)</span></div>
+          <div class="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="8" viewBox="0 0 72 8" fill="none">
+              <path
+                d="M71.3536 4.03324C71.5488 3.83798 71.5488 3.5214 71.3536 3.32613L68.1716 0.144154C67.9763 -0.0511086 67.6597 -0.0511086 67.4645 0.144154C67.2692 0.339416 67.2692 0.655998 67.4645 0.85126L70.2929 3.67969L67.4645 6.50811C67.2692 6.70338 67.2692 7.01996 67.4645 7.21522C67.6597 7.41048 67.9763 7.41048 68.1716 7.21522L71.3536 4.03324ZM0 3.67969L0 4.17969L71 4.17969V3.67969V3.17969L0 3.17969L0 3.67969Z"
+                fill="black" />
+            </svg>
+          </div>
+          <div class="node"><span>Click Pay Now</span></div>
+          <div class="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="8" viewBox="0 0 72 8" fill="none">
+              <path
+                d="M71.3536 4.03324C71.5488 3.83798 71.5488 3.5214 71.3536 3.32613L68.1716 0.144154C67.9763 -0.0511086 67.6597 -0.0511086 67.4645 0.144154C67.2692 0.339416 67.2692 0.655998 67.4645 0.85126L70.2929 3.67969L67.4645 6.50811C67.2692 6.70338 67.2692 7.01996 67.4645 7.21522C67.6597 7.41048 67.9763 7.41048 68.1716 7.21522L71.3536 4.03324ZM0 3.67969L0 4.17969L71 4.17969V3.67969V3.17969L0 3.17969L0 3.67969Z"
+                fill="black" />
+            </svg>
+          </div>
+          <div class="node"><span>Select Payment Method</span></div>
+          <div class="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="8" viewBox="0 0 72 8" fill="none">
+              <path
+                d="M71.3536 4.03324C71.5488 3.83798 71.5488 3.5214 71.3536 3.32613L68.1716 0.144154C67.9763 -0.0511086 67.6597 -0.0511086 67.4645 0.144154C67.2692 0.339416 67.2692 0.655998 67.4645 0.85126L70.2929 3.67969L67.4645 6.50811C67.2692 6.70338 67.2692 7.01996 67.4645 7.21522C67.6597 7.41048 67.9763 7.41048 68.1716 7.21522L71.3536 4.03324ZM0 3.67969L0 4.17969L71 4.17969V3.67969V3.17969L0 3.17969L0 3.67969Z"
+                fill="black" />
+            </svg>
+          </div>
+          <div class="node"><span>Submit</span></div>
+          <div class="arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="8" viewBox="0 0 72 8" fill="none">
+              <path
+                d="M71.3536 4.03324C71.5488 3.83798 71.5488 3.5214 71.3536 3.32613L68.1716 0.144154C67.9763 -0.0511086 67.6597 -0.0511086 67.4645 0.144154C67.2692 0.339416 67.2692 0.655998 67.4645 0.85126L70.2929 3.67969L67.4645 6.50811C67.2692 6.70338 67.2692 7.01996 67.4645 7.21522C67.6597 7.41048 67.9763 7.41048 68.1716 7.21522L71.3536 4.03324ZM0 3.67969L0 4.17969L71 4.17969V3.67969V3.17969L0 3.17969L0 3.67969Z"
+                fill="black" />
+            </svg>
+          </div>
+          <div class="node"><span>Download Receipt</span></div>
+        </div>
+        <h4 class="last-line">
+          Plan once chosen, cannot be changed during the academic year
+        </h4>
+      </div>
+
+      <!-- Refund & Cancellation Policy -->
+      <div class="tab-panel" id="tab-refund">
+        <p class="blue-text">Online Application Fee for Admission Forms</p>
+        <ul class="policy-content">
+          <li>
+            There will be no refund for any application fee processed in order
+            to complete an application form.
+          </li>
+          <li>
+            It is the responsibility of the application to ensure that all
+            applications are accurately and completely filled in at the time
+            of submitting the application.
+          </li>
+          <li>
+            Applications will not be amended in any way after submission and
+            there will be no refund processed for cancellation of an
+            application.
+          </li>
+        </ul>
+        <p class="blue-text">Online Fee Payment for Course Enrollment</p>
+        <ul class="policy-content">
+          <li>
+            Applicants are required to pay the fees for the academic year once
+            they are offered admission and prior to the review of documents.
+          </li>
+          <li>
+            If any of the documentation presented to the institution is
+            found to be fabricated, erroneous or otherwise inaccurate in any
+            way, the Institute has the right to reject the application and
+            rescind the offer of admission.
+          </li>
+          <li>
+            In this case, the enrollment and tuition fees will be refunded as
+            per the existing guidelines of the Department of Education. There
+            will be no transfer of fees paid to any other applicant or
+            student.
+          </li>
+        </ul>
+        <div class="last-black-line">
+          All refunds will be processed by cheque payment only by the school
+          and typically takes 1 month of processing time.
+        </div>
+      </div>
+
+      <!-- Privacy Policy -->
+      <div class="tab-panel" id="tab-privacy">
+        <p class="black-line-txt">
+          This privacy policy discloses the privacy practices for <a
+            href="https://avmschools.ac.in/">http://avmschools.ac.in</a>
+          This privacy policy applies solely to information collected by this
+          web site. It will notify you of the following:
+        </p>
+        <ul class="privacy-content">
+          <li>
+            What personally identifiable information is collected from you
+            through the web site, how it is used and with whom it may be
+            shared.
+          </li>
+          <li>
+            What choices are available to you regarding the use of your data.
+          </li>
+          <li>
+            The security procedures in place to protect the misuse of your
+            information.
+          </li>
+          <li>How you can correct any inaccuracies in the information.</li>
+        </ul>
+        <p class="black-line-txt">Information Collection, Use, and Sharing</p>
+        <ul class="privacy-content">
+          <li>
+            We are the sole owners of the information collected on this site.
+          </li>
+          <li>
+            We only have access to/collect information that you voluntarily
+            give us via email or other direct contact from you.
+          </li>
+          <li>We will not sell or rent this information to anyone.</li>
+          <li>
+            We will use your information to respond to you, regarding the
+            reason you contacted us.
+          </li>
+          <li>
+            We will not share your information with any third party outside of
+            our organization, other than as necessary to fulfill your request,
+            e.g. to process an online admission application, process fee
+            payment, access facilities provided by the college including but
+            not limited to moodle, email, WiFi etc.
+          </li>
+          <li>
+            Unless you ask us not to, we may contact you via email in the
+            future to tell you about news and events on campus, alumni get
+            togethers, or changes to this privacy policy.
+          </li>
+        </ul>
+        <p class="black-line-txt">
+          Your Access to and Control Over Information
+        </p>
+        <p class="other-txt">
+          You may opt out of any future contacts from us at any time. You can
+          do the following at any time by<br />
+          contacting us via the email address or phone number given on our
+          website:
+        </p>
+        <ul class="privacy-content">
+          <li>See what data we have about you, if any.</li>
+          <li>Change/correct any data we have about you.</li>
+          <li>Have us delete any data we have about you.</li>
+          <li>Express any concern you have about our use of your data.</li>
+        </ul>
+        <p class="blue-text">Security</p>
+        <ul class="privacy-content">
+          <li>
+            We take precautions to protect your information. When you submit
+            sensitive information via the website, your information is
+            protected both online and offline.
+          </li>
+          <li>
+            Wherever we collect sensitive information (such as credit card
+            data), that information is encrypted and transmitted to us in a
+            secure way. You can verify this by looking for a closed lock icon
+            at the bottom of your web browser, or looking for https at the
+            beginning of the address of the web page.
+          </li>
+          <li>
+            While we use encryption to protect sensitive information
+            transmitted online, we also protect your information offline. None
+            of your personally identifiable information for the purpose of
+            processing financial transactions is stored on our website. It is
+            directly processed by the payment gateway provider.
+          </li>
+        </ul>
+        <p class="blue-text">Registration</p>
+        <p class="other-txt">
+          In order to apply for admission or other features provided by this
+          website, a user must first complete the registration/application
+          form. During registration a user is required to give certain
+          information (such as name and email address). This information is
+          used to contact you about the products/services on our site in which
+          you have expressed interest.
+        </p>
+        <p class="blue-text">Financial Information</p>
+        <p class="other-txt">
+          We request information from you on our application form and fee
+          payment system. To use these services from us, you must provide
+          contact information and financial information (like bank account
+          details, debit/credit card number, expiration date). This
+          information is used for billing purposes and to complete your
+          transaction. If we have trouble processing an order, we will use
+          this information to contact you.
+        </p>
+        <p class="blue-text">Cookies</p>
+        <p class="other-txt">
+          We use cookies on this site. A cookie is a piece of data stored on a
+          site visitors hard drive to help us improve your access to our site
+          and identify repeat visitors to our site. For instance, when we use
+          a cookie to identify you, you would not have to log in a password
+          more than once, thereby saving time while on our site. Cookies can
+          also enable us to track and target the interests of our users to
+          enhance the experience on our site. Usage of a cookie is in no way
+          linked to any personally identifiable information on our site.
+        </p>
+        <p class="blue-text">Sharing</p>
+        <p class="other-txt">
+          We do not share aggregated demographic information with our partners
+          and advertisers.
+        </p>
+        <p class="blue-text">Links</p>
+        <p class="other-txt">
+          This web site contains links to other sites. Please be aware that we
+          are not responsible for the content or privacy practices of such
+          other sites. We encourage our users to be aware when they leave our
+          site and to read the privacy statements of any other site that
+          collects personally identifiable information.
+        </p>
+      </div>
+
+      <!-- Terms of Use -->
+      <div class="tab-panel" id="tab-terms">
+        <p class="black-line-txt">
+          This website <a href="http://avmschools.ac.in">http://avmschools.ac.in</a> and all its pages, content, images,
+          videos, information and other
+          forms of data whether hosted on this site or on other websites such
+          as YouTube, Facebook and others that are or may be linked to this
+          website are the intellectual property of AVM BANDRA WEST, a
+          registered educational trust.
+        </p>
+        <p class="blue-text">Copyright</p>
+        <p class="other-txt">
+          Material on these pages is copyright or reproduced with permission
+          from other copyright owners. It may be downloaded and printed for
+          personal reference, but not otherwise copied, altered in any way or
+          transmitted to others (unless explicitly stated otherwise) without
+          the written permission of AVM BANDRA WEST, a registered educational
+          trust. Hypertext links to other Web locations are for the
+          convenience of users and do not constitute any endorsement or
+          authorisation by AVM BANDRA WEST.
+        </p>
+        <p class="blue-text">Website terms of use</p>
+        <p class="other-txt">
+          Use of website at <a href="http://avmschools.ac.in">http://avmschools.ac.in</a> is subject to these terms of
+          use. Users who do not accept these
+          terms of use are not authorised to use or continue using this
+          website.<br />We may amend these terms of use at any time and any
+          revised version will be effective immediately that it is displayed
+          on this website. In the event of any comments or questions
+          concerning these terms of use.<br />Our Intellectual property
+          rights<br />We own or are licensed to use all intellectual property
+          rights in and to this website and all technical infrastructure
+          relating to it.
+        </p>
+        <p class="black-bold-txt">
+          Access to and use of this website.<br />In accessing any part of
+          this website, you agree:
+        </p>
+        <ul class="privacy-content">
+          <li>
+            Not to use this website in such a way that disrupts, interferes
+            with or restricts the use of this website by other users;
+          </li>
+          <li>
+            Not to upload, display or transmit any materials through this
+            website which are false, offensive, defamatory, threatening,
+            obscene, unlawful or which infringe the rights of any other person
+            anywhere in the world;
+          </li>
+          <li>
+            Not to reverse engineer, decompile, copy or adapt any software or
+            other code or scripts forming part of this website or attempt to
+            transmit to or via this website any information that contains a
+            virus, worm, trojan horse or other harmful or disruptive component
+          </li>
+          <li>
+            Not to change, modify, delete, interfere with or misuse data
+            contained on this website and entered by or relating to any third
+            party user of this website.
+          </li>
+          <li>
+            Material contained in this website may be downloaded, viewed and
+            printed for personal use or internal circulation within your
+            organisation provided that no trade mark, copyright or other
+            proprietary notices contained in or appearing on such material are
+            removed in whole or in part.
+          </li>
+          <li>
+            Material contained in this website may not otherwise be copied,
+            reproduced or redistributed in whole or in part without our prior
+            written consent. In particular it must not be reproduced or
+            exploited for commercial gain. All other rights are reserved and
+            users must seek our permission before making any other use of
+            material contained in this website.
+          </li>
+        </ul>
+        <p class="black-bold-txt">Exclusions and limitations of liability</p>
+        <ul class="privacy-content">
+          <li>
+            This website has been prepared with the aim of providing
+            information, our educational facilities and course offerings.
+            Owing to the nature of the Internet we cannot guarantee that this
+            website or the websites to which it is linked will always be
+            available to users. You should ensure that you have appropriate
+            protection against viruses and other security arrangements in
+            place whilst using the Internet.
+          </li>
+          <li>
+            Although every reasonable effort has been made to ensure that the
+            information on this website was accurate at the time of
+            publication, it is subject to variation at any time without notice
+            and we do not give any warranty that any such information will be
+            accurate or complete at any particular time or at all.
+          </li>
+          <li>
+            This website and any information or other material contained in it
+            are made available strictly on the basis that you accept it on an
+            as is and as available basis. Where you rely on any information or
+            other material contained in it, you do so entirely at your own
+            risk and you accept that all warranties, conditions and
+            undertakings, express or implied, whether by common law, statute,
+            trade usage, course of dealings or otherwise in respect of this
+            website are excluded to the fullest extent permitted by law. We
+            exclude all liability whatever, to the fullest extent permitted by
+            law, in respect of any loss or damage resulting or arising from
+            any non-availability or use of this website or of any other
+            website linked to it, or from reliance on the contents of this
+            website or any material or content accessed through it.
+          </li>
+        </ul>
+        <p class="blue-text">Jurisdiction</p>
+        <p class="other-txt">
+          This website has been designed and these terms of use shall be
+          governed by and construed in accordance with Indian law. Any dispute
+          arising out of the accessing or use of this website shall be subject
+          to the jurisdiction of Indian courts in the city of Mumbai,
+          Maharashtra.
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- Fee Payment Policy section End -->
+
+  <!-- footer start -->
+  <footer class="bbt-FA-main-footer desk-footer">
+    <div class="container-xxl footer-container">
+      <div class="footer-top">
+        <div class="ft-col-logo">
+          <div class="footer-logo">
+            <a href="index.html">
+              <img src="images/logo.png" alt="footer-logo" class="footer-logo" />
+            </a>
+          </div>
+        </div>
+
+        <div class="ft-col-menu">
+          <ul class="text">
+            <li><a href="index.html" class="title">Home</a></li>
+            <li><a href="about-us.html" class="title">About AVM</a></li>
+            <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
+            <li><a href="our-school.html" class="title">Schools</a></li>
+          </ul>
+        </div>
+
+        <div class="ft-col-menu">
+          <ul class="text">
+            <li>
+              <a href="admissions.html" class="title">Admissions</a>
+            </li>
+            <!-- <li>
+              <a href="news-and-events.html" class="title">News & Events</a>
+            </li> -->
+
+            <li><a href="careers.html" class="title">Careers</a></li>
+            <li><a href="fee-payment-policy.html" class="title">Fee Payment Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="ft-col-menu">
+          <ul class="text">
+            <li>
+              <a href="#" class="title">Fee Payment</a>
+            </li>
+            <li>
+              <a href="https://parent.intellischools.com/session/login/AVMBWS" class="title">Parent Login</a>
+            </li>
+            <li>
+              <a href="https://schadmin.intellischools.com/session/login/AVMBWS" class="title">Teacher Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-text">
+        <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+        <div class="ft-meta-phone">
+          <a href="#">T: +91 22 6101 3900</a>
+        </div>
+
+        <div class="ft-meta-email">
+          <a href="#">E: info@avmschools.ac.in</a>
+        </div>
+
+        <div class="ft-social">
+          <div class="icon">
+            <a href="#">
+              <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
+            </a>
+          </div>
+
+          <div class="icon">
+            <a href="#">
+              <img src="images/youtube-icon.svg" alt="youtube-icon" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <footer class="bbt-FA-main-footer mob-footer">
+    <div class="container-xxl footer-container">
+      <div class="footer-top">
+        <div class="ft-col-menu">
+          <ul class="text">
+            <li><a href="index.html" class="title">Home</a></li>
+            <li><a href="about-us.html" class="title">About AVM</a></li>
+            <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
+            <li><a href="our-school.html" class="title">Schools</a></li>
+            <li>
+              <a href="admissions.html" class="title">Admissions</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="ft-col-menu">
+          <ul class="text">
+            <!-- <li>
+              <a href="news-and-events.html" class="title">News & Events</a>
+            </li> -->
+            <li><a href="careers.html" class="title">Careers</a></li>
+            <li><a href="fee-payment-policy.html" class="title">Fee Payment Policy</a></li>
+            <li>
+              <a href="#" class="title">Fee Payment</a>
+            </li>
+            <li>
+              <a href="https://parent.intellischools.com/session/login/AVMBWS" class="title">Parent Login</a>
+            </li>
+            <li>
+              <a href="https://schadmin.intellischools.com/session/login/AVMBWS" class="title">Teacher Login</a>
+            </li>
+            <!-- <li><a href="#" class="title">Contact us</a></li> -->
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-text">
+        <div class="footer-middle">
+          <div class="ft-meta-info">
+            <div class="ft-meta-phone">
+              <a href="#">T: +91 22 6101 3900</a>
+            </div>
+
+            <div class="ft-meta-email">
+              <a href="#">E: info@avmschools.ac.in</a>
+            </div>
+          </div>
+
+          <div class="ft-social">
+            <div class="icon">
+              <a href="#">
+                <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
+              </a>
+            </div>
+            <div class="icon">
+              <a href="#">
+                <img src="images/youtube-icon.svg" alt="youtube-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ft-col-logo">
+        <div class="footer-logo">
+          <a href="index.html">
+            <img src="images/mob-footer-logo.png" alt="footer-logo" class="footer-logo" />
+          </a>
+        </div>
+        <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- footer End -->
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="assets/script.js"></script>
+  <script src="assets/fee-payment-policy.js"></script>
+</body>
+
+</html>

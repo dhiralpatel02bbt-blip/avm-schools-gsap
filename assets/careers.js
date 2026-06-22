@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
       .querySelectorAll(".careers-page .bbt-fa-careers-openings-sec .card h3")
       .forEach(function (heading) {
         const title = heading.textContent.trim().replace(/\s+/g, " ");
-        const exists = Array.from(positionSelect.options).some(
-          function (option) {
-            return option.textContent.trim() === title;
-          },
-        );
+        const exists = Array.from(positionSelect.options).some(function (
+          option
+        ) {
+          return option.textContent.trim() === title;
+        });
 
         if (!exists) {
           const option = document.createElement("option");
@@ -74,6 +74,102 @@ document.addEventListener("DOMContentLoaded", function () {
       closePopup();
     }
   });
+
+  // File input change handler to show file name
+  const fileInputs = document.querySelectorAll(".file-input");
+  fileInputs.forEach(input => {
+    input.addEventListener("change", function(e) {
+      const fileName = e.target.files[0] ? e.target.files[0].name : "Upload";
+      const label = document.querySelector(`label.upload-btn[for="${input.id}"]`);
+      if (label) {
+        label.textContent = fileName;
+      }
+    });
+  });
+
+  // Form submission and validation
+  const applicationForm = document.getElementById("applicationForm");
+  const formMessage = document.getElementById("form-message");
+
+  if (applicationForm) {
+    applicationForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // Reset message
+      formMessage.style.display = "none";
+      formMessage.textContent = "";
+      formMessage.className = "form-message";
+
+      // Basic validation
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const position = document.getElementById("position").value;
+
+      if (!position || position === "Position applying for") {
+        showMessage("Please select a position.", "error");
+        return;
+      }
+
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone)) {
+        showMessage("Please enter a valid 10-digit phone number.", "error");
+        return;
+      }
+
+      // Simple but effective regex for email @ . and TLD validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showMessage("Please enter a valid email address.", "error");
+        return;
+      }
+
+      // Prepare form data
+      const formData = new FormData(applicationForm);
+      
+      // Update button to show loading
+      const submitBtn = applicationForm.querySelector(".submit-btn");
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.textContent = "Submitting...";
+      submitBtn.disabled = true;
+
+      fetch("submit_careers.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
+
+        if (data.success) {
+          showMessage(data.message, "success");
+          applicationForm.reset();
+        } else {
+          showMessage(data.message, "error");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
+        showMessage("An error occurred while submitting the form. Please try again later.", "error");
+      });
+    });
+
+    function showMessage(msg, type) {
+      formMessage.textContent = msg;
+      formMessage.style.display = "block";
+      if (type === "success") {
+        formMessage.style.backgroundColor = "#d4edda";
+        formMessage.style.color = "#155724";
+        formMessage.style.border = "1px solid #c3e6cb";
+      } else {
+        formMessage.style.backgroundColor = "#f8d7da";
+        formMessage.style.color = "#721c24";
+        formMessage.style.border = "1px solid #f5c6cb";
+      }
+    }
+  }
 });
 
 // Careers hero + about scroll animation
@@ -84,19 +180,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const heroCircle = document.querySelector(".careers-page .hero-circle");
   const heroContent = document.querySelector(".careers-page .hero-content");
   const about = document.querySelector(
-    ".careers-page .bbt-fa-careers-about-sec",
+    ".careers-page .bbt-fa-careers-about-sec"
   );
   const aboutWrapper = document.querySelector(
-    ".careers-page .bbt-fa-careers-about-sec .career-wrapper",
+    ".careers-page .bbt-fa-careers-about-sec .career-wrapper"
   );
   const aboutImage = document.querySelector(
-    ".careers-page .bbt-fa-careers-about-sec .avm-image-wrap",
+    ".careers-page .bbt-fa-careers-about-sec .avm-image-wrap"
   );
   const aboutText = document.querySelector(
-    ".careers-page .bbt-fa-careers-about-sec .avm-text",
+    ".careers-page .bbt-fa-careers-about-sec .avm-text"
   );
   const openingsSec = document.querySelector(
-    ".careers-page .bbt-fa-careers-openings-sec",
+    ".careers-page .bbt-fa-careers-openings-sec"
   );
 
   if (!hero || !heroCircle || !heroContent || typeof gsap === "undefined") {
@@ -104,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function init() {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 992) {
       gsap.set([heroCircle, heroContent, aboutWrapper, aboutImage, aboutText], {
         clearProps: "all",
       });
@@ -137,28 +233,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
 
-      const deskFooter = document.querySelector(".bbt-FA-main-footer.desk-footer");
+      const deskFooter = document.querySelector(
+        ".bbt-FA-main-footer.desk-footer"
+      );
       if (deskFooter && openingsSec) {
         // Ensure hero covers the fixed footer
         gsap.set(hero, { zIndex: 4, position: "relative" });
-
-        function setFooterReveal() {
-          if (window.innerWidth >= 768) {
-            gsap.set(deskFooter, {
-              position: "fixed",
-              bottom: 0,
-              left: 0,
-              width: "100%",
-              zIndex: 1,
-            });
-            gsap.set(openingsSec, { marginBottom: deskFooter.offsetHeight });
-          } else {
-            gsap.set(deskFooter, { clearProps: "all" });
-            gsap.set(openingsSec, { marginBottom: 0 });
-          }
-        }
-        setFooterReveal();
-        window.addEventListener("resize", setFooterReveal);
       }
 
       gsap
@@ -177,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .to(
           heroContent,
           { autoAlpha: 0, x: -180, duration: 0.34, ease: "power2.inOut" },
-          0.12,
+          0.12
         )
         .to(
           heroCircle,
@@ -186,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
             duration: 1,
             ease: "power2.inOut",
           },
-          0,
+          0
         )
         .to(
           aboutImage,
@@ -196,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
             duration: 0.42,
             ease: "power3.out",
           },
-          0.72,
+          0.72
         )
         .to(
           aboutText,
@@ -206,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
             duration: 0.42,
             ease: "power3.out",
           },
-          0.8,
+          0.8
         )
         .set({}, {}, 2.33);
     }
@@ -221,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
         heroContent,
         { autoAlpha: 0, x: -180 },
         { autoAlpha: 1, x: 0, duration: 0.95 },
-        "+=0.02",
+        "+=0.02"
       );
   }
 
@@ -230,4 +310,44 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     window.addEventListener("load", init, { once: true });
   }
+})();
+
+// Footer Reveal Effect Setup
+(function initFooterReveal() {
+  var deskFooter = document.querySelector(
+    ".careers-page .bbt-FA-main-footer.desk-footer"
+  );
+  var openingsSec = document.querySelector(
+    ".careers-page .bbt-fa-careers-openings-sec"
+  );
+  var hero = document.querySelector(".careers-page .hero");
+
+  if (!deskFooter || !openingsSec) return;
+
+  function updateFooterMargin() {
+    if (window.innerWidth >= 992) {
+      gsap.set(deskFooter, {
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
+        zIndex: -1,
+      });
+      if (hero) gsap.set(hero, { zIndex: 4, position: "relative" });
+      gsap.set(openingsSec, {
+        marginBottom: deskFooter.offsetHeight,
+        backgroundColor: "#fff",
+      });
+    } else {
+      gsap.set(deskFooter, { clearProps: "all" });
+      if (hero) gsap.set(hero, { clearProps: "zIndex,position" });
+      gsap.set(openingsSec, { marginBottom: 0, backgroundColor: "" });
+    }
+  }
+
+  window.addEventListener("resize", updateFooterMargin);
+  window.addEventListener("load", updateFooterMargin);
+
+  updateFooterMargin();
+  setTimeout(updateFooterMargin, 500);
 })();

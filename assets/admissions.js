@@ -312,28 +312,36 @@
   if (!wrapper) return;
 
   var deskFooter = document.querySelector(".bbt-FA-main-footer.desk-footer");
-  var mobFooter = document.querySelector(".bbt-FA-main-footer.mob-footer");
+  if (!deskFooter) return;
 
   function updateFooterMargin() {
-    var activeFooter = null;
-    
-    // Determine which footer is currently active based on display property or media query
-    if (deskFooter && window.getComputedStyle(deskFooter).display !== "none") {
-      activeFooter = deskFooter;
-    } else if (mobFooter && window.getComputedStyle(mobFooter).display !== "none") {
-      activeFooter = mobFooter;
-    }
-
-    if (activeFooter) {
-      wrapper.style.marginBottom = activeFooter.offsetHeight + "px";
+    if (window.innerWidth >= 768) {
+      gsap.set(deskFooter, {
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
+        zIndex: -1,
+      });
+      // The wrapper needs to have a solid background so it hides the footer when scrolling over it
+      // admissions-page body is white, so wrapper background white is safe
+      gsap.set(wrapper, { 
+        position: "relative",
+        zIndex: 10,
+        backgroundColor: "#fff",
+        marginBottom: deskFooter.offsetHeight 
+      });
+    } else {
+      gsap.set(deskFooter, { clearProps: "all" });
+      gsap.set(wrapper, { clearProps: "all" });
     }
   }
 
   window.addEventListener("resize", updateFooterMargin);
   window.addEventListener("load", updateFooterMargin);
   
-  // Initial check
   updateFooterMargin();
-  // Double check after fonts and images might have loaded
   setTimeout(updateFooterMargin, 500);
 })();
+
+

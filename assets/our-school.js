@@ -162,7 +162,10 @@
   var slide3Text = slide3.querySelector(".campus-slide-text");
 
   if (isDesktop) {
-    gsap.set([slide1Circle, slide2Circle, slide3Circle], { x: -60, autoAlpha: 0 });
+    gsap.set([slide1Circle, slide2Circle, slide3Circle], {
+      x: -60,
+      autoAlpha: 0,
+    });
     gsap.set([slide1Text, slide2Text, slide3Text], { x: -60, autoAlpha: 0 });
   }
 
@@ -184,43 +187,102 @@
       },
       onLeaveBack: function () {
         playLoadAnim(true);
-      }
-    }
+      },
+    },
   });
 
   // Phase 2: Fade out initial elements (Blue Circle & Text)
   // Duration of 10 units for a smoother exit
-  masterTL.fromTo(campusHalfCircle, { xPercent: 0, autoAlpha: 1 }, { xPercent: -100, autoAlpha: 0, ease: "none", duration: 10, immediateRender: false }, 0.1);
-  masterTL.fromTo(campusText, { x: 0 }, { x: -180, filter: "none", ease: "none", duration: 10, immediateRender: false }, 0.1);
-  masterTL.fromTo(campusText, { autoAlpha: 1 }, { autoAlpha: 0, ease: "none", duration: 4, immediateRender: false }, 0.1);
+  masterTL.fromTo(
+    campusHalfCircle,
+    { xPercent: 0, autoAlpha: 1 },
+    {
+      xPercent: -100,
+      autoAlpha: 0,
+      ease: "none",
+      duration: 10,
+      immediateRender: false,
+    },
+    0.1,
+  );
+  masterTL.fromTo(
+    campusText,
+    { x: 0 },
+    {
+      x: -180,
+      filter: "none",
+      ease: "none",
+      duration: 10,
+      immediateRender: false,
+    },
+    0.1,
+  );
+  masterTL.fromTo(
+    campusText,
+    { autoAlpha: 1 },
+    { autoAlpha: 0, ease: "none", duration: 4, immediateRender: false },
+    0.1,
+  );
   masterTL.to(campusStaticMedia, { scale: 1, ease: "none", duration: 10 }, 0);
 
   // Bring in the stacked images cleanly
   masterTL.to(campusStack, { autoAlpha: 1, duration: 0.1, ease: "none" }, 10);
 
   // Phase 3: Reveal Slide 1 Details (Yellow Circle & Text)
-  masterTL.to(slide1Circle, { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" }, 10.1);
-  masterTL.to(slide1Text, { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" }, 10.1);
+  masterTL.to(
+    slide1Circle,
+    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
+    10.1,
+  );
+  masterTL.to(
+    slide1Text,
+    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
+    10.1,
+  );
 
   // Pause to look at slide 1
   masterTL.to({}, { duration: 15 }, 15.1);
 
   // Slide 1 up to reveal slide 2
-  masterTL.to(slide1, { yPercent: -100, ease: "power1.inOut", duration: 15 }, 30.1);
+  masterTL.to(
+    slide1,
+    { yPercent: -100, ease: "power1.inOut", duration: 15 },
+    30.1,
+  );
 
   // Reveal Slide 2 Details
-  masterTL.to(slide2Circle, { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" }, 45.1);
-  masterTL.to(slide2Text, { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" }, 45.1);
+  masterTL.to(
+    slide2Circle,
+    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
+    45.1,
+  );
+  masterTL.to(
+    slide2Text,
+    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
+    45.1,
+  );
 
   // Pause to look at slide 2
   masterTL.to({}, { duration: 15 }, 50.1);
 
   // Slide 2 up to reveal slide 3
-  masterTL.to(slide2, { yPercent: -100, ease: "power1.inOut", duration: 15 }, 65.1);
+  masterTL.to(
+    slide2,
+    { yPercent: -100, ease: "power1.inOut", duration: 15 },
+    65.1,
+  );
 
   // Reveal Slide 3 Details
-  masterTL.to(slide3Circle, { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" }, 80.1);
-  masterTL.to(slide3Text, { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" }, 80.1);
+  masterTL.to(
+    slide3Circle,
+    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
+    80.1,
+  );
+  masterTL.to(
+    slide3Text,
+    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
+    80.1,
+  );
 
   // Pause on slide 3 at the end
   masterTL.to({}, { duration: 15 }, 85.1);
@@ -228,7 +290,6 @@
   // Add empty space to the timeline so the animation finishes at exactly 80% (400vh out of 500vh)
   // This gives the remaining 20% (100vh) of scroll for the next section to slide up and overlap.
   masterTL.to({}, { duration: 25 }, 100.1);
-
 })();
 
 // ============================================================
@@ -266,10 +327,10 @@
           snapTo: 1 / (slides.length - 1),
           duration: { min: 0.2, max: 0.6 },
           delay: 0.05,
-          ease: "power2.inOut"
+          ease: "power2.inOut",
         },
         invalidateOnRefresh: true,
-      }
+      },
     });
 
     return function () {
@@ -300,7 +361,8 @@
 
   var devSec = document.querySelector(".development-sec");
 
-  gsap.fromTo([section, devSec],
+  gsap.fromTo(
+    [section, devSec],
     { backgroundColor: "#ffffff" },
     {
       backgroundColor: "#f7df00",
@@ -310,9 +372,9 @@
         start: "top bottom",
         end: "top top",
         scrub: true,
-        invalidateOnRefresh: true
-      }
-    }
+        invalidateOnRefresh: true,
+      },
+    },
   );
 
   gsap.set(leftColumn, { autoAlpha: 0, x: -28 });
@@ -422,7 +484,7 @@ if (
     bottom: 0,
     left: 0,
     width: "100%",
-    zIndex: 0
+    zIndex: 0,
   });
 
   // Make sure body doesn't overlap if it has background

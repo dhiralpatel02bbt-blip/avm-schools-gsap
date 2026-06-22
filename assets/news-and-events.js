@@ -133,7 +133,7 @@
 
     if (!Number.isFinite(gutter)) {
       var container = document.querySelector(
-        ".news-and-events-page .container-xxl",
+        ".news-and-events-page .container-xxl"
       );
       gutter = container ? container.getBoundingClientRect().left : 0;
     }
@@ -223,7 +223,7 @@
           event.preventDefault();
         }
       },
-      { passive: false },
+      { passive: false }
     );
   }
 
@@ -292,7 +292,7 @@
     return;
 
   var reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
+    "(prefers-reduced-motion: reduce)"
   ).matches;
   if (reducedMotion) return;
 
@@ -368,22 +368,29 @@
   var featuredSec = document.querySelector(".featured-news-sec");
   var nextSec = document.querySelector(".bbt-fa-news-sec");
   if (!featuredSec || !nextSec) return;
-  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
 
-  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
   if (reducedMotion) return;
 
-  // Set zIndex before pinning so the GSAP pin-spacer inherits it.
-  // We use zIndex: 2 so it sits above the footer (1) but below the next section (3).
-  gsap.set(featuredSec, { zIndex: 2, position: "relative" });
+  var mm = gsap.matchMedia();
 
-  ScrollTrigger.create({
-    trigger: featuredSec,
-    start: "top top",
-    endTrigger: nextSec,
-    end: "top top", // unpin when section 2 fully covers it
-    pin: true,
-    pinSpacing: false
+  mm.add("(min-width: 992px)", () => {
+    // Set zIndex before pinning so the GSAP pin-spacer inherits it.
+    // We use zIndex: 2 so it sits above the footer (-1) but below the next section (3).
+    gsap.set(featuredSec, { zIndex: 2, position: "relative" });
+
+    ScrollTrigger.create({
+      trigger: featuredSec,
+      start: "top top",
+      endTrigger: nextSec,
+      end: "top top", // unpin when section 2 fully covers it
+      pin: true,
+      pinSpacing: false,
+    });
   });
 })();
 
@@ -393,19 +400,26 @@
 (function initFooterReveal() {
   var footers = document.querySelectorAll(".bbt-FA-main-footer");
   var prevSec = document.querySelector(".bbt-fa-news-sec");
-  
-  if (!footers.length || !prevSec) return;
-  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
 
-  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!footers.length || !prevSec) return;
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    return;
+
+  var reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
   if (reducedMotion) return;
 
   // Ensure previous section is on top to slide over the footer AND the featured section
-  gsap.set(prevSec, { zIndex: 3, position: "relative" });
+  gsap.set(prevSec, {
+    zIndex: 3,
+    position: "relative",
+    backgroundColor: "#fff",
+  });
 
   function updateFooterReveal() {
     var activeFooter = null;
-    footers.forEach(function(f) {
+    footers.forEach(function (f) {
       if (getComputedStyle(f).display !== "none") {
         activeFooter = f;
       } else {
@@ -417,17 +431,17 @@
       var h = activeFooter.offsetHeight;
 
       // Apply fixed reveal globally if it fits on screen
-      if (h < window.innerHeight) {
+      if (window.innerWidth >= 992 && h < window.innerHeight) {
         gsap.set(activeFooter, {
           position: "fixed",
           bottom: 0,
           left: 0,
           width: "100%",
-          zIndex: 1, // Stay firmly behind featuredSec (2) and prevSec (3)
-          clearProps: "transform"
+          zIndex: -1, // Stay firmly behind featuredSec (2) and prevSec (3)
+          clearProps: "transform",
         });
         gsap.set(prevSec, {
-          marginBottom: h + "px"
+          marginBottom: h + "px",
         });
       } else {
         // Fallback for very small screens/tall footers: standard scroll
@@ -440,8 +454,9 @@
   updateFooterReveal();
 
   var resizeTimer;
-  window.addEventListener("resize", function() {
+  window.addEventListener("resize", function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(updateFooterReveal, 100);
   });
+  window.addEventListener("load", updateFooterReveal);
 })();

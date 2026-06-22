@@ -77,7 +77,7 @@ gsap.registerPlugin(ScrollTrigger);
   // Homepage hero reference
   var homepageHero = document.querySelector(".bbt-dp-hero");
 
-  //  Helper: Campus section ke pin zone mein hain? 
+  //  Helper: Campus section ke pin zone mein hain?
   // GSAP campusViewport ko pin karta hai 200vh ke liye.
   // Us dauraan header ko chhedna nahi chahiye.
   function insideCampusPin() {
@@ -87,14 +87,14 @@ gsap.registerPlugin(ScrollTrigger);
     return rect.top <= 0 && rect.bottom >= window.innerHeight * 0.5;
   }
 
-  //  Helper: Homepage hero ke andar hain? 
+  //  Helper: Homepage hero ke andar hain?
   function insideHomepageHero() {
     if (!homepageHero) return false;
     var heroBottom = homepageHero.offsetTop + homepageHero.offsetHeight;
     return window.scrollY <= heroBottom - 100;
   }
 
-  //  Show / Hide functions 
+  //  Show / Hide functions
   function showHeader() {
     if (!isHidden) return;
     isHidden = false;
@@ -119,7 +119,7 @@ gsap.registerPlugin(ScrollTrigger);
     });
   }
 
-  //  Scroll handler 
+  //  Scroll handler
   function onScroll() {
     var currentY = window.scrollY;
     var direction = currentY > lastScrollY ? "down" : "up"; // down ya up
@@ -277,119 +277,52 @@ heroTL
 
   if (!aboutSection || !heroSection || !heroWrapper) return;
 
-  heroWrapper.style.height = "auto";
-  heroSection.style.clipPath = "";
-  heroSection.style.willChange = "";
-  gsap.set(aboutSection, { clearProps: "transform,opacity,visibility" });
+  let mm = gsap.matchMedia();
+  mm.add("(min-width: 768px)", () => {
+    heroWrapper.style.height = "auto";
+    heroSection.style.clipPath = "";
+    heroSection.style.willChange = "";
+    gsap.set(aboutSection, { clearProps: "transform,opacity,visibility" });
 
-  const aboutImg = aboutSection.querySelector(".about-img");
-  const aboutParagraph = aboutSection.querySelector(".about-paragraph");
-  const revealItems = [];
+    const aboutImg = aboutSection.querySelector(".about-img");
+    const aboutParagraph = aboutSection.querySelector(".about-paragraph");
+    const revealItems = [];
 
-  if (aboutImg) {
-    gsap.set(aboutImg, { autoAlpha: 0, x: -110 });
-    revealItems.push(aboutImg);
-  }
+    if (aboutImg) {
+      gsap.set(aboutImg, { autoAlpha: 0, x: -110 });
+      revealItems.push(aboutImg);
+    }
 
-  if (aboutParagraph) {
-    gsap.set(aboutParagraph, { autoAlpha: 0, x: 110 });
-    revealItems.push(aboutParagraph);
-  }
+    if (aboutParagraph) {
+      gsap.set(aboutParagraph, { autoAlpha: 0, x: 110 });
+      revealItems.push(aboutParagraph);
+    }
 
-  if (revealItems.length) {
-    ScrollTrigger.create({
-      trigger: aboutSection,
-      start: "top 72%",
-      once: true,
-      onEnter: function () {
-        gsap.to(revealItems, {
-          autoAlpha: 1,
-          x: 0,
-          duration: 0.9,
-          stagger: 0.12,
-          ease: "power3.out",
-          overwrite: true,
-        });
-      },
-    });
-  }
+    if (revealItems.length) {
+      ScrollTrigger.create({
+        trigger: aboutSection,
+        start: "top 72%",
+        once: true,
+        onEnter: function () {
+          gsap.to(revealItems, {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.9,
+            stagger: 0.12,
+            ease: "power3.out",
+            overwrite: true,
+          });
+        },
+      });
+    }
 
-  window.addEventListener("load", function () {
-    ScrollTrigger.refresh();
-  });
+    const onLoadRefresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoadRefresh);
 
-  return;
-
-  //  Strategy 
-  // Wrapper height = 100vh (hero) + about ki poori height
-  // Hero: position sticky, top:0, height:100vh  â†’ apni jagah fixed
-  // About: position absolute, top:0             â†’ hero ke upar layer
-  // JS: about translateY(100vh â†’ 0) scrub       â†’ slide up effect
-  // Wrapper overflow:hidden                     â†’ about clip nahi hoga
-  //   kyunki wrapper khud itna lamba hai
-  // Baad mein: video section wrapper ke theek baad â” no gap
-  // 
-
-  function setWrapperHeight() {
-    // Wrapper = hero (100vh) + about poori height
-    // Taaki about fully visible ho sake aur clip na ho
-    const aboutH = aboutSection.offsetHeight;
-    heroWrapper.style.height = window.innerHeight + aboutH + "px";
-  }
-
-  // About ki height pehle measure karo (display block chahiye)
-  // aboutSection position:absolute hai, toh offsetHeight sahi aayega
-  setWrapperHeight();
-
-  //  Hero: page load pe fully visible 
-  heroSection.style.clipPath = "inset(0 0 0% 0)";
-  heroSection.style.willChange = "clip-path";
-
-  //  About: shuru mein viewport ke neeche 
-  gsap.set(aboutSection, {
-    y: window.innerHeight,
-    autoAlpha: 1,
-    willChange: "transform",
-  });
-
-  //  Scrub: first 100vh scroll mein about y:100vhâ†’0 
-  // end: "+=100vh" matlab sirf 100vh scroll mein animation complete
-  // Uske baad wrapper ka remaining scroll space = about ki height
-  // jo naturally consume hoti hai jab user about padh raha hota hai
-  gsap.to(aboutSection, {
-    y: 0,
-    ease: "none",
-    scrollTrigger: {
-      trigger: heroWrapper,
-      start: "top top",
-      end: () => "+=" + window.innerHeight, // 100vh mein slide complete
-      scrub: true,
-      invalidateOnRefresh: true,
-      onUpdate(self) {
-        // Hero ko neeche se clip karo jitna about aaya
-        const pct = Math.round(self.progress * 100);
-        heroSection.style.clipPath = `inset(0 0 ${pct}% 0)`;
-      },
-      onRefresh() {
-        setWrapperHeight();
-        if (this.progress === 0) {
-          gsap.set(aboutSection, { y: window.innerHeight });
-          heroSection.style.clipPath = "inset(0 0 0% 0)";
-        }
-      },
-    },
-  });
-
-  gsap.set(".bbt-dp-about .about-img", { clearProps: "all" });
-  gsap.set(".bbt-dp-about .about-paragraph", { clearProps: "all" });
-
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      setWrapperHeight();
-      ScrollTrigger.refresh();
-    }, 150);
+    return () => {
+      window.removeEventListener("load", onLoadRefresh);
+      gsap.set(aboutSection, { clearProps: "all" });
+    };
   });
 })();
 
@@ -411,7 +344,7 @@ const video = document.getElementById("mainVideo");
 const playBtn = document.getElementById("playBtn");
 
 if (videoWrapper && video && playBtn) {
-  //  Click: play / pause toggle 
+  //  Click: play / pause toggle
   videoWrapper.addEventListener("click", () => {
     if (video.paused) {
       video.defaultMuted = false;
@@ -419,108 +352,147 @@ if (videoWrapper && video && playBtn) {
       video.volume = 1;
       video.play();
       playBtn.innerHTML = `<span class="pause-icon"></span>`;
+      videoWrapper.classList.add("is-playing");
     } else {
       video.pause();
       playBtn.innerHTML = `<span class="triangle"></span>`;
+      videoWrapper.classList.remove("is-playing");
     }
   });
 
-  //  PHASE 1: Square â†’ Rectangle 
-  // Video expand: wrapper padding 0 tak animate â†’ container-xxl se full viewport
-  const isSmallScreen = window.matchMedia("(max-width: 767.9px)").matches;
-  const startMask = isSmallScreen
-    ? {
-      "--video-mask-x": "34%",
-      "--video-mask-y": "36%",
-      "--video-mask-radius": "14px",
-    }
-    : {
+  // Set up matchMedia for responsive animations
+  let mm = gsap.matchMedia();
+
+  // Desktop Animation: 3-Phase Scroll Animation (Mask, Parallax, and Scrub-Reveal)
+  mm.add("(min-width: 768px)", () => {
+    const startMask = {
       "--video-mask-x": "41%",
       "--video-mask-y": "34%",
       "--video-mask-radius": "18px",
     };
 
-  gsap.set(".video-container", startMask);
+    gsap.set(".video-container", startMask);
 
-  const videoMaskTL = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".video-section",
-      start: "top bottom",
-      end: "top 20%",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  videoMaskTL
-    .to(
-      ".video-wrapper",
-      {
-        paddingTop: "0px",
-        paddingBottom: "0px",
-        ease: "none",
-        duration: 1,
-      },
-      0,
-    )
-    .to(
-      ".video-container",
-      {
-        "--video-mask-x": "0%",
-        "--video-mask-y": "0%",
-        "--video-mask-radius": "0px",
-        ease: "none",
-        duration: 1,
-      },
-      0,
-    );
-
-  // Parallax
-  gsap.fromTo(
-    ".bg-video",
-    { y: "8%" },
-    {
-      y: "0%",
-      ease: "none",
+    const videoMaskTL = gsap.timeline({
       scrollTrigger: {
         trigger: ".video-section",
         start: "top bottom",
         end: "top 20%",
         scrub: true,
+        invalidateOnRefresh: true,
       },
-    },
-  );
+    });
 
-  // Phase 2: overlay + content + play btn reveal
-  gsap.set(".video-wrapper", { clipPath: "inset(0% 0% 0% 0%)" });
+    videoMaskTL
+      .to(
+        ".video-wrapper",
+        {
+          paddingTop: "0px",
+          paddingBottom: "0px",
+          ease: "none",
+          duration: 1,
+        },
+        0,
+      )
+      .to(
+        ".video-container",
+        {
+          "--video-mask-x": "0%",
+          "--video-mask-y": "0%",
+          "--video-mask-radius": "0px",
+          ease: "none",
+          duration: 1,
+        },
+        0,
+      );
 
-  const videoRevealTL = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".video-section",
-      start: "top 80%", // pehle 60% tha â” ab thoda pehle shuru
-      end: "top top",
-      scrub: 0.8,
-    },
+    // Parallax
+    gsap.fromTo(
+      ".bg-video",
+      { y: "8%" },
+      {
+        y: "0%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".video-section",
+          start: "top bottom",
+          end: "top 20%",
+          scrub: true,
+        },
+      },
+    );
+
+    // Phase 2: overlay + content + play btn reveal
+    gsap.set(".video-wrapper", { clipPath: "inset(0% 0% 0% 0%)" });
+
+    const videoRevealTL = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".video-section",
+        start: "top 80%",
+        end: "top top",
+        scrub: 0.8,
+      },
+    });
+
+    videoRevealTL
+      .fromTo(
+        ".video-section .overlay",
+        { opacity: 0 },
+        { opacity: 1, ease: "none", duration: 1 },
+      )
+      .fromTo(
+        ".video-section .content",
+        { opacity: 0, yPercent: -40, y: 60 },
+        { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 0.8 },
+        0.2,
+      )
+      .fromTo(
+        "#playBtn",
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.6 },
+        0.2,
+      );
   });
 
-  videoRevealTL
-    .fromTo(
-      ".video-section .overlay",
-      { opacity: 0 },
-      { opacity: 1, ease: "none", duration: 1 },
-    )
-    .fromTo(
-      ".video-section .content",
-      { opacity: 0, yPercent: -40, y: 60 },
-      { opacity: 1, yPercent: -50, y: 0, ease: "power2.out", duration: 0.8 },
-      0.2,
-    )
-    .fromTo(
-      "#playBtn",
-      { opacity: 0, scale: 0 },
-      { opacity: 1, scale: 1, ease: "back.out(1.7)", duration: 0.6 },
-      0.2,
-    );
+  // Mobile Animation: Simple Fade In Up Transition on entering viewport
+  mm.add("(max-width: 767.9px)", () => {
+    // Reset any potential inline mask values (though clip-path: none is handled by CSS)
+    gsap.set(".video-container", { clearProps: "transform" });
+    gsap.set(".bg-video", { y: "0%" });
+
+    const videoMobileTL = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".video-section",
+        start: "top 75%",
+        once: true,
+      },
+    });
+
+    videoMobileTL
+      .fromTo(
+        ".video-container",
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
+      )
+      .fromTo(
+        ".video-section .overlay",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.8 },
+        "-=0.6",
+      )
+      .fromTo(
+        ".video-section .content",
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+        "-=0.4",
+      )
+      .fromTo(
+        "#playBtn",
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" },
+        "-=0.4",
+      );
+  });
 }
 
 // Register plugin
@@ -589,6 +561,7 @@ gsap.from(".award .leaf", {
 //   â¢ After last panel â†’ overflow restored, page scrolls freely
 // ============================================================
 (function initHorizontalSection() {
+  if (window.matchMedia("(max-width: 767.98px)").matches) return;
   var hSec = document.querySelector(".horizontal-section");
   var horizontal = document.querySelector(".horizontal-wrapper");
   if (!hSec || !horizontal) return;
@@ -628,6 +601,7 @@ gsap.from(".award .leaf", {
   // -YP end
 
   var getFillScale = function () {
+    if (window.innerWidth <= 767) return;
     var circle = hSec.querySelector(".lavender-circle");
     if (!circle) return 4;
     var sW = hSec.offsetWidth,
@@ -637,7 +611,7 @@ gsap.from(".award .leaf", {
     return Math.max(sW / (cW * 0.5), sH / cH) * 1.1;
   };
 
-  //  Initial states 
+  //  Initial states
   gsap.set(".horizontal-section .yellow h2", { x: -160, autoAlpha: 0 });
   gsap.set(".lavender-circle", {
     scale: 0.22,
@@ -668,37 +642,50 @@ gsap.from(".award .leaf", {
       start: "top 20%",
       end: "+=" + (window.innerHeight * 0.2 + phase1Distance),
       scrub: 1.5,
-    }
+    },
   });
 
   // Circle appears from right bottom and fills on scroll
-  introTL.to(".lavender-circle", {
-    scale: getFillScale(),
-    ease: "none",
-  }, 0);
+  introTL.to(
+    ".lavender-circle",
+    {
+      scale: getFillScale(),
+      ease: "none",
+    },
+    0,
+  );
 
   // Heading slides and fades in from left
-  introTL.to(".horizontal-section .yellow h2", {
-    x: 0,
-    autoAlpha: 1,
-    ease: "power3.out",
-  }, 0.2);
+  introTL.to(
+    ".horizontal-section .yellow h2",
+    {
+      x: 0,
+      autoAlpha: 1,
+      ease: "power3.out",
+    },
+    0.2,
+  );
 
   // Swiper slider (panel 0) slides and fades in a little from left
-  introTL.fromTo(panels[0],
-    { xPercent: -15, autoAlpha: 0 },
+  introTL.fromTo(
+    panels[0],
+    { xPercent: 15, autoAlpha: 0 },
     { xPercent: 0, autoAlpha: 1, ease: "power3.out" },
-    0.4
+    0.4,
   );
 
   // CTA appears
-  introTL.to(".pedagogy-btn", {
-    autoAlpha: 1,
-    y: 0,
-    ease: "power3.out",
-  }, 0.6);
+  introTL.to(
+    ".pedagogy-btn",
+    {
+      autoAlpha: 1,
+      y: 0,
+      ease: "power3.out",
+    },
+    0.6,
+  );
 
-  //  Master scrub timeline 
+  //  Master scrub timeline
   // Structure (all durations in timeline "units"):
   //   title phase  : heading slides in after the circle finishes
   //   panels       : Panel 0 slides in, then panel-to-panel transitions
@@ -720,7 +707,6 @@ gsap.from(".award .leaf", {
   // -YP end
 
   // Phase 1 segment: circle fill only. Title and Panel 0 are revealed via early ScrollTrigger.
-
 
   // Panel transitions
   for (var i = 1; i < n; i++) {
@@ -760,7 +746,7 @@ gsap.from(".award .leaf", {
     );
   }
 
-  //  ScrollTrigger â” one big pin for everything 
+  //  ScrollTrigger â” one big pin for everything
   // Total scroll distance: PHASE1_PX + (n panels * PX_PER_PANEL)
   function getPhase1Px() {
     return phase1Distance; // Allow native scroll to handle the scrubbed introTL before hijacking wheel
@@ -799,7 +785,7 @@ gsap.from(".award .leaf", {
     if (shouldBeWhite === lastSlideBgActive) return;
     lastSlideBgActive = shouldBeWhite;
     // gsap.to(".lavender-circle", {
-    //   backgroundColor: shouldBeWhite ? "#ffffff" : "#f7df00",
+    //   backgroundColor: shouldBeWhite ? "#ffffff" : "#FFEA2C",
     //   duration: 0.8,
     //   ease: "power2.inOut",
     //   overwrite: true,
@@ -910,11 +896,10 @@ gsap.from(".award .leaf", {
     invalidateOnRefresh: true,
     onUpdate: function (self) {
       var phase1 = getPhase1Px();
-      var introProgress = phase1 > 0 ? gsap.utils.clamp(
-        0,
-        1,
-        (window.pageYOffset - self.start) / phase1,
-      ) : 1;
+      var introProgress =
+        phase1 > 0
+          ? gsap.utils.clamp(0, 1, (window.pageYOffset - self.start) / phase1)
+          : 1;
 
       if (introProgress < 1) {
         currentStep = -1;
@@ -960,6 +945,27 @@ gsap.from(".award .leaf", {
 
   window.addEventListener("resize", function () {
     ScrollTrigger.refresh();
+  });
+})();
+
+// ============================================================
+// MOBILE HORIZONTAL SWIPER
+// ============================================================
+(function initMobileHorizontalSwiper() {
+  var swiperEl = document.querySelector(
+    ".horizontal-section-mobile .horizontal-swiper",
+  );
+  if (!swiperEl) return;
+
+  new Swiper(swiperEl, {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: false,
+    // autoplay: {
+    //   delay: 3500,
+    //   disableOnInteraction: false,
+    // },
+    grabCursor: true,
   });
 })();
 
@@ -1258,178 +1264,77 @@ if (tl) {
       ...bubbleCircles,
       ...connectorSegments,
     ]);
+
+    // Clear previous GSAP styles that might interfere
+    gsap.set(
+      [
+        section,
+        stickyViewport,
+        bubbleTrack,
+        ...bubbleCircles,
+        ...connectorSegments,
+      ],
+      { clearProps: "all" },
+    );
+
+    // Allow native scrolling on mobile by overriding CSS pinning rules
+    gsap.set(section, {
+      overflow: "visible",
+      backgroundColor: "#ffffff",
+      minHeight: "auto",
+    });
+    gsap.set(stickyViewport, {
+      height: "auto",
+      minHeight: "auto",
+      overflow: "visible",
+      backgroundColor: "#ffffff",
+    });
+    gsap.set(bubbleTrack, { position: "relative", height: "auto" });
+
+    // Dynamically calculate the tightest height for the cluster based on the last circle's bottom edge
+    let maxBottom = 0;
+    bubbleCircles.forEach((circle) => {
+      const bottom = circle.offsetTop + circle.offsetHeight;
+      if (bottom > maxBottom) maxBottom = bottom;
+    });
+    // Apply the exact height plus a small 80px padding at the bottom
+    gsap.set(cluster, { height: maxBottom + 80 });
+
+    // Draw connectors at native positions
     drawBubbleConnectors();
 
-    const viewportHeight = window.innerHeight;
-    const viewportCenter = viewportHeight / 2;
-    const focusY = bubbleCircles.map((circle) => {
-      return viewportCenter - (circle.offsetTop + circle.offsetHeight / 2);
-    });
-
-    gsap.set(bubbleTrack, {
-      x: 0,
-      y: focusY[0] || 0,
-    });
-    gsap.set(bubbleCircles, {
-      scale: 0.72,
-      autoAlpha: 0,
-      zIndex: 2,
-      transformOrigin: "50% 50%",
-    });
-    gsap.set(".bbt-FA-circle-sec .circle h2, .bbt-FA-circle-sec .circle p", {
-      autoAlpha: 0,
-      y: 16,
-    });
-    gsap.set(bubbleCircles[0], {
-      scale: 0.48,
-      autoAlpha: 0,
-      y: 80,
-      zIndex: 5,
-    });
-
+    // Show connectors fully
     connectorSegments.forEach((segment) => {
-      setConnectorDrawProgress(segment, 0);
-      gsap.set(segment, {
-        autoAlpha: 0,
-        strokeDasharray: "0 8",
-        strokeDashoffset: 0,
+      setConnectorDrawProgress(segment, 1);
+      gsap.set(segment, { autoAlpha: 1 });
+    });
+
+    // Set initial state for circles: hidden and slightly scaled down (15% smaller)
+    gsap.set(bubbleCircles, {
+      autoAlpha: 0,
+      scale: 0.85,
+      zIndex: 2,
+    });
+
+    // Ensure text inside is fully visible when the circle fades in
+    gsap.set(".bbt-FA-circle-sec .circle h2, .bbt-FA-circle-sec .circle p", {
+      autoAlpha: 1,
+      y: 0,
+    });
+
+    // Create simple ScrollTriggers for each bubble
+    bubbleCircles.forEach((circle, index) => {
+      gsap.to(circle, {
+        scrollTrigger: {
+          trigger: circle,
+          start: "top 85%",
+        },
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: "power2.out",
       });
     });
-
-    const segmentDuration = 1;
-    const backgroundRevealDuration = segmentDuration * 0.34;
-    const scrollDistance = Math.max(
-      bubbleCircles.length * viewportHeight * 1.05,
-      viewportHeight * 7,
-    );
-    bubbleTimeline = gsap.timeline({
-      defaults: { ease: "none" },
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: `+=${scrollDistance}`,
-        scrub: 1,
-        pin: stickyViewport,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
-    bubbleTimeline.to(
-      [section, stickyViewport],
-      {
-        backgroundColor: "#ffffff",
-        duration: backgroundRevealDuration,
-      },
-      0,
-    );
-
-    const firstHeading = bubbleCircles[0].querySelector("h2");
-    const firstBody = bubbleCircles[0].querySelector("p");
-
-    bubbleTimeline
-      .to(
-        bubbleCircles[0],
-        {
-          scale: 1,
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.55,
-          ease: "power2.out",
-        },
-        backgroundRevealDuration,
-      )
-      .to(
-        [firstHeading, firstBody].filter(Boolean),
-        {
-          autoAlpha: 1,
-          y: 0,
-          stagger: 0.08,
-          duration: 0.28,
-          ease: "power2.out",
-        },
-        backgroundRevealDuration + 0.28,
-      );
-
-    bubbleCircles.forEach((circle, index) => {
-      if (index === 0) return;
-
-      const heading = circle.querySelector("h2");
-      const body = circle.querySelector("p");
-      const connector = connectorSegments[index];
-      const at = index * segmentDuration;
-
-      if (index > 0) {
-        bubbleTimeline.to(
-          bubbleTrack,
-          {
-            y: focusY[index],
-            duration: 0.24,
-            ease: "power2.inOut",
-          },
-          at,
-        );
-      }
-
-      bubbleTimeline.to(
-        circle,
-        {
-          scale: 1,
-          autoAlpha: 1,
-          duration: 0.18,
-          ease: "back.out(1.45)",
-        },
-        at + 0.08,
-      );
-
-      if (heading) {
-        bubbleTimeline.to(
-          heading,
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.16,
-            ease: "power2.out",
-          },
-          at + 0.28,
-        );
-      }
-
-      if (body) {
-        bubbleTimeline.to(
-          body,
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.16,
-            ease: "power2.out",
-          },
-          at + 0.46,
-        );
-      }
-
-      if (connector && index < bubbleCircles.length - 1) {
-        const lineDraw = { progress: 0 };
-        bubbleTimeline.to(
-          lineDraw,
-          {
-            progress: 1,
-            duration: 0.28,
-            ease: "power2.inOut",
-            onStart: () => {
-              gsap.set(connector, { autoAlpha: 0.92 });
-            },
-            onUpdate: () => {
-              setConnectorDrawProgress(connector, lineDraw.progress);
-            },
-          },
-          at + 0.68,
-        );
-      }
-    });
-
-    bubbleTimeline.to({}, { duration: 0.2 });
   }
 
   function buildBubbleTimeline() {
@@ -1583,7 +1488,7 @@ if (tl) {
       firstBubbleIntro,
     );
 
-    gsap.set([section, stickyViewport], { backgroundColor: "#f7df00" });
+    gsap.set([section, stickyViewport], { backgroundColor: "#FFEA2C" });
     bubbleTimeline.to(
       [section, stickyViewport],
       {
@@ -1754,6 +1659,7 @@ if (tl) {
 // taaki woh fixed img-sec (z-index:1) ke neeche rahe.
 // ============================================================
 (function initCurtainEffect() {
+  if (window.innerWidth <= 767) return; // Mobile me disable
   const circleSec = document.querySelector(".bbt-FA-circle-sec");
   const imgSec = document.querySelector(".bbt-FA-img-sec");
   if (!circleSec || !imgSec) return;
@@ -1765,6 +1671,7 @@ if (tl) {
 
   const newsSec = document.querySelector(".news-section");
   if (newsSec) {
+    if (window.innerWidth <= 767) return; // Mobile me disable
     gsap.set(newsSec, { position: "relative", zIndex: 2 });
 
     const scrollPauseSpacer = document.createElement("div");
@@ -1798,8 +1705,16 @@ if (tl) {
     // Entrance animation: plays when circleSec finishes overlapping
     const tl = gsap.timeline({ paused: true });
     tl.to(imgText, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" })
-      .to(purpleCircle, { autoAlpha: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.6")
-      .to(mainTitle, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.6");
+      .to(
+        purpleCircle,
+        { autoAlpha: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)" },
+        "-=0.6",
+      )
+      .to(
+        mainTitle,
+        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" },
+        "-=0.6",
+      );
 
     ScrollTrigger.create({
       trigger: circleSec,
@@ -1810,15 +1725,16 @@ if (tl) {
 
     // Exit animation: scrubs dynamically as newsSec overlaps the pinned image
     const exitTl = gsap.timeline({ paused: true });
-    exitTl.fromTo([imgText, purpleCircle, mainTitle],
+    exitTl.fromTo(
+      [imgText, purpleCircle, mainTitle],
       { autoAlpha: 1, y: 0 },
-      { autoAlpha: 0, y: -150, stagger: 0.1, immediateRender: false }
+      { autoAlpha: 0, y: -150, stagger: 0.1, immediateRender: false },
     );
 
     ScrollTrigger.create({
       trigger: newsSec,
       start: "top 85%", // Starts fading out when newsSec enters 15% from bottom
-      end: "top 30%",   // Finishes before newsSec reaches the middle
+      end: "top 30%", // Finishes before newsSec reaches the middle
       animation: exitTl,
       scrub: 1,
     });
@@ -1899,12 +1815,143 @@ if (tl) {
     onEnter: () => {
       const tl = gsap.timeline();
       if (newsHeader) {
-        tl.to(newsHeader, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" });
+        tl.to(newsHeader, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        });
       }
       if (newsCards.length > 0) {
-        tl.to(newsCards, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.2 }, "-=0.6");
+        tl.to(
+          newsCards,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.2,
+          },
+          "-=0.6",
+        );
       }
-    }
+    },
+  });
+})();
+
+// ============================================================
+// RECOGNITION SECTION ANIMATION
+// ============================================================
+(function initRecognitionSectionAnimation() {
+  const recSec = document.querySelector(".recognition-sec");
+  if (window.innerWidth <= 767) return;
+  if (!recSec) return;
+
+  const heading = recSec.querySelector(".section-title");
+  const awards = recSec.querySelectorAll(".awards-grid .award");
+
+  gsap.set(heading, { autoAlpha: 0, y: 50 });
+  gsap.set(awards, { autoAlpha: 0, y: 50 });
+
+  ScrollTrigger.create({
+    trigger: recSec,
+    start: "top 30%",
+    once: true,
+    onEnter: () => {
+      const tl = gsap.timeline();
+      if (heading) {
+        tl.to(heading, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      }
+      if (awards.length > 0) {
+        tl.to(
+          awards,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.2,
+          },
+          "-=0.4",
+        );
+      }
+    },
+  });
+})();
+
+// ============================================================
+// BACKGROUND COLOR TRANSITION
+// ============================================================
+(function initBackgroundColorTransition() {
+  const newsSection = document.querySelector(".news-section");
+  const recognitionSection = document.querySelector(".recognition-sec");
+  if (!newsSection || !recognitionSection) return;
+
+  const newsGrid = newsSection.querySelector(".news-grid");
+
+  gsap.set(newsSection, { backgroundColor: "#ffffff" });
+  gsap.set(recognitionSection, { backgroundColor: "#ffffff" });
+
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    gsap.to([newsSection, recognitionSection], {
+      backgroundColor: "#FFEA2C",
+      ease: "none",
+      scrollTrigger: {
+        trigger: newsGrid || newsSection,
+        start: "bottom 25%",
+        end: "bottom top",
+        scrub: 0,
+        invalidateOnRefresh: true,
+      },
+    });
+  }
+})();
+
+// ============================================================
+// NEWS SECTION ANIMATION
+// ============================================================
+(function initNewsSectionAnimation() {
+  const newsSec = document.querySelector(".news-section");
+  if (!newsSec) return;
+
+  const newsHeader = newsSec.querySelector(".news-header");
+  const newsCards = newsSec.querySelectorAll(".news-grid .card");
+
+  gsap.set([newsHeader, ...newsCards], { autoAlpha: 0, y: 50 });
+
+  ScrollTrigger.create({
+    trigger: newsSec,
+    start: "top 50%",
+    once: true,
+    onEnter: () => {
+      const tl = gsap.timeline();
+      if (newsHeader) {
+        tl.to(newsHeader, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      }
+      if (newsCards.length > 0) {
+        tl.to(
+          newsCards,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.2,
+          },
+          "-=0.6",
+        );
+      }
+    },
   });
 })();
 
@@ -1928,12 +1975,27 @@ if (tl) {
     onEnter: () => {
       const tl = gsap.timeline();
       if (heading) {
-        tl.to(heading, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" });
+        tl.to(heading, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        });
       }
       if (awards.length > 0) {
-        tl.to(awards, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.2 }, "-=0.4");
+        tl.to(
+          awards,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.2,
+          },
+          "-=0.4",
+        );
       }
-    }
+    },
   });
 })();
 
@@ -1952,7 +2014,7 @@ if (tl) {
 
   if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     gsap.to([newsSection, recognitionSection], {
-      backgroundColor: "#f7df00",
+      backgroundColor: "#FFEA2C",
       ease: "none",
       scrollTrigger: {
         trigger: newsGrid || newsSection,
@@ -1965,7 +2027,7 @@ if (tl) {
   }
 })();
 
-//  Feature Block Scroll Animation 
+//  Feature Block Scroll Animation
 (function () {
   var observer = new IntersectionObserver(
     function (entries) {
@@ -2046,7 +2108,64 @@ if (tl) {
   updateStickyBtn();
 })();
 
-/// ============================================================
-// BBT-FA-IMG-SEC â” Purple circle (right se) + Title (left se) animation
+(function initFooterReveal() {
+  var wrapper = document.querySelector(".main-content-wrapper");
+  var overlapFooter = document.querySelector(".overlap-footer");
 
+  if (!wrapper || !overlapFooter) return;
 
+  let mm = gsap.matchMedia();
+  mm.add("(min-width: 768px)", () => {
+    Object.assign(wrapper.style, {
+      position: "relative",
+      zIndex: "10",
+    });
+
+    Object.assign(overlapFooter.style, {
+      position: "fixed",
+      bottom: "0",
+      left: "0",
+      width: "100%",
+      zIndex: "-1",
+      transform: "none",
+    });
+
+    function updateFooterMargin() {
+      wrapper.style.marginBottom = overlapFooter.offsetHeight + "px";
+    }
+
+    window.addEventListener("resize", updateFooterMargin);
+    window.addEventListener("load", updateFooterMargin);
+
+    updateFooterMargin();
+    setTimeout(updateFooterMargin, 500);
+
+    return () => {
+      window.removeEventListener("resize", updateFooterMargin);
+      window.removeEventListener("load", updateFooterMargin);
+      wrapper.style.marginBottom = "";
+      Object.assign(wrapper.style, { position: "", zIndex: "" });
+      Object.assign(overlapFooter.style, {
+        position: "",
+        bottom: "",
+        left: "",
+        width: "",
+        zIndex: "",
+        transform: "",
+      });
+    };
+  });
+})();
+// ============================================================
+// MOBILE SCHOOL INFO SECTION (bbt-FA-img-sec-mobile)
+// ============================================================
+(function initMobileSchoolInfo() {
+  const mobileSec = document.querySelector(".bbt-FA-img-sec-mobile");
+  if (!mobileSec) return;
+
+  // The mobile version utilizes CSS `vw` and Flexbox to remain perfectly
+  // scaled and centered across all devices, eliminating manual positioning.
+  // Any mobile-specific interactive logic or dynamic adjustments
+  // for this section should be implemented here to keep it decoupled
+  // from the desktop logic.
+})();

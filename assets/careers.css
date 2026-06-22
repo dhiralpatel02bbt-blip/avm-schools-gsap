@@ -29,18 +29,18 @@
   display: flex;
   align-items: center;
   padding-left: 5%;
-  width: 36%;
+  width: clamp(576px, 36vw, 691px);
   z-index: 2;
 }
 
 .hero-circle {
   position: absolute;
-  top: -210px;
-  left: -1060px;
+  top: clamp(-250px, -14.58vw, -150px);
+  left: clamp(-1330px, 65vw - 1995px, -1060px);
   z-index: 0;
   display: block;
-  width: 1900px;
-  height: 1900px;
+  width: clamp(1700px, 131vw, 1900px);
+  height: clamp(1700px, 131vw, 1900px);
   background: rgb(10, 61, 156);
   border-radius: 50%;
   will-change: transform;
@@ -58,7 +58,7 @@
 .hero-content h2 {
   color: #fff;
   font-family: Satoshi;
-  font-size: 2.3em;
+  font-size: clamp(28px, 2.5vw, 2.3em);
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
@@ -67,7 +67,7 @@
 .hero-right {
   position: relative;
   z-index: 1;
-  width: 64%;
+  /*width: clamp(864px, 64vw, 1228px);*/
   height: 100%;
   overflow: hidden;
 }
@@ -75,36 +75,8 @@
 .hero-right img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* object-fit: cover; */
   display: block;
-}
-
-@media (max-width: 1728px) {
-  .hero-left {
-    width: 40%;
-  }
-
-  .hero-circle {
-    left: -1150px;
-  }
-
-  .hero-right {
-    width: 60%;
-  }
-}
-
-@media (max-width: 1200.9px) {
-  .hero-circle {
-    left: -1230px;
-    width: 1890px;
-    height: 1780px;
-  }
-}
-
-@media (max-width: 1023.9px) {
-  .hero-circle {
-    left: -1330px;
-  }
 }
 
 @media (max-width: 767.9px) {
@@ -158,6 +130,7 @@
     text-align: center;
     position: relative;
     z-index: 1;
+    left: -6px;
   }
 
   .hero-content h2 {
@@ -176,7 +149,7 @@
   .hero-left {
     width: 721px;
     height: 721px;
-    top: 545px;
+    top: 500px;
     bottom: auto;
     left: 50%;
     transform: translateX(-50%);
@@ -193,7 +166,7 @@
     position: absolute;
     width: 479px;
     height: 725px;
-    top: -10px;
+    top: -40px;
   }
 }
 
@@ -257,9 +230,9 @@ body.popup-open {
   line-height: normal;
   display: flex;
   justify-content: space-between;
-  padding: 18px 23px 18px 18px;
+  padding: 8px 23px 8px 18px;
   align-items: center;
-  height: 65px;
+  height: 50px;
   cursor: pointer;
   width: 100%;
   appearance: none;
@@ -289,7 +262,7 @@ body.popup-open {
   font-family: Poppins;
   font-size: 0.9em;
   width: 100%;
-  height: 65px;
+  height: 50px;
   padding-left: 20px;
   margin-bottom: 15px;
   outline: none;
@@ -317,7 +290,7 @@ body.popup-open {
   position: relative;
   /* padding: 38px 87px 79px 94px; */
   padding: 70px;
-  max-width: 1296px;
+  max-width: 1200px;
   width: 100%;
   background: #fff;
   max-height: calc(100vh - 64px);
@@ -450,11 +423,12 @@ body.popup-open {
   border: none;
   cursor: pointer;
   position: relative;
+  left: 30%;
   overflow: hidden;
   transition: all 0.5s ease;
 }
 
-.model-popup button.submit-btn:before {
+/* .model-popup button.submit-btn:before {
   content: "";
   position: absolute;
   top: -50%;
@@ -462,20 +436,22 @@ body.popup-open {
   width: 200%;
   height: 200%;
   background: linear-gradient(0deg, transparent, transparent 30%, #ffd40045);
+   
+  background: #f7df00;
   transform: rotate(-45deg);
   transition: all 0.5s ease;
-}
+} */
 
 .model-popup button.submit-btn:hover {
-  background-color: transparent;
+  background-color: #f7df00;
   transform: scale(1.05);
   box-shadow: 0 0 20px #ffd40054;
 }
 
-.model-popup button.submit-btn:hover::before {
+/* .model-popup button.submit-btn:hover::before {
   opacity: 1;
   transform: rotate(-45deg) translateY(100%);
-}
+} */
 
 @media (max-width: 991.98px) {
   .model-popup .career-wrapper {
@@ -488,7 +464,7 @@ body.popup-open {
 
   .career-wrapper .popup {
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
     align-items: center;
   }
 
@@ -516,6 +492,7 @@ body.popup-open {
   }
 
   .model-popup .career-wrapper {
+    width: 90%;
     max-width: 402px;
   }
 
@@ -541,6 +518,25 @@ body.popup-open {
     margin-bottom: 10px;
   }
 
+  .model-popup h2.Openings-text {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 115%;
+    /* 27.6px */
+  }
+
+  .model-popup .upload-sec p {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .model-popup .input-field {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 149.94%;
+    /* 19.492px */
+  }
+
   .model-popup button.submit-btn {
     border-radius: 122px;
     background: #f7df00;
@@ -557,13 +553,31 @@ body.popup-open {
     overflow: hidden;
     transition: all 0.5s ease;
   }
+
+  .model-popup-close::before,
+  .model-popup-close::after {
+    background: #fc8b5f;
+    width: 21px;
+  }
+
+  .model-popup .upload-row label:first-child {
+    color: rgba(0, 0, 0, 0.46);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .model-popup .upload-btn {
+    text-align: right;
+    font-size: 13px;
+    font-weight: 500;
+  }
 }
 
 /*  popup css end */
 
 /* Careers openings section css start */
 section.bbt-fa-careers-openings-sec {
-  padding: 131.52px 0px 128px 0px;
+  padding: clamp(64px, 6.45vw, 131.52px) 0px clamp(60px, 6.6vw, 128px) 0px;
 }
 
 .bbt-fa-careers-openings-sec .grid {
@@ -577,17 +591,17 @@ section.bbt-fa-careers-openings-sec {
   color: #0a3d9c;
   text-align: center;
   font-family: Satoshi;
-  font-size: 2.3em;
+  font-size: clamp(26px, 2.5vw, 2.3em);
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
-  padding-bottom: 135.48px;
+  padding-bottom: clamp(54px, 5.6vw, 135.48px);
 }
 
 .bbt-fa-careers-openings-sec .card {
   background: #dcd8f5;
   border-radius: 0;
-  padding: 43px 41px 37px 41px;
+  padding: clamp(33px, 2.3vw, 43px) clamp(20px, 2.1vw, 41px) clamp(27px, 1.8vw, 37px) clamp(20px, 2.1vw, 41px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -609,11 +623,11 @@ section.bbt-fa-careers-openings-sec {
 .bbt-fa-careers-openings-sec .card .details {
   color: rgba(0, 0, 0, 0.85);
   font-family: Poppins;
-  font-size: 0.9em;
+  font-size: clamp(13px, 1vw, 0.9em);
   font-style: normal;
   font-weight: 400;
   line-height: 160%;
-  margin-top: 34px;
+  margin-top: clamp(20px, 1.45vw, 34px);
 }
 
 .bbt-fa-careers-openings-sec .card .apply-now {
@@ -623,67 +637,7 @@ section.bbt-fa-careers-openings-sec {
   font-style: normal;
   font-weight: 600;
   line-height: 154%;
-  margin-top: 44px;
-}
-
-@media (max-width: 1728px) {
-  section.bbt-fa-careers-openings-sec {
-    padding: 121.52px 0px 118px 0px;
-  }
-
-  .bbt-fa-careers-openings-sec h2 {
-    padding-bottom: 125.48px;
-  }
-}
-
-@media (max-width: 1650px) {
-  section.bbt-fa-careers-openings-sec {
-    padding: 102.52px 0px 105px 0px;
-  }
-
-  .bbt-fa-careers-openings-sec h2 {
-    padding-bottom: 110.48px;
-  }
-
-  .bbt-fa-careers-openings-sec .card .details {
-    margin-top: 21px;
-  }
-
-  .bbt-fa-careers-openings-sec .card .apply-now {
-    margin-top: 24px;
-  }
-}
-
-@media (max-width: 1440px) {
-  section.bbt-fa-careers-openings-sec {
-    padding: 92.52px 0px 95px 0px;
-  }
-
-  .bbt-fa-careers-openings-sec h2 {
-    padding-bottom: 80.48px;
-  }
-
-  .bbt-fa-careers-openings-sec .card .details {
-    font-size: 15px;
-  }
-
-  .bbt-fa-careers-openings-sec .card {
-    padding: 33px 31px 27px 31px;
-  }
-
-  .bbt-fa-careers-openings-sec .card .apply-now {
-    margin-top: 23px;
-  }
-}
-
-@media (max-width: 1366px) {
-  .bbt-fa-careers-openings-sec .card .details {
-    font-size: 14px;
-  }
-
-  .bbt-fa-careers-openings-sec .card .apply-now {
-    margin-top: 10px;
-  }
+  margin-top: clamp(10px, 1.6vw, 44px);
 }
 
 @media (max-width: 767.9px) {
@@ -738,6 +692,13 @@ section.bbt-fa-careers-openings-sec {
     max-width: unset;
   }
 
+  .bbt-fa-careers-openings-sec .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 140%;
+    /* 22.4px */
+  }
+
   .bbt-fa-careers-openings-sec .card h3 br {
     display: block;
   }
@@ -760,7 +721,8 @@ section.bbt-fa-careers-about-sec {
 .bbt-fa-careers-about-sec .career-wrapper {
   display: flex;
   justify-content: space-between;
-  gap: 50px;
+  gap: 8em;
+  /* gap: clamp(50px, -13vw + 299px, 112px); */
   opacity: 1;
   align-items: center;
 }
@@ -799,44 +761,12 @@ section.bbt-fa-careers-about-sec {
 .bbt-fa-careers-about-sec p.text-p {
   color: #fff;
   font-family: Poppins;
-  font-size: 1.25em;
+  font-size: clamp(16px, 1.4vw, 1.25em);
   font-style: normal;
   font-weight: 400;
   line-height: 180%;
   display: flex;
   align-items: center;
-}
-
-@media (max-width: 1728px) {
-  section.bbt-fa-careers-about-sec {
-    padding: 0;
-  }
-
-  .bbt-fa-careers-about-sec .avm-text {
-    margin-top: 0;
-  }
-}
-
-@media (max-width: 1440px) {
-  .bbt-fa-careers-about-sec .career-wrapper {
-    gap: 112px;
-  }
-
-  .bbt-fa-careers-about-sec .avm-text {
-    margin-top: 0;
-  }
-}
-
-@media (max-width: 1366px) {
-  .bbt-fa-careers-about-sec .avm-text {
-    margin-top: 0;
-  }
-}
-
-@media (max-width: 1200.9px) {
-  .bbt-fa-careers-about-sec p.text-p {
-    width: 95%;
-  }
 }
 
 @media (max-width: 767.9px) {
@@ -880,7 +810,7 @@ section.bbt-fa-careers-about-sec {
     width: 50%;
     margin: 0 auto !important;
     text-align: center;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 153%;
     /* 26.01px */
@@ -889,7 +819,7 @@ section.bbt-fa-careers-about-sec {
 
 @media (max-width: 576.9px) {
   .bbt-fa-careers-about-sec p.text-p {
-    width: 110%;
+    width: 100%;
   }
 
   .bbt-fa-careers-about-sec .avm-image-wrap {

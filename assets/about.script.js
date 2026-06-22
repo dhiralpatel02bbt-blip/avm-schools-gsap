@@ -55,7 +55,11 @@
     keepAtHeroTop();
   }
 
-  lockInitialHeroScroll();
+  if (window.innerWidth >= 768) {
+    lockInitialHeroScroll();
+  } else {
+    unlockInitialHeroScroll();
+  }
 
   function initMobileStickyButton() {
     var wrapper = document.querySelector(".main-content-wrapper");
@@ -71,7 +75,7 @@
       var wrapperBottom = wrapper.getBoundingClientRect().bottom;
       aboutBody.classList.toggle(
         "about-hide-mob-sticky",
-        wrapperBottom <= window.innerHeight,
+        wrapperBottom <= window.innerHeight
       );
     }
 
@@ -441,7 +445,7 @@
           duration: 0.35,
           ease: "none",
         },
-        0.06,
+        0.06
       );
     }
 
@@ -532,7 +536,7 @@
           duration: 1.05,
           ease: "power2.out",
         },
-        ">",
+        ">"
       )
       .to([awarenessImage, awarenessText], {
         y: -120,
@@ -610,7 +614,7 @@
           duration: 0.65,
           ease: "power3.out",
         },
-        "<",
+        "<"
       )
       .to(
         visionTitle,
@@ -619,7 +623,7 @@
           duration: 0.38,
           ease: "power2.out",
         },
-        "-=0.34",
+        "-=0.34"
       )
       .to(
         visionPara,
@@ -629,7 +633,7 @@
           duration: 0.48,
           ease: "power2.out",
         },
-        "-=0.12",
+        "-=0.12"
       )
       .to({}, { duration: 0.45 });
 
@@ -808,20 +812,20 @@
     masterTL.to(
       whiteCircle,
       { scale: 1, autoAlpha: 1, duration: circleGrowDuration, ease: "none" },
-      0,
+      0
     );
     if (circleHeading) {
       masterTL.to(
         circleHeading,
         { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" },
-        0.18,
+        0.18
       );
     }
     if (circleSubtitle) {
       masterTL.to(
         circleSubtitle,
         { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" },
-        0.22,
+        0.22
       );
     }
 
@@ -894,7 +898,7 @@
     if (!textWrapper || !animLine) return;
 
     var items = Array.prototype.slice.call(
-      textWrapper.querySelectorAll(".core-para"),
+      textWrapper.querySelectorAll(".core-para")
     );
     if (!items.length) return;
 
@@ -906,8 +910,8 @@
     var textNodes = items.reduce(function (nodes, item) {
       return nodes.concat(
         Array.prototype.slice.call(
-          item.querySelectorAll(".value-para h3, .value-para p"),
-        ),
+          item.querySelectorAll(".value-para h3, .value-para p")
+        )
       );
     }, []);
 
@@ -940,7 +944,7 @@
         : 44;
       mobileSection.style.setProperty(
         "--core-mob-mask-height",
-        headingBottom + headingGap + "px",
+        headingBottom + headingGap + "px"
       );
       var anchorIndex = index > 0 ? index - 1 : index;
       var anchorRect = items[anchorIndex].getBoundingClientRect();
@@ -986,11 +990,7 @@
       { autoAlpha: 1, duration: 0.15, ease: "power1.out" },
       0
     );
-    mobileTL.to(
-      dots,
-      { autoAlpha: 1, duration: 0.15, ease: "power2.out" },
-      0
-    );
+    mobileTL.to(dots, { autoAlpha: 1, duration: 0.15, ease: "power2.out" }, 0);
     mobileTL.to(
       textNodes,
       { autoAlpha: 1, duration: 0.15, ease: "power1.out" },
@@ -1055,7 +1055,7 @@
       .to(
         commitmentSection,
         { backgroundColor: "#ffffff", duration: 0.5, ease: "none" },
-        0,
+        0
       )
       // Text slides in
       .to(commitmentText, { x: 0, autoAlpha: 1, duration: 1.05 }, 0.15)
@@ -1067,7 +1067,7 @@
           duration: 1.1,
           ease: "power2.inOut",
         },
-        0.25,
+        0.25
       )
       .set([commitmentText, commitmentImage], { clearProps: "willChange" });
 
@@ -1118,7 +1118,7 @@
           duration: 1.1,
           ease: "power2.inOut",
         },
-        0,
+        0
       )
       // Text slides in from right
       .to(governanceText, { x: 0, autoAlpha: 1, duration: 1.35 }, 0.16)
@@ -1143,8 +1143,8 @@
     killTriggers();
 
     if (window.innerWidth < 768) {
-      window.setTimeout(unlockInitialHeroScroll, 2750);
-      initCoreValuesMobile();
+      unlockInitialHeroScroll();
+      // Bypass initCoreValuesMobile so the content just stacks naturally
       ScrollTrigger.refresh();
       return;
     }
@@ -1179,7 +1179,7 @@
 // ============================================================
 (function initFooterReveal() {
   if (!document.querySelector("body.about-us-page")) return;
-  
+
   var wrapper = document.querySelector(".main-content-wrapper");
   var footerWrap = document.querySelector(".footer-reveal-wrapper");
   if (!wrapper || !footerWrap) return;
@@ -1202,7 +1202,7 @@
     bottom: 0,
     left: 0,
     width: "100%",
-    zIndex: 0
+    zIndex: 0,
   });
 
   // Make sure body doesn't overlap if it has background

@@ -359,7 +359,8 @@
       tabScrollTL.to({}, { duration: 0.12 });
 
       var tabSpacer = document.createElement("div");
-      tabSpacer.style.height = (window.innerHeight * (tabCards.length + 2)) + "px";
+      tabSpacer.style.height =
+        window.innerHeight * (tabCards.length + 2) + "px";
       stage.parentNode.insertBefore(tabSpacer, stage.nextSibling);
 
       ScrollTrigger.create({
@@ -588,12 +589,20 @@
     // -YP start
     nodes.forEach(function (n) {
       if (n)
-        scrollTL.to(n, { opacity: 1, duration: 0.05, ease: "power2.out" }, 0.85);
+        scrollTL.to(
+          n,
+          { opacity: 1, duration: 0.05, ease: "power2.out" },
+          0.85,
+        );
     });
     // -YP end
     labels.forEach(function (l) {
       if (l)
-        scrollTL.to(l, { opacity: 1, duration: 0.05, ease: "power2.out" }, 0.85);
+        scrollTL.to(
+          l,
+          { opacity: 1, duration: 0.05, ease: "power2.out" },
+          0.85,
+        );
     });
     labelTitles.forEach(function (t) {
       if (t)
@@ -679,7 +688,7 @@
         );
       }
     }
-    
+
     scrollTL.to({}, { duration: 0.333 });
     // -YP end
 
@@ -1204,8 +1213,10 @@ tabs.forEach((tab) => {
     var mask = document.createElement("div");
     mask.className = maskClass;
     // Hide synchronously with visibility to prevent flash, GSAP will reveal it
-    mask.style.cssText = "display:block;overflow:hidden;visibility:hidden;will-change:clip-path;";
-    img.style.cssText += ";transform-origin:" + transformOrigin + ";will-change:transform;";
+    mask.style.cssText =
+      "display:block;overflow:hidden;visibility:hidden;will-change:clip-path;";
+    img.style.cssText +=
+      ";transform-origin:" + transformOrigin + ";will-change:transform;";
     img.parentNode.insertBefore(mask, img);
     mask.appendChild(img);
 
@@ -1220,13 +1231,19 @@ tabs.forEach((tab) => {
 
   function registerWipe(colSelector, maskClass, direction) {
     var col = document.querySelector(colSelector);
-    if (!col || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+    if (
+      !col ||
+      typeof gsap === "undefined" ||
+      typeof ScrollTrigger === "undefined"
+    )
+      return;
 
     var mask = col.querySelector("." + maskClass);
     if (!mask) return;
     var img = mask.querySelector("img");
 
-    var startClip = direction === "rtl" ? "inset(0% 0% 0% 100%)" : "inset(0% 100% 0% 0%)";
+    var startClip =
+      direction === "rtl" ? "inset(0% 0% 0% 100%)" : "inset(0% 100% 0% 0%)";
 
     // Foolproof fromTo pattern guarantees start and end states
     gsap.fromTo(
@@ -1241,7 +1258,7 @@ tabs.forEach((tab) => {
           end: "top 30%",
           scrub: 1,
         },
-      }
+      },
     );
 
     if (img) {
@@ -1257,7 +1274,7 @@ tabs.forEach((tab) => {
             end: "top 30%",
             scrub: 1,
           },
-        }
+        },
       );
     }
   }
@@ -1284,7 +1301,8 @@ tabs.forEach((tab) => {
 (function initExtraScrollSlider() {
   function build() {
     if (!document.querySelector("body.pedagogy-page")) return;
-    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+      return;
 
     var extraSec = document.querySelector(".extra-section");
     var extraTrack = document.querySelector(".extra-track");
@@ -1304,9 +1322,9 @@ tabs.forEach((tab) => {
             y: 0,
             duration: 0.9,
             stagger: 0.2,
-            ease: "power3.out"
+            ease: "power3.out",
           });
-        }
+        },
       });
     }
 
@@ -1328,11 +1346,11 @@ tabs.forEach((tab) => {
         scrollTrigger: {
           trigger: extraSec,
           start: "top top",
-          end: () => "+=" + (Math.abs(getScrollAmount()) * 0.35),
+          end: () => "+=" + Math.abs(getScrollAmount()) * 0.35,
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
-        }
+        },
       });
 
       return function () {
@@ -1355,17 +1373,23 @@ tabs.forEach((tab) => {
   var wrapper = document.querySelector(".pedagogy-page .main-content-wrapper");
   if (!wrapper) return;
 
-  var revealWrapper = document.querySelector(".pedagogy-page .footer-reveal-wrapper");
+  var revealWrapper = document.querySelector(
+    ".pedagogy-page .footer-reveal-wrapper",
+  );
 
   function updateFooterMargin() {
     if (revealWrapper) {
-      wrapper.style.marginBottom = revealWrapper.offsetHeight + "px";
+      if (window.innerWidth <= 991) {
+        wrapper.style.marginBottom = "0px";
+      } else {
+        wrapper.style.marginBottom = revealWrapper.offsetHeight + "px";
+      }
     }
   }
 
   window.addEventListener("resize", updateFooterMargin);
   window.addEventListener("load", updateFooterMargin);
-  
+
   // Initial check
   updateFooterMargin();
   // Double check after fonts and images might have loaded
@@ -1376,7 +1400,7 @@ tabs.forEach((tab) => {
 (function initBgTransition() {
   const tabbingSec = document.querySelector(".tabbing-sec");
   const extraSec = document.querySelector(".extra-section");
-  
+
   if (!tabbingSec || !extraSec) return;
 
   // We want the transition to happen when the extra section enters from 50% to 100% of the viewport.
@@ -1384,11 +1408,17 @@ tabs.forEach((tab) => {
   // "top top" means the top of extra-section hits the top of the viewport (100% in).
   ScrollTrigger.create({
     trigger: extraSec,
-    start: "top center", 
-    end: "top top",      
+    start: "top center",
+    end: "top top",
     scrub: true,
-    animation: gsap.timeline()
+    animation: gsap
+      .timeline()
       .to(tabbingSec, { backgroundColor: "#0a3d9c", ease: "none" }, 0)
-      .fromTo(extraSec, { backgroundColor: "#ffffff" }, { backgroundColor: "#0a3d9c", ease: "none" }, 0)
+      .fromTo(
+        extraSec,
+        { backgroundColor: "#ffffff" },
+        { backgroundColor: "#0a3d9c", ease: "none" },
+        0,
+      ),
   });
 })();

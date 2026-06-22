@@ -101,7 +101,7 @@
   bottom: -390px;
   width: 530px;
   height: 510px;
-  background: #f7df00;
+  background: #FFEA2C;
   border-radius: 50%;
   z-index: 0;
 }
@@ -158,9 +158,9 @@
   z-index: 1;
 }
 
-body.our-school-page {
+/* body.our-school-page {
   overflow-x: hidden;
-}
+} */
 
 .campus-section .panel {
   position: absolute;
@@ -176,12 +176,12 @@ body.our-school-page {
 
 .campus-section .half-circle {
   position: absolute;
-  top: -190px;
-  left: -1080px;
+  top: -9.8958vw;
+  left: -56.25vw;
   z-index: 0;
   display: block;
-  width: 1900px;
-  height: 1900px;
+  width: 98.9583vw;
+  height: 98.9583vw;
   background: rgb(10, 61, 156);
   border-radius: 50%;
   pointer-events: none;
@@ -190,11 +190,11 @@ body.our-school-page {
 .campus-section .body-txt {
   position: relative;
   z-index: 4;
-  margin: 52% 0 auto 100px;
-  max-width: 450px;
+  margin: clamp(264px, 19.4vw, 348px) 0 auto clamp(40px, 6.9vw, 100px);
+  max-width: clamp(320px, 31vw, 450px);
   display: flex;
   flex-direction: column;
-  gap: 46px;
+  gap: clamp(24px, 3.2vw, 46px);
   opacity: 0;
   visibility: hidden;
   /* filter: blur(18px); */
@@ -207,7 +207,7 @@ body.our-school-page {
   z-index: 1;
   color: #fff;
   font-family: Satoshi;
-  font-size: 2.3em;
+  font-size: clamp(1.75rem, 2.55vw, 2.3em);
   font-weight: 700;
   line-height: 112%;
 }
@@ -228,64 +228,13 @@ body.our-school-page {
 .campus-section .panel-body {
   color: #fff;
   font-family: Poppins;
-  font-size: 0.9em;
+  font-size: clamp(14px, 1vw, 0.9em);
   font-style: normal;
   font-weight: 400;
   line-height: 166%;
 }
 
-@media (max-width: 1366.9px) {
-  .campus-section .body-txt {
-    margin: 45% 0 auto 100px;
-  }
 
-  .campus-section .panel-title::before {
-    width: 161px;
-    height: 161px;
-  }
-
-  .campus-section .panel-title::before {
-    width: 161px;
-    height: 161px;
-  }
-}
-
-@media (max-width: 1280px) {
-  .dev-slide .absolute-box {
-    width: min(100%, 530px);
-  }
-}
-
-@media (max-width: 1200px) {
-  .campus-section .half-circle {
-    width: 1720px;
-    height: 1800px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .campus-section .body-txt {
-    margin: 65% 0 auto 100px;
-  }
-}
-
-@media (max-width: 1023.9px) {
-  .campus-section .panel-title::before {
-    width: 131px;
-    height: 131px;
-    left: -47px;
-    top: -40px;
-  }
-
-  .campus-section .body-txt {
-    gap: 36px;
-    margin: 75% 0 auto 100px;
-  }
-
-  .campus-section .half-circle {
-    width: 1640px;
-  }
-}
 
 @media (max-width: 991.9px) {
   .campus-section {
@@ -506,7 +455,7 @@ body.our-school-page {
   }
 
   .campus-media {
-    height: max(110vh, 540px);
+    height: max(100vh, 540px);
   }
 
   .campus-media img {
@@ -531,11 +480,11 @@ section.development-sec {
 .development-sec h2.title-txt {
   color: #0a3d9c;
   font-family: Satoshi;
-  font-size: 2.3em;
+  font-size: clamp(28px, 2.5vw, 2.3em);
   font-weight: 700;
   line-height: 112%;
-  width: 39%;
-  padding-bottom: 65px;
+  width: clamp(450px, 49vw, 750px);
+  padding-bottom: clamp(30px, 4.5vw, 65px);
   padding-top: 50px;
 }
 
@@ -582,7 +531,7 @@ section.development-sec {
 }
 
 .yellow-box {
-  background: #f7df00;
+  background: #FFEA2C;
 }
 
 .orange-box {
@@ -614,9 +563,9 @@ section.development-sec {
 .dev-slide .absolute-box {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: clamp(0%, 2vw, 5%);
   z-index: 2;
-  width: min(100%, 550px);
+  width: min(100%, clamp(450px, 38vw, 560px));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -625,10 +574,10 @@ section.development-sec {
 .dev-slide .absolute-box p {
   color: #000;
   font-family: Poppins;
-  font-size: 1em;
+  font-size: clamp(14px, 1.2vw, 1em);
   font-weight: 500;
   line-height: 154%;
-  padding: 16px 32px;
+  padding: clamp(12px, 1.1vw, 16px) clamp(20px, 2.2vw, 32px);
   margin: 0;
 }
 
@@ -649,12 +598,12 @@ section.development-sec {
   align-items: flex-start;
   width: max-content;
   will-change: transform;
-  padding: 0 max(12px, calc((100vw - 1320px) / 2 + -181px));
-  gap: 377px;
+  padding: 0 clamp(80px, 6.25vw, 120px);
+  gap: clamp(150px, 19.2vw, 377px);
 }
 
 .dev-slide {
-  flex: 0 0 min(72vw, 980px);
+  flex: 0 0 min(72vw, clamp(550px, 56vw, 980px));
   position: relative;
 }
 
@@ -664,78 +613,7 @@ section.development-sec {
   object-fit: cover;
 }
 
-@media (max-width: 1728px) {
-  .development-sec h2.title-txt {
-    width: 43%;
-    padding-bottom: 58px;
-  }
 
-  .dev-slide .absolute-box {
-    width: min(100%, 560px);
-  }
-
-  .dev-track {
-    padding: 0 max(12px, calc((100vw - 1320px) / 2 + -101px));
-    gap: 317px;
-  }
-}
-
-@media (max-width: 1650px) {
-  .development-sec h2.title-txt {
-    width: 45%;
-  }
-
-  .dev-track {
-    padding: 0 max(12px, calc((100vw - 1320px) / 2 + -61px));
-    gap: 297px;
-  }
-}
-
-@media (max-width: 1440px) {
-  .development-sec h2.title-txt {
-    width: 49%;
-  }
-
-  .dev-horizontal {
-    padding-left: 20px;
-  }
-
-  .dev-slide .absolute-box {
-    bottom: 5%;
-  }
-
-  .dev-track {
-    padding: 0 max(12px, calc((100vw - 1320px) / 2 + 30px));
-    gap: 277px;
-  }
-
-  .dev-slide {
-    flex: 0 0 min(72vw, 810px);
-  }
-}
-
-@media (max-width: 1366px) {
-  .dev-track {
-    padding: 0 max(12px, calc((100vw - 1320px) / 2 + 60px));
-  }
-}
-
-@media (max-width: 1280px) {
-  .development-sec h2.title-txt {
-    width: 52%;
-  }
-
-  .dev-track {
-    padding: 0 max(12px, calc((100vw - 1320px) / 2 + 100px));
-    gap: 217px
-  }
-}
-
-@media (max-width: 1200px) {
-  .development-sec h2.title-txt {
-    width: 47%;
-  }
-}
 
 @media (max-width: 991.9px) {
   .our-school-page .development-sec {
@@ -803,7 +681,7 @@ section.development-sec {
 
 @media (max-width: 767.9px) {
   .our-school-page .development-sec {
-    padding: 82px 0 0;
+    padding: 82px 0 58px 0;
   }
 
   .development-sec h2.title-txt {
@@ -854,7 +732,7 @@ section.development-sec {
     position: absolute;
     width: 49px;
     height: 15px;
-    background: #f7df00;
+    background: #FFEA2C;
     top: 0;
     left: 48px;
   }
@@ -874,7 +752,7 @@ section.development-sec {
     position: absolute;
     width: 57px;
     height: 15px;
-    background: #f7df00;
+    background: #FFEA2C;
     top: -15px;
     right: 0;
   }
@@ -904,7 +782,7 @@ section.development-sec {
     position: absolute;
     width: 49px;
     height: 15px;
-    background: #f7df00;
+    background: #FFEA2C;
     top: 0;
     left: 49px;
   }
@@ -924,7 +802,7 @@ section.development-sec {
     position: absolute;
     width: 49px;
     height: 15px;
-    background: #f7df00;
+    background: #FFEA2C;
     top: 0;
     right: 49px;
   }
@@ -987,12 +865,12 @@ section.development-sec {
 }
 
 .location-section {
-  background: #ffe600;
+  background: ##FFEA2C;
   display: flex;
   gap: 40px;
   align-items: flex-start;
-  padding: 130px 0;
-  /* margin-top: 96px; */
+  padding: clamp(60px, 5.5vw, 130px) 0;
+  /* margin-top: clamp(0px, 5.5vw, 80px); */
   position: relative;
 }
 
@@ -1006,15 +884,15 @@ section.development-sec {
 
 .location-section .d-flex {
   display: flex;
-  gap: 155px;
+  gap: clamp(70px, 10.7vw, 155px);
   align-items: flex-start;
 }
 
 .campus-heading {
-  flex: 0 0 200px;
+  flex: 0 0 clamp(70px, 6.25vw, 200px);
   color: #0a3d9c;
   font-family: Satoshi;
-  font-size: 2.3em;
+  font-size: clamp(28px, 2.5vw, 2.3em);
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
@@ -1023,10 +901,10 @@ section.development-sec {
 .campus-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 140px 152px;
+  gap: clamp(110px, 7vw, 140px) clamp(102px, 9vw, 152px);
   margin-top: 100px;
   width: 70%;
-  margin: 100px auto 0;
+  margin: 60px auto 0;
 }
 
 .campus-card {
@@ -1037,8 +915,8 @@ section.development-sec {
 .card-header {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: clamp(15px, 1.4vw, 20px);
+  margin-bottom: clamp(15px, 1.4vw, 20px);
 }
 
 .arrow-icon {
@@ -1066,7 +944,7 @@ section.development-sec {
 }
 
 .campus-address {
-  padding-left: 64px;
+  padding-left: clamp(40px, 4.1vw, 64px);
   color: #000;
   font-family: Poppins;
   font-size: 1em;
@@ -1096,56 +974,9 @@ section.development-sec {
   text-decoration: underline;
 }
 
-@media (max-width: 1440px) {
-  .location-section {
-    padding: 80px 0;
-    margin-top: 80px;
-  }
-
-  .campus-heading {
-    flex: 0 0 90px;
-  }
-
-  .card-header {
-    gap: 15px;
-  }
-
-  .campus-grid {
-    gap: 110px 102px;
-  }
-
-  .campus-address {
-    padding-left: 59px;
-  }
-}
-
 @media(max-width: 1366px) {
   .campus-grid {
-    width: 80%;
-  }
-}
-
-@media (max-width: 1200px) {
-  .location-section .d-flex {
-    gap: 100px;
-  }
-
-  .card-header {
-    margin-bottom: 15px;
-  }
-
-  .campus-heading {
-    flex: 0 0 70px;
-  }
-}
-
-@media (max-width: 1023.9px) {
-  .location-section .d-flex {
-    gap: 70px;
-  }
-
-  .campus-grid {
-    gap: 110px;
+    width: 100%;
   }
 }
 
@@ -1174,24 +1005,13 @@ section.development-sec {
     margin-top: 0px;
   }
 
-  .location-section::before {
-    content: "";
-    position: absolute;
-    background-image: url("../images/left-part-semicircle.png");
-    width: 34.001px;
-    height: 34.119px;
-    right: 43px;
-    top: -17px;
-    background-repeat: no-repeat;
-  }
-
   .campus-heading {
     color: #0a3d9c;
     font-family: Satoshi;
     font-size: 28px;
     font-weight: 700;
     line-height: 118%;
-    /* 33.04px */
+    text-align: left !important;
   }
 
   .location-section .d-flex {
