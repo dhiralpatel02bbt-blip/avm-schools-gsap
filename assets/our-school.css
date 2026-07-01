@@ -95,15 +95,23 @@
   min-height: 220px;
 }
 
-.campus-slide-circle {
+/* .campus-slide-circle {
   position: absolute;
   left: -168px;
   bottom: -390px;
   width: 530px;
   height: 510px;
-  background: #FFEA2C;
+  background: #ffea2c;
   border-radius: 50%;
   z-index: 0;
+} */
+.campus-slide-text h4 {
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 1.5em;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 115%;
 }
 
 .campus-slide-text {
@@ -111,19 +119,23 @@
   z-index: 1;
   padding: 0;
   opacity: 1;
-  width: 60%;
+  width: 100%;
   top: 170px;
-  left: -104px;
+  left: 0;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .campus-slide-text p {
   margin: 0;
-  color: #101010;
+  color: #FFF;
   font-family: Poppins;
-  font-size: 0.9em;
-  font-weight: 600;
-  line-height: 139%;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%;
 }
 
 .our-school-page .location-section {
@@ -176,8 +188,8 @@
 
 .campus-section .half-circle {
   position: absolute;
-  top: -9.8958vw;
-  left: -56.25vw;
+  top: -7.7vw;
+  left: -52.5vw;
   z-index: 0;
   display: block;
   width: 98.9583vw;
@@ -187,11 +199,18 @@
   pointer-events: none;
 }
 
+@media (min-width: 992px) {
+  .campus-section .half-circle {
+    /* opacity: 0; removed to avoid fading from 0 */
+  }
+}
+
 .campus-section .body-txt {
   position: relative;
   z-index: 4;
-  margin: clamp(264px, 19.4vw, 348px) 0 auto clamp(40px, 6.9vw, 100px);
-  max-width: clamp(320px, 31vw, 450px);
+  /* margin: clamp(264px, 19.4vw, 338px) 0 auto clamp(40px, 6.9vw, 100px); */
+  margin: auto 0 auto clamp(40px, 6.9vw, 100px);
+  max-width: clamp(320px, 30vw, 470px);
   display: flex;
   flex-direction: column;
   gap: clamp(24px, 3.2vw, 46px);
@@ -232,9 +251,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: 166%;
+  margin-top: 2em !important;
 }
-
-
 
 @media (max-width: 991.9px) {
   .campus-section {
@@ -246,13 +264,13 @@
   .campus-stack {
     position: relative;
     width: 100%;
-    height: auto;
-    min-height: 0;
+    /* height: auto;
+    min-height: 0; */
     overflow: visible;
   }
 
   .campus-viewport {
-    padding: calc(max(100vh, 540px) + 86px) 0 0;
+    padding: 200% 0 0;
   }
 
   .campus-slide-circle {
@@ -263,18 +281,18 @@
     position: absolute;
     inset: 0 0 auto;
     display: block;
-    height: max(100vh, 540px);
+    /* height: max(100vh, 540px); */
     overflow: hidden;
   }
 
   .campus-media img {
     position: absolute;
-    width: 100%;
+    /* width: 100%;
     min-width: 160%;
     height: 100%;
     bottom: -16%;
     left: -40%;
-    object-fit: cover;
+    object-fit: cover; */
   }
 
   .campus-section .panel {
@@ -340,6 +358,7 @@
     position: absolute;
     inset: 0;
     clip-path: none !important;
+    transform: none !important;
   }
 
   .campus-slide-visual img {
@@ -351,6 +370,7 @@
     display: block;
     object-fit: cover;
     object-position: center;
+    transform: none !important;
   }
 
   .campus-slide-caption {
@@ -407,6 +427,7 @@
     font-size: 28px;
     font-weight: 700;
     line-height: 118%;
+    margin-bottom: 30px !important;
     /* 33.04px */
   }
 
@@ -416,6 +437,11 @@
     line-height: 150%;
     /* 21.75px */
     letter-spacing: 0.145px;
+    width: 110%;
+  }
+
+  .campus-slide-text h4 {
+    font-weight: 500;
   }
 
   .campus-section .body-txt {
@@ -438,34 +464,35 @@
   }
 
   .campus-slide-caption {
-    padding: 42px 6px 20px 21px;
+    padding: 42px 6px 20px 18px;
+  }
+
+  .campus-viewport {
+    height: unset;
+    min-height: unset;
   }
 }
 
 @media (max-width: 576.9px) {
-
-  /* .campus-slide-visual img {
-    max-width: 576px;
-  } */
   .campus-section .half-circle {
-    width: 792px;
-    height: 793px;
-    top: -36%;
-    left: -49%;
+    width: 800px;
+    height: 800px;
+    top: -380px;
+    left: -53%;
   }
 
   .campus-media {
-    height: max(100vh, 540px);
+    /* height: max(100vh, 540px); */
   }
 
   .campus-media img {
-    width: 438px;
-    height: 570px;
-    bottom: -2%;
+    width: 100%;
+    height: unset;
+    top: 300px;
   }
 
   .campus-section .body-txt {
-    top: 16%;
+    top: 135px;
     width: 75%;
   }
 }
@@ -531,7 +558,7 @@ section.development-sec {
 }
 
 .yellow-box {
-  background: #FFEA2C;
+  background: #f7df00;
 }
 
 .orange-box {
@@ -565,7 +592,7 @@ section.development-sec {
   right: 0;
   bottom: clamp(0%, 2vw, 5%);
   z-index: 2;
-  width: min(100%, clamp(450px, 38vw, 560px));
+  width: min(100%, clamp(450px, 38vw, 589px));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -599,7 +626,7 @@ section.development-sec {
   width: max-content;
   will-change: transform;
   padding: 0 clamp(80px, 6.25vw, 120px);
-  gap: clamp(150px, 19.2vw, 377px);
+  gap: clamp(150px, 13.2vw, 377px);
 }
 
 .dev-slide {
@@ -613,7 +640,11 @@ section.development-sec {
   object-fit: cover;
 }
 
-
+@media (max-width: 1650px) {
+  .dev-slide .absolute-box {
+    width: min(100%, clamp(450px, 37vw, 589px));
+  }
+}
 
 @media (max-width: 991.9px) {
   .our-school-page .development-sec {
@@ -707,7 +738,7 @@ section.development-sec {
     overflow: unset;
   }
 
-  .image-container:nth-child(2) .img-relative:before {
+  /* .image-container:nth-child(2) .img-relative:before {
     content: "";
     position: absolute;
     width: 57px;
@@ -732,7 +763,7 @@ section.development-sec {
     position: absolute;
     width: 49px;
     height: 15px;
-    background: #FFEA2C;
+    background: #ffea2c;
     top: 0;
     left: 48px;
   }
@@ -752,7 +783,7 @@ section.development-sec {
     position: absolute;
     width: 57px;
     height: 15px;
-    background: #FFEA2C;
+    background: #ffea2c;
     top: -15px;
     right: 0;
   }
@@ -782,7 +813,7 @@ section.development-sec {
     position: absolute;
     width: 49px;
     height: 15px;
-    background: #FFEA2C;
+    background: #ffea2c;
     top: 0;
     left: 49px;
   }
@@ -802,7 +833,7 @@ section.development-sec {
     position: absolute;
     width: 49px;
     height: 15px;
-    background: #FFEA2C;
+    background: #ffea2c;
     top: 0;
     right: 49px;
   }
@@ -825,7 +856,7 @@ section.development-sec {
     background: #fc8b5f;
     top: 0;
     left: 49px;
-  }
+  } */
 }
 
 @media (max-width: 576.9px) {
@@ -834,6 +865,7 @@ section.development-sec {
   }
 
   .development-sec h2.title-txt {
+    padding-top: 0;
     width: 91%;
   }
 
@@ -853,7 +885,15 @@ section.development-sec {
 /* Location section css Start */
 .our-school-page .campus-heading,
 .our-school-page .campus-grid {
-  visibility: hidden;
+  visibility: visible;
+}
+
+@media (max-width: 767.98px) {
+
+  .our-school-page .campus-heading,
+  .our-school-page .campus-grid {
+    visibility: visible;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -865,7 +905,7 @@ section.development-sec {
 }
 
 .location-section {
-  background: ##FFEA2C;
+  background: #f7df00;
   display: flex;
   gap: 40px;
   align-items: flex-start;
@@ -904,7 +944,7 @@ section.development-sec {
   gap: clamp(110px, 7vw, 140px) clamp(102px, 9vw, 152px);
   margin-top: 100px;
   width: 70%;
-  margin: 60px auto 0;
+  margin: 110px auto 0;
 }
 
 .campus-card {
@@ -917,6 +957,7 @@ section.development-sec {
   align-items: center;
   gap: clamp(15px, 1.4vw, 20px);
   margin-bottom: clamp(15px, 1.4vw, 20px);
+  justify-content: center;
 }
 
 .arrow-icon {
@@ -944,17 +985,16 @@ section.development-sec {
 }
 
 .campus-address {
-  padding-left: clamp(40px, 4.1vw, 64px);
   color: #000;
   font-family: Poppins;
   font-size: 1em;
   font-weight: 400;
   line-height: 169%;
+  text-align: center;
 }
 
 .directions-link {
   display: inline-block;
-  padding-left: 64px;
   margin-top: 10px;
   cursor: pointer;
   color: #0a3d9c;
@@ -968,13 +1008,14 @@ section.development-sec {
   text-decoration-color: #fc8b5f;
   text-underline-offset: 3px;
   text-underline-position: from-font;
+  text-align: center;
 }
 
 .directions-link:hover {
   text-decoration: underline;
 }
 
-@media(max-width: 1366px) {
+@media (max-width: 1366px) {
   .campus-grid {
     width: 100%;
   }
@@ -1023,6 +1064,7 @@ section.development-sec {
   }
 
   .campus-grid {
+    margin: 60px auto 0;
     grid-template-columns: unset;
     gap: 51px;
   }
@@ -1033,7 +1075,7 @@ section.development-sec {
 
   .campus-name {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 140%;
     /* 22.4px */
   }
@@ -1043,7 +1085,7 @@ section.development-sec {
     font-size: 14px;
     font-weight: 400;
     line-height: 150%;
-    /* 21px */
+    text-align: left;
   }
 
   .card-header {

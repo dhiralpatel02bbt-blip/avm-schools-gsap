@@ -27,6 +27,7 @@ body.pedagogy-page header .black-logo {
   z-index: 2;
   /* overflow hidden clips the expanding circle */
   overflow: hidden;
+  --hero-blue-size: 93.5vw;
 }
 
 .pedagogy-page .campus-section {
@@ -84,14 +85,13 @@ body.pedagogy-page header .black-logo {
   will-change: transform, opacity;
   backface-visibility: hidden;
   position: absolute;
-  top: 73%;
-  /* left: -32%; */
-  left: -27%;
-  width: 2165px;
-  height: 2165px;
+  top: clamp(-198px, -13vh, -90px);
+  left: calc(var(--hero-blue-size) * -0.5);
+  width: var(--hero-blue-size);
+  height: var(--hero-blue-size);
   border-radius: 50%;
-  background: #0a43a4;
-  transform: translateY(-50%);
+  background: #0a3d9c;
+  transform: translateX(-200px);
   transform-origin: center center;
   z-index: 1;
   box-shadow: 0 0 120px rgba(10, 67, 164, 0.22);
@@ -142,15 +142,15 @@ body.pedagogy-page header .black-logo {
 
 @media (max-width: 1650px) {
   .pedagogy-page .campus-section .half-circle {
-    top: 81%;
-    left: -45%;
+    top: clamp(-198px, -14vh, -90px);
+    left: calc(var(--hero-blue-size) * -0.5);
   }
 }
 
 @media (max-width: 1366px) {
   .pedagogy-page .campus-section .half-circle {
-    top: 95%;
-    left: -54%;
+    top: clamp(-198px, -14vh, -90px);
+    left: calc(var(--hero-blue-size) * -0.5);
   }
 }
 
@@ -160,30 +160,30 @@ body.pedagogy-page header .black-logo {
   }
 
   .pedagogy-page .campus-section .half-circle {
-    top: 93%;
-    left: -62%;
+    top: clamp(-198px, -14vh, -90px);
+    left: calc(var(--hero-blue-size) * -0.5);
   }
 }
 
 @media (max-width: 1200px) {
   .pedagogy-page .campus-section .half-circle {
-    left: -92%;
-    top: 86%;
+    left: calc(var(--hero-blue-size) * -0.5);
+    top: clamp(-198px, -14vh, -90px);
   }
 }
 
 @media (max-width: 1023px) {
   .pedagogy-page .campus-section .half-circle {
-    left: -100%;
+    left: calc(var(--hero-blue-size) * -0.5);
   }
 }
 
 @media (max-width: 991.98px) {
   .pedagogy-page .campus-section .half-circle {
-    left: -80%;
-    width: 1865px;
-    height: 1865px;
-    top: 81%;
+    left: calc(var(--hero-blue-size) * -0.5);
+    width: var(--hero-blue-size);
+    height: var(--hero-blue-size);
+    top: -40px;
   }
 }
 
@@ -206,7 +206,7 @@ body.pedagogy-page header .black-logo {
     width: 701px;
     height: 681px;
     border-radius: 50%;
-    background: #0A3D9C;
+    background: #0a3d9c;
     margin: -140px;
     z-index: 0;
     position: absolute;
@@ -223,17 +223,17 @@ body.pedagogy-page header .black-logo {
   }
 
   .mob-campus-section .panel-title {
-    color: #FFF;
+    color: #fff;
     font-family: Satoshi;
     font-size: 26px;
     font-style: normal;
     font-weight: 700;
     line-height: 115%;
-    padding-bottom: 112px;
+    padding-bottom: 72px;
   }
 
   .mob-campus-section .panel-body {
-    color: #FFF;
+    color: #fff;
     font-family: Poppins;
     font-size: 14.5px;
     font-style: normal;
@@ -279,26 +279,23 @@ body.pedagogy-page header .black-logo {
   }
 
   .mob-pedagogy-section {
-    background: #0A3D9C;
+    background: #0a3d9c;
     min-height: 100vh;
-    padding: 60px 20px;
-    margin-top: 188px;
+    padding: 100px 20px;
+    margin-top: 150px;
     z-index: 22;
     position: relative;
   }
 
   .mob-pedagogy-section h2 {
-    color: #FFF;
+    color: #fff;
     text-align: center;
-
-    /* Mob 5 */
     font-family: Satoshi;
     font-size: 28px;
     font-style: normal;
     font-weight: 700;
     line-height: 118%;
-    /* 33.04px */
-    padding-bottom: 96px;
+    padding-bottom: 76px;
   }
 
   .circle-card {
@@ -310,6 +307,10 @@ body.pedagogy-page header .black-logo {
     justify-content: center;
     text-align: center;
     padding: 35px;
+  }
+
+  .circle-content {
+    width: 89%;
   }
 
   .circle-content h3 {
@@ -344,17 +345,16 @@ body.pedagogy-page header .black-logo {
   }
 
   .orange {
-    background: #FC8B5F;
+    background: #fc8b5f;
   }
 
   .yellow {
-    background: #FFEA2C;
+    background: #ffea2c;
   }
 
   .purple {
-    background: #BEACFF;
+    background: #beacff;
   }
-
 }
 
 @media (max-width: 576px) {
@@ -397,7 +397,7 @@ body.pedagogy-page header .black-logo {
   inset: 0;
   width: 100%;
   height: 100%;
-  background: #1a49a8;
+  background: #0a3d9c;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -431,8 +431,8 @@ body.pedagogy-page header .black-logo {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 230px;
-  height: 230px;
+  width: 200px;
+  height: 200px;
   background: #ded5ff;
   border-radius: 50%;
   transform: translate(-50%, -50%);
@@ -452,8 +452,8 @@ body.pedagogy-page header .black-logo {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 546px;
-  height: 546px;
+  width: 500px;
+  height: 500px;
   border: 3px dotted #ff8a5b;
   border-radius: 50%;
   transform: translate(-50%, -50%);
@@ -478,42 +478,38 @@ body.pedagogy-page header .black-logo {
 }
 
 .diagram-sec .node1 {
-  top: 22.3%;
-  left: 39.6%;
+  top: 23.3%;
+  left: 41.1%;
 }
 
 .diagram-sec .node2 {
   top: 22.3%;
-  left: 60.4%;
+  left: 58.1%;
 }
 
 .diagram-sec .node3 {
   top: 50%;
-  left: 66.5%;
+  left: 65.2%;
 }
 
 .diagram-sec .node4 {
-  /* top: 78.2%; */
-  /* left: 64.6%; */
-  top: 75.2%;
-  left: 61.6%;
+  top: 74.8%;
+  left: 59.9%;
 }
 
 .diagram-sec .node5 {
-  top: 85.7%;
+  top: 82.7%;
   left: 50%;
 }
 
 .diagram-sec .node6 {
   top: 50%;
-  left: 33.5%;
+  left: 34.9%;
 }
 
 .diagram-sec .node7 {
-  /* top: 78.2%;
-  left: 35.4%; */
-  top: 75.2%;
-  left: 38.3%;
+  top: 74.8%;
+  left: 40%;
 }
 
 .diagram-sec .label {
@@ -560,43 +556,43 @@ body.pedagogy-page header .black-logo {
 
 .diagram-sec .label.right-top {
   top: 8%;
-  right: 16%;
+  right: 19%;
   width: 19%;
   text-align: center;
 }
 
 .diagram-sec .label.right-mid {
   top: 51.5%;
-  right: 6%;
+  right: 9%;
   width: 24%;
   transform: translateY(-50%);
   text-align: center;
 }
 
 .diagram-sec .label.bottom {
-  right: 15%;
-  bottom: 0%;
+  right: 18%;
+  bottom: 4%;
   width: 21%;
   text-align: center;
 }
 
 .diagram-sec .label.left-bottom {
-  bottom: -14%;
+  bottom: -12%;
   left: 39%;
   width: 23%;
   text-align: center;
 }
 
 .diagram-sec .label.left-lower {
-  top: 76%;
-  left: 10%;
+  top: 73%;
+  left: 15%;
   width: 22%;
   text-align: center;
 }
 
 .diagram-sec .label.left-mid {
-  top: 50%;
-  left: 6%;
+  top: 51.5%;
+  left: 9%;
   width: 22%;
   text-align: center;
   transform: translateY(-50%);
@@ -608,114 +604,153 @@ body.pedagogy-page header .black-logo {
 
 @media (max-width: 1728px) {
   .diagram-sec .node1 {
-    top: 14.5%;
-    left: 38.6%;
+    top: 22.5%;
+    left: 40.7%;
   }
 
   .diagram-sec .node2 {
-    top: 14.5%;
-    left: 64.2%;
+    top: 22.5%;
+    left: 59.2%;
   }
 
   .diagram-sec .node3 {
-    left: 71.8%;
+    left: 66.8%;
   }
 
   .diagram-sec .node4 {
-    left: 66%;
+    left: 61.4%;
+    top: 73.8%;
   }
 
   .diagram-sec .node6 {
-    left: 28%;
+    left: 33.3%;
   }
 
   .diagram-sec .node7 {
-    left: 33.9%;
+    left: 38.5%;
+    top: 73.8%;
   }
 
   .diagram-sec .label.right-mid {
     top: 48.5%;
-    right: -2%;
+    right: 7%;
+  }
+
+  .diagram-sec .label.bottom {
+    right: 16%;
+    bottom: 9%;
+  }
+
+  .diagram-sec .label.left-bottom {
+    bottom: -8%;
+  }
+
+  .diagram-sec .label.left-lower {
+    top: 71%;
   }
 
   .diagram-sec .label.left-mid {
-    top: 41.5%;
-    left: 2%;
+    top: 48.5%;
+    left: 8%;
+  }
+
+  .diagram-sec .label.top {
+    left: 20%;
   }
 }
 
 @media (max-width: 1650px) {
-  .diagram-sec .orbit {
-    width: 630px;
-    height: 630px;
-  }
-
   .diagram-sec .node1 {
-    left: 38%;
+    left: 40.4%;
   }
 
   .diagram-sec .node2 {
-    left: 61.7%;
+    left: 59.7%;
   }
 
   .diagram-sec .node3 {
-    left: 72.7%;
+    left: 67.6%;
   }
 
   .diagram-sec .node4 {
-    left: 65.5%;
-    top: 80.2%;
+    left: 61.2%;
+    top: 75.2%;
   }
 
   .diagram-sec .node5 {
-    top: 91.2%;
+    top: 82.7%;
   }
 
   .diagram-sec .node6 {
-    left: 27.3%;
+    left: 32.5%;
   }
 
   .diagram-sec .node7 {
-    left: 34.6%;
-    top: 80.2%;
+    left: 38.8%;
+    top: 75.2%;
   }
 
   .diagram-sec .label.top {
-    top: 6%;
-    left: 10%;
+    top: 8%;
+    left: 20%;
   }
 
   .diagram-sec .label.right-top {
     top: 8%;
-    right: 9%;
+    right: 17%;
   }
 
   .diagram-sec .label.right-mid {
-    top: 46.5%;
-    right: -2%;
+    top: 49.5%;
+    right: 6%;
   }
 
   .diagram-sec .label.left-mid {
-    left: -1%;
-    top: 45.5%;
+    left: 8%;
+    top: 47.5%;
   }
 
   .diagram-sec .label.left-bottom {
-    bottom: -20%;
+    bottom: -8%;
   }
 
   .diagram-sec .label.bottom {
-    right: 10%;
-    bottom: 3%;
+    right: 16%;
+    bottom: 7%;
+  }
+}
+
+@media(max-width: 1512px) {
+  .diagram-sec .node1 {
+    top: 21.5%;
+  }
+
+  .diagram-sec .node2 {
+    top: 21.5%;
+  }
+
+  .diagram-sec .node3 {
+    left: 69.1%;
+  }
+
+  .diagram-sec .node4 {
+    top: 76.4%;
+  }
+
+  .diagram-sec .node6 {
+    left: 31%;
+  }
+
+  .diagram-sec .node7 {
+    left: 37.8%;
+  }
+
+  .diagram-sec .label.left-mid {
+    left: 6%;
   }
 }
 
 @media (max-width: 1440px) {
-  .diagram-sec .orbit {
-    width: 636px;
-    height: 636px;
-  }
-
   .diagram-sec .label .strong {
     padding-bottom: 10px;
   }
@@ -726,125 +761,137 @@ body.pedagogy-page header .black-logo {
   }
 
   .diagram-sec .node1 {
-    left: 36%;
+    top: 22.5%;
+    left: 39%;
   }
 
   .diagram-sec .node2 {
-    left: 63.7%;
+    top: 22.5%;
+    left: 61.1%;
   }
 
   .diagram-sec .node3 {
-    left: 76.4%;
+    left: 70%;
     top: 50%;
   }
 
   .diagram-sec .node4 {
-    left: 68.5%;
-    top: 80%;
+    left: 62.9%;
+    top: 75%;
   }
 
   .diagram-sec .node5 {
-    top: 91.7%;
+    top: 82.7%;
   }
 
   .diagram-sec .node6 {
-    left: 23.5%;
+    left: 30%;
     top: 50%;
   }
 
   .diagram-sec .node7 {
-    left: 32%;
+    left: 37.2%;
   }
 
   .diagram-sec .label.right-top {
-    right: 7%;
+    right: 14%;
+    top: 13%;
+    width: 21%;
   }
 
   .diagram-sec .label.left-lower {
-    left: 8%;
+    left: 15%;
+    top: 73%;
   }
 
   .diagram-sec .label.bottom {
-    right: 8%;
+    right: 14%;
+    bottom: 10%;
   }
 
   .diagram-sec .label.left-bottom {
-    bottom: -16%;
+    bottom: -5%;
   }
 
   .diagram-sec .label.left-mid {
-    left: -4%;
+    left: 6%;
+    top: 44.5%;
   }
 
   .diagram-sec .label.right-mid {
-    top: 48.5%;
-    right: -5%;
+    top: 44.5%;
+    right: 4%;
   }
 }
 
 @media (max-width: 1366px) {
+  .diagram-sec .center {
+    width: 170px;
+    height: 170px;
+  }
+
   .diagram-sec .orbit {
-    width: 500px;
-    height: 500px;
+    width: 420px;
+    height: 420px;
   }
 
   .diagram-sec .node1 {
-    top: 22.5%;
-    left: 38%;
+    top: 26.5%;
+    left: 40.5%;
   }
 
   .diagram-sec .node2 {
-    top: 22.5%;
-    left: 61.7%;
+    top: 26.5%;
+    left: 59.7%;
   }
 
   .diagram-sec .node3 {
-    left: 71.8%;
+    left: 67.8%;
     top: 50%;
   }
 
   .diagram-sec .node4 {
-    top: 72.2%;
-    left: 65.9%;
+    top: 71.2%;
+    left: 61.2%;
   }
 
   .diagram-sec .node5 {
-    top: 82.6%;
+    top: 77.5%;
   }
 
   .diagram-sec .node6 {
-    left: 28%;
+    left: 32.2%;
     top: 50%;
   }
 
   .diagram-sec .node7 {
-    top: 72.2%;
-    left: 34%;
+    top: 71.2%;
+    left: 38.7%;
   }
 
   .diagram-sec .label.top {
-    top: 13%;
-    left: 12%;
+    top: 17%;
+    left: 20%;
   }
 
   .diagram-sec .label.right-top {
-    top: 13%;
-    right: 10%;
+    top: 17%;
+    right: 15%;
   }
 
   .diagram-sec .label.right-mid {
     width: 22%;
-    right: 2%;
+    right: 8%;
   }
 
   .diagram-sec .label.bottom {
-    right: 8%;
+    right: 15%;
     bottom: 14%;
     width: 23%;
   }
 
   .diagram-sec .label.left-bottom {
-    bottom: -6%;
+    bottom: 0%;
   }
 
   .diagram-sec .label.left-lower {
@@ -852,8 +899,8 @@ body.pedagogy-page header .black-logo {
   }
 
   .diagram-sec .label.left-mid {
-    top: 45%;
-    left: 0%;
+    top: 50%;
+    left: 7%;
   }
 
   .diagram-sec .label.right-mid {
@@ -866,56 +913,54 @@ body.pedagogy-page header .black-logo {
 }
 
 @media (max-width: 1280px) {
-  .diagram-sec .center {
-    width: 180px;
-    height: 180px;
-  }
-
   .diagram-sec .node1 {
-    top: 21.7%;
+    top: 26.5%;
+    left: 40%;
   }
 
   .diagram-sec .node2 {
-    left: 62.7%;
+    left: 59.7%;
   }
 
   .diagram-sec .node3 {
-    left: 73.5%;
+    left: 69%;
   }
 
   .diagram-sec .node4 {
-    top: 71.2%;
-    left: 67.6%;
+    top: 70.2%;
+    left: 62.7%;
   }
 
   .diagram-sec .node6 {
-    left: 26.5%;
+    left: 31%;
   }
 
   .diagram-sec .node7 {
-    left: 33%;
+    left: 37%;
+    top: 70.2%;
   }
 
   .diagram-sec .label.right-mid {
     top: 44%;
-    right: 0%;
+    right: 7%;
   }
 
   .diagram-sec .label.bottom {
-    right: 5%;
+    right: 15%;
     bottom: 16%;
   }
 
   .diagram-sec .label.left-bottom {
-    bottom: -5%;
+    bottom: 3%;
   }
 
   .diagram-sec .label.left-mid {
-    left: 0%;
+    left: 5%;
+    top: 44%;
   }
 
   .diagram-sec .label.right-top {
-    right: 9%;
+    right: 13%;
   }
 }
 
@@ -1021,7 +1066,7 @@ body.pedagogy-page header .black-logo {
   }
 
   .diagram-tab .yellow {
-    background: #FFEA2C;
+    background: #ffea2c;
   }
 
   .diagram-tab .purple {
@@ -1044,8 +1089,6 @@ body.pedagogy-page header .black-logo {
   z-index: 10;
   background: #fff;
 }
-
-/* The previous negative margin code was removed because we are using pinSpacing: false in GSAP and manually adding spacers to handle the overlap */
 
 .tabbing-sec .tabs-sticky-bar {
   background: #ffffff;
@@ -1256,7 +1299,7 @@ body.pedagogy-page header .black-logo {
   right: 90px;
   width: 90px;
   height: 25px;
-  background-color: #FFEA2C;
+  background-color: #ffea2c;
 }
 
 #playtrails .feature-block:last-child .img-block:before {
@@ -1307,7 +1350,7 @@ body.pedagogy-page header .black-logo {
   right: 90px;
   width: 90px;
   height: 25px;
-  background-color: #FFEA2C;
+  background-color: #ffea2c;
 }
 
 #secondary .feature-block:nth-child(1) .img-block:after {
@@ -1338,7 +1381,7 @@ body.pedagogy-page header .black-logo {
   right: 90px;
   width: 90px;
   height: 25px;
-  background-color: #FFEA2C;
+  background-color: #ffea2c;
 }
 
 #secondary .feature-block:nth-child(3) .img-block:before {
@@ -1387,45 +1430,9 @@ body.pedagogy-page header .black-logo {
   }
 }
 
-@media (max-width: 1440px) {
-  .tabbing-sec .feature-title {
-    width: 90%;
-    align-items: center;
-  }
-
-  #primary .feature-block:first-child .img-block:after {
-    width: 171px;
-    height: 20px;
-  }
-
-  #primary .feature-block:first-child .img-block:before {
-    bottom: -19px;
-    right: 171px;
-    width: 87px;
-    height: 20px;
-  }
-
-  #primary .feature-block:last-child .img-block:before {
-    top: -19px;
-    left: -148px;
-    width: 148px;
-    height: 20px;
-  }
-
-  #primary .feature-block:last-child .img-block:after {
-    width: 94px;
-    height: 20px;
-  }
-}
-
 @media (max-width: 1366px) {
   .tabbing-sec .feature-title {
     gap: 26.44px;
-  }
-
-  #primary .feature p,
-  #secondary .feature p {
-    padding-left: 75px;
   }
 
   .tabbing-sec .feature p {
@@ -1530,6 +1537,11 @@ body.pedagogy-page header .black-logo {
     padding: 49px 0 107px;
   }
 
+  #secondary .feature-block:nth-child(1) .img-block:before,
+  #secondary .feature-block:nth-child(1) .img-block:after {
+    display: none;
+  }
+
   #primary .text-block .feature-title,
   #secondary .text-block .feature-title {
     width: 13px;
@@ -1616,6 +1628,14 @@ body.pedagogy-page header .black-logo {
 
   .tabbing-sec .feature-block {
     gap: 67px;
+  }
+
+  .tabbing-sec .feature-block>*:nth-child(1),
+  .tabbing-sec .feature-block>*:nth-child(2) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
   }
 
   .tabbing-sec .feature p {
@@ -1707,7 +1727,7 @@ body.pedagogy-page header .black-logo {
 
 .text-content {
   max-width: 53%;
-  margin-bottom: 105px;
+  margin: 0 auto 105px;
   z-index: 1;
   position: relative;
 }
@@ -1719,6 +1739,7 @@ body.pedagogy-page header .black-logo {
   font-style: normal;
   font-weight: 700;
   line-height: 112%;
+  text-align: center;
 }
 
 .text-content p {
@@ -1733,7 +1754,7 @@ body.pedagogy-page header .black-logo {
 /* Extra Section — GSAP Horizontal Scroll */
 .extra-horizontal {
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 100%;
   flex: 0 0 auto;
   display: flex;
@@ -1772,7 +1793,7 @@ body.pedagogy-page header .black-logo {
 
 .extra-section .card img {
   width: 100%;
-  height: clamp(300px, calc(100svh - 300px), 520px);
+  /* height: clamp(300px, calc(100svh - 300px), 520px); */
   object-fit: cover;
   display: block;
 }
@@ -1818,7 +1839,7 @@ body.pedagogy-page header .black-logo {
   left: 0;
   width: 90px;
   height: 25px;
-  background: #FFEA2C;
+  background: #ffea2c;
 }
 
 .extra-slide:nth-child(odd) .card::before {
@@ -1955,7 +1976,7 @@ body.pedagogy-page header .black-logo {
   .extra-section .yellow {
     width: 100%;
     padding: 27px 25px 26px 20px;
-    background: #FFEA2C;
+    background: #ffea2c;
   }
 
   .extra-slide:nth-child(even) .card-label {
@@ -1984,6 +2005,7 @@ body.pedagogy-page header .black-logo {
   .text-content h2 {
     font-size: 28px;
     line-height: 118%;
+    text-align: left;
   }
 
   .extra-section {
@@ -2004,7 +2026,7 @@ body.pedagogy-page header .black-logo {
   padding: 196.88px 0 209px;
 }
 
-.aym-img-col:before {
+/* .aym-img-col:before {
   content: "";
   position: absolute;
   top: -32px;
@@ -2012,6 +2034,8 @@ body.pedagogy-page header .black-logo {
   width: 86px;
   height: 32px;
   background: #a793ec;
+  z-index: 3;
+  pointer-events: none;
 }
 
 .aym-img-col:after {
@@ -2022,12 +2046,15 @@ body.pedagogy-page header .black-logo {
   width: 160px;
   height: 32px;
   background: #ff7f50;
-}
+  z-index: 3;
+  pointer-events: none;
+} */
 
 .aym-img-col {
   flex: 0 0 50%;
   position: relative;
 }
+
 
 .aym-text {
   padding: 0 100px 0 122.98px;
@@ -2201,7 +2228,7 @@ body.pedagogy-page header .black-logo {
   --line-length: 58px;
   --line-angle: 0deg;
   box-sizing: border-box;
-  background: #FFEA2C;
+  background: #ffea2c;
   border-radius: 100px;
   width: 420px;
   height: 130px;
@@ -2576,7 +2603,7 @@ body.pedagogy-page header .black-logo {
     padding: 0 6vw 0 calc(var(--aym-mobile-circle-size) * 0.59);
     transform: translateY(-50%);
     border-radius: 50%;
-    background: #FFEA2C;
+    background: #ffea2c;
     justify-content: space-around;
     color: #000;
     text-align: left;
@@ -2695,6 +2722,8 @@ body.pedagogy-page header .black-logo {
   width: 86px;
   height: 32px;
   background: #a793ec;
+  z-index: 3;
+  pointer-events: none;
 }
 
 .avm-img-col:after {
@@ -2705,6 +2734,8 @@ body.pedagogy-page header .black-logo {
   width: 160px;
   height: 32px;
   background: #ff7f50;
+  z-index: 3;
+  pointer-events: none;
 }
 
 .avm-img-col {
@@ -2825,7 +2856,7 @@ body.pedagogy-page header .black-logo {
     width: 100%;
   }
 
-  .mob-avm-img-col::before {
+  /* .mob-avm-img-col::before {
     content: "";
     position: absolute;
     top: 0;
@@ -2833,6 +2864,8 @@ body.pedagogy-page header .black-logo {
     width: 57px;
     height: 15px;
     background: #beacff;
+    z-index: 3;
+    pointer-events: none;
   }
 
   .mob-avm-img-col::after {
@@ -2843,18 +2876,27 @@ body.pedagogy-page header .black-logo {
     width: 49px;
     height: 15px;
     background: #fc8b5f;
-  }
+    z-index: 3;
+    pointer-events: none;
+  } */
 }
 
 @media (max-width: 767px) {
   .avm-text {
-    padding: 0 39px;
+    width: 101%;
   }
 
   .avm-text h2 {
     font-size: 28px;
     font-weight: 700;
     line-height: 118%;
+  }
+
+  .aym-text p {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 160%;
+    letter-spacing: 0.15px;
   }
 
   .avm-text p {
@@ -2877,28 +2919,28 @@ body.pedagogy-page header .black-logo {
 }
 
 .aym-section .aym-text {
-  opacity: 0;
-  transform: translateX(80px);
-  transition: opacity 0.75s ease 0.15s, transform 0.75s ease 0.15s;
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 /* AVM: text is left, img-col is right */
 .avm-section .avm-text {
-  opacity: 1;
-  transform: none;
-  transition: none;
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
 }
 
 .avm-section .avm-img-col {
-  opacity: 1;
-  transform: none;
-  transition: none;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
 }
 
 .avm-section .mob-avm-img-col {
-  opacity: 1;
-  transform: none;
-  transition: none;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
 }
 
 /* Visible state */
@@ -2908,7 +2950,24 @@ body.pedagogy-page header .black-logo {
 .avm-section.in-view .avm-img-col,
 .avm-section.in-view .mob-avm-img-col {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate(0, 0);
+}
+
+@media (max-width: 991px) {
+  .aym-section .mob-aym-section-title,
+  .aym-section .aym-img-col,
+  .aym-section .aym-text {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+
+  .aym-section.in-view .mob-aym-section-title,
+  .aym-section.in-view .aym-img-col,
+  .aym-section.in-view .aym-text {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* development diagram section css Start */
@@ -2948,7 +3007,7 @@ body.pedagogy-page header .black-logo {
   transform: translateX(-50%);
   width: clamp(120px, 18vw, 328px);
   height: clamp(120px, 18vw, 328px);
-  background: #FFEA2C;
+  background: #ffea2c;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2976,7 +3035,7 @@ body.pedagogy-page header .black-logo {
 
 .teacher-dev .content {
   position: absolute;
-  width: clamp(180px, 25vw, 470px);
+  width: clamp(180px, 25vw, 410px);
 }
 
 .teacher-dev .content h4 {
@@ -3075,25 +3134,51 @@ body.pedagogy-page header .black-logo {
   }
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1512px) {
+  .teacher-dev .content {
+    width: clamp(180px, 21vw, 410px);
+  }
+
   .teacher-dev .left-bottom {
-    left: -360px;
-  }
-
-  .teacher-dev .right-bottom {
-    right: -360px;
-  }
-
-  .teacher-dev .right-top {
-    right: -310px;
+    left: -340px;
   }
 
   .teacher-dev .left-top {
-    left: -320px;
+    left: -280px;
   }
 
   .teacher-dev .top {
-    top: -120px;
+    top: -150px;
+  }
+
+  .teacher-dev .right-top {
+    right: -280px;
+  }
+
+  .teacher-dev .right-bottom {
+    right: -320px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .teacher-dev .left-bottom {
+    left: -320px;
+  }
+
+  .teacher-dev .right-bottom {
+    right: -310px;
+  }
+
+  .teacher-dev .right-top {
+    right: -270px;
+  }
+
+  .teacher-dev .left-top {
+    left: -270px;
+  }
+
+  .teacher-dev .top {
+    top: -140px;
   }
 
   .teacher-dev .center-circle {
@@ -3176,7 +3261,7 @@ body.pedagogy-page header .black-logo {
   }
 
   .development-circle {
-    background: #FFEA2C;
+    background: #ffea2c;
     width: 100%;
     aspect-ratio: 2 / 1;
     border-radius: 999px 999px 0 0;
@@ -3210,7 +3295,7 @@ body.pedagogy-page header .black-logo {
     top: 0;
     left: 1px;
     width: 1px;
-    height: 100%;
+    height: var(--teacher-dev-line-height, 100%);
     background: #ff7f50;
   }
 
@@ -3304,19 +3389,6 @@ body.pedagogy-page header .black-logo {
   }
 }
 
-.aym-img-col .aym-img-mask,
-.avm-img-col .avm-img-mask {
-  display: block;
-  overflow: hidden;
-  will-change: clip-path;
-}
-
-.aym-img-col .aym-img-mask img,
-.avm-img-col .avm-img-mask img {
-  display: block;
-  width: 100%;
-  will-change: transform;
-}
 
 /* ── Extra Section: Scroll-jacked slide per scroll ── */
 .extra-section-pin-spacer-custom {

@@ -37,6 +37,7 @@ body {
   overflow-x: clip;
   margin: 0;
   max-width: 100%;
+  scroll-behavior: auto !important;
 }
 
 html {
@@ -214,7 +215,8 @@ button:focus-visible {
     cursor: pointer;
     color: #000 !important;
     transition: all 0.5s ease;
-    z-index: 9;
+    z-index: 1000;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   }
 }
 
@@ -299,29 +301,6 @@ header .main-btn {
   transition: all 0.5s ease;
 }
 
-header .main-btn::before {
-  /* content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(0deg, transparent, transparent 30%, #ffd40045);
-  transform: rotate(-45deg);
-  transition: all 0.5s ease; */
-}
-
-header .main-btn:hover {
-  /* background-color: transparent; */
-  /* transform: scale(1.05); */
-  /* box-shadow: 0 0 20px #ffd40054; */
-}
-
-header .main-btn:hover::before {
-  /* opacity: 1;
-  transform: rotate(-45deg) translateY(100%); */
-}
-
 .offcanvas-menu {
   display: none;
 }
@@ -400,15 +379,15 @@ header .main-btn:hover::before {
 
   .offcanvas-menu nav {
     position: fixed;
-    height: 100svh;
-    width: min(402px, 100vw);
+    height: 100vh;
+    width: 100vw;
     top: 0;
     right: 0;
     overflow: hidden;
     background: #FFEA2C;
     /* transition: 0.3s ease; */
     transition: none;
-    padding: 40px 30px;
+    padding: 22px 30px;
     box-sizing: border-box;
     transform: translateX(100%);
   }
@@ -420,8 +399,8 @@ header .main-btn:hover::before {
   }
 
   .logo.nav-logo img {
-    width: 165px;
-    height: 65px;
+    width: clamp(9.375rem, 12vw, 14.8125rem);
+    /* height: 65px; */
   }
 
   .offcanvas-menu nav>div a {
@@ -565,6 +544,10 @@ header .main-btn:hover::before {
     width: 27.245px;
     height: 27.245px;
   }
+
+  header .col-4 .logo {
+    padding-left: 12px;
+  }
 }
 
 /* Header css End */
@@ -608,10 +591,11 @@ header .main-btn:hover::before {
   overflow: hidden;
   position: relative;
   z-index: 10;
-  margin-top: -60px;
+  /* margin-top: -60px; */
   transform: translateY(60px);
   will-change: transform;
   border-bottom: 1px solid #ffffff;
+  min-height: 65vh;
 }
 
 .contact-sec .row {
@@ -650,14 +634,14 @@ header .main-btn:hover::before {
   color: #ffffff;
   font-size: 1.6em;
   font-weight: 500;
-  line-height: 243.75%;
-  padding-bottom: 7px;
+  line-height: 125%;
+  padding-bottom: 1.3em;
 }
 
 .contact-sec .inner-content h2 {
   font-family: "Satoshi";
   color: #ffffff;
-  font-size: 2.3em;
+  font-size: 2.75em;
   font-weight: 700;
   line-height: 112%;
 }
@@ -665,16 +649,15 @@ header .main-btn:hover::before {
 /* GSAP handles h3/h2 animations — no override needed */
 
 .contact-sec a.apply-btn {
-  font-size: 1.1em;
+  font-size: 1em;
   line-height: normal;
-  padding: clamp(1.125rem, 1vw, 1.1875rem) clamp(2.8125rem, 3.5vw, 4.0625rem);
 }
 
 .contact-sec .form-actions {
   display: flex;
   align-items: center;
   gap: clamp(1.875rem, 5vw, 6rem);
-  margin-top: clamp(1.5rem, 2vw, 2.5rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .contact-sec .download-link {
@@ -691,10 +674,11 @@ header .main-btn:hover::before {
 }
 
 .contact-sec .image-container {
-  width: clamp(18.75rem, 24vw, 25rem);
-  height: clamp(18.75rem, 24vw, 25rem);
+  width: clamp(18.75rem, 27vw, 26rem);
+  height: clamp(18.75rem, 26vw, 25rem);
   transition: transform 0.2s ease;
-  padding-right: 5%;
+  padding-right: 3%;
+  margin-right: 5%;
   opacity: 1;
   transform: translateX(0);
   transition: all 1s ease;
@@ -912,6 +896,8 @@ body.reveal-animations-ready .contact-sec .image-container {
 
   .mob-contact-sec .inner-content {
     padding-bottom: 50px;
+    width: 90%;
+    margin: auto;
   }
 
   .mob-contact-sec .inner-content h2 {
@@ -919,7 +905,7 @@ body.reveal-animations-ready .contact-sec .image-container {
     font-size: 26px;
     font-weight: 700;
     font-family: Satoshi;
-    line-height: 108%;
+    line-height: 125%;
     width: 105%;
     color: #fff;
   }
@@ -929,7 +915,7 @@ body.reveal-animations-ready .contact-sec .image-container {
     text-align: center;
     font-size: 20px;
     font-weight: 500;
-    line-height: 18px;
+    line-height: 125%;
     padding-bottom: 22px;
   }
 }
@@ -983,7 +969,7 @@ body.reveal-animations-ready .contact-sec .image-container {
 
 .bbt-FA-main-footer a.title {
   color: #fff;
-  font-size: 1em;
+  font-size: 0.8em;
   font-weight: 500;
   line-height: 205%;
   transition: color 0.2s ease, text-decoration-color 0.2s ease;
@@ -1044,8 +1030,8 @@ body.reveal-animations-ready .contact-sec .image-container {
 }
 
 .bbt-FA-main-footer .icon {
-  width: clamp(2.75rem, 3.5vw, 3.375rem);
-  height: clamp(2.75rem, 3.5vw, 3.375rem);
+  width: clamp(2.55rem, 2.5vw, 3.375rem);
+  height: clamp(2.55rem, 2.5vw, 3.375rem);
   background: #FFEA2C;
   border-radius: 50%;
   display: flex;
@@ -1060,11 +1046,6 @@ body.reveal-animations-ready .contact-sec .image-container {
   height: 18px;
   fill: #000;
   transition: all 0.35s ease;
-}
-
-.bbt-FA-main-footer .icon:hover {
-  transform: translateY(-6px) scale(1.08);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35), 0 0 20px rgba(255, 224, 47, 0.8);
 }
 
 .bbt-FA-main-footer .container.footer-container {
@@ -1083,29 +1064,25 @@ body.reveal-animations-ready .contact-sec .image-container {
 }
 
 .bbt-FA-main-footer .ft-col-logo {
-  width: 40%;
+  width: 45%;
 }
 
 .bbt-FA-main-footer .footer-top .ft-col-menu:nth-child(2) {
-  width: 22%;
+  width: 18%;
 }
 
 .bbt-FA-main-footer .footer-top .ft-col-menu:nth-child(3) {
-  width: 23%;
+  width: 21%;
 }
 
 .bbt-FA-main-footer .footer-top .ft-col-menu:nth-child(4) {
-  width: 15%;
+  width: 16%;
 }
 
 .bbt-FA-main-footer .text {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.bbt-FA-main-footer .text li {
-  margin: 0 0 10px;
 }
 
 .bbt-FA-main-footer .text li:last-child {
@@ -1115,10 +1092,16 @@ body.reveal-animations-ready .contact-sec .image-container {
 .bbt-FA-main-footer a {
   color: #FFEA2C;
   font-family: Poppins;
-  font-size: 1em;
+  font-size: 0.8em;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+@media (max-width: 768px) {
+  .bbt-FA-main-footer a {
+    font-size: 1.2em;
+  }
 }
 
 .bbt-FA-main-footer {
@@ -1128,7 +1111,8 @@ body.reveal-animations-ready .contact-sec .image-container {
   /* gap: 56px; */
   /* gap: 131px; */
   margin-top: 0;
-  padding-top: 4rem;
+  padding-top: 3rem;
+  min-height: 35vh;
   /* width: 52%; */
 }
 
@@ -1137,7 +1121,12 @@ body.reveal-animations-ready .contact-sec .image-container {
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
-  width: 15%;
+  width: 16%;
+}
+
+.bbt-FA-main-footer .ft-social img {
+  width: 27px;
+  height: 27px;
 }
 
 .bbt-FA-main-footer .icon:hover {
@@ -1149,17 +1138,17 @@ body.reveal-animations-ready .contact-sec .image-container {
   display: flex;
   align-items: center;
   margin-top: clamp(1rem, 2vw, 2rem);
-  padding: clamp(1rem, 1.5vw, 1.75rem) 0 clamp(1rem, 1.5vw, 1.75rem);
+  padding: clamp(0rem, 0vw, 0rem) 0 clamp(1rem, 1.3vw, 1.75rem);
 }
 
 .bbt-FA-main-footer .footer-text p {
   color: #fff;
   font-family: Poppins;
-  font-size: 0.9em;
+  font-size: 0.8em;
   font-style: normal;
   font-weight: 400;
   line-height: 225%;
-  width: 40%;
+  width: 45%;
 }
 
 .bbt-FA-main-footer .icon:hover svg {
@@ -1171,11 +1160,11 @@ body.reveal-animations-ready .contact-sec .image-container {
 }
 
 .ft-meta-phone {
-  width: 22%;
+  width: 18%;
 }
 
 .ft-meta-email {
-  width: 23%;
+  width: 21%;
 }
 
 /* Removed desktop media queries for footer */
@@ -1314,13 +1303,18 @@ body.reveal-animations-ready .contact-sec .image-container {
 @media (max-width: 767.9px) {
   .bbt-FA-main-footer.mob-footer {
     display: block;
-    padding-top: 58px;
+    padding-top: 45px;
     border-top: 1px solid #FFFFFF80;
   }
 
   .mob-footer .ft-col-menu,
+  .bbt-FA-main-footer .footer-top .ft-col-menu {
+    width: 45%;
+  }
+
+  .mob-footer .ft-col-menu,
   .bbt-FA-main-footer .footer-top .ft-col-menu:nth-child(2) {
-    width: 50%;
+    width: 55%;
   }
 
   .bbt-FA-main-footer.mob-footer .footer-middle {
@@ -1367,7 +1361,7 @@ body.reveal-animations-ready .contact-sec .image-container {
     font-weight: 400;
     line-height: 225%;
     /* 29.25px */
-    padding-bottom: 47px;
+    padding-bottom: 45px;
   }
 
   .bbt-FA-main-footer.desk-footer {
@@ -1402,9 +1396,9 @@ body.reveal-animations-ready .contact-sec .image-container {
 
   .bbt-FA-main-footer a.title {
     font-size: 14px;
-    line-height: 36px;
+    line-height: 33px;
     white-space: nowrap;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   .bbt-FA-main-footer .inner-content {
@@ -1531,8 +1525,83 @@ body.reveal-animations-ready .contact-sec .image-container {
 
 .overlap-footer .contact-sec {
   /* margin-top: 0; */
-  margin-top: -60px;
+  /* margin-top: -60px; */
   transform: none;
 }
 
 /* Sticky/Fixed Footer css End */
+/* Fix for GSAP / wrapper blocking clicks to fixed footer */
+.main-content-wrapper,
+.pin-spacer,
+.panels {
+  pointer-events: none !important;
+}
+
+.main-content-wrapper>*,
+.pin-spacer>*,
+.panels>* {
+  pointer-events: auto;
+}
+
+/* Footer Dropdown css Start */
+.footer-dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.dropdown-header .chevron {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-header.active .chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown-body {
+  display: flex;
+  gap: 16px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  padding-top: 0;
+}
+
+.dropdown-body.open {
+  max-height: 100px;
+  opacity: 1;
+  padding-top: 12px;
+}
+
+.dropdown-body a.dropdown-link {
+  color: #FFEA2C !important;
+  font-size: 0.7em;
+  text-decoration: none;
+  text-decoration-color: #FFEA2C !important;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+  .dropdown-body a.dropdown-link {
+    font-size: 1em;
+  }
+}
+
+@media (min-width: 769px) {
+
+  .bbt-FA-main-footer.desk-footer a,
+  .bbt-FA-main-footer.desk-footer a.title,
+  .bbt-FA-main-footer.desk-footer .dropdown-body a.dropdown-link {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+}
+
+/* Footer Dropdown css End */

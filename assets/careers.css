@@ -21,6 +21,7 @@
   background: #010101;
   position: relative;
   isolation: isolate;
+  --hero-blue-size: 95vw;
 }
 
 /* LEFT SIDE */
@@ -35,14 +36,15 @@
 
 .hero-circle {
   position: absolute;
-  top: clamp(-250px, -14.58vw, -150px);
-  left: clamp(-1330px, 65vw - 1995px, -1060px);
+  top: clamp(-198px, -14vh, -90px);
+  left: calc(var(--hero-blue-size) * -0.5);
   z-index: 0;
   display: block;
-  width: clamp(1700px, 131vw, 1900px);
-  height: clamp(1700px, 131vw, 1900px);
+  width: var(--hero-blue-size);
+  height: var(--hero-blue-size);
   background: rgb(10, 61, 156);
   border-radius: 50%;
+  transform-origin: center center;
   will-change: transform;
 }
 
@@ -70,12 +72,14 @@
   /*width: clamp(864px, 64vw, 1228px);*/
   height: 100%;
   overflow: hidden;
+  transform-origin: top left;
+  will-change: transform, opacity;
 }
 
 .hero-right img {
   width: 100%;
   height: 100%;
-  /* object-fit: cover; */
+  object-fit: cover;
   display: block;
 }
 
@@ -123,7 +127,7 @@
 
   .hero-content {
     margin: 0 auto;
-    padding-top: 112px;
+    padding-top: 82px;
     opacity: 1;
     visibility: visible;
     transform: none;
@@ -149,7 +153,7 @@
   .hero-left {
     width: 721px;
     height: 721px;
-    top: 500px;
+    top: 460px;
     bottom: auto;
     left: 50%;
     transform: translateX(-50%);
@@ -166,7 +170,7 @@
     position: absolute;
     width: 479px;
     height: 725px;
-    top: -40px;
+    top: -80px;
   }
 }
 
@@ -471,6 +475,7 @@ body.popup-open {
   .model-popup .career-img {
     margin-top: 41px;
     width: 38%;
+    justify-content: center;
   }
 
   .model-popup h2.Openings-text {
@@ -492,12 +497,10 @@ body.popup-open {
   }
 
   .model-popup .career-wrapper {
-    width: 90%;
+    width: 100%;
     max-width: 402px;
-  }
-
-  .model-popup .career-wrapper {
-    padding: 29px 30px 40px 30px;
+    max-height: 100vh;
+    padding: 29px 25px 40px 25px;
   }
 
   .model-popup .career-form {
@@ -505,6 +508,7 @@ body.popup-open {
   }
 
   .model-popup .career-img {
+    margin-top: 15px;
     width: 100%;
   }
 
@@ -523,6 +527,10 @@ body.popup-open {
     font-weight: 700;
     line-height: 115%;
     /* 27.6px */
+  }
+
+  .model-popup .upload-sec {
+    padding: 26px 0px 34px;
   }
 
   .model-popup .upload-sec p {
@@ -620,6 +628,10 @@ section.bbt-fa-careers-openings-sec {
   line-height: 135%;
 }
 
+.bbt-fa-careers-openings-sec .card h3 br {
+  display: none;
+}
+
 .bbt-fa-careers-openings-sec .card .details {
   color: rgba(0, 0, 0, 0.85);
   font-family: Poppins;
@@ -675,10 +687,7 @@ section.bbt-fa-careers-openings-sec {
 
   .bbt-fa-careers-openings-sec .card .apply-now {
     margin-top: 25px;
-  }
-
-  .bbt-fa-careers-openings-sec .card h3 br {
-    display: none;
+    font-size: 14px;
   }
 }
 
@@ -786,7 +795,7 @@ section.bbt-fa-careers-about-sec {
   }
 
   .bbt-fa-careers-about-sec .avm-image-wrap {
-    margin-top: 144px;
+    margin-top: 120px;
   }
 
   .bbt-fa-careers-about-sec .avm-image-wrap,
@@ -796,7 +805,7 @@ section.bbt-fa-careers-about-sec {
   }
 
   .bbt-fa-careers-about-sec .avm-text {
-    margin-bottom: 152px;
+    margin-bottom: 100px;
   }
 
   .bbt-fa-careers-about-sec img {
@@ -823,7 +832,7 @@ section.bbt-fa-careers-about-sec {
   }
 
   .bbt-fa-careers-about-sec .avm-image-wrap {
-    margin-top: 238px;
+    margin-top: 120px;
   }
 
   .bbt-fa-careers-about-sec img {

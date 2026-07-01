@@ -1,718 +1,856 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AVM Schools</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="assets/global.css" />
+    <link rel="stylesheet" href="assets/admissions.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AVM Schools</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="assets/global.css" />
-  <link rel="stylesheet" href="assets/admissions.css" />
+    <!--favicon-->
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+  </head>
 
-  <!--favicon-->
-  <link rel="icon" type="image/png" href="images/favicon.png">
-
-</head>
-
-<body class="admissions-page">
-  <div class="main-content-wrapper">
-    <header class="header">
-      <div class="w-90">
-        <div class="row d-flex">
-          <div class="col-4">
-            <div class="logo white-logo">
-              <a href="index.html">
-                <img src="images/logo.png" alt="logo" />
-              </a>
+  <body class="admissions-page">
+    <div class="main-content-wrapper">
+      <header class="header">
+        <div class="w-90">
+          <div class="row d-flex">
+            <div class="col-4">
+              <div class="logo white-logo">
+                <a href="index.html">
+                  <img src="images/logo.png" alt="logo" />
+                </a>
+              </div>
+              <div class="logo black-logo">
+                <a href="index.html">
+                  <img src="images/black-logo.png" alt="logo" />
+                </a>
+              </div>
             </div>
-            <div class="logo black-logo">
-              <a href="index.html">
-                <img src="images/black-logo.png" alt="logo" />
-              </a>
-            </div>
-          </div>
-          <div class="col-8">
-            <div class="offcanvas-menu">
-              <input type="checkbox" id="toogle-menu" />
+            <div class="col-8">
+              <div class="offcanvas-menu">
+                <input type="checkbox" id="toogle-menu" />
 
-              <label for="toogle-menu" class="toogle-open"><span></span></label>
+                <label for="toogle-menu" class="toogle-open"
+                  ><span></span
+                ></label>
 
-              <nav>
-                <div class="mobile-menu-header">
-                  <div class="logo nav-logo">
-                    <a href="index.html">
-                      <img src="images/black-logo.png" alt="logo" />
-                    </a>
+                <nav>
+                  <div class="mobile-menu-header">
+                    <div class="logo nav-logo">
+                      <a href="index.html">
+                        <img src="images/black-logo.png" alt="logo" />
+                      </a>
+                    </div>
+                    <label for="toogle-menu" class="toogle-close">
+                      <span></span>
+                    </label>
                   </div>
-                  <label for="toogle-menu" class="toogle-close">
-                    <span></span>
-                  </label>
-                </div>
-                <ul>
-                  <li class="menu"><a href="index.html">Home </a></li>
-                  <li class="menu"><a href="about-us.html">About AVM</a></li>
-                  <li class="menu"><a href="our-school.html">Schools </a></li>
-                  <li class="menu"><a href="pedagogy.html">Pedagogy </a></li>
-                  <li class="menu">
-                    <a href="admissions.html">Admissions </a>
-                  </li>
-                  <!-- <li class="menu">
+                  <ul>
+                    <li class="menu"><a href="index.html">Home </a></li>
+                    <li class="menu"><a href="about-us.html">About AVM</a></li>
+                    <li class="menu"><a href="our-school.html">Schools </a></li>
+                    <li class="menu"><a href="pedagogy.html">Pedagogy </a></li>
+                    <li class="menu">
+                      <a href="admissions.html">Admissions </a>
+                    </li>
+                    <!-- <li class="menu">
                     <a href="news-and-events.html">News & Events </a>
                   </li> -->
+                    <li class="menu">
+                      <a href="careers.html">Careers</a>
+                    </li>
+                  </ul>
+                  <div class="nav-menu-ft-social">
+                    <div class="icon">
+                      <a href="https://www.instagram.com/avm_schools/">
+                        <img
+                          src="images/Instagram-icon.svg"
+                          alt="Instagram-icon"
+                        />
+                      </a>
+                    </div>
+                    <div class="icon">
+                      <a
+                        href="https://www.youtube.com/@aryavidyamandirschoolevent1002"
+                      >
+                        <img src="images/youtube-icon.svg" alt="youtube-icon" />
+                      </a>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+              <nav class="main-menu">
+                <ul class="d-flex">
                   <li class="menu">
-                    <a href="careers.html">Careers</a>
+                    <a href="about-us.html">About</a>
                   </li>
-                </ul>
-                <div class="nav-menu-ft-social">
-                  <div class="icon">
-                    <a href="#">
-                      <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
-                    </a>
-                  </div>
-                  <div class="icon">
-                    <a href="#">
-                      <img src="images/youtube-icon.svg" alt="youtube-icon" />
-                    </a>
-                  </div>
-                </div>
-              </nav>
-            </div>
-            <nav class="main-menu">
-              <ul class="d-flex">
-                <li class="menu">
-                  <a href="about-us.html">About</a>
-                </li>
-                <li class="menu">
-                  <a href="pedagogy.html">Pedagogy</a>
-                </li>
-                <li class="menu">
-                  <a href="our-school.html">Schools</a>
-                </li>
-                <!-- <li class="menu">
+                  <li class="menu">
+                    <a href="pedagogy.html">Pedagogy</a>
+                  </li>
+                  <li class="menu">
+                    <a href="our-school.html">Schools</a>
+                  </li>
+                  <!-- <li class="menu">
                   <a href="news-and-events.html">News & Events</a>
                 </li> -->
-                <li class="btn-element">
-                  <a href="admissions.html" class="main-btn">Apply Now</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- admissions Hero section start -->
-    <section class="admission-hero">
-      <div class="row main-hero-items">
-        <div class="d-flex">
-          <div class="col-12 col-md-6 col-sm-6 blue-half-circle-ele">
-            <div class="blue-half-circle"></div>
-            <div class="main-title">
-              <h2 class="hero-txt">
-                An education that <br />builds lifelong success.
-              </h2>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-sm-6"></div>
-        </div>
-      </div>
-    </section>
-    <!-- admissions Hero section end -->
-    <!-- circle section start -->
-    <section class="bbt-fa-circle-sec">
-      <div class="container-xxl">
-        <div class="journey-wrapper">
-          <div class="journey-line-segment segment-1"></div>
-          <div class="journey-line-segment segment-2"></div>
-          <!-- Circle 1 -->
-          <div class="circle-card orange">
-            <div class="content">
-              <h3>Excellence in college</h3>
-              <p>
-                Strong foundations enable confident transitions to higher
-                education.
-              </p>
-            </div>
-          </div>
-
-          <!-- Circle 2 -->
-          <div class="circle-card yellow">
-            <div class="content">
-              <h3>Diverse career pathways</h3>
-              <p>
-                Across the sciences, humanities, entrepreneurship and public
-                service.
-              </p>
-            </div>
-          </div>
-
-          <!-- Circle 3 -->
-          <div class="circle-card purple">
-            <div class="content">
-              <h3>Lifelong advantages</h3>
-              <p>
-                Values, discipline, integrity, clear focus and clarity of
-                purpose.
-              </p>
+                  <li class="btn-element">
+                    <a href="admissions.html" class="main-btn">Apply Now</a>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- circle section end -->
+      </header>
 
-    <!-- Admissions about section start-->
-    <section class="bbt-fa-admissions-about-sec">
-      <div class="container-xxl">
-        <div class="swiper avm-swiper">
-          <div class="swiper-wrapper">
-            <!-- Slide 1 -->
-            <div class="swiper-slide Admissions-wrapper">
-              <!-- <div class="avm-image-wrap">
-                <img class="avm-photo" src="images/dr.png" alt="Teacher helping a young student" />
-              </div> -->
-              <div class="avm-text">
-                <p class="text-p">
-                  “AVM gave me the foundation to build a career and the
-                  character to build a life. The habit of ‘continuous
-                  curiosity’. It taught me to never stop asking ‘why’, which
-                  has become the foundation of how I approach every new
-                  challenge in my professional life.”
+      <!-- admissions Hero section start -->
+      <section class="admission-hero">
+        <div class="row main-hero-items">
+          <div class="d-flex">
+            <div class="col-12 col-md-6 col-sm-6 blue-half-circle-ele">
+              <div class="blue-half-circle"></div>
+              <div class="main-title">
+                <h2 class="hero-txt">
+                  An education that <br />builds lifelong success.
+                </h2>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-sm-6"></div>
+          </div>
+        </div>
+      </section>
+      <!-- admissions Hero section end -->
+      <!-- circle section start -->
+      <section class="bbt-fa-circle-sec">
+        <div class="container-xxl">
+          <div class="journey-wrapper">
+            <div class="journey-line-segment segment-1"></div>
+            <div class="journey-line-segment segment-2"></div>
+            <!-- Circle 1 -->
+            <div class="circle-card orange">
+              <div class="content">
+                <h3>Excellence in college</h3>
+                <p>
+                  Strong foundations enable confident transitions to higher
+                  education.
                 </p>
-                <div class="author-info">
-                  <h4>​Suhail Bhatia</h4>
-                  <!-- <span>Prosthodontist &amp; Implantologist</span> -->
-                  <span>1994</span>
-
-                  <span>AVM Bandra West</span>
-                </div>
               </div>
             </div>
 
-            <!-- Slide 2 -->
-            <div class="swiper-slide Admissions-wrapper">
-              <!-- <div class="avm-image-wrap">
+            <!-- Circle 2 -->
+            <div class="circle-card yellow">
+              <div class="content">
+                <h3>Diverse career pathways</h3>
+                <p>
+                  Across the sciences, humanities, entrepreneurship and public
+                  service.
+                </p>
+              </div>
+            </div>
+
+            <!-- Circle 3 -->
+            <div class="circle-card purple">
+              <div class="content">
+                <h3>Lifelong advantages</h3>
+                <p>
+                  Values, discipline, integrity, clear focus and clarity of
+                  purpose.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- circle section end -->
+
+      <!-- Admissions about section start-->
+      <section class="bbt-fa-admissions-about-sec">
+        <div class="container-xxl">
+          <div class="swiper avm-swiper">
+            <div class="swiper-wrapper">
+              <!-- Slide 1 -->
+              <div class="swiper-slide Admissions-wrapper">
+                <!-- <div class="avm-image-wrap">
                 <img class="avm-photo" src="images/dr.png" alt="Teacher helping a young student" />
               </div> -->
-              <div class="avm-text">
-                <p class="text-p">
-                  “AVM taught me the ability to be grounded and adapt to any
-                  environment. It shaped my personality in a way thats made me
-                  strong, gave me faith in god, great fundational learning,
-                  creative skill sets and the right attitude!”
-                </p>
-                <div class="author-info">
-                  <h4>Subani seth</h4>
-                  <!-- <span>Prosthodontist &amp; Implantologist</span>
+                <div class="avm-text">
+                  <p class="text-p">
+                    “AVM gave me the foundation to build a career and the
+                    character to build a life. The habit of ‘continuous
+                    curiosity’. It taught me to never stop asking ‘why’, which
+                    has become the foundation of how I approach every new
+                    challenge in my professional life.”
+                  </p>
+                  <div class="author-info">
+                    <h4>​Suhail Bhatia</h4>
+                    <!-- <span>Prosthodontist &amp; Implantologist</span> -->
+                    <span>1994</span>
+
+                    <span>AVM Bandra West</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2 -->
+              <div class="swiper-slide Admissions-wrapper">
+                <!-- <div class="avm-image-wrap">
+                <img class="avm-photo" src="images/dr.png" alt="Teacher helping a young student" />
+              </div> -->
+                <div class="avm-text">
+                  <p class="text-p">
+                    “AVM taught me the ability to be grounded and adapt to any
+                    environment. It shaped my personality in a way thats made me
+                    strong, gave me faith in god, great fundational learning,
+                    creative skill sets and the right attitude!”
+                  </p>
+                  <div class="author-info">
+                    <h4>Subani seth</h4>
+                    <!-- <span>Prosthodontist &amp; Implantologist</span>
                   <span>AVM Bandra (W), 1997</span> -->
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Slide 3 -->
-            <div class="swiper-slide Admissions-wrapper">
-              <!-- <div class="avm-image-wrap">
+              <!-- Slide 3 -->
+              <div class="swiper-slide Admissions-wrapper">
+                <!-- <div class="avm-image-wrap">
                 <img class="avm-photo" src="images/dr.png" alt="Teacher helping a young student" />
               </div> -->
-              <div class="avm-text">
-                <p class="text-p">
-                  “I have lived in different countries and there is always an
-                  AVM alumni as my first ‘go to’ person who has helped me
-                  settle down. AVM played the most pivotal role in helping me
-                  build my value system and cultural fabric.”
-                </p>
-                <div class="author-info">
-                  <h4>Ajay Nanda</h4>
-                  <span>1997 </span>
-                  <span>AVM Juhu </span>
+                <div class="avm-text">
+                  <p class="text-p">
+                    “I have lived in different countries and there is always an
+                    AVM alumni as my first ‘go to’ person who has helped me
+                    settle down. AVM played the most pivotal role in helping me
+                    build my value system and cultural fabric.”
+                  </p>
+                  <div class="author-info">
+                    <h4>Ajay Nanda</h4>
+                    <span>1997 </span>
+                    <span>AVM Juhu </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- Slide 4 -->
-            <div class="swiper-slide Admissions-wrapper">
-              <!-- <div class="avm-image-wrap">
+              <!-- Slide 4 -->
+              <div class="swiper-slide Admissions-wrapper">
+                <!-- <div class="avm-image-wrap">
                 <img class="avm-photo" src="images/dr.png" alt="Teacher helping a young student" />
               </div> -->
-              <div class="avm-text">
-                <p class="text-p">
-                  “AVM helped me to embrace regular studies instead of last
-                  minute cramming. This habit held me in good stead in my
-                  higher studies in dentistry and prosthodontics where I
-                  achieved Gold medals with ease.”
-                </p>
-                <div class="author-info">
-                  <h4>Dr Shambhvi Anil Malik</h4>
-                  <span>Prosthodontist &amp; Implantologist</span>
-                  <!-- <span>AVM Bandra (W), 1997</span> -->
+                <div class="avm-text">
+                  <p class="text-p">
+                    “AVM helped me to embrace regular studies instead of last
+                    minute cramming. This habit held me in good stead in my
+                    higher studies in dentistry and prosthodontics where I
+                    achieved Gold medals with ease.”
+                  </p>
+                  <div class="author-info">
+                    <h4>Dr Shambhvi Anil Malik</h4>
+                    <span>Prosthodontist &amp; Implantologist</span>
+                    <!-- <span>AVM Bandra (W), 1997</span> -->
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- Slide 5 -->
-            <div class="swiper-slide Admissions-wrapper">
-              <!-- <div class="avm-image-wrap">
+              <!-- Slide 5 -->
+              <div class="swiper-slide Admissions-wrapper">
+                <!-- <div class="avm-image-wrap">
                 <img class="avm-photo" src="images/dr.png" alt="Teacher helping a young student" />
               </div> -->
-              <div class="avm-text">
-                <p class="text-p">
-                  “The power of reflection. When we did something wrong, we
-                  were rarely punished but asked to ruminate. That is a
-                  powerful lesson that has helped in many an intense
-                  situation.”
-                </p>
-                <div class="author-info">
-                  <h4>Prabhu Viswanathan</h4>
-                  <span>1980 </span>
-                  <span>AVM Santacruz </span>
+                <div class="avm-text">
+                  <p class="text-p">
+                    “The power of reflection. When we did something wrong, we
+                    were rarely punished but asked to ruminate. That is a
+                    powerful lesson that has helped in many an intense
+                    situation.”
+                  </p>
+                  <div class="author-info">
+                    <h4>Prabhu Viswanathan</h4>
+                    <span>1980 </span>
+                    <span>AVM Santacruz </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Controls -->
-        <div class="avm-slider-controls">
-          <div class="avm-pagination"></div>
-        </div>
-      </div>
-    </section>
-    <!-- Admissions about section end-->
-
-    <!-- online section  start -->
-    <section class="bbt-fa-online-section">
-      <div class="container-xxl">
-        <h2 class="main-title">How to apply online</h2>
-
-        <p class="description">
-          Admissions to AVM are conducted through a structured online process.
-          Complete the online form on our admissions portal via the link
-          below.
-        </p>
-
-        <h3 class="sub-title">Age eligibility criteria</h3>
-
-        <div class="table-wrapper">
-          <table class="eligibility">
-            <thead>
-              <tr>
-                <th>Grade</th>
-                <th>Age Eligibility</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>Early Trail</td>
-                <td>01.10.22 - 30.09.2023</td>
-              </tr>
-
-              <tr>
-                <td>Junior Trail</td>
-                <td>01.10.21 - 30.09.2022</td>
-              </tr>
-
-              <tr>
-                <td>Senior Trail</td>
-                <td>01.10.2020 - 30.09.2021</td>
-              </tr>
-
-              <tr>
-                <td>Std 1</td>
-                <td>01.10.2019 - 30.09.2026</td>
-              </tr>
-
-              <tr>
-                <td>Std 2 onwards</td>
-                <td>As per previous school report card</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-    <!-- online section end -->
-
-    <!-- pincode section start -->
-    <section class="bbt-fa-pincode-section">
-      <div class="container-xxl">
-        <h2 class="title">AVM Schools Pincode List</h2>
-        <p class="subtitle">
-          Each AVM School is associated with a specified set of pincodes.
-          <br />
-          Only children residing within these pin codes are eligible to apply
-          for admission.
-        </p>
-
-        <!-- Tabs -->
-        <div class="tabs">
-          <button class="tab active" data-tab="bandra-w">Bandra (W)</button>
-          <button class="tab" data-tab="juhu">Juhu</button>
-          <button class="tab" data-tab="bandra-e">Bandra (E)</button>
-        </div>
-
-        <!-- Tab Content: Bandra (W) -->
-        <div class="tab-content active" id="bandra-w">
-          <div class="pincode-box">
-            <p class="box-title">Pincode 49 upto: Hotel Ramada Inn</p>
-            <div class="pincode-row">
-              <span>400005*</span>
-              <span>400006*</span>
-              <span>400007*</span>
-              <span>400011*</span>
-              <span>400013*</span>
-              <span>400016</span>
-            </div>
-            <div class="pincode-row">
-              <span>400018*</span>
-              <span>400025</span>
-              <span>400026*</span>
-              <span>400034*</span>
-              <span>400036*</span>
-              <span>400049</span>
-            </div>
-            <div class="pincode-row last-row">
-              <span>400050</span>
-              <span>400052</span>
-              <span>400054</span>
-              <span>400055*</span>
-              <span>400098*</span>
-            </div>
+          <!-- Controls -->
+          <div class="avm-slider-controls">
+            <div class="avm-pagination"></div>
           </div>
         </div>
+      </section>
+      <!-- Admissions about section end-->
 
-        <!-- Tab Content: Juhu -->
-        <div class="tab-content" id="juhu">
-          <div class="pincode-box">
-            <p class="box-title">400049 from Hotel Ramada Inn</p>
-            <div class="pincode-row">
-              <span>400053</span>
-              <span>400056</span>
-              <span>400057</span>
-              <span>400058</span>
-              <span>400059*</span>
-              <span>400060*</span>
-            </div>
-            <div class="pincode-row">
-              <span>400061</span>
-              <span>400063*</span>
-              <span>400064*</span>
-              <span>400069</span>
-              <span>400093</span>
-              <span>400099*</span>
-            </div>
-            <div class="pincode-row last-row">
-              <span>4000102</span>
-              <span>4000104</span>
-            </div>
-          </div>
-        </div>
+      <!-- online section  start -->
+      <section class="bbt-fa-online-section">
+        <div class="container-xxl">
+          <h2 class="main-title">How to apply online</h2>
 
-        <!-- Tab Content: Bandra (E) -->
-        <div class="tab-content" id="bandra-e">
-          <div class="pincode-box">
-            <p class="box-title">Bandra (E) pincodes</p>
-            <div class="pincode-row">
-              <span>400012*</span>
-              <span>400014</span>
-              <span>400019</span>
-              <span>400022</span>
-              <span>400028</span>
-              <span>400029</span>
-            </div>
-            <div class="pincode-row">
-              <span>400031</span>
-              <span>400037</span>
-              <span>400051</span>
-              <span>400070</span>
-              <span>400071</span>
-              <span>400079*</span>
-            </div>
-            <div class="pincode-row last-row">
-              <span>400086*</span>
-              <span>400089*</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- pincode section end -->
-
-    <!-- application section start -->
-    <section class="bbt-fa-application-section">
-      <div class="container-xxl">
-        <h1>Documents to be uploaded<br />with application</h1>
-        <div class="box">
-          <div class="mandatory">
-            <p class="section-title">Mandatory</p>
-            <ul>
-              <li>Photograph of the student applicant</li>
-              <li>Municipal Birth Certificate</li>
-              <li>Residence proof</li>
-              <li>ID proof for father/mother/guardian</li>
-            </ul>
-          </div>
-
-          <div class="optional">
-            <p class="section-title">Optional</p>
-            <ul>
-              <li>
-                Medical Certificate (in case the applicant has any special
-                medical needs/allergies)
-              </li>
-              <li>Progress Report of the most recent term</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- application section end -->
-
-    <!-- abilities section start -->
-    <section class="bbt-fa-abilities-section">
-      <div class="container-xxl">
-        <div class="abilities-wrapper">
-          <h1 class="hero-heading">
-            Build your child's values and future-ready abilities.
-          </h1>
-          <a href="https://hoavm.udtweb.com/OnlineHoAdmission/register" target="_blank" class="cta-button">Click here to
-            apply</a>
-        </div>
-      </div>
-    </section>
-    <!-- abilities section end -->
-
-    <!-- notes section start -->
-    <section class="bbt-fa-notes-section">
-      <div class="container-xxl">
-        <h2>Please note</h2>
-        <div class="notes-wrapper">
-          <p>
-            Admission is subject to vacancy. Once the form is filled, as and
-            when a vacancy arises in the class requested,<br />
-            the school will evaluate and revert. The decision of the school
-            will be final in all matters.
+          <p class="description">
+            Admissions to AVM are conducted through a structured online process.
+            Complete the online form on our admissions portal via the link
+            below.
           </p>
 
-          <p>
-            Incase of issues or queries regarding admissions please email on
-            <a href="avm@intelliadmissions.org">avm@intelliadmissions.org</a>
-          </p>
+          <h3 class="sub-title">Age eligibility criteria</h3>
 
-          <p>
-            Applicants will receive communication as to when they are required
-            to visit the respective schools for<br />
-            submission and verification of documents.
-          </p>
+          <div class="table-wrapper">
+            <table class="eligibility">
+              <thead>
+                <tr>
+                  <th>Grade</th>
+                  <th>Age Eligibility</th>
+                </tr>
+              </thead>
 
-          <p>
-            Parents whose children meet the above criteria for "Early Trail"
-            (Nursery) admission can fill the application<br />
-            form online and pay a non-refundable application fee of Rs.1000/-
-            through the payment gateway.
-          </p>
-        </div>
-      </div>
-    </section>
-    <!-- notes section end -->
-  </div>
+              <tbody>
+                <tr>
+                  <td>Early Trail</td>
+                  <td>01/10/2022 - 30/09/2023</td>
+                </tr>
 
-  <!-- footer start -->
-  <footer class="bbt-FA-main-footer desk-footer">
-    <div class="container-xxl footer-container">
-      <div class="footer-top">
-        <div class="ft-col-logo">
-          <div class="footer-logo">
-            <a href="index.html">
-              <img src="images/logo.png" alt="footer-logo" class="footer-logo" />
-            </a>
+                <tr>
+                  <td>Junior Trail</td>
+                  <td>01/10/2021 - 30/09/2022</td>
+                </tr>
+
+                <tr>
+                  <td>Senior Trail</td>
+                  <td>01/10/2020 - 30/09/2021</td>
+                </tr>
+
+                <tr>
+                  <td>Std 1</td>
+                  <td>01/10/2019 - 30/09/2020</td>
+                </tr>
+
+                <tr>
+                  <td>Std 2 onwards</td>
+                  <td>As per previous school report card</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+      </section>
+      <!-- online section end -->
 
-        <div class="ft-col-menu">
-          <ul class="text">
-            <li><a href="index.html" class="title">Home</a></li>
-            <li><a href="about-us.html" class="title">About AVM</a></li>
-            <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
-            <li><a href="our-school.html" class="title">Schools</a></li>
-          </ul>
-        </div>
+      <!-- pincode section start -->
+      <section class="bbt-fa-pincode-section">
+        <div class="container-xxl">
+          <h2 class="title">AVM Schools Pincode List</h2>
+          <p class="subtitle">
+            Each AVM School is associated with a specified set of pincodes.
+            <br />
+            Only children residing within these pin codes are eligible to apply
+            for admission.
+          </p>
 
-        <div class="ft-col-menu">
-          <ul class="text">
-            <li>
-              <a href="admissions.html" class="title">Admissions</a>
-            </li>
-            <!-- <li>
-              <a href="news-and-events.html" class="title">News & Events</a>
-            </li> -->
-
-            <li><a href="careers.html" class="title">Careers</a></li>
-            <li><a href="fee-payment-policy.html" class="title">Fee Payment Policy</a></li>
-          </ul>
-        </div>
-
-        <div class="ft-col-menu">
-          <ul class="text">
-            <li>
-              <a href="#" class="title">Fee Payment</a>
-            </li>
-            <li>
-              <a href="https://parent.intellischools.com/session/login/AVMBWS" class="title">Parent Login</a>
-            </li>
-            <li>
-              <a href="https://schadmin.intellischools.com/session/login/AVMBWS" class="title">Teacher Login</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-text">
-        <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
-        <div class="ft-meta-phone">
-          <a href="#">T: +91 22 6101 3900</a>
-        </div>
-
-        <div class="ft-meta-email">
-          <a href="#">E: info@avmschools.ac.in</a>
-        </div>
-
-        <div class="ft-social">
-          <div class="icon">
-            <a href="#">
-              <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
-            </a>
+          <!-- Tabs -->
+          <div class="tabs">
+            <button class="tab active" data-tab="bandra-w">Bandra (W)</button>
+            <button class="tab" data-tab="juhu">Juhu</button>
+            <button class="tab" data-tab="bandra-e">Bandra (E)</button>
           </div>
 
-          <div class="icon">
-            <a href="#">
-              <img src="images/youtube-icon.svg" alt="youtube-icon" />
-            </a>
+          <!-- Tab Content: Bandra (W) -->
+          <div class="tab-content active" id="bandra-w">
+            <div class="pincode-box">
+              <p class="box-title">Pincode 49 upto: Hotel Ramada Inn</p>
+              <div class="pincode-row">
+                <span>400005*</span>
+                <span>400006*</span>
+                <span>400007*</span>
+                <span>400011*</span>
+                <span>400013*</span>
+                <span>400016</span>
+              </div>
+              <div class="pincode-row">
+                <span>400018*</span>
+                <span>400025</span>
+                <span>400026*</span>
+                <span>400034*</span>
+                <span>400036*</span>
+                <span>400049</span>
+              </div>
+              <div class="pincode-row last-row">
+                <span>400050</span>
+                <span>400052</span>
+                <span>400054</span>
+                <span>400055*</span>
+                <span>400098*</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Juhu -->
+          <div class="tab-content" id="juhu">
+            <div class="pincode-box">
+              <p class="box-title">400049 from Hotel Ramada Inn</p>
+              <div class="pincode-row">
+                <span>400053</span>
+                <span>400056</span>
+                <span>400057</span>
+                <span>400058</span>
+                <span>400059*</span>
+                <span>400060*</span>
+              </div>
+              <div class="pincode-row">
+                <span>400061</span>
+                <span>400063*</span>
+                <span>400064*</span>
+                <span>400069</span>
+                <span>400093</span>
+                <span>400099*</span>
+              </div>
+              <div class="pincode-row last-row">
+                <span>4000102</span>
+                <span>4000104</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Bandra (E) -->
+          <div class="tab-content" id="bandra-e">
+            <div class="pincode-box">
+              <p class="box-title">Bandra (E) pincodes</p>
+              <div class="pincode-row">
+                <span>400012*</span>
+                <span>400014</span>
+                <span>400019</span>
+                <span>400022</span>
+                <span>400028</span>
+                <span>400029</span>
+              </div>
+              <div class="pincode-row">
+                <span>400031</span>
+                <span>400037</span>
+                <span>400051</span>
+                <span>400070</span>
+                <span>400071</span>
+                <span>400079*</span>
+              </div>
+              <div class="pincode-row last-row">
+                <span>400086*</span>
+                <span>400089*</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+      <!-- pincode section end -->
+
+      <!-- application section start -->
+      <section class="bbt-fa-application-section">
+        <div class="container-xxl">
+          <h1>Documents to be uploaded<br />with application</h1>
+          <div class="box">
+            <div class="mandatory">
+              <p class="section-title">Mandatory</p>
+              <ul>
+                <li>Photograph of the student applicant</li>
+                <li>Municipal Birth Certificate</li>
+                <li>Residence proof</li>
+                <li>ID proof for father/mother/guardian</li>
+              </ul>
+            </div>
+
+            <div class="optional">
+              <p class="section-title">Optional</p>
+              <ul>
+                <li>
+                  Medical Certificate (in case the applicant has any special
+                  medical needs/allergies)
+                </li>
+                <li>Progress Report of the most recent term</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- application section end -->
+
+      <!-- abilities section start -->
+      <section class="bbt-fa-abilities-section">
+        <div class="container-xxl">
+          <div class="abilities-wrapper">
+            <h1 class="hero-heading">
+              Build your child's values <br />and future-ready abilities.
+            </h1>
+            <a
+              href="https://hoavm.udtweb.com/OnlineHoAdmission/register"
+              target="_blank"
+              class="cta-button"
+              >Apply for 2026-27</a
+            >
+          </div>
+        </div>
+      </section>
+      <!-- abilities section end -->
+
+      <!-- notes section start -->
+      <section class="bbt-fa-notes-section">
+        <div class="container-xxl">
+          <h2>Please note</h2>
+          <div class="notes-wrapper">
+            <p>
+              Admission is subject to vacancy. Once the form is filled, as and
+              when a vacancy arises in the class requested,<br />
+              the school will evaluate and revert. The decision of the school
+              will be final in all matters.
+            </p>
+
+            <p>
+              Incase of issues or queries regarding admissions please email on
+              <a href="avm@intelliadmissions.org">avm@intelliadmissions.org</a>
+            </p>
+
+            <p>
+              Applicants will receive communication as to when they are required
+              to visit the respective schools for<br />
+              submission and verification of documents.
+            </p>
+
+            <p>
+              Parents whose children meet the above criteria for "Early Trail"
+              (Nursery) admission can fill the application<br />
+              form online and pay a non-refundable application fee of Rs.1000/-
+              through the payment gateway.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- notes section end -->
     </div>
-  </footer>
-  <footer class="bbt-FA-main-footer mob-footer">
-    <div class="container-xxl footer-container">
-      <div class="footer-top">
-        <div class="ft-col-menu">
-          <ul class="text">
-            <li><a href="index.html" class="title">Home</a></li>
-            <li><a href="about-us.html" class="title">About AVM</a></li>
-            <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
-            <li><a href="our-school.html" class="title">Schools</a></li>
-            <li>
-              <a href="admissions.html" class="title">Admissions</a>
-            </li>
-          </ul>
+
+    <!-- footer start -->
+    <footer class="bbt-FA-main-footer desk-footer">
+      <div class="container-xxl footer-container">
+        <div class="footer-top">
+          <div class="ft-col-logo">
+            <div class="footer-logo">
+              <a href="index.html">
+                <img
+                  src="images/logo.png"
+                  alt="footer-logo"
+                  class="footer-logo"
+                />
+              </a>
+            </div>
+          </div>
+
+          <div class="ft-col-menu">
+            <ul class="text">
+              <li><a href="index.html" class="title">Home</a></li>
+              <li><a href="about-us.html" class="title">About AVM</a></li>
+              <li><a href="our-school.html" class="title">Schools</a></li>
+              <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
+            </ul>
+          </div>
+
+          <div class="ft-col-menu">
+            <ul class="text">
+              <li>
+                <a href="admissions.html" class="title">Admissions</a>
+              </li>
+              <!-- <li>
+                  <a href="news-and-events.html" class="title">News & Events</a>
+                </li> -->
+
+              <li><a href="careers.html" class="title">Careers</a></li>
+              <li>
+                <a href="fee-payment-policy.html" class="title"
+                  >Fee Payment Policy</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="ft-col-menu">
+            <ul class="text">
+              <!-- <li>
+                  <a href="#" class="title">Fee Payment</a>
+                </li> -->
+              <li class="footer-dropdown">
+                <div class="dropdown-header loginDropdownToggle">
+                  <a
+                    href="#"
+                    class="title"
+                    style="
+                      text-decoration: none;
+                      text-decoration-color: #0088ff;
+                      text-underline-offset: 6px;
+                      border: none;
+                      outline: none;
+                      background: transparent;
+                      padding: 0;
+                    "
+                    >Parent & Teacher Login</a
+                  >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="10"
+                    viewBox="0 0 16 10"
+                    fill="none"
+                    class="chevron"
+                    style="pointer-events: none"
+                  >
+                    <path
+                      d="M2 2L8 8L14 2"
+                      stroke="#F7DF00"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="dropdown-body loginDropdownBody">
+                  <a href="https://avmbe.udtweb.com/" class="dropdown-link"
+                    >Bandra (E)</a
+                  >
+                  <a href="https://avmbw.udtweb.com/" class="dropdown-link"
+                    >Bandra (W)</a
+                  >
+                  <a href="https://avmjuhu.udtweb.com/" class="dropdown-link"
+                    >Juhu</a
+                  >
+                </div>
+              </li>
+              <!-- <li>
+                  <a href="https://schadmin.intellischools.com/session/login/AVMBWS" class="title">Teacher Login</a>
+                </li> -->
+            </ul>
+          </div>
         </div>
 
-        <div class="ft-col-menu">
-          <ul class="text">
-            <!-- <li>
-              <a href="news-and-events.html" class="title">News & Events</a>
-            </li> -->
-            <li><a href="careers.html" class="title">Careers</a></li>
-            <li><a href="fee-payment-policy.html" class="title">Fee Payment Policy</a></li>
-            <li>
-              <a href="#" class="title">Fee Payment</a>
-            </li>
-            <li>
-              <a href="https://parent.intellischools.com/session/login/AVMBWS" class="title">Parent Login</a>
-            </li>
-            <li>
-              <a href="https://schadmin.intellischools.com/session/login/AVMBWS" class="title">Teacher Login</a>
-            </li>
-            <!-- <li><a href="#" class="title">Contact us</a></li> -->
-          </ul>
-        </div>
-      </div>
+        <div class="footer-text">
+          <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+          <div class="ft-meta-phone">
+            <a href="tel:+912261013900">T: +91 22 6101 3900</a>
+          </div>
 
-      <div class="footer-text">
-        <div class="footer-middle">
-          <div class="ft-meta-info">
-            <div class="ft-meta-phone">
-              <a href="#">T: +91 22 6101 3900</a>
-            </div>
-
-            <div class="ft-meta-email">
-              <a href="#">E: info@avmschools.ac.in</a>
-            </div>
+          <div class="ft-meta-email">
+            <a href="mailto:info@avmschools.ac.in">E: info@avmschools.ac.in</a>
           </div>
 
           <div class="ft-social">
             <div class="icon">
-              <a href="#">
+              <a href="https://www.instagram.com/avm_schools/">
                 <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
               </a>
             </div>
+
             <div class="icon">
-              <a href="#">
+              <a href="https://www.youtube.com/@aryavidyamandirschoolevent1002">
                 <img src="images/youtube-icon.svg" alt="youtube-icon" />
               </a>
             </div>
           </div>
         </div>
       </div>
-      <div class="ft-col-logo">
-        <div class="footer-logo">
-          <a href="index.html">
-            <img src="images/mob-footer-logo.png" alt="footer-logo" class="footer-logo" />
-          </a>
+    </footer>
+    <footer class="bbt-FA-main-footer mob-footer">
+      <div class="container-xxl footer-container">
+        <div class="footer-top">
+          <div class="ft-col-menu">
+            <ul class="text">
+              <li><a href="index.html" class="title">Home</a></li>
+              <li><a href="about-us.html" class="title">About AVM</a></li>
+              <li><a href="our-school.html" class="title">Schools</a></li>
+              <li><a href="pedagogy.html" class="title">Pedagogy</a></li>
+
+              <li>
+                <a href="admissions.html" class="title">Admissions</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="ft-col-menu">
+            <ul class="text">
+              <!-- <li>
+                  <a href="news-and-events.html" class="title">News & Events</a>
+                </li> -->
+              <li><a href="careers.html" class="title">Careers</a></li>
+              <li>
+                <a href="fee-payment-policy.html" class="title"
+                  >Fee Payment Policy</a
+                >
+              </li>
+              <!-- <li>
+                  <a href="#" class="title">Fee Payment</a>
+                </li> -->
+              <li class="footer-dropdown">
+                <div class="dropdown-header loginDropdownToggle">
+                  <a
+                    href="#"
+                    class="title"
+                    style="
+                      text-decoration: none;
+                      border: none;
+                      outline: none;
+                      background: transparent;
+                      padding: 0;
+                    "
+                    >Parent & Teacher Login</a
+                  >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="10"
+                    viewBox="0 0 16 10"
+                    fill="none"
+                    class="chevron"
+                    style="pointer-events: none"
+                  >
+                    <path
+                      d="M2 2L8 8L14 2"
+                      stroke="#F7DF00"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="dropdown-body loginDropdownBody">
+                  <a
+                    href="https://avmbe.udtweb.com/"
+                    class="dropdown-link"
+                    target="_blank"
+                    >Bandra (E)</a
+                  >
+                  <a
+                    href="https://avmbw.udtweb.com/"
+                    class="dropdown-link"
+                    target="_blank"
+                    >Bandra (W)</a
+                  >
+                  <a
+                    href="https://avmjuhu.udtweb.com/"
+                    class="dropdown-link"
+                    target="_blank"
+                    >Juhu</a
+                  >
+                </div>
+              </li>
+              <!-- <li>
+                  <a href="https://schadmin.intellischools.com/session/login/AVMBWS" class="title">Teacher Login</a>
+                </li> -->
+              <!-- <li><a href="#" class="title">Contact us</a></li> -->
+            </ul>
+          </div>
         </div>
-        <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+
+        <div class="footer-text">
+          <div class="footer-middle">
+            <div class="ft-meta-info">
+              <div class="ft-meta-phone">
+                <a href="tel:+912261013900">T: +91 22 6101 3900</a>
+              </div>
+
+              <div class="ft-meta-email">
+                <a href="mailto:info@avmschools.ac.in"
+                  >E: info@avmschools.ac.in</a
+                >
+              </div>
+            </div>
+
+            <div class="ft-social">
+              <div class="icon">
+                <a href="https://www.instagram.com/avm_schools/">
+                  <img src="images/Instagram-icon.svg" alt="Instagram-icon" />
+                </a>
+              </div>
+              <div class="icon">
+                <a
+                  href="https://www.youtube.com/@aryavidyamandirschoolevent1002"
+                >
+                  <img src="images/youtube-icon.svg" alt="youtube-icon" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ft-col-logo">
+          <div class="footer-logo">
+            <a href="index.html">
+              <img
+                src="images/logo.png"
+                alt="footer-logo"
+                class="footer-logo"
+              />
+            </a>
+          </div>
+          <p>&copy; 2026 Arya Vidya Mandir Group of Institutions</p>
+        </div>
       </div>
-    </div>
-  </footer>
-  <!-- footer End -->
+    </footer>
+    <!-- footer End -->
 
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  <script src="assets/script.js"></script>
-  <script src="assets/admissions.js"></script>
-  <script>
-    document
-      .querySelectorAll(".bbt-fa-pincode-section .tab")
-      .forEach((tab) => {
-        tab.addEventListener("click", () => {
-          // Update active tab button
-          document
-            .querySelectorAll(".bbt-fa-pincode-section .tab")
-            .forEach((t) => t.classList.remove("active"));
-          tab.classList.add("active");
+    <script src="assets/script.js"></script>
+    <script src="assets/admissions.js"></script>
+    <script>
+      document
+        .querySelectorAll(".bbt-fa-pincode-section .tab")
+        .forEach((tab) => {
+          tab.addEventListener("click", () => {
+            // Update active tab button
+            document
+              .querySelectorAll(".bbt-fa-pincode-section .tab")
+              .forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
 
-          // Show matching tab content
-          document
-            .querySelectorAll(".bbt-fa-pincode-section .tab-content")
-            .forEach((content) => content.classList.remove("active"));
-          document.getElementById(tab.dataset.tab).classList.add("active");
+            // Show matching tab content
+            document
+              .querySelectorAll(".bbt-fa-pincode-section .tab-content")
+              .forEach((content) => content.classList.remove("active"));
+            document.getElementById(tab.dataset.tab).classList.add("active");
+          });
         });
-      });
 
-    const avmSwiper = new Swiper(".avm-swiper", {
-      loop: true,
-      speed: 600,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      navigation: {
-        nextEl: ".avm-next",
-        prevEl: ".avm-prev",
-      },
-      pagination: {
-        el: ".avm-pagination",
-        clickable: false,
-      },
-    });
-  </script>
-</body>
-
+      const avmSwiperEl = document.querySelector(".avm-swiper");
+      if (
+        avmSwiperEl &&
+        window.getComputedStyle(
+          avmSwiperEl.closest(".bbt-fa-admissions-about-sec"),
+        ).display !== "none"
+      ) {
+        const avmSwiper = new Swiper(".avm-swiper", {
+          loop: true,
+          speed: 600,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+          },
+          navigation: {
+            nextEl: ".avm-next",
+            prevEl: ".avm-prev",
+          },
+          pagination: {
+            el: ".avm-pagination",
+            clickable: false,
+          },
+        });
+      }
+    </script>
+  </body>
 </html>

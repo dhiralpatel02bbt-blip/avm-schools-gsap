@@ -99,7 +99,7 @@ body.fee-payment-page .black-logo {
     left: 0;
     min-width: 160px;
     margin: 0;
-    padding: 6px;
+    padding: 6px !important;
     list-style: none;
     background: #ffffff;
     border-radius: 8px;
@@ -264,11 +264,12 @@ body.fee-payment-page .black-logo {
     /* flex-wrap: wrap; */
     justify-content: center;
     margin-top: 98px;
+    gap: 20px;
 }
 
 .node {
-    width: 9em;
-    height: 9em;
+    width: 8.9em;
+    height: 8.9em;
     border-radius: 50%;
     background: #DED5FF;
     display: flex;
@@ -337,8 +338,8 @@ p.blue-text+.d-flex p {
     /* 26.82px */
 }
 
-ul.policy-content {
-    padding-left: 20px;
+body.fee-payment-page .policy-page .tab-panel ul.policy-content {
+    padding-left: 30px !important;
     margin-top: 20px;
 }
 
@@ -376,7 +377,7 @@ ul.policy-content li {
 }
 
 #tab-privacy ul.privacy-content {
-    padding-left: 20px;
+    padding-left: 30px !important;
     padding-bottom: 90px;
 }
 
@@ -430,7 +431,7 @@ p.black-bold-txt {
 }
 
 #tab-terms ul.privacy-content {
-    padding-left: 20px;
+    padding-left: 30px !important;
     padding-bottom: 90px;
 }
 
@@ -448,6 +449,63 @@ p.other-txt:last-child {
     padding-bottom: 0;
 }
 
+.fee-payment-page p a {
+    color: #000;
+}
+
+.arrow svg {
+    transform: rotate(270deg);
+    width: 32px;
+}
+
+@media(max-width: 1650px) {
+    .policy-tabs {
+        gap: 50px;
+        margin-bottom: 100px;
+    }
+
+    .policy-tabs .tab-txt {
+        font-size: 1rem;
+    }
+
+    .policy-header {
+        margin-bottom: 115px;
+    }
+}
+
+@media(max-width: 1366px) {
+    .policy-page {
+        padding-bottom: 102px;
+    }
+
+    .policy-header {
+        margin-bottom: 105px;
+    }
+
+    .policy-tabs .tab-txt {
+        font-size: 20px;
+    }
+
+    .policy-tabs {
+        gap: 50px;
+        margin-bottom: 87px;
+    }
+
+    .node {
+        width: 8.5em;
+        height: 8.5em;
+        padding: 15px;
+    }
+
+    p.blue-text+.d-flex {
+        margin: 25px 0 150px;
+    }
+
+    .flow {
+        margin-top: 78px;
+    }
+}
+
 @media(max-width: 767.9px) {
     .policy-page {
         padding-top: clamp(10.5rem, 12vw, 11rem);
@@ -460,15 +518,17 @@ p.other-txt:last-child {
     }
 
     .policy-header {
-        margin-bottom: 75px;
+        margin-bottom: 55px;
+        flex-direction: column;
+        gap: 30px;
     }
 
-    .year-select {
-        font-size: 16px;
+    .year-select-wrapper {
+        display: none;
     }
 
     .policy-tabs .tab-txt {
-        font-size: 16px;
+        font-size: 13px;
     }
 
     .policy-tabs {
@@ -478,7 +538,7 @@ p.other-txt:last-child {
         gap: 32px;
         margin-bottom: 50px;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        scrollbar-width: thin;
     }
 
     .policy-tabs::-webkit-scrollbar {
@@ -506,18 +566,38 @@ p.other-txt:last-child {
         font-size: 28px;
     }
 
-    .flow {
-        margin-top: 50px;
-        flex-direction: column;
-        gap: 31px;
+    .node {
+        width: 140px;
+        height: 140px;
+        padding: 25px;
+    }
+
+    .node span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 145%;
+        /* 20.3px */
+        letter-spacing: 0.14px;
+        font-family: Poppins;
     }
 
     .arrow svg {
-        transform: rotate(90deg);
+        transform: rotate(360deg);
+    }
+
+    .flow {
+        margin-top: 53px;
+        flex-direction: column;
+        gap: 15px;
     }
 
     .last-line {
         padding-top: 60px;
+        font-size: 18px;
+        line-height: 177%;
+        color: #000;
+        font-family: Poppins;
+        font-weight: 600;
     }
 
     p.blue-text+ul.policy-content {
@@ -536,6 +616,11 @@ p.other-txt:last-child {
         font-size: 18px;
         line-height: 144%;
         padding-bottom: 41px;
+    }
+
+    p.black-bold-txt {
+        font-size: 18px;
+        padding-bottom: 25px;
     }
 
     #tab-privacy ul.privacy-content {

@@ -179,6 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const hero = document.querySelector(".careers-page .hero");
   const heroCircle = document.querySelector(".careers-page .hero-circle");
   const heroContent = document.querySelector(".careers-page .hero-content");
+  const heroImage = document.querySelector(".careers-page .hero-right");
   const about = document.querySelector(
     ".careers-page .bbt-fa-careers-about-sec"
   );
@@ -195,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ".careers-page .bbt-fa-careers-openings-sec"
   );
 
-  if (!hero || !heroCircle || !heroContent || typeof gsap === "undefined") {
+  if (!hero || !heroCircle || !heroContent || !heroImage || typeof gsap === "undefined") {
     return;
   }
 
@@ -204,21 +205,46 @@ document.addEventListener("DOMContentLoaded", function () {
       gsap.set([heroCircle, heroContent, aboutWrapper, aboutImage, aboutText], {
         clearProps: "all",
       });
+      gsap.set(heroImage, { clearProps: "all" });
       if (openingsSec) gsap.set(openingsSec, { clearProps: "all" });
       return;
     }
 
+    gsap.set(heroImage, {
+      x: 0,
+      y: 0,
+      scaleX: 1,
+      scaleY: 1,
+      autoAlpha: 1,
+      transformOrigin: "top left",
+    });
     gsap.set(heroCircle, {
-      x: "-54vw",
+      x: -200,
       scale: 1,
       transformOrigin: "50% 50%",
     });
-    gsap.set(heroContent, { autoAlpha: 0, x: -180 });
+    gsap.set(heroContent, { autoAlpha: 0, x: -80 });
 
     if (about && aboutWrapper && aboutImage && aboutText) {
       gsap.set(aboutWrapper, { opacity: 1 });
-      gsap.set(aboutImage, { autoAlpha: 0, x: -120 });
-      gsap.set(aboutText, { autoAlpha: 0, x: 120 });
+      gsap.set(aboutImage, { autoAlpha: 0, x: 0, y: 0 });
+      gsap.set(aboutText, { autoAlpha: 0, x: 0, y: 64 });
+    }
+
+    function getHeroImageToAboutImage() {
+      if (!aboutImage) {
+        return { x: 0, y: 0, scaleX: 1, scaleY: 1 };
+      }
+
+      const heroRect = heroImage.getBoundingClientRect();
+      const aboutRect = aboutImage.getBoundingClientRect();
+
+      return {
+        x: aboutRect.left - heroRect.left,
+        y: aboutRect.top - heroRect.top,
+        scaleX: aboutRect.width / heroRect.width,
+        scaleY: aboutRect.height / heroRect.height,
+      };
     }
 
     function initScrollAnimations() {
@@ -269,24 +295,44 @@ document.addEventListener("DOMContentLoaded", function () {
           0
         )
         .to(
+          heroImage,
+          {
+            x: () => getHeroImageToAboutImage().x,
+            y: () => getHeroImageToAboutImage().y,
+            scaleX: () => getHeroImageToAboutImage().scaleX,
+            scaleY: () => getHeroImageToAboutImage().scaleY,
+            duration: 0.82,
+            ease: "power2.inOut",
+          },
+          0.24
+        )
+        .to(
+          heroImage,
+          {
+            autoAlpha: 0,
+            duration: 0.28,
+            ease: "power1.out",
+          },
+          0.94
+        )
+        .to(
           aboutImage,
           {
             autoAlpha: 1,
-            x: 0,
-            duration: 0.42,
+            duration: 0.62,
             ease: "power3.out",
           },
-          0.72
+          0.86
         )
         .to(
           aboutText,
           {
             autoAlpha: 1,
-            x: 0,
-            duration: 0.42,
+            y: 0,
+            duration: 0.68,
             ease: "power3.out",
           },
-          0.8
+          1.02
         )
         .set({}, {}, 2.33);
     }
@@ -296,12 +342,12 @@ document.addEventListener("DOMContentLoaded", function () {
         defaults: { ease: "power3.out" },
         onComplete: initScrollAnimations,
       })
-      .to(heroCircle, { x: 0, duration: 1.15 })
+      .to(heroCircle, { x: 0, duration: 1.55 }, 0)
       .fromTo(
         heroContent,
-        { autoAlpha: 0, x: -180 },
-        { autoAlpha: 1, x: 0, duration: 0.95 },
-        "+=0.02"
+        { autoAlpha: 0, x: -80 },
+        { autoAlpha: 1, x: 0, duration: 1.2 },
+        0.6
       );
   }
 
@@ -351,3 +397,93 @@ document.addEventListener("DOMContentLoaded", function () {
   updateFooterMargin();
   setTimeout(updateFooterMargin, 500);
 })();
+
+// ============================================================
+// MOBILE CAREERS ELEMENTS FADE IN UP
+// ============================================================
+function initMobileFadeInUpCareers() {
+  if (!document.querySelector("body.careers-page")) return;
+  
+  let mm = gsap.matchMedia();
+  mm.add("(max-width: 991.98px)", () => {
+    var sections = document.querySelectorAll(
+      ".hero, .bbt-fa-careers-about-sec, .bbt-fa-careers-openings-sec"
+    );
+
+    sections.forEach(function (sec) {
+      if (sec.classList.contains("hero")) {
+        // Immediate fade in up for hero
+        var heroTitle = sec.querySelector(".hero-content h2");
+        var heroImg = sec.querySelector(".hero-right"); // animate the container, as mobile image is in ::after
+        
+        if (heroImg) gsap.fromTo(heroImg, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.0, ease: "power3.out" });
+        if (heroTitle) gsap.fromTo(heroTitle, { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.0, ease: "power3.out", delay: 0.2 });
+        return;
+      }
+
+      if (sec.classList.contains("bbt-fa-careers-openings-sec")) {
+          var heading = sec.querySelector("h2");
+          if (heading) {
+              gsap.set(heading, { autoAlpha: 0, y: 100 });
+              ScrollTrigger.create({
+                  trigger: heading,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function () {
+                      gsap.to(heading, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+                  }
+              });
+          }
+
+          var cards = sec.querySelectorAll(".card");
+          cards.forEach(function(card) {
+              gsap.set(card, { autoAlpha: 0, y: 100 });
+              ScrollTrigger.create({
+                  trigger: card,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function () {
+                      gsap.to(card, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+                  }
+              });
+          });
+          return;
+      }
+
+      // Default for about section
+      var targetSelector = "";
+      if (sec.classList.contains("bbt-fa-careers-about-sec")) {
+          targetSelector = ".avm-image-wrap, .avm-text";
+      }
+      
+      var targets = sec.querySelectorAll(targetSelector);
+      if (targets.length === 0) targets = [sec];
+
+      gsap.set(targets, { autoAlpha: 0, y: 100 });
+
+      ScrollTrigger.create({
+        trigger: sec,
+        start: "top 85%",
+        once: true,
+        onEnter: function () {
+          gsap.to(targets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            overwrite: "auto"
+          });
+        }
+      });
+    });
+  });
+}
+
+if (document.readyState === "complete") {
+  setTimeout(initMobileFadeInUpCareers, 150);
+} else {
+  window.addEventListener("load", function() {
+    setTimeout(initMobileFadeInUpCareers, 150);
+  });
+}

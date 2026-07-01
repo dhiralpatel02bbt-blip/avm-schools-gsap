@@ -35,6 +35,7 @@
 
   function lockInitialHeroScroll() {
     initialHeroLocked = true;
+    if (window.lenis) window.lenis.stop();
     keepAtHeroTop();
     window.addEventListener("wheel", stopInitialHeroScroll, { passive: false });
     window.addEventListener("touchmove", stopInitialHeroScroll, {
@@ -47,6 +48,7 @@
   function unlockInitialHeroScroll() {
     if (!initialHeroLocked) return;
     initialHeroLocked = false;
+    if (window.lenis) window.lenis.start();
     window.removeEventListener("wheel", stopInitialHeroScroll);
     window.removeEventListener("touchmove", stopInitialHeroScroll);
     window.removeEventListener("keydown", stopInitialHeroScroll, false);
@@ -140,6 +142,11 @@
       fallbackAwarenessImage.style.transform = "translateY(90px)";
       fallbackAwarenessImage.style.transition =
         "opacity 1.1s ease, transform 1.1s cubic-bezier(0.16, 1, 0.3, 1)";
+
+
+
+
+
       fallbackAwarenessText.style.opacity = "0";
       fallbackAwarenessText.style.transform = "translateY(90px)";
       fallbackAwarenessText.style.transition =
@@ -148,22 +155,21 @@
 
     if (fallbackCommitmentText && fallbackCommitmentImage) {
       fallbackCommitmentText.style.opacity = "0";
-      fallbackCommitmentText.style.transform = "translateX(-130px)";
+      fallbackCommitmentText.style.transform = "translateY(100px)";
       fallbackCommitmentText.style.transition =
         "opacity 1.05s ease, transform 1.05s cubic-bezier(0.16, 1, 0.3, 1)";
       fallbackCommitmentImage.style.opacity = "0";
-      fallbackCommitmentImage.style.transform = "translateX(150px)";
+      fallbackCommitmentImage.style.transform = "translateY(100px)";
       fallbackCommitmentImage.style.transition =
-        "opacity 1.05s ease 0.12s, transform 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.12s";
+        "opacity 1.05s ease 0.15s, transform 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.15s";
     }
 
     if (fallbackGovernanceText && fallbackGovernanceImage) {
-      fallbackGovernanceImage.style.opacity = "0";
-      fallbackGovernanceImage.style.transform = "translateX(-150px)";
-      fallbackGovernanceImage.style.transition =
-        "opacity 1.35s ease, transform 1.35s cubic-bezier(0.16, 1, 0.3, 1)";
+      fallbackGovernanceImage.style.opacity = "1";
+      fallbackGovernanceImage.style.transform = "none";
+      fallbackGovernanceImage.style.transition = "none";
       fallbackGovernanceText.style.opacity = "0";
-      fallbackGovernanceText.style.transform = "translateX(130px)";
+      fallbackGovernanceText.style.transform = "translateY(100px)";
       fallbackGovernanceText.style.transition =
         "opacity 1.35s ease 0.16s, transform 1.35s cubic-bezier(0.16, 1, 0.3, 1) 0.16s";
     }
@@ -245,9 +251,9 @@
         ) {
           commitmentShown = true;
           fallbackCommitmentText.style.opacity = "1";
-          fallbackCommitmentText.style.transform = "translateX(0)";
+          fallbackCommitmentText.style.transform = "translateY(0)";
           fallbackCommitmentImage.style.opacity = "1";
-          fallbackCommitmentImage.style.transform = "translateX(0)";
+          fallbackCommitmentImage.style.transform = "translateY(0)";
         }
       } else if (
         commitmentShown &&
@@ -258,9 +264,9 @@
         commitmentShown = false;
         if (fallbackCommitmentText && fallbackCommitmentImage) {
           fallbackCommitmentText.style.opacity = "0";
-          fallbackCommitmentText.style.transform = "translateX(-130px)";
+          fallbackCommitmentText.style.transform = "translateY(100px)";
           fallbackCommitmentImage.style.opacity = "0";
-          fallbackCommitmentImage.style.transform = "translateX(150px)";
+          fallbackCommitmentImage.style.transform = "translateY(100px)";
         }
       }
 
@@ -275,10 +281,8 @@
           fallbackGovernanceImage
         ) {
           governanceShown = true;
-          fallbackGovernanceImage.style.opacity = "1";
-          fallbackGovernanceImage.style.transform = "translateX(0)";
           fallbackGovernanceText.style.opacity = "1";
-          fallbackGovernanceText.style.transform = "translateX(0)";
+          fallbackGovernanceText.style.transform = "translateY(0)";
         }
       } else if (
         governanceShown &&
@@ -288,10 +292,8 @@
       ) {
         governanceShown = false;
         if (fallbackGovernanceText && fallbackGovernanceImage) {
-          fallbackGovernanceImage.style.opacity = "0";
-          fallbackGovernanceImage.style.transform = "translateX(-150px)";
           fallbackGovernanceText.style.opacity = "0";
-          fallbackGovernanceText.style.transform = "translateX(130px)";
+          fallbackGovernanceText.style.transform = "translateY(100px)";
         }
       }
     }
@@ -355,6 +357,8 @@
     ? governanceSection.querySelector(".image-wrapper")
     : null;
 
+
+
   var heroScrollTrigger;
   var awarenessTrigger;
   var visionSplitTrigger;
@@ -362,6 +366,7 @@
   var coreValuesTrigger;
   var commitmentTrigger;
   var governanceTrigger;
+  var mobileTriggers = [];
   var resizeTimer;
 
   if (!hero || !circle || typeof ScrollTrigger === "undefined") return;
@@ -374,6 +379,24 @@
     if (coreValuesTrigger) coreValuesTrigger.kill();
     if (commitmentTrigger) commitmentTrigger.kill();
     if (governanceTrigger) governanceTrigger.kill();
+
+    if (mobileTriggers.length > 0) {
+      mobileTriggers.forEach(function (t) {
+        t.kill();
+      });
+      mobileTriggers = [];
+    }
+
+    // Clean up commitment section properties modified for desktop overlap
+    var commitmentSection = document.querySelector(".commitment-sec");
+    if (commitmentSection) {
+      gsap.set(commitmentSection, { clearProps: "marginTop,zIndex,clipPath,backgroundColor" });
+    }
+    
+    var governanceSection = document.querySelector(".governance-sec");
+    if (governanceSection) {
+      gsap.set(governanceSection, { clearProps: "marginTop,position,zIndex" });
+    }
 
     heroScrollTrigger = null;
     awarenessTrigger = null;
@@ -455,7 +478,7 @@
       end: "+=100%",
       pin: true,
       pinSpacing: false,
-      anticipatePin: 1,
+
       scrub: 0.35,
       invalidateOnRefresh: true,
       animation: coverTL,
@@ -552,7 +575,7 @@
       end: "+=150%",
       pin: true,
       pinSpacing: true,
-      anticipatePin: 1,
+
       scrub: 0.8,
       animation: awarenessTL,
       invalidateOnRefresh: true,
@@ -598,14 +621,14 @@
         "--vision-radial-scale": 1,
         "--vision-radial-opacity": 0.95,
         "--vision-radial-reveal": "85%",
-        duration: 1.45,
+        duration: 0.72,
       })
       .to(visionLeft, {
         x: 0,
         autoAlpha: 1,
         duration: 0.65,
         ease: "power3.out",
-      })
+      }, "-=0.35")
       .to(
         visionRight,
         {
@@ -635,15 +658,32 @@
         },
         "-=0.12"
       )
-      .to({}, { duration: 0.45 });
+      .to({}, { duration: 0.45 })
+      .to(
+        [visionLeft, visionRight, visionTitle, visionPara],
+        {
+          autoAlpha: 0,
+          duration: 0.4,
+          ease: "power2.inOut",
+        }
+      )
+      .to(
+        visionSection,
+        {
+          "--vision-radial-opacity": 0,
+          duration: 0.4,
+          ease: "power2.inOut",
+        },
+        "<"
+      );
 
     visionRadialTrigger = ScrollTrigger.create({
       trigger: visionSection,
       start: "top top",
-      end: "+=260%",
+      end: "+=130%",
       pin: visionSection,
       pinSpacing: true,
-      anticipatePin: 1,
+
       scrub: 1,
       animation: visionPinnedTL,
       invalidateOnRefresh: true,
@@ -670,6 +710,9 @@
   function initCoreValues() {
     var coreSection = document.querySelector(".core-value-sec");
     if (!coreSection) return;
+
+    // Pull the section up to remove the scroll delay after the Vision section
+    gsap.set(coreSection, { marginTop: "-100vh" });
 
     var whiteCircle = coreSection.querySelector(".white-circle");
     var circleHeading = whiteCircle ? whiteCircle.querySelector("h2") : null;
@@ -865,7 +908,9 @@
     // ── ScrollTrigger: pin the section, scrub the timeline ──────────────────
     // Extra scroll space = 3× viewport heights so each phase gets room
     // Let the final line settle before ScrollTrigger releases the pinned section.
-    masterTL.to({}, { duration: 0.18 });
+    masterTL.to({}, { duration: 0.18 })
+            .to(whiteCircle, { y: -500, autoAlpha: 0, duration: 0.5, ease: "power1.inOut" }, ">")
+            .to(textWrapper, { yPercent: -40, autoAlpha: 0, duration: 0.5, ease: "power1.inOut" }, "<");
 
     coreValuesTrigger = ScrollTrigger.create({
       trigger: coreSection,
@@ -873,7 +918,7 @@
       end: "+=" + Math.max(300, items.length * 90) + "%",
       pin: true,
       pinSpacing: true,
-      anticipatePin: 1,
+
       scrub: true,
       invalidateOnRefresh: true,
       animation: masterTL,
@@ -892,6 +937,9 @@
   function initCoreValuesMobile() {
     var mobileSection = document.querySelector(".core-value-mob");
     if (!mobileSection) return;
+
+    // Pull the section up to remove the scroll delay after the Vision section
+    gsap.set(mobileSection, { marginTop: "-100vh" });
 
     var textWrapper = mobileSection.querySelector(".text-wrapper");
     var animLine = mobileSection.querySelector(".avm-cv-anim-line");
@@ -1008,7 +1056,9 @@
       0.2
     );
 
-    mobileTL.to({}, { duration: 0.16 });
+    mobileTL.to({}, { duration: 0.16 })
+            .to(mobileSection.querySelector(".main-heading"), { y: -400, autoAlpha: 0, duration: 0.5, ease: "power1.inOut" }, ">")
+            .to(textWrapper, { yPercent: -40, autoAlpha: 0, duration: 0.5, ease: "power1.inOut" }, "<");
 
     coreValuesTrigger = ScrollTrigger.create({
       trigger: mobileSection,
@@ -1016,7 +1066,7 @@
       end: "+=" + Math.max(320, items.length * 95) + "%",
       pin: true,
       pinSpacing: true,
-      anticipatePin: 1,
+
       scrub: true,
       invalidateOnRefresh: true,
       animation: mobileTL,
@@ -1024,23 +1074,32 @@
   }
 
   function initCommitment() {
+    var commitmentSection = document.querySelector(".commitment-sec");
+    var commitmentText = commitmentSection ? commitmentSection.querySelector(".content-sec") : null;
+    var commitmentImage = commitmentSection ? commitmentSection.querySelector(".image-wrapper") : null;
+
     if (!commitmentSection || !commitmentText || !commitmentImage) return;
 
     gsap.killTweensOf([commitmentSection, commitmentText, commitmentImage]);
 
-    // Cross-fade: section background fades from blue to white as it enters
-    gsap.set(commitmentSection, { backgroundColor: "#0a3d9c" });
-
-    // Image wipe: clip-path reveal left-to-right
-    gsap.set(commitmentImage, {
-      clipPath: "inset(0 100% 0 0)",
-      force3D: true,
-      willChange: "clip-path",
+    // Pull commitment section up to overlap the pinned Values section during its final scroll phase
+    gsap.set(commitmentSection, { 
+      marginTop: "-100vh",
+      position: "relative",
+      zIndex: 5,
+      backgroundColor: "#ffffff"
     });
 
-    // Text: slide in from left
+    // Initial state: image fades in up, text slides in from left
+    gsap.set(commitmentImage, {
+      y: 100,
+      autoAlpha: 0,
+      force3D: true,
+      willChange: "transform, opacity",
+    });
+
     gsap.set(commitmentText, {
-      x: -130,
+      y: 100,
       autoAlpha: 0,
       force3D: true,
       willChange: "transform, opacity",
@@ -1048,58 +1107,43 @@
 
     var commitmentTL = gsap.timeline({
       defaults: { ease: "power3.out" },
+      scrollTrigger: {
+        trigger: commitmentSection,
+        start: "top 50%", // Starts when it reaches 50% of the viewport
+        end: "top 20%",
+        scrub: 1.15,
+        invalidateOnRefresh: true
+      }
     });
 
     commitmentTL
-      // Cross-fade background blue → white over the first half of the scrub
-      .to(
-        commitmentSection,
-        { backgroundColor: "#ffffff", duration: 0.5, ease: "none" },
-        0
-      )
-      // Text slides in
-      .to(commitmentText, { x: 0, autoAlpha: 1, duration: 1.05 }, 0.15)
-      // Image wipes in left → right, slightly after text
-      .to(
-        commitmentImage,
-        {
-          clipPath: "inset(0 0% 0 0)",
-          duration: 1.1,
-          ease: "power2.inOut",
-        },
-        0.25
-      )
+      .to([commitmentText, commitmentImage], { x: 0, y: 0, autoAlpha: 1, duration: 1.35 }, 0.16)
       .set([commitmentText, commitmentImage], { clearProps: "willChange" });
 
-    // -YP start
-    commitmentTrigger = ScrollTrigger.create({
-      trigger: commitmentSection,
-      start: "top top",
-      end: "+=" + window.innerHeight,
-      pin: true,
-      pinSpacing: true,
-      anticipatePin: 1,
-      animation: commitmentTL,
-      scrub: 0.7,
-      invalidateOnRefresh: true,
-    });
-    // -YP end
   }
 
   function initGovernance() {
     if (!governanceSection || !governanceText || !governanceImage) return;
 
-    gsap.killTweensOf([governanceImage, governanceText]);
+    gsap.killTweensOf([governanceImage, governanceText, governanceSection]);
 
-    // Image wipe: reveal right-to-left (since image is on the left side)
+    // Pull governance section up to reduce white space and scroll delay
+    gsap.set(governanceSection, { 
+      marginTop: "-25vh",
+      position: "relative",
+      zIndex: 6
+    });
+
+    // Initial state: image fades in up, text slides in from right
     gsap.set(governanceImage, {
-      clipPath: "inset(0 0 0 100%)",
+      y: 100,
+      autoAlpha: 0,
       force3D: true,
-      willChange: "clip-path",
+      willChange: "transform, opacity",
     });
 
     gsap.set(governanceText, {
-      x: 130,
+      y: 100,
       autoAlpha: 0,
       force3D: true,
       willChange: "transform, opacity",
@@ -1108,31 +1152,27 @@
     var governanceTL = gsap.timeline({
       defaults: { ease: "power3.out" },
     });
-
     governanceTL
-      // Image wipes in right → left
-      .to(
-        governanceImage,
-        {
-          clipPath: "inset(0 0 0 0%)",
-          duration: 1.1,
-          ease: "power2.inOut",
-        },
-        0
-      )
-      // Text slides in from right
-      .to(governanceText, { x: 0, autoAlpha: 1, duration: 1.35 }, 0.16)
-      .set([governanceImage, governanceText], { clearProps: "willChange" });
+      .to([governanceText, governanceImage], { x: 0, y: 0, autoAlpha: 1, duration: 1.35 }, 0.16)
+      .set([governanceText, governanceImage], { clearProps: "willChange" });
 
     // -YP start
+    ScrollTrigger.create({
+      trigger: governanceSection,
+      start: "top 50%",
+      end: "top 20%",
+      animation: governanceTL,
+      scrub: 1.15,
+      invalidateOnRefresh: true,
+    });
+
     governanceTrigger = ScrollTrigger.create({
       trigger: governanceSection,
       start: "top top",
       end: "+=" + window.innerHeight,
       pin: true,
       pinSpacing: true,
-      anticipatePin: 1,
-      animation: governanceTL,
+
       scrub: 1.15,
       invalidateOnRefresh: true,
     });
@@ -1207,4 +1247,114 @@
 
   // Make sure body doesn't overlap if it has background
   gsap.set(document.body, { backgroundColor: "transparent" });
+})();
+
+// ============================================================
+// MOBILE ABOUT-US ELEMENTS FADE IN UP
+// ============================================================
+(function initMobileFadeInUp() {
+  if (!document.querySelector("body.about-us-page")) return;
+  
+  let mm = gsap.matchMedia();
+  mm.add("(max-width: 767.98px)", () => {
+    var sections = document.querySelectorAll(
+      ".mob-hero, .awareness-about-sec, .our-vision-sec, .core-value-mob, .commitment-sec, .governance-sec"
+    );
+
+    sections.forEach(function (sec) {
+      if (sec.classList.contains("mob-hero")) {
+        // slideUp animation to the blue circle (.mob-content), no fade, no image animation
+        var mobContent = sec.querySelector(".mob-content");
+        if (mobContent) {
+          gsap.set(mobContent, { y: 50 });
+          ScrollTrigger.create({
+            trigger: sec,
+            start: "top 85%",
+            once: true,
+            onEnter: function () {
+              gsap.to(mobContent, {
+                y: 0,
+                duration: 1.0,
+                ease: "power3.out",
+                overwrite: "auto"
+              });
+            }
+          });
+        }
+        return; // skip the rest of the loop for mob-hero
+      }
+
+      var targetSelector = "";
+      if (sec.classList.contains("awareness-about-sec")) {
+          targetSelector = ".avm-image-wrap, .avm-text";
+      } else if (sec.classList.contains("our-vision-sec")) {
+          targetSelector = ".vision-text-area, .para-text";
+      } else if (sec.classList.contains("core-value-mob")) {
+          var coreHeading = sec.querySelector(".main-heading");
+          var coreItems = sec.querySelectorAll(".core-para");
+
+          if (coreHeading) {
+            gsap.set(coreHeading, { autoAlpha: 0, y: 70 });
+            ScrollTrigger.create({
+              trigger: sec,
+              start: "top 85%",
+              once: true,
+              onEnter: function () {
+                gsap.to(coreHeading, {
+                  autoAlpha: 1,
+                  y: 0,
+                  duration: 0.8,
+                  ease: "power3.out",
+                  overwrite: "auto"
+                });
+              }
+            });
+          }
+
+          gsap.set(coreItems, { autoAlpha: 0, y: 70 });
+          coreItems.forEach(function (item) {
+            ScrollTrigger.create({
+              trigger: item,
+              start: "top 82%",
+              once: true,
+              onEnter: function () {
+                gsap.to(item, {
+                  autoAlpha: 1,
+                  y: 0,
+                  duration: 0.72,
+                  ease: "power3.out",
+                  overwrite: "auto"
+                });
+              }
+            });
+          });
+
+          return;
+      } else if (sec.classList.contains("commitment-sec") || sec.classList.contains("governance-sec")) {
+          targetSelector = ".image-wrapper, .content-sec";
+      }
+      
+      var targets = sec.querySelectorAll(targetSelector);
+      if (targets.length === 0) targets = [sec];
+
+      // More vertical offset for prominent fadeInUp
+      gsap.set(targets, { autoAlpha: 0, y: 100 });
+
+      ScrollTrigger.create({
+        trigger: sec,
+        start: "top 85%",
+        once: true,
+        onEnter: function () {
+          gsap.to(targets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            overwrite: "auto"
+          });
+        }
+      });
+    });
+  });
 })();

@@ -161,7 +161,7 @@
     // Circle: fully off-screen left
     if (halfCircle) {
       gsap.set(halfCircle, {
-        x: -(circleW * 0.5) - 300,
+        x: -200,
         scale: 1,
         transformOrigin: "center center",
         force3D: true,
@@ -169,12 +169,9 @@
     }
 
     // Text elements: invisible + shifted left
-    if (panelKicker)
-      gsap.set(panelKicker, { opacity: 0, x: -60, visibility: "visible" });
-    if (panelTitle)
-      gsap.set(panelTitle, { opacity: 0, x: -60, visibility: "visible" });
-    if (panelBody)
-      gsap.set(panelBody, { opacity: 0, x: -60, visibility: "visible" });
+    if (panelKicker) gsap.set(panelKicker, { autoAlpha: 0, x: -90 });
+    if (panelTitle) gsap.set(panelTitle, { autoAlpha: 0, x: -90 });
+    if (panelBody) gsap.set(panelBody, { autoAlpha: 0, x: -90 });
     if (heroGlowCircle)
       gsap.set(heroGlowCircle, {
         opacity: 0,
@@ -209,8 +206,9 @@
       });
 
       var tabLoadTL = gsap.timeline({
-        delay: 0.3,
+        delay: 0.12,
         onComplete: function () {
+          createTabHeroScrollTrigger();
           tabLoadTL = null;
         },
       });
@@ -219,12 +217,12 @@
         tabLoadTL.to(
           halfCircle,
           {
-            x: -(circleW * 0.5),
-            duration: 1.1,
-            ease: "power3.out",
+            x: 0,
+            duration: 1.55,
+            ease: "power4.out",
             force3D: true,
           },
-          0,
+          0
         );
       }
       if (heroGlowCircle) {
@@ -236,28 +234,28 @@
             duration: 0.65,
             ease: "back.out(1.6)",
           },
-          0.3,
+          0.3
         );
       }
       if (panelTitle) {
         tabLoadTL.to(
           panelTitle,
-          { opacity: 1, x: 0, duration: 0.85, ease: "power3.out" },
-          0.5,
+          { autoAlpha: 1, x: 0, duration: 1.2, ease: "power4.out" },
+          0.28
         );
       }
       if (panelBody) {
         tabLoadTL.to(
           panelBody,
-          { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-          0.7,
+          { autoAlpha: 1, x: 0, duration: 1.2, ease: "power4.out" },
+          0.28
         );
       }
       if (panelKicker) {
         tabLoadTL.to(
           panelKicker,
-          { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
-          0.9,
+          { autoAlpha: 1, x: 0, duration: 1.2, ease: "power4.out" },
+          0.28
         );
       }
 
@@ -267,7 +265,7 @@
         tabScrollTL.fromTo(
           halfCircle,
           {
-            x: -(circleW * 0.5),
+            x: 0,
             scale: 1,
             transformOrigin: "center center",
           },
@@ -277,9 +275,10 @@
             transformOrigin: "center center",
             ease: "power2.inOut",
             duration: 0.32,
+            immediateRender: false,
             force3D: true,
           },
-          0,
+          0
         );
       }
 
@@ -289,22 +288,22 @@
         tabScrollTL.fromTo(
           panelKicker,
           { opacity: 1, x: 0 },
-          { opacity: 0, x: -30, duration: 0.16 },
-          0.02,
+          { opacity: 0, x: -30, duration: 0.16, immediateRender: false },
+          0.02
         );
       if (panelTitle)
         tabScrollTL.fromTo(
           panelTitle,
           { opacity: 1, x: 0 },
-          { opacity: 0, x: -40, duration: 0.18 },
-          0.05,
+          { opacity: 0, x: -40, duration: 0.18, immediateRender: false },
+          0.05
         );
       if (panelBody)
         tabScrollTL.fromTo(
           panelBody,
           { opacity: 1, x: 0 },
-          { opacity: 0, x: -30, duration: 0.16 },
-          0.08,
+          { opacity: 0, x: -30, duration: 0.16, immediateRender: false },
+          0.08
         );
 
       tabScrollTL
@@ -312,14 +311,14 @@
         .to(
           diagramTab,
           { opacity: 1, duration: 0.08, ease: "power2.out" },
-          0.38,
+          0.38
         );
 
       if (tabTitle) {
         tabScrollTL.to(
           tabTitle,
           { autoAlpha: 1, y: 0, duration: 0.12, ease: "power3.out" },
-          0.42,
+          0.42
         );
       }
 
@@ -339,7 +338,7 @@
               duration: cardSlice * 0.28,
               ease: "power2.in",
             },
-            start,
+            start
           );
         }
 
@@ -352,7 +351,7 @@
             duration: cardSlice * 0.55,
             ease: "back.out(1.45)",
           },
-          start + cardSlice * 0.12,
+          start + cardSlice * 0.12
         );
       });
 
@@ -363,25 +362,30 @@
         window.innerHeight * (tabCards.length + 2) + "px";
       stage.parentNode.insertBefore(tabSpacer, stage.nextSibling);
 
-      ScrollTrigger.create({
-        trigger: stage,
-        start: "top top",
-        end: function () {
-          return "+=" + window.innerHeight * (tabCards.length + 3);
-        },
-        pin: true,
-        pinSpacing: false,
-        anticipatePin: 1,
-        scrub: 1.05,
-        animation: tabScrollTL,
-        invalidateOnRefresh: true,
-        onUpdate: function (self) {
-          if (self.progress > 0.001 && tabLoadTL) {
-            tabLoadTL.kill();
-            tabLoadTL = null;
-          }
-        },
-      });
+      var tabHeroScrollTrigger;
+      function createTabHeroScrollTrigger() {
+        if (tabHeroScrollTrigger) return;
+
+        tabHeroScrollTrigger = ScrollTrigger.create({
+          trigger: stage,
+          start: "top top",
+          end: function () {
+            return "+=" + window.innerHeight * (tabCards.length + 3);
+          },
+          pin: true,
+          pinSpacing: false,
+          anticipatePin: 1,
+          scrub: 1.05,
+          animation: tabScrollTL,
+          invalidateOnRefresh: true,
+          onUpdate: function (self) {
+            if (self.progress > 0.001 && tabLoadTL) {
+              tabLoadTL.kill();
+              tabLoadTL = null;
+            }
+          },
+        });
+      }
 
       return;
     }
@@ -426,8 +430,9 @@
     // t=1.55  Kicker fades in (subtle, last)
 
     var loadTL = gsap.timeline({
-      delay: 0.3,
+      delay: 0.12,
       onComplete: function () {
+        createHeroScrollTrigger();
         loadTL = null;
       },
     });
@@ -437,12 +442,12 @@
       loadTL.to(
         halfCircle,
         {
-          x: -(circleW * 0.5),
-          duration: 1.1,
-          ease: "power3.out",
+          x: 0,
+          duration: 1.55,
+          ease: "power4.out",
           force3D: true,
         },
-        0,
+        0
       );
     }
 
@@ -456,7 +461,7 @@
           duration: 0.65,
           ease: "back.out(1.6)",
         },
-        0.3,
+        0.3
       );
     }
 
@@ -465,12 +470,12 @@
       loadTL.to(
         panelTitle,
         {
-          opacity: 1,
+          autoAlpha: 1,
           x: 0,
-          duration: 0.85,
-          ease: "power3.out",
+          duration: 1.2,
+          ease: "power4.out",
         },
-        0.5,
+        0.28
       );
     }
 
@@ -479,12 +484,12 @@
       loadTL.to(
         panelBody,
         {
-          opacity: 1,
+          autoAlpha: 1,
           x: 0,
-          duration: 0.8,
-          ease: "power3.out",
+          duration: 1.2,
+          ease: "power4.out",
         },
-        0.7,
+        0.28
       );
     }
 
@@ -493,22 +498,22 @@
       loadTL.to(
         panelKicker,
         {
-          opacity: 1,
+          autoAlpha: 1,
           x: 0,
-          duration: 0.45,
-          ease: "power2.out",
+          duration: 1.2,
+          ease: "power4.out",
         },
-        0.9,
+        0.28
       );
     }
 
     // ── Step 3: Scroll timeline (paused, scrubbed) ───────
     //
-    // 0.00→0.35  Circle scale:1 → scale:14  (floods full viewport)
+    // 0.00→0.58  Circle scale:1 → scale:14  (floods full viewport)
     // 0.02→0.20  Hero image + glow + text fade out
-    // 0.48       diagram-sec visibility:visible
-    // 0.50→0.56  Diagram fades in over blue bg
-    // 0.56→1.00  Nodes highlight one by one
+    // 0.62       diagram-sec visibility:visible after blue fill completes
+    // 0.64→0.74  Diagram fades in over blue bg
+    // 0.92→1.00  Nodes highlight one by one
 
     // -YP start
     var scrollTL = gsap.timeline({ paused: true });
@@ -517,7 +522,7 @@
       scrollTL.fromTo(
         halfCircle,
         {
-          x: -(circleW * 0.5),
+          x: 0,
           scale: 1,
           transformOrigin: "center center",
         },
@@ -526,10 +531,11 @@
           scale: 14,
           transformOrigin: "center center",
           ease: "power2.inOut",
-          duration: 0.5,
+          duration: 0.58,
+          immediateRender: false,
           force3D: true,
         },
-        0,
+        0
       );
     }
 
@@ -539,34 +545,34 @@
       scrollTL.fromTo(
         panelKicker,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -30, duration: 0.2 },
-        0.05,
+        { opacity: 0, x: -30, duration: 0.2, immediateRender: false },
+        0.05
       );
     if (panelTitle)
       scrollTL.fromTo(
         panelTitle,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -40, duration: 0.2 },
-        0.1,
+        { opacity: 0, x: -40, duration: 0.2, immediateRender: false },
+        0.1
       );
     if (panelBody)
       scrollTL.fromTo(
         panelBody,
         { opacity: 1, x: 0 },
-        { opacity: 0, x: -30, duration: 0.2 },
-        0.1,
+        { opacity: 0, x: -30, duration: 0.2, immediateRender: false },
+        0.1
       );
 
     // Diagram reveal
     scrollTL.set(
       diagramSec,
       { visibility: "visible", pointerEvents: "auto" },
-      0.5,
+      0.32
     );
     scrollTL.to(
       diagramSec,
       { opacity: 1, duration: 0.1, ease: "power2.out" },
-      0.5,
+      0.34
     );
     // -YP start
     // 1. Center and Orbit grow FIRST (slowly on scroll)
@@ -574,14 +580,14 @@
       scrollTL.to(
         diagramCenter,
         { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.5,
+        0.36
       );
     }
     if (diagramOrbit) {
       scrollTL.to(
         diagramOrbit,
         { opacity: 0.95, scale: 1, duration: 0.3, ease: "power2.out" },
-        0.55,
+        0.41
       );
     }
 
@@ -592,7 +598,7 @@
         scrollTL.to(
           n,
           { opacity: 1, duration: 0.05, ease: "power2.out" },
-          0.85,
+          0.62
         );
     });
     // -YP end
@@ -601,7 +607,7 @@
         scrollTL.to(
           l,
           { opacity: 1, duration: 0.05, ease: "power2.out" },
-          0.85,
+          0.62
         );
     });
     labelTitles.forEach(function (t) {
@@ -609,18 +615,18 @@
         scrollTL.to(
           t,
           { opacity: 0.35, duration: 0.05, ease: "power2.out" },
-          0.85,
+          0.62
         );
     });
 
     var SMALL = 22,
       BIG = 44,
       TOTAL = nodes.length;
-    var slice = 0.55 / TOTAL; // 0.90 to 1.45 is 0.55
+    var slice = 0.55 / TOTAL; // 0.68 to 1.23 is 0.55
     // -YP end
 
     for (var i = 0; i < TOTAL; i++) {
-      var s = 0.9 + i * slice;
+      var s = 0.68 + i * slice;
       var mid = s + slice * 0.15;
       var end = s + slice * 0.85;
 
@@ -636,20 +642,20 @@
             duration: slice * 0.28,
             ease: "power2.in",
           },
-          s,
+          s
         );
         // -YP end
         if (labelTitles[i - 1])
           scrollTL.to(
             labelTitles[i - 1],
             { opacity: 0.35, duration: slice * 0.2 },
-            s,
+            s
           );
         if (labelBodies[i - 1])
           scrollTL.to(
             labelBodies[i - 1],
             { opacity: 0, y: 12, duration: slice * 0.22 },
-            s,
+            s
           );
       }
       if (nodes[i]) {
@@ -663,28 +669,28 @@
             duration: slice * 0.38,
             ease: "back.out(1.7)",
           },
-          mid,
+          mid
         );
       }
       if (labelTitles[i]) {
         scrollTL.to(
           labelTitles[i],
           { opacity: 1, duration: slice * 0.28, ease: "power3.out" },
-          mid,
+          mid
         );
       }
       if (labelBodies[i]) {
         scrollTL.to(
           labelBodies[i],
           { opacity: 1, y: 0, duration: slice * 0.38, ease: "power3.out" },
-          mid,
+          mid
         );
       }
       if (nodes[i]) {
         scrollTL.to(
           nodes[i],
           { boxShadow: "none", duration: slice * 0.3, ease: "power2.in" },
-          end - slice * 0.2,
+          end - slice * 0.2
         );
       }
     }
@@ -702,35 +708,40 @@
     stage.parentNode.insertBefore(desktopSpacer, stage.nextSibling);
 
     // ── Pin stage + scrub ────────────────────────────────
-    ScrollTrigger.create({
-      trigger: stage,
-      start: "top top",
-      end: "+=600%",
-      pin: true,
-      pinSpacing: false,
-      anticipatePin: 1,
-      scrub: 0.8,
-      animation: scrollTL,
-      invalidateOnRefresh: true,
-      onUpdate: function (self) {
-        if (self.progress > 0.001 && loadTL) {
-          loadTL.kill();
-          loadTL = null;
-        }
-        // Show fade only after last node has animated
-        if (self.progress >= 0.81) {
-          fadeDiv.classList.add("visible");
-        } else {
-          fadeDiv.classList.remove("visible");
-        }
-      },
-    });
+    var heroScrollTrigger;
+    function createHeroScrollTrigger() {
+      if (heroScrollTrigger) return;
+
+      heroScrollTrigger = ScrollTrigger.create({
+        trigger: stage,
+        start: "top top",
+        end: "+=600%",
+        pin: true,
+        pinSpacing: false,
+        anticipatePin: 1,
+        scrub: 0.8,
+        animation: scrollTL,
+        invalidateOnRefresh: true,
+        onUpdate: function (self) {
+          if (self.progress > 0.001 && loadTL) {
+            loadTL.kill();
+            loadTL = null;
+          }
+          // Show fade only after last node has animated
+          if (self.progress >= 0.81) {
+            fadeDiv.classList.add("visible");
+          } else {
+            fadeDiv.classList.remove("visible");
+          }
+        },
+      });
+    }
   }
 
-  if (document.readyState === "complete") {
+  if (document.readyState !== "loading") {
     init();
   } else {
-    window.addEventListener("load", init, { once: true });
+    document.addEventListener("DOMContentLoaded", init, { once: true });
   }
 
   window.addEventListener("resize", function () {
@@ -930,7 +941,7 @@ tabs.forEach((tab) => {
         scale: 1,
         duration: 0.9,
         ease: "power2.out",
-      },
+      }
     );
 
     arms.forEach(({ line, satellite, lineState }) => {
@@ -949,7 +960,7 @@ tabs.forEach((tab) => {
             duration: 0.35,
             ease: "power2.out",
           },
-          ">-0.12",
+          ">-0.12"
         );
     });
 
@@ -1017,7 +1028,7 @@ tabs.forEach((tab) => {
     const wrapperRect = wrapper.getBoundingClientRect();
     const scale = Math.min(
       svgRect.width / viewBox.width,
-      svgRect.height / viewBox.height,
+      svgRect.height / viewBox.height
     );
     const renderedWidth = viewBox.width * scale;
     const renderedHeight = viewBox.height * scale;
@@ -1137,7 +1148,7 @@ tabs.forEach((tab) => {
         }
       });
     },
-    { threshold: 0.15 },
+    { threshold: 0.15 }
   );
 
   function observeBlocks() {
@@ -1167,7 +1178,7 @@ tabs.forEach((tab) => {
         }
       });
     },
-    { threshold: 0.2 },
+    { threshold: 0.2 }
   );
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -1179,124 +1190,169 @@ tabs.forEach((tab) => {
   });
 })();
 
-// ============================================================
-// PEDAGOGY — Wipe Mask Reveal  (AYM + AVM image columns)
-//
-// WHY PREVIOUS ATTEMPTS FAILED:
-//   • CSS had opacity:0 + translateX on .aym-img-col / .avm-img-col
-//     but we kept overriding them with opacity:1 !important which
-//     made images instantly visible — wipe had nothing to reveal.
-//   • IntersectionObserver that adds .in-view never actually fires
-//     (DOMContentLoaded already passed when script.js loads at
-//     bottom of <body>), so those columns stay opacity:0 via CSS.
-//
-// CORRECT FLOW:
-//   1. Immediately wrap <img> in a clip-path mask div (sync,
-//      at parse time) — before anything else can show the image.
-//   2. After window.load + 300ms, register ScrollTrigger.
-//   3. On enter: gsap.set col to opacity:1, then wipe mask open.
-//   NO !important overrides. NO touching the CSS opacity rules.
-// ============================================================
-
-(function initPedagogyWipeMasks() {
-  if (!document.querySelector("body.pedagogy-page")) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  function wrapNow(colSelector, maskClass, direction) {
-    var col = document.querySelector(colSelector);
-    if (!col) return;
-    var img = col.querySelector("img");
-    if (!img || col.querySelector("." + maskClass)) return;
-
-    var transformOrigin = direction === "rtl" ? "right center" : "left center";
-
-    var mask = document.createElement("div");
-    mask.className = maskClass;
-    // Hide synchronously with visibility to prevent flash, GSAP will reveal it
-    mask.style.cssText =
-      "display:block;overflow:hidden;visibility:hidden;will-change:clip-path;";
-    img.style.cssText +=
-      ";transform-origin:" + transformOrigin + ";will-change:transform;";
-    img.parentNode.insertBefore(mask, img);
-    mask.appendChild(img);
-
-    // Disable CSS transition on col immediately so it doesn't fight GSAP
-    col.style.transition = "none";
-    col.style.opacity = "1";
-    col.style.transform = "none";
+  /* 
+  function queueBuild(delay) {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      buildAymDiagram();
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+      }
+    }, delay);
   }
 
-  wrapNow(".aym-section .aym-img-col", "aym-img-mask", "ltr");
-  wrapNow(".avm-section .avm-img-col", "avm-img-mask", "rtl");
-
-  function registerWipe(colSelector, maskClass, direction) {
-    var col = document.querySelector(colSelector);
-    if (
-      !col ||
-      typeof gsap === "undefined" ||
-      typeof ScrollTrigger === "undefined"
-    )
-      return;
-
-    var mask = col.querySelector("." + maskClass);
-    if (!mask) return;
-    var img = mask.querySelector("img");
-
-    var startClip =
-      direction === "rtl" ? "inset(0% 0% 0% 100%)" : "inset(0% 100% 0% 0%)";
-
-    // Foolproof fromTo pattern guarantees start and end states
-    gsap.fromTo(
-      mask,
-      { clipPath: startClip, autoAlpha: 1 }, // autoAlpha removes visibility:hidden
-      {
-        clipPath: "inset(0% 0% 0% 0%)",
-        ease: "power2.inOut",
-        scrollTrigger: {
-          trigger: col,
-          start: "top 80%",
-          end: "top 30%",
-          scrub: 1,
-        },
-      },
-    );
-
-    if (img) {
-      gsap.fromTo(
-        img,
-        { scale: 1.06 },
-        {
-          scale: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: col,
-            start: "top 80%",
-            end: "top 30%",
-            scrub: 1,
-          },
-        },
-      );
-    }
-  }
-
-  function init() {
-    registerWipe(".aym-section .aym-img-col", "aym-img-mask", "ltr");
-    registerWipe(".avm-section .avm-img-col", "avm-img-mask", "rtl");
-    if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
-  }
-
-  if (document.readyState === "complete") {
-    setTimeout(init, 300);
-  } else {
-    window.addEventListener(
-      "load",
-      function () {
-        setTimeout(init, 300);
-      },
-      { once: true },
-    );
-  }
+  queueBuild(700);
+  window.addEventListener("load", () => queueBuild(500));
+  window.addEventListener("resize", () => {
+    queueBuild(180);
+  });
 })();
+
+// developer diagram section
+(function initTeacherDevDiagram() {
+  const section = document.querySelector(".teacher-dev");
+  const wrapper = document.querySelector(".teacher-dev .circle-wrapper");
+  const path = document.querySelector("#arcPath");
+  const dots = Array.from(document.querySelectorAll(".teacher-dev .dot"));
+  const centerCircle = document.querySelector(".teacher-dev .center-circle");
+  const contentByDot = [
+    document.querySelector(".teacher-dev .content.left-bottom"),
+    document.querySelector(".teacher-dev .content.left-top"),
+    document.querySelector(".teacher-dev .content.top"),
+    document.querySelector(".teacher-dev .content.right-top"),
+    document.querySelector(".teacher-dev .content.right-bottom"),
+  ].filter(Boolean);
+  let teacherDevTrigger;
+  let teacherResizeTimer;
+
+  if (
+    !section ||
+    !wrapper ||
+    !path ||
+    !dots.length ||
+    !centerCircle ||
+    !contentByDot.length
+  ) {
+    return;
+  }
+
+  function positionTeacherDots() {
+    const length = path.getTotalLength();
+    const svg = path.ownerSVGElement;
+    const viewBox = svg.viewBox.baseVal;
+    const svgRect = svg.getBoundingClientRect();
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const scale = Math.min(
+      svgRect.width / viewBox.width,
+      svgRect.height / viewBox.height
+    );
+    const renderedWidth = viewBox.width * scale;
+    const renderedHeight = viewBox.height * scale;
+    const offsetX =
+      svgRect.left - wrapperRect.left + (svgRect.width - renderedWidth) / 2;
+    const offsetY =
+      svgRect.top - wrapperRect.top + (svgRect.height - renderedHeight) / 2;
+
+    dots.forEach((dot, index) => {
+      const point = path.getPointAtLength((index / (dots.length - 1)) * length);
+      dot.style.left = `${offsetX + (point.x - viewBox.x) * scale}px`;
+      dot.style.top = `${offsetY + (point.y - viewBox.y) * scale}px`;
+    });
+  }
+
+  function buildTeacherDevDiagram() {
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+      return;
+    }
+
+    if (teacherDevTrigger) teacherDevTrigger.kill();
+
+    positionTeacherDots();
+
+    const pathLength = path.getTotalLength();
+
+    gsap.set(path, {
+      strokeDasharray: pathLength,
+      strokeDashoffset: pathLength,
+    });
+    gsap.set(centerCircle, {
+      autoAlpha: 0,
+      scale: 0.72,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(dots, {
+      autoAlpha: 0,
+      scale: 0,
+      xPercent: -50,
+      yPercent: -50,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(contentByDot, {
+      autoAlpha: 0,
+      y: 18,
+    });
+
+    const timeline = gsap.timeline({
+      defaults: { ease: "power2.out" },
+    });
+
+    timeline
+      .to(centerCircle, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.9,
+        ease: "power2.out",
+      })
+      .to(path, {
+        strokeDashoffset: 0,
+        duration: 1,
+        ease: "power1.inOut",
+      });
+
+    dots.forEach((dot, index) => {
+      timeline
+        .to(dot, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.45,
+          ease: "back.out(1.8)",
+        })
+        .to(contentByDot[index], {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+    });
+
+    teacherDevTrigger = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: () => `+=${window.innerHeight * (dots.length + 2)}`,
+      pin: true,
+      scrub: 0.7,
+      animation: timeline,
+      invalidateOnRefresh: true,
+      onRefresh: positionTeacherDots,
+    });
+  }
+
+  function queueTeacherDevBuild(delay) {
+    clearTimeout(teacherResizeTimer);
+    teacherResizeTimer = setTimeout(() => {
+      buildTeacherDevDiagram();
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+      }
+    }, delay);
+  }
+
+  positionTeacherDots();
+  queueTeacherDevBuild(700);
+  window.addEventListener("load", () => queueTeacherDevBuild(500));
+  window.addEventListener("resize", () => queueTeacherDevBuild(180));
+})();
+*/
 
 (function initExtraScrollSlider() {
   function build() {
@@ -1314,7 +1370,9 @@ tabs.forEach((tab) => {
       gsap.set([textContent, extraHorizontal], { autoAlpha: 0, y: 40 });
       ScrollTrigger.create({
         trigger: extraSec,
-        start: "top top",
+        start: function () {
+          return window.innerWidth <= 991.98 ? "top 82%" : "top top";
+        },
         once: true,
         onEnter: function () {
           gsap.to([textContent, extraHorizontal], {
@@ -1374,7 +1432,7 @@ tabs.forEach((tab) => {
   if (!wrapper) return;
 
   var revealWrapper = document.querySelector(
-    ".pedagogy-page .footer-reveal-wrapper",
+    ".pedagogy-page .footer-reveal-wrapper"
   );
 
   function updateFooterMargin() {
@@ -1396,29 +1454,164 @@ tabs.forEach((tab) => {
   setTimeout(updateFooterMargin, 500);
 })();
 
-// Background transition between tabbing-sec and extra-section
-(function initBgTransition() {
-  const tabbingSec = document.querySelector(".tabbing-sec");
-  const extraSec = document.querySelector(".extra-section");
 
-  if (!tabbingSec || !extraSec) return;
+// ============================================================
+// MOBILE PEDAGOGY ELEMENTS FADE IN UP & SCALE
+// ============================================================
+function initMobileFadeInUpPedagogy() {
+  if (!document.querySelector("body.pedagogy-page")) return;
+  
+  let mm = gsap.matchMedia();
+  mm.add("(max-width: 991.98px)", () => {
+    var sections = document.querySelectorAll(
+      ".mob-campus-section, .mob-pedagogy-section, .tabbing-sec, .mob-teacher-dev, .extra-section"
+    );
 
-  // We want the transition to happen when the extra section enters from 50% to 100% of the viewport.
-  // "top center" means the top of extra-section hits the center of the viewport (50% in).
-  // "top top" means the top of extra-section hits the top of the viewport (100% in).
-  ScrollTrigger.create({
-    trigger: extraSec,
-    start: "top center",
-    end: "top top",
-    scrub: true,
-    animation: gsap
-      .timeline()
-      .to(tabbingSec, { backgroundColor: "#0a3d9c", ease: "none" }, 0)
-      .fromTo(
-        extraSec,
-        { backgroundColor: "#ffffff" },
-        { backgroundColor: "#0a3d9c", ease: "none" },
-        0,
-      ),
+    sections.forEach(function (sec) {
+      if (sec.classList.contains("mob-campus-section")) {
+        // Immediate fade in up for hero image and text
+        var heroTitle = sec.querySelector(".panel-title");
+        var heroText = sec.querySelector(".panel-body");
+        var heroImg = sec.querySelector(".img-full");
+        
+        if (heroImg) gsap.fromTo(heroImg, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.0, ease: "power3.out" });
+        if (heroTitle) gsap.fromTo(heroTitle, { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.0, ease: "power3.out", delay: 0.2 });
+        if (heroText) gsap.fromTo(heroText, { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.0, ease: "power3.out", delay: 0.35 });
+        return;
+      }
+
+      if (sec.classList.contains("mob-pedagogy-section")) {
+          var heading = sec.querySelector("h2");
+          if (heading) {
+              gsap.set(heading, { autoAlpha: 0, y: 100 });
+              ScrollTrigger.create({
+                  trigger: heading,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function () {
+                      gsap.to(heading, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+                  }
+              });
+          }
+
+          var cards = sec.querySelectorAll(".circle-card");
+          cards.forEach(function(card) {
+              gsap.set(card, {
+                  scale: 0.65,
+                  autoAlpha: 0,
+                  transformOrigin: "center center"
+              });
+              ScrollTrigger.create({
+                  trigger: card,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function () {
+                      gsap.to(card, {
+                          scale: 1,
+                          autoAlpha: 1,
+                          duration: 1.2,
+                          ease: "power3.out",
+                          overwrite: "auto"
+                      });
+                  }
+              });
+          });
+          return;
+      }
+
+      if (sec.classList.contains("tabbing-sec")) {
+          var targets = sec.querySelectorAll(".tabs, .tab-content .title-txt, .tab-content .feature-block");
+          
+          targets.forEach(function(el) {
+              gsap.set(el, { autoAlpha: 0, y: 100 });
+              ScrollTrigger.create({
+                  trigger: el,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function () {
+                      gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+                  }
+              });
+          });
+          return;
+      }
+
+      if (sec.classList.contains("extra-section")) {
+          var textContent = sec.querySelector(".text-content");
+          if (textContent) {
+              gsap.set(textContent, { autoAlpha: 0, y: 100 });
+              ScrollTrigger.create({
+                  trigger: textContent,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function () {
+                      gsap.to(textContent, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+                  }
+              });
+          }
+
+          var targets = sec.querySelectorAll(".extra-slide");
+          targets.forEach(function(el) {
+              gsap.set(el, { autoAlpha: 0, y: 100 });
+              ScrollTrigger.create({
+                  trigger: el,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function () {
+                      gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+                  }
+              });
+          });
+          return;
+      }
+
+      if (sec.classList.contains("mob-teacher-dev")) {
+          var targets = sec.querySelectorAll(".development-circle, .content");
+          
+          targets.forEach(function(el) {
+              gsap.set(el, { autoAlpha: 0, y: 100 });
+              ScrollTrigger.create({
+                  trigger: el,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function () {
+                      gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+                  }
+              });
+          });
+          return;
+      }
+    });
   });
-})();
+}
+
+function updateMobileTeacherDevLine() {
+  var part = document.querySelector(".mob-teacher-dev .development-part");
+  if (!part) return;
+
+  var dots = part.querySelectorAll(".orange-dot");
+  var lastDot = dots[dots.length - 1];
+  if (!lastDot) return;
+
+  var lastContent = lastDot.closest(".content");
+  if (!lastContent) return;
+
+  var lineHeight = lastContent.offsetTop + lastDot.offsetTop + lastDot.offsetHeight / 2;
+
+  part.style.setProperty("--teacher-dev-line-height", lineHeight + "px");
+}
+
+if (document.readyState === "complete") {
+  setTimeout(initMobileFadeInUpPedagogy, 150);
+  setTimeout(updateMobileTeacherDevLine, 250);
+} else {
+  window.addEventListener("load", function() {
+    setTimeout(initMobileFadeInUpPedagogy, 150);
+    setTimeout(updateMobileTeacherDevLine, 250);
+  });
+}
+
+window.addEventListener("resize", function () {
+  clearTimeout(window.teacherDevLineResizeTimer);
+  window.teacherDevLineResizeTimer = setTimeout(updateMobileTeacherDevLine, 180);
+});

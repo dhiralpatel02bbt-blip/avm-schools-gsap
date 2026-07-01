@@ -32,12 +32,12 @@
   }
 
   gsap.set(heroCircle, {
-    xPercent: -34,
+    x: -200,
     autoAlpha: 1,
     scale: 1,
     transformOrigin: "50% 50%",
   });
-  gsap.set(heroTitle, { autoAlpha: 0, x: -130 });
+  gsap.set(heroTitle, { autoAlpha: 0, x: -80 });
 
   if (cards.length) {
     gsap.set(cards, {
@@ -103,7 +103,7 @@
           trigger: circleSection,
           start: "top top",
           end: function () {
-            return "+=" + window.innerHeight * 5.6;
+            return "+=" + window.innerHeight * 2.8;
           },
           pin: true,
           scrub: 0.85,
@@ -114,17 +114,17 @@
 
       journeyTL
         .to(cards[0], { autoAlpha: 1, scale: 1, y: 0, duration: 0.75 })
-        .to(contents[0], { autoAlpha: 1, y: 0, duration: 0.45 })
-        .to(segments[0], { scaleX: 1, duration: 0.72, ease: "power1.inOut" })
+        .to(contents[0], { autoAlpha: 1, y: 0, duration: 0.45 }, "<")
+        .to(segments[0], { scaleX: 1, duration: 0.45, ease: "power1.inOut" })
         .to(cards[1], { autoAlpha: 1, scale: 1, y: 0, duration: 0.75 })
-        .to(contents[1], { autoAlpha: 1, y: 0, duration: 0.45 })
-        .to(segments[1], { scaleX: 1, duration: 0.72, ease: "power1.inOut" })
+        .to(contents[1], { autoAlpha: 1, y: 0, duration: 0.45 }, "<")
+        .to(segments[1], { scaleX: 1, duration: 0.45, ease: "power1.inOut" })
         .to(cards[2], { autoAlpha: 1, scale: 1, y: 0, duration: 0.75 })
-        .to(contents[2], { autoAlpha: 1, y: 0, duration: 0.45 })
-        .to({}, { duration: 0.45 });
+        .to(contents[2], { autoAlpha: 1, y: 0, duration: 0.45 }, "<")
+        .to({}, { duration: 0.2 });
     }
 
-    if (aboutSection && aboutItems.length) {
+    if (aboutSection && window.getComputedStyle(aboutSection).display !== "none" && aboutItems.length) {
       gsap.to(aboutItems, {
         autoAlpha: 1,
         y: 0,
@@ -281,15 +281,15 @@
         defaults: { ease: "power3.out" },
         onComplete: buildScrollAnimations,
       })
-      .to(heroCircle, { xPercent: 0, duration: 1.05 })
+      .to(heroCircle, { x: 0, duration: 1.55 }, 0)
       .to(
         heroTitle,
         {
           autoAlpha: 1,
           x: 0,
-          duration: 0.9,
+          duration: 1.2,
         },
-        "+=0.02",
+        0.6,
       );
   }
 
@@ -344,4 +344,92 @@
   setTimeout(updateFooterMargin, 500);
 })();
 
+// ============================================================
+// MOBILE ADMISSIONS ELEMENTS FADE IN UP
+// ============================================================
+(function initMobileFadeInUpAdmissions() {
+  if (!document.querySelector("body.admissions-page")) return;
+  
+  let mm = gsap.matchMedia();
+  mm.add("(max-width: 991.98px)", () => {
+    var sections = document.querySelectorAll(
+      ".admission-hero, .bbt-fa-circle-sec, .bbt-fa-admissions-about-sec, .bbt-fa-online-section, .bbt-fa-pincode-section, .bbt-fa-application-section, .bbt-fa-abilities-section, .bbt-fa-notes-section"
+    );
 
+    sections.forEach(function (sec) {
+      if (sec.classList.contains("admission-hero")) {
+        // Immediate fade in up for hero since it's above the fold
+        var heroTitle = sec.querySelector(".main-title");
+        var heroCircle = sec.querySelector(".blue-half-circle");
+        
+        if (heroCircle) gsap.fromTo(heroCircle, { y: 50 }, { y: 0, duration: 1.0, ease: "power3.out" });
+        if (heroTitle) gsap.fromTo(heroTitle, { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.0, ease: "power3.out", delay: 0.2 });
+        return;
+      }
+
+      var targetSelector = "";
+      if (sec.classList.contains("bbt-fa-circle-sec")) {
+          var cards = sec.querySelectorAll(".circle-card");
+          cards.forEach(function(card) {
+              gsap.set(card, { scale: 0.65, autoAlpha: 1 }); // Scale from center, no fade
+              ScrollTrigger.create({
+                  trigger: card,
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function() {
+                      gsap.to(card, { scale: 1, duration: 1.2, ease: "power3.out", overwrite: "auto" });
+                  }
+              });
+          });
+          
+          var wrapper = sec.querySelector(".journey-wrapper");
+          if (wrapper && cards.length > 0) {
+              gsap.set(wrapper, { "--line-height": "0%" });
+              ScrollTrigger.create({
+                  trigger: cards[0],
+                  start: "top 85%",
+                  once: true,
+                  onEnter: function() {
+                      // Appear after the first circle is formed (delay 0.6s)
+                      gsap.to(wrapper, { "--line-height": "100%", duration: 1.5, delay: 0.6, ease: "power2.inOut" });
+                  }
+              });
+          }
+          return;
+      } else if (sec.classList.contains("bbt-fa-admissions-about-sec")) {
+          targetSelector = ".avm-swiper"; // Swiper wrapper
+      } else if (sec.classList.contains("bbt-fa-online-section")) {
+          targetSelector = ".main-title, .description, .sub-title, .table-wrapper";
+      } else if (sec.classList.contains("bbt-fa-pincode-section")) {
+          targetSelector = ".title, .subtitle, .tabs, .tab-content";
+      } else if (sec.classList.contains("bbt-fa-application-section")) {
+          targetSelector = "h1, .mandatory, .optional";
+      } else if (sec.classList.contains("bbt-fa-abilities-section")) {
+          targetSelector = ".hero-heading, .cta-button";
+      } else if (sec.classList.contains("bbt-fa-notes-section")) {
+          targetSelector = "h2, p";
+      }
+      
+      var targets = sec.querySelectorAll(targetSelector);
+      if (targets.length === 0) targets = [sec];
+
+      gsap.set(targets, { autoAlpha: 0, y: 100 });
+
+      ScrollTrigger.create({
+        trigger: sec,
+        start: "top 85%",
+        once: true,
+        onEnter: function () {
+          gsap.to(targets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            overwrite: "auto"
+          });
+        }
+      });
+    });
+  });
+})();

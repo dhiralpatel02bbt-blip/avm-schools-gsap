@@ -33,6 +33,8 @@
   var slide2 = campusSection.querySelector(".campus-slide.slide-2");
   var slide3 = campusSection.querySelector(".campus-slide.slide-3");
   var campusText = campusSection.querySelector(".body-txt");
+  var campusTitle = campusText ? campusText.querySelector(".panel-title") : null;
+  var campusBody = campusText ? campusText.querySelector(".panel-body") : null;
   var campusHalfCircle = campusSection.querySelector(".half-circle");
   var siteHeader = document.querySelector("header.header");
 
@@ -60,8 +62,13 @@
     return;
   }
 
-  gsap.set(campusText, { autoAlpha: 0, x: -96, filter: "none" });
-  gsap.set(campusHalfCircle, { xPercent: -22 });
+  gsap.set(campusText, { autoAlpha: 1, x: 0, filter: "none" });
+  gsap.set([campusTitle, campusBody].filter(Boolean), {
+    autoAlpha: 0,
+    x: -80,
+    filter: "none",
+  });
+  gsap.set(campusHalfCircle, { x: -200, autoAlpha: 1 });
   gsap.set(campusStack, { autoAlpha: 0 });
 
   function playLoadAnim(isReentry) {
@@ -86,8 +93,13 @@
         });
       }
     }
-    gsap.set(campusHalfCircle, { xPercent: -40, autoAlpha: 0 });
-    gsap.set(campusText, { x: -96, autoAlpha: 0, filter: "none" });
+    gsap.set(campusHalfCircle, { x: -200, autoAlpha: 1 });
+    gsap.set(campusText, { x: 0, autoAlpha: 1, filter: "none" });
+    gsap.set([campusTitle, campusBody].filter(Boolean), {
+      x: -80,
+      autoAlpha: 0,
+      filter: "none",
+    });
 
     loadTL = gsap.timeline({
       delay: isReentry ? 0 : 0.2,
@@ -104,16 +116,24 @@
     if (campusHalfCircle) {
       loadTL.to(
         campusHalfCircle,
-        { xPercent: 0, autoAlpha: 1, duration: 2.2, ease: "power3.out" },
+        { x: 0, autoAlpha: 1, duration: 1.55, ease: "power3.out" },
         0,
       );
     }
-    loadTL.fromTo(
-      campusText,
-      { x: -96, autoAlpha: 0, filter: "none" },
-      { x: 0, autoAlpha: 1, filter: "none", duration: 1.6, ease: "power3.out" },
-      0.55,
-    );
+    if (campusTitle) {
+      loadTL.to(
+        campusTitle,
+        { x: 0, autoAlpha: 1, filter: "none", duration: 1.2, ease: "power3.out" },
+        0.6,
+      );
+    }
+    if (campusBody) {
+      loadTL.to(
+        campusBody,
+        { x: 0, autoAlpha: 1, filter: "none", duration: 1.2, ease: "power3.out" },
+        0.6,
+      );
+    }
   }
 
   if (document.readyState === "complete") {
@@ -166,7 +186,6 @@
       x: -60,
       autoAlpha: 0,
     });
-    gsap.set([slide1Text, slide2Text, slide3Text], { x: -60, autoAlpha: 0 });
   }
 
   // Master timeline for scrubbing the pinned section
@@ -234,11 +253,6 @@
     { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
     10.1,
   );
-  masterTL.to(
-    slide1Text,
-    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
-    10.1,
-  );
 
   // Pause to look at slide 1
   masterTL.to({}, { duration: 15 }, 15.1);
@@ -256,11 +270,6 @@
     { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
     45.1,
   );
-  masterTL.to(
-    slide2Text,
-    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
-    45.1,
-  );
 
   // Pause to look at slide 2
   masterTL.to({}, { duration: 15 }, 50.1);
@@ -275,11 +284,6 @@
   // Reveal Slide 3 Details
   masterTL.to(
     slide3Circle,
-    { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
-    80.1,
-  );
-  masterTL.to(
-    slide3Text,
     { x: 0, autoAlpha: 1, duration: 5, ease: "power1.out" },
     80.1,
   );
@@ -308,38 +312,55 @@
   var mm = gsap.matchMedia();
 
   mm.add("(min-width: 992px)", function () {
+    var locationSec = document.querySelector(".location-section");
+    if (locationSec) {
+      gsap.set(locationSec, { marginTop: () => -window.innerHeight });
+    }
+
     function getScrollAmount() {
       var lastSlide = slides[slides.length - 1];
       var firstSlide = slides[0];
       return -(lastSlide.offsetLeft - firstSlide.offsetLeft);
     }
+    
+    var totalScroll = () => Math.abs(getScrollAmount()) + window.innerHeight;
 
-    gsap.to(devTrack, {
-      x: getScrollAmount,
-      ease: "none",
+    var tl = gsap.timeline({
       scrollTrigger: {
         trigger: devSec,
         start: "top top",
-        end: () => "+=" + Math.abs(getScrollAmount()),
+        end: () => "+=" + totalScroll(),
         pin: true,
         scrub: 1,
-        snap: {
-          snapTo: 1 / (slides.length - 1),
-          duration: { min: 0.2, max: 0.6 },
-          delay: 0.05,
-          ease: "power2.inOut",
-        },
         invalidateOnRefresh: true,
-      },
+      }
+    });
+
+    tl.to(devTrack, {
+      x: getScrollAmount,
+      ease: "none",
+      duration: () => Math.abs(getScrollAmount()) / totalScroll()
+    });
+
+    var devChildren = devSec.querySelectorAll(".container-xxl, .dev-horizontal");
+    tl.to(devChildren, {
+      y: "-20vh",
+      autoAlpha: 0,
+      ease: "power1.inOut",
+      duration: () => window.innerHeight / totalScroll()
     });
 
     return function () {
       gsap.set(devTrack, { clearProps: "x" });
+      gsap.set(devChildren, { clearProps: "all" });
+      if (locationSec) {
+        gsap.set(locationSec, { clearProps: "marginTop" });
+      }
     };
   });
 })();
 
-// Our School page location section: short opposite-side reveal.
+// Our School page location section: Desktop fade-in and pin
 (function initLocationSectionReveal() {
   if (!document.querySelector("body.our-school-page")) return;
   if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
@@ -357,73 +378,67 @@
     return;
   }
 
-  var hasRevealed = false;
-
-  var devSec = document.querySelector(".development-sec");
-
-  gsap.fromTo(
-    [section, devSec],
-    { backgroundColor: "#ffffff" },
-    {
-      backgroundColor: "#f7df00",
-      ease: "none",
+  var mm = gsap.matchMedia();
+  mm.add("(min-width: 992px)", function() {
+    
+    // 1. Parallax scrub (moves content FASTER by translating it upwards relative to container)
+    // We use a timeline so it stays completely static during the pinned phase.
+    var parallaxTl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top bottom",
-        end: "top top",
+        end: "bottom top",
         scrub: true,
-        invalidateOnRefresh: true,
-      },
-    },
-  );
+        invalidateOnRefresh: true
+      }
+    });
 
-  gsap.set(leftColumn, { autoAlpha: 0, x: -28 });
-  gsap.set(rightColumn, { autoAlpha: 0, x: 28 });
+    // Phase 1: Section enters viewport
+    parallaxTl.fromTo(
+      [leftColumn, rightColumn],
+      { y: 150 },
+      { y: 0, ease: "none", duration: 1 }
+    );
 
-  function revealLocationSection() {
-    if (hasRevealed) return;
-    hasRevealed = true;
+    // Phase 2: Section is pinned (stays static)
+    parallaxTl.to({}, { duration: 1 });
 
-    gsap
-      .timeline({
-        defaults: {
-          duration: 0.8,
-          ease: "power3.out",
-        },
-      })
-      .to(leftColumn, { autoAlpha: 1, x: 0 })
-      .to(rightColumn, { autoAlpha: 1, x: 0 }, "-=0.58");
-  }
+    // Phase 3: Section leaves viewport
+    parallaxTl.to(
+      [leftColumn, rightColumn],
+      { y: -150, ease: "none", duration: 1 }
+    );
 
-  // FIX: refresh() pehle karo taaki campus + dev section ke pins ki
-  // wajah se scroll height sahi ho, phir trigger register karo.
-  // Pehle create() baad mein refresh() karna galat hai — "once:true" trigger
-  // galat position pe register hota hai aur onEnter kabhi fire nahi hota.
-  if (document.readyState === "complete") {
-    ScrollTrigger.refresh();
+    // 2. Fade in up when section is 50% into viewport
+    gsap.fromTo(
+      [leftColumn, rightColumn],
+      { autoAlpha: 0 },
+      {
+        autoAlpha: 1,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 50%",
+          once: true
+        }
+      }
+    );
+
+    // 3. Pin the section so it stays static for some time
     ScrollTrigger.create({
       trigger: section,
-      start: "top 15%",
-      once: true,
-      onEnter: revealLocationSection,
-      invalidateOnRefresh: true,
+      start: "top top",
+      end: "+=100%",
+      pin: true,
+      pinSpacing: true,
+      invalidateOnRefresh: true
     });
-  } else {
-    window.addEventListener(
-      "load",
-      function () {
-        ScrollTrigger.refresh();
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top 15%",
-          once: true,
-          onEnter: revealLocationSection,
-          invalidateOnRefresh: true,
-        });
-      },
-      { once: true },
-    );
-  }
+    
+    return function() {
+      gsap.set([leftColumn, rightColumn], { clearProps: "all" });
+    };
+  });
 })();
 
 if (
@@ -489,4 +504,173 @@ if (
 
   // Make sure body doesn't overlap if it has background
   gsap.set(document.body, { backgroundColor: "transparent" });
+})();
+
+// ============================================================
+// MOBILE OUR-SCHOOL ELEMENTS FADE IN UP
+// ============================================================
+(function initMobileFadeInUpOurSchool() {
+  if (!document.querySelector("body.our-school-page")) return;
+  
+  let mm = gsap.matchMedia();
+  mm.add("(max-width: 767.98px)", () => {
+    var sections = document.querySelectorAll(
+      ".campus-section, .development-sec, .location-section, .mob-contact-sec"
+    );
+
+    sections.forEach(function (sec) {
+      if (sec.classList.contains("campus-section")) {
+        // Fade in the school image on mobile (immediate animation since it's above the fold)
+        var schoolImage = sec.querySelector(".campus-static-media");
+        if (schoolImage) {
+          gsap.fromTo(schoolImage, 
+            { autoAlpha: 0 }, 
+            { autoAlpha: 1, duration: 1.0, ease: "power3.out", delay: 0.1 }
+          );
+        }
+        
+        // SlideUp for contents (heading and text), but skip circle
+        // There are multiple .body-txt blocks (desktop/mobile display toggles), so query all
+        var textContents = sec.querySelectorAll(".body-txt");
+        if (textContents.length > 0) {
+          gsap.fromTo(textContents, 
+            { y: 100, autoAlpha: 0 }, 
+            { y: 0, autoAlpha: 1, duration: 1.0, ease: "power3.out", delay: 0.3 }
+          );
+        }
+        
+        // The 3 School divs (campus-slide) need individual scroll triggers
+        var campusSlides = sec.querySelectorAll(".campus-slide");
+        campusSlides.forEach(function(slide) {
+          var slideVisual = slide.querySelector(".campus-slide-visual");
+          var slideImage = slide.querySelector(".campus-slide-visual img");
+
+          gsap.set([slideVisual, slideImage].filter(Boolean), {
+            clearProps: "transform,scale,scaleX,scaleY,clipPath",
+          });
+          gsap.set(slide, {
+            y: 110,
+            autoAlpha: 0,
+            scale: 1,
+            transformOrigin: "50% 50%",
+          });
+
+          gsap.fromTo(
+            slide,
+            {
+              y: 110,
+              autoAlpha: 0,
+              scale: 1,
+            },
+            {
+              y: 0,
+              autoAlpha: 1,
+              scale: 1,
+              duration: 1.15,
+              ease: "power3.out",
+              overwrite: "auto",
+              scrollTrigger: {
+                trigger: slide,
+                start: "top 92%",
+                once: true,
+              },
+            },
+          );
+        });
+        return; // skip the rest for campus-section
+      }
+
+      if (sec.classList.contains("development-sec")) {
+          // Facilities section: title + individual slides
+          var devTitle = sec.querySelector(".title-txt");
+          if (devTitle) {
+            gsap.set(devTitle, { autoAlpha: 0, y: 100 });
+            ScrollTrigger.create({
+              trigger: devTitle,
+              start: "top 85%",
+              once: true,
+              onEnter: function () {
+                gsap.to(devTitle, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+              }
+            });
+          }
+          
+          var devSlides = sec.querySelectorAll(".dev-slide");
+          devSlides.forEach(function(slide) {
+            gsap.set(slide, { autoAlpha: 0, y: 100 });
+            ScrollTrigger.create({
+            trigger: slide,
+            start: "top 85%",
+            once: true,
+            onEnter: function () {
+              gsap.to(slide, {
+                y: 0,
+                autoAlpha: 1,
+                duration: 0.8,
+                ease: "power3.out",
+                overwrite: "auto"
+              });
+            }
+          });
+        });
+          return; // skip the rest for development-sec
+      }
+
+      var targetSelector = "";
+      if (sec.classList.contains("location-section")) {
+          var locHeading = sec.querySelector(".campus-heading");
+          if (locHeading) {
+            gsap.set(locHeading, { autoAlpha: 0, y: 100 });
+            ScrollTrigger.create({
+              trigger: locHeading,
+              start: "top 85%",
+              once: true,
+              onEnter: function () {
+                gsap.to(locHeading, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+              }
+            });
+          }
+
+          var locCards = sec.querySelectorAll(".campus-card");
+          locCards.forEach(function(card) {
+            gsap.set(card, { autoAlpha: 0, y: 100 });
+            ScrollTrigger.create({
+              trigger: card,
+              start: "top 85%",
+              once: true,
+              onEnter: function () {
+                gsap.to(card, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+              }
+            });
+          });
+          return; // skip the rest for location-section
+      }
+
+      if (sec.classList.contains("mob-contact-sec")) {
+          targetSelector = ".inner-content, .contact-img, .form-actions";
+      }
+      
+      var targets = sec.querySelectorAll(targetSelector);
+      if (targets.length === 0) targets = [sec];
+
+      // Vertical offset for prominent fadeInUp
+      gsap.set(targets, { autoAlpha: 0, y: 100 });
+
+      ScrollTrigger.create({
+        trigger: sec,
+        start: "top 85%",
+        once: true,
+        onEnter: function () {
+          gsap.to(targets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            overwrite: "auto"
+          });
+        }
+      });
+    });
+  });
 })();
